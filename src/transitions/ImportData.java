@@ -63,7 +63,7 @@ public class ImportData {
        String[] folder=assistant.split("\\.");
        projectDataFolder=folder[0];
 
-       String sStandardString=projectDataFolder+File.separator;
+       String sStandardString= "datasets" + File.separator +projectDataFolder+File.separator;
 
        for(int i=0; i<sAllSchemas.length; i++){
     	   
