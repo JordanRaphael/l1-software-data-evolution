@@ -1002,7 +1002,7 @@ public class Gui extends JFrame implements ActionListener{
 									"the SQL files of the dataset that you want to use."+"\n" +
 									"The .txt file must have EXACTLY the same name with the folder " +
 									"that contains the DDL Scripts of the dataset."+ "\n" +
-									"Both .txt file and dataset folder must be to the project's folder.";
+									"Both .txt file and dataset folder must be in the same folder.";
 				JOptionPane.showMessageDialog(null,message); 				
 			}
 		});
