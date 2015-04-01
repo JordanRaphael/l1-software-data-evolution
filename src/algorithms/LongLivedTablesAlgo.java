@@ -1,29 +1,36 @@
 package algorithms;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.TreeMap;
 
-import results.LongLivedTablesResults;
+import data.pplSqlSchema.PPLSchema;
+import data.pplSqlSchema.PPLTable;
 import results.Results;
-import sqlSchema.Schema;
-import sqlSchema.Table;
+import results.ResultsFactory;
 
 public class LongLivedTablesAlgo implements Algorithm {
 	
-	private ArrayList<Schema> AllSchemas=new ArrayList<Schema>();
+	private TreeMap<String,PPLSchema> allPPLSchemas=new TreeMap<String,PPLSchema>();
 	private int k=0;
 	private Results results=null;
-	
-	public LongLivedTablesAlgo(ArrayList<Schema> tmpAllSchemas , int tmpk){
+	private ArrayList<PPLTable> longLivedTables=new ArrayList<PPLTable>();
+
+	public LongLivedTablesAlgo(TreeMap<String,PPLSchema> tmpAllSchemas , int tmpk){
 		
-		AllSchemas=tmpAllSchemas;
+		allPPLSchemas=tmpAllSchemas;
 		k=tmpk;
 	
 	}
 	
+//	public void setAll(TreeMap<String,PPLSchema> tmpAllSchemas , int tmpk){
+//		
+//		allPPLSchemas=tmpAllSchemas;
+//		k=tmpk;
+//	}
+	
 	public Results compute(){
 		
-		ArrayList<Table> longLivedTables=new ArrayList<Table>();
 		ArrayList<String> tableNames=new ArrayList<String>();
 		
 		
@@ -31,13 +38,13 @@ public class LongLivedTablesAlgo implements Algorithm {
 		int found=0;
 		int age=0;
 		
-		for(int i=0; i<AllSchemas.size(); i++){
+		for (Map.Entry<String,PPLSchema> pplSc : allPPLSchemas.entrySet()) {
 			
-			Schema oneSchema=AllSchemas.get(i);
-			
+			PPLSchema oneSchema = pplSc.getValue();
+					
 			for(int j=0; j<oneSchema.getTables().size(); j++){
 				
-				Table currentTable=oneSchema.getTableAt(j);
+				PPLTable currentTable=oneSchema.getTableAt(j);
 				String currentTableName=currentTable.getName();
 				
 				for(int k=0; k<tableNames.size(); k++){
@@ -54,16 +61,16 @@ public class LongLivedTablesAlgo implements Algorithm {
 					
 					age=calculateAge(currentTable);
 					tableNames.add(currentTableName);
-					AllSchemas.get(i).getTableAt(j).setAge(age);
+					allPPLSchemas.get(pplSc.getKey()).getTableAt(j).setAge(age);
 					longLivedTables.add(currentTable);
-					currentTable=new Table();
+					currentTable=new PPLTable();
 					age=0;
 					
 				}
 				else if(found==1){
 					
 					found=0;
-					currentTable=new Table();
+					currentTable=new PPLTable();
 				
 				}
 				
@@ -77,7 +84,9 @@ public class LongLivedTablesAlgo implements Algorithm {
 			longLivedTables.remove(i);
 		}
 		
-		results=new LongLivedTablesResults();
+
+		ResultsFactory rf = new ResultsFactory("LongLivedTablesResults");
+		results=rf.createResult();
 		results.setResults(longLivedTables);
 		
 		return results;
@@ -85,15 +94,15 @@ public class LongLivedTablesAlgo implements Algorithm {
 		
 	}
 
-	private int calculateAge(Table currentTable) {
+	private int calculateAge(PPLTable currentTable) {
 		
-		TreeMap<String,Table> tables=new TreeMap<String,Table>();
+		TreeMap<String,PPLTable> tables=new TreeMap<String,PPLTable>();
 		
 		int age=0;
 		
-		for(int u=0; u<AllSchemas.size(); u++){
+		for (Map.Entry<String,PPLSchema> pplSc : allPPLSchemas.entrySet()) {
 			
-			tables=AllSchemas.get(u).getTables();
+			tables=allPPLSchemas.get(pplSc.getKey()).getTables();
 			
 			if(tables.containsKey(currentTable.getName())){
 				age++;
@@ -106,9 +115,9 @@ public class LongLivedTablesAlgo implements Algorithm {
 		
 	}
 	
-	private ArrayList<Table> sortTablesByAge(ArrayList<Table> tmpLongLivedTables) {
+	private ArrayList<PPLTable> sortTablesByAge(ArrayList<PPLTable> tmpLongLivedTables) {
 		
-		ArrayList<Table> sortingTables=new ArrayList<Table>();
+		ArrayList<PPLTable> sortingTables=new ArrayList<PPLTable>();
 		
 		for(int i=0; i<tmpLongLivedTables.size(); i++){
 			
@@ -139,6 +148,14 @@ public class LongLivedTablesAlgo implements Algorithm {
 		
 		return sortingTables;
 	}
+
+	@Override
+	public void compute(String compute) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 	
 
 }

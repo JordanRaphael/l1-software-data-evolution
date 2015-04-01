@@ -1,14 +1,16 @@
 package results;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
-import sqlSchema.Table;
+import data.pplSqlSchema.PPLTable;
 
 public class LongLivedTablesResults implements Results {
 	
-	private ArrayList<Table> longLivedTables=new ArrayList<Table>();
+	private ArrayList<PPLTable> longLivedTables=new ArrayList<PPLTable>();
 	
 	public LongLivedTablesResults(){
+		
 		
 	}
 	
@@ -17,8 +19,25 @@ public class LongLivedTablesResults implements Results {
 		longLivedTables=tmpResults;
 	}
 	
-	public ArrayList<Table> getResults(){
+	public ArrayList<PPLTable> getResults(){
 		return longLivedTables;
 	}
 
+	@SuppressWarnings("rawtypes")
+	@Override
+	public void setResults(TreeMap tmpResults) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public TreeMap getResults(String lala) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+	
 }

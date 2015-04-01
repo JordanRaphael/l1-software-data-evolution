@@ -1,12 +1,13 @@
 package results;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
-import sqlSchema.Table;
+import data.pplSqlSchema.PPLTable;
 
 public class MostUpdatedTablesResults implements Results {
 
-	private ArrayList<Table> mostUpdatedTables=new ArrayList<Table>();
+	private ArrayList<PPLTable> mostUpdatedTables=new ArrayList<PPLTable>();
 	
 	public MostUpdatedTablesResults(){
 		
@@ -17,8 +18,24 @@ public class MostUpdatedTablesResults implements Results {
 		mostUpdatedTables=tmpResults;
 	}
 	
-	public ArrayList<Table> getResults(){
+	public ArrayList<PPLTable> getResults(){
 		return mostUpdatedTables;
 	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public void setResults(TreeMap tmpResults) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public TreeMap getResults(String lala) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 	
 }

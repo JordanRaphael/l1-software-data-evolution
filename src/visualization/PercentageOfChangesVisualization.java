@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import javax.swing.Timer;
 
@@ -14,12 +15,12 @@ import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 
+import results.AssistantPercentageClassResults;
 import results.Results;
-import sqlSchema.Table;
 
 public class PercentageOfChangesVisualization implements Visualization {
 	
-	private ArrayList<Table> tables=new ArrayList<Table>();
+	private TreeMap<String, ArrayList<AssistantPercentageClassResults>> tables=new TreeMap<String, ArrayList<AssistantPercentageClassResults>>();
 	private Float[][] mo=null;
 	private Rotator rotator=null;
 	private ChartPanel chartPanel =null;
@@ -36,7 +37,7 @@ public class PercentageOfChangesVisualization implements Visualization {
 		@SuppressWarnings("unchecked")
 		public void draw(Results res) {
 			 	results=res;
-			 	tables=results.getResults();
+			 	tables=results.getResults("lala");
 			 
 			 
 			 	final PieDataset dataset = createDataset();
@@ -88,13 +89,22 @@ public class PercentageOfChangesVisualization implements Visualization {
 	    private PieDataset createDataset() {
 	        final DefaultPieDataset result = new DefaultPieDataset();
 	        
+	        String[] mapKeys = new String[tables.size()];
+			int pos2 = 0;
+			for (String key : tables.keySet()) {
+			    mapKeys[pos2++] = key;
+			}
+			
+	        
 	        for(int i=0; i<mo.length; i++){
 				
 	        	int l=(int)(Math.round(mo[i][0]));
 	        	
-					final double value = mo[i][1];
-					
-		            result.setValue("Table " + tables.get(l).getName()+"("+i+")", value);
+				final double value = mo[i][1];
+				
+				String pos3=mapKeys[l];
+				
+	            result.setValue("Table " +pos3+"("+i+")", value);
 				
 				
 			}

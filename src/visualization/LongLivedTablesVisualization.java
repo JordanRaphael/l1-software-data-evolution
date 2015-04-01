@@ -16,12 +16,12 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import data.pplSqlSchema.PPLTable;
 import results.Results;
-import sqlSchema.Table;
 
 public class LongLivedTablesVisualization implements Visualization {
 	
-	private ArrayList<Table> longLivedTables=new ArrayList<Table>();
+	private ArrayList<PPLTable> longLivedTables=new ArrayList<PPLTable>();
 	private ChartPanel chartPanel=null;
 	private Color color=new Color(000,191,255);
 	private Results results=null;

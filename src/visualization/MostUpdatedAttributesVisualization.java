@@ -17,8 +17,8 @@ import org.jfree.text.TextBlockAnchor;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.TextAnchor;
 
+import data.pplSqlSchema.PPLAttribute;
 import results.Results;
-import sqlSchema.Attribute;
 
 public class MostUpdatedAttributesVisualization implements Visualization {
 
@@ -51,7 +51,7 @@ public class MostUpdatedAttributesVisualization implements Visualization {
 	    @SuppressWarnings("unchecked")
 		public void draw(Results res){
 	    	results=res;
-	    	ArrayList<Attribute> attributes=results.getResults();
+	    	ArrayList<PPLAttribute> attributes=results.getResults();
 	   
 	    	
 	    	final DefaultCategoryDataset dataset = new DefaultCategoryDataset();

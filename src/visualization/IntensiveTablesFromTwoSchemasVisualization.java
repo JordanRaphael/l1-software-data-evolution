@@ -14,14 +14,14 @@ import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import data.pplSqlSchema.PPLTable;
 import results.Results;
-import sqlSchema.Table;
 
 public class IntensiveTablesFromTwoSchemasVisualization implements Visualization {
 	
 	
 	private ChartPanel chartPanel=null;
-	private ArrayList<Table> mostIntensiveTables=new ArrayList<Table>();
+	private ArrayList<PPLTable> mostIntensiveTables=new ArrayList<PPLTable>();
 	private Results results=null;
 
 	

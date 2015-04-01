@@ -1,39 +1,48 @@
 package algorithms;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
-import results.MostUpdatedTablesResults;
+import data.pplSqlSchema.PPLSchema;
+import data.pplSqlSchema.PPLTable;
 import results.Results;
-import sqlSchema.Schema;
-import sqlSchema.Table;
+import results.ResultsFactory;
 
 public class MostUpdatedTablesAlgo implements Algorithm {
 	
-	private ArrayList<Schema> AllSchemas=new ArrayList<Schema>();
+	private TreeMap<String,PPLSchema> allPPLSchemas=new TreeMap<String,PPLSchema>();
 	private int k=0;
 	private Results results=null;
+	private ArrayList<PPLTable> mostUpdatedTables=new ArrayList<PPLTable>();
+
 	
-	public MostUpdatedTablesAlgo(ArrayList<Schema> tmpAllSchemas, int tmpk){
+	public MostUpdatedTablesAlgo(TreeMap<String,PPLSchema> tmpAllSchemas, int tmpk){
 		
-		AllSchemas=tmpAllSchemas;
+		allPPLSchemas=tmpAllSchemas;
 		k=tmpk;
 		
 	}
 	
+//	public void setAll(TreeMap<String,PPLSchema> tmpAllSchemas, int tmpk){
+//		allPPLSchemas=tmpAllSchemas;
+//		k=tmpk;
+//		
+//	}
+	
 	public Results compute(){
 		
-		ArrayList<Table> mostUpdatedTables=new ArrayList<Table>();
 		ArrayList<String> tableNames=new ArrayList<String>();
 		
 		int found=0;
 		
-		for(int i=0; i<AllSchemas.size(); i++){
+		for (Map.Entry<String,PPLSchema> pplSc : allPPLSchemas.entrySet()) {
 			
-			Schema oneSchema=AllSchemas.get(i);
+			PPLSchema oneSchema=pplSc.getValue();
 			
 			for(int j=0; j<oneSchema.getTables().size(); j++){
 				
-				Table currentTable=oneSchema.getTableAt(j);
+				PPLTable currentTable=oneSchema.getTableAt(j);
 				String currentTableName=currentTable.getName();
 				
 				for(int k=0; k<tableNames.size(); k++){
@@ -50,14 +59,14 @@ public class MostUpdatedTablesAlgo implements Algorithm {
 					
 					tableNames.add(currentTableName);
 					mostUpdatedTables.add(currentTable);
-					currentTable=new Table();
+					currentTable=new PPLTable();
 					
 					
 				}
 				else if(found==1){
 					
 					found=0;
-					currentTable=new Table();
+					currentTable=new PPLTable();
 				
 				}
 				
@@ -70,8 +79,9 @@ public class MostUpdatedTablesAlgo implements Algorithm {
 		for(int i=mostUpdatedTables.size()-1; i>=k; i--){
 			mostUpdatedTables.remove(i);
 		}
-		
-		results=new MostUpdatedTablesResults();
+
+		ResultsFactory rf = new ResultsFactory("MostUpdatedTablesResults");
+		results=rf.createResult();
 		results.setResults(mostUpdatedTables);
 		
 		return results;
@@ -79,9 +89,9 @@ public class MostUpdatedTablesAlgo implements Algorithm {
 		
 	}
 
-	private ArrayList<Table> sortTablesByTotalChanges(ArrayList<Table> tmpMostUpdatedTables) {
+	private ArrayList<PPLTable> sortTablesByTotalChanges(ArrayList<PPLTable> tmpMostUpdatedTables) {
 		
-		ArrayList<Table> sortingTables=new ArrayList<Table>();
+		ArrayList<PPLTable> sortingTables=new ArrayList<PPLTable>();
 		
 		for(int i=0; i<tmpMostUpdatedTables.size(); i++){
 			
@@ -112,5 +122,12 @@ public class MostUpdatedTablesAlgo implements Algorithm {
 		
 		return sortingTables;
 	}
+
+	@Override
+	public void compute(String compute) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

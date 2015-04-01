@@ -1,12 +1,13 @@
 package results;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
-import sqlSchema.Table;
+import data.pplSqlSchema.PPLTable;
 
 public class IntensiveTablesFromTwoSchemasResults implements Results {
 	
-	private ArrayList<Table> mostIntensiveTables=new ArrayList<Table>();
+	private ArrayList<PPLTable> mostIntensiveTables=new ArrayList<PPLTable>();
 	
 	public IntensiveTablesFromTwoSchemasResults(){
 		
@@ -19,8 +20,26 @@ public class IntensiveTablesFromTwoSchemasResults implements Results {
 	
 	}
 	
-	public ArrayList<Table> getResults(){
+	public ArrayList<PPLTable> getResults(){
 		return mostIntensiveTables;
 	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public void setResults(TreeMap tmpResults) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public TreeMap getResults(String lala) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+	
 
 }
