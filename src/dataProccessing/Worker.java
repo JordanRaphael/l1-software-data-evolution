@@ -52,7 +52,7 @@ public class Worker {
 		
 		PPLTablesConstruction pplTables = new PPLTablesConstruction(allPPLSchemas);
 		pplTables.makeAllPPLTables();
-		TreeMap<String,PPLTable> allTables=pplTables.getAllPPLTables();
+		allTables=pplTables.getAllPPLTables();
 		
 		AtomicChangeConstruction atomicChangesC = new AtomicChangeConstruction(allTransitions);
 		atomicChangesC.makeAtomicChanges();

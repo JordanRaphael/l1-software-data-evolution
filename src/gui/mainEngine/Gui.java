@@ -1034,8 +1034,10 @@ public class Gui extends JFrame implements ActionListener{
 				table.constructColumns();
 				table.constructRows();
 				
-				FindCoChanges coChanges=new FindCoChanges(globalDataKeeper.getAllPPLSchemas(), globalDataKeeper.getAllPPLTransitions(), globalDataKeeper.getAllPPLTables(),project);
 				
+				
+				FindCoChanges coChanges=new FindCoChanges(globalDataKeeper.getAllPPLSchemas(), globalDataKeeper.getAllPPLTransitions(), globalDataKeeper.getAllPPLTables(),project);
+
 				coChanges.compute("computeAndExport");
 				
 				

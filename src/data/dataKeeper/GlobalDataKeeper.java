@@ -92,8 +92,8 @@ public class GlobalDataKeeper {
 	}
 	
 	private void setAllPPLTables(TreeMap<String,PPLTable> tmpAllTables){
-		
 		 allTables=tmpAllTables;
+
 		
 	}
 	

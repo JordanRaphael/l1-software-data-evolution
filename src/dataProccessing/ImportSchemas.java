@@ -17,11 +17,13 @@ import gr.uoi.cs.daintiness.hecate.sql.Schema;
 
 import gr.uoi.cs.daintiness.hecate.transitions.Deletion;
 import gr.uoi.cs.daintiness.hecate.transitions.Insersion;
+import gr.uoi.cs.daintiness.hecate.transitions.Transition;
 import gr.uoi.cs.daintiness.hecate.transitions.TransitionList;
 import gr.uoi.cs.daintiness.hecate.transitions.Transitions;
 import gr.uoi.cs.daintiness.hecate.transitions.Update;
 //import hecate.transitions.TransitionList;
 //import hecate.transitions.Transitions;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
