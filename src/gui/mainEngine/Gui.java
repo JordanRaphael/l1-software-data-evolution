@@ -57,6 +57,7 @@ import phaseAnalyzer.commons.PhaseExtractionParameters;
 import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
 import results.Results;
 import results.ResultsDataKeeper;
+import tableClustering.engine.TableClusteringMainEngine;
 import algorithms.Algorithm;
 import algorithms.FindCoChanges;
 import data.dataKeeper.GlobalDataKeeper;
@@ -979,6 +980,13 @@ public class Gui extends JFrame implements ActionListener{
 			            
 						PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(project.replace(".txt", ".csv"),timeWeight,changeWeight,preProcessingTime,preProcessingChange);
 	
+						Float b=new Float(0.3);
+						Float d=new Float(0.3);
+						Float c=new Float(0.3);
+
+						TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,b,d,c);
+						mainEngine2.extractClusters(4);
+
 						//for(int i=0; i<PhaseExtractionParameters.DATASET_AR.size(); i++){
 							
 						mainEngine.parseInput();		
