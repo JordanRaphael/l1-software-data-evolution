@@ -75,6 +75,8 @@ public class TableChangeConstruction {
 			
 			TableChange tmpTableChange = t.getValue();
 			allTables.get(t.getKey()).setTableChanges(tmpTableChange);
+			allTables.get(t.getKey()).setTotalChanges();
+
 				
 		}
 		

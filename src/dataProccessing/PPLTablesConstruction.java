@@ -70,7 +70,6 @@ public class PPLTablesConstruction {
 		
 		for (Map.Entry<String,PPLTable> pplTbl : allPPLTables.entrySet()) {
 			PPLTable oneTable=pplTbl.getValue();
-			System.out.println(oneTable.getName()+"\t"+oneTable.getBirth()+"\t"+oneTable.getDeath());
 		}
 		
 		
@@ -82,8 +81,10 @@ public class PPLTablesConstruction {
 		for (Map.Entry<String, TableChange> t : allTableChanges.entrySet()) {
 			
 			TableChange tmpTableChange = t.getValue();
-			
+						
 			allPPLTables.get(t.getKey()).setTableChanges(tmpTableChange);
+			
+
 				
 		}
 		

@@ -48,4 +48,17 @@ public class TableClusteringMainEngine {
 
 	}
 	
+	public void print(){
+		
+		String toPrint="";
+		
+		for(int i=0; i<allClusterCollectors.size(); i++){
+			ClusterCollector clusterCollector=allClusterCollectors.get(i);
+			toPrint=toPrint+clusterCollector.toString();
+			
+		}
+		
+		System.out.println(toPrint);
+	}
+	
 }

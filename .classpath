@@ -3,8 +3,8 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="libs/jfreechart-1.0.14/lib/jfreechart-1.0.14.jar"/>
-	<classpathentry kind="lib" path="/Users/comitech/Documents/Plutarch_Parallel_Lives/libs/ANTLR/antlr-runtime-4.4.jar"/>
+	<classpathentry kind="lib" path="E:/My Documents/GitHub/Plutarch_Parallel_Lives/libs/ANTLR/antlr-runtime-4.4.jar"/>
 	<classpathentry kind="lib" path="libs/jfreechart-1.0.14/lib/jcommon-1.0.17.jar"/>
-	<classpathentry kind="lib" path="/Users/comitech/Documents/Plutarch_Parallel_Lives/libs/Hecate.jar"/>
+	<classpathentry kind="lib" path="E:/My Documents/GitHub/Plutarch_Parallel_Lives/libs/Hecate.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

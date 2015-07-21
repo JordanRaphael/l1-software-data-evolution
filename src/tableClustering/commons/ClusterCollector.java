@@ -23,4 +23,15 @@ public class ClusterCollector {
 		this.clusters = clusters;
 	}
 	
+	public String toString(){
+		
+		String toReturn="";
+		for(int i=0; i<this.clusters.size();i++){
+			
+			toReturn=toReturn+this.clusters.get(i).toString();
+		}
+		
+		return toReturn;
+	}
+	
 }

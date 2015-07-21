@@ -984,9 +984,7 @@ public class Gui extends JFrame implements ActionListener{
 						Float d=new Float(0.3);
 						Float c=new Float(0.3);
 
-						TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,b,d,c);
-						mainEngine2.extractClusters(4);
-
+						
 						//for(int i=0; i<PhaseExtractionParameters.DATASET_AR.size(); i++){
 							
 						mainEngine.parseInput();		
@@ -1014,6 +1012,9 @@ public class Gui extends JFrame implements ActionListener{
 						}
 						
 						mainEngine.connectTransitionsWithPhases(globalDataKeeper);
+						TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,b,d,c);
+						mainEngine2.extractClusters(4);
+						mainEngine2.print();
 					}
 				}
 				else{

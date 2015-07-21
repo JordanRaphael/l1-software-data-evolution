@@ -19,7 +19,6 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 	public ClusterCollector extractAtMostKClusters(GlobalDataKeeper dataKeeper,
 			int numClusters, float birthWeight, float deathWeight, float changeWeight) {
 		
-		
 		ClusterCollector initSolution = new ClusterCollector();
 		this.init(dataKeeper, initSolution);
 		//System.out.println("init "+initSolution.getPhases().size());
@@ -32,6 +31,7 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 		currentSolution = this.newClusterCollector(initSolution, birthWeight, deathWeight, changeWeight);
 
 		while (currentSolution.getClusters().size() > numClusters){
+
 			currentSolution = this.newClusterCollector(currentSolution, birthWeight, deathWeight, changeWeight);
 		}
 		return currentSolution;
@@ -78,7 +78,7 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 	    //merge them in a new phase. Merge posI with its PREVIOUS (ATTN!!)
 		Cluster toMerge = oldClusters.get(posI-1);
 		Cluster newCluster = toMerge.mergeWithNextCluster(oldClusters.get(posI));
-
+		//System.out.println("HUE:"+newCluster.getBirth()+"\t"+newCluster.getDeath());
 		for(int i=0; i < posI-1; i++){
 			Cluster c = oldClusters.get(i);
 			newClusters.add(c);
@@ -104,10 +104,13 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 
 		
 		for (Map.Entry<String,PPLTable> pplTable : tables.entrySet()) {
-			Cluster c = new Cluster(pplTable.getValue().getBirthVersionID(),pplTable.getValue().getDeathVersionID(),pplTable.getValue().getTotalChanges());
+			Cluster c = new Cluster(pplTable.getValue().getBirthVersionID(),pplTable.getValue().getDeath(),pplTable.getValue().getDeathVersionID(),pplTable.getValue().getDeath(),pplTable.getValue().getTotalChanges());
+			c.addTable(pplTable.getValue());
 			clusterCollector.addCluster(c);
 			
 		}
+		
+		System.out.println("HUE:"+clusterCollector.getClusters().size());
 		return clusterCollector;
 	}
 

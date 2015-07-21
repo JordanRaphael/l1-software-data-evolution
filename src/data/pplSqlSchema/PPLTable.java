@@ -155,7 +155,12 @@ public class PPLTable {
 	}
 	
 	public void setTotalChanges(int tmpTotalChanges){
+				
 		totalChanges=tmpTotalChanges;
+	}
+	
+	public void setTotalChanges(){
+		totalChanges=tableChanges.getTableAtomicChanges().size();
 	}
 	
 	public void setChangesForChart(ArrayList<Integer> tmpChangesForChart){
