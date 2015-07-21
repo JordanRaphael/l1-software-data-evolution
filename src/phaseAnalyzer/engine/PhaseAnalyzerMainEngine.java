@@ -17,9 +17,9 @@ import phaseAnalyzer.parser.IParser;
 import phaseAnalyzer.parser.ParserFactory;
 import data.dataKeeper.GlobalDataKeeper;
 
-public class MainEngine {
+public class PhaseAnalyzerMainEngine {
 	
-	public MainEngine(String tmpDataset,Float tmpTimeWeight, Float tmpChangeWeight,
+	public PhaseAnalyzerMainEngine(String tmpDataset,Float tmpTimeWeight, Float tmpChangeWeight,
 														Boolean tmpPreProcessingTime,Boolean tmpPreProcessingChange){
 		
 		timeWeight=tmpTimeWeight;

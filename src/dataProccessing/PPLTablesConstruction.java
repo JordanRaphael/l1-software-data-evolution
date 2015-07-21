@@ -20,6 +20,8 @@ public class PPLTablesConstruction {
 	
 	public void makeAllPPLTables(){
 		
+		int versionID=0;
+		
 		for (Map.Entry<String,PPLSchema> pplSch : allPPLSchemas.entrySet()) {
 			
 			PPLSchema oneSchema = pplSch.getValue();			
@@ -30,6 +32,7 @@ public class PPLTablesConstruction {
 				
 				if(!allPPLTables.containsKey(oneTable.getName())){
 					oneTable.setBirth(oneSchema.getName());
+					oneTable.setBirthVersionID(versionID);
 					oneTable.setActive();
 					allPPLTables.put(oneTable.getName(),oneTable);
 					oneTable=new PPLTable();
@@ -54,11 +57,14 @@ public class PPLTablesConstruction {
 				
 				if(!found && pplTbl.getValue().getActive()){
 					pplTbl.getValue().setDeath(oneSchema.getName());
+					pplTbl.getValue().setDeathVersionID(versionID);
 					pplTbl.getValue().setActive();
 
 				}
 				
 			}
+			
+			versionID++;
 			
 		}
 		

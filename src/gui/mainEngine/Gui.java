@@ -54,7 +54,7 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.jfree.chart.ChartPanel;
 
 import phaseAnalyzer.commons.PhaseExtractionParameters;
-import phaseAnalyzer.engine.MainEngine;
+import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
 import results.Results;
 import results.ResultsDataKeeper;
 import algorithms.Algorithm;
@@ -977,7 +977,7 @@ public class Gui extends JFrame implements ActionListener{
 			            
 			            System.out.println(timeWeight+" "+changeWeight);
 			            
-						MainEngine mainEngine = new MainEngine(project.replace(".txt", ".csv"),timeWeight,changeWeight,preProcessingTime,preProcessingChange);
+						PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(project.replace(".txt", ".csv"),timeWeight,changeWeight,preProcessingTime,preProcessingChange);
 	
 						//for(int i=0; i<PhaseExtractionParameters.DATASET_AR.size(); i++){
 							

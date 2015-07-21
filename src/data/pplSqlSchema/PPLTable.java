@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.sun.org.apache.regexp.internal.recompile;
-
 import data.pplTransition.TableChange;
 
 public class PPLTable {
@@ -27,7 +25,9 @@ public class PPLTable {
 	private TreeMap<String, PPLAttribute> attrs;
 	private String name="";
 	private String birth=null;
+	private int birthVersionID;
 	private String death=null;
+	private int deathVersionID;
 	private boolean active=false;
 
 	
@@ -47,8 +47,16 @@ public class PPLTable {
 		this.birth=birth;
 	}
 	
+	public void setBirthVersionID(int birthID){
+		birthVersionID=birthID;
+	}
+	
 	public void setDeath(String death){
 		this.death=death;
+	}
+	
+	public void setDeathVersionID(int deathID){
+		deathVersionID=deathID;
 	}
 	
 	public void setActive(){
@@ -61,6 +69,14 @@ public class PPLTable {
 	
 	public String getBirth(){
 		return this.birth;
+	}
+	
+	public int getBirthVersionID(){
+		return birthVersionID;
+	}
+	
+	public int getDeathVersionID(){
+		return deathVersionID;
 	}
 	
 	public String getDeath(){
