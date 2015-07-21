@@ -1,0 +1,2 @@
+	WC:0.5 WT:0.5 PreProCh:OFF PreProTi:OFF	
+Atlas.csv	877.9365091323853	

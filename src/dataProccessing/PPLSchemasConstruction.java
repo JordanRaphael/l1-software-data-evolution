@@ -30,7 +30,6 @@ public class PPLSchemasConstruction {
 	
 	public void makePPLSchemas(){
 		
-		System.out.println("!!"+allSchemas.size());
 		
 		for(int i=0; i<allSchemas.size(); i++){
 			

@@ -8,6 +8,4 @@ public interface Algorithm {
 	
 	public void compute(String compute);
 	
-
-
 }

@@ -44,7 +44,6 @@ public class Worker {
 		ArrayList<Schema> allHecSchemas = filesToImportData.getAllHecSchemas();
 		ArrayList<TransitionList> allTransitions=filesToImportData.getAllTransitions();
 
-		System.out.println(allHecSchemas.size()+" "+allTransitions.size());
 		
 		PPLSchemasConstruction pplSchemas = new PPLSchemasConstruction(allHecSchemas);
 		pplSchemas.makePPLSchemas();

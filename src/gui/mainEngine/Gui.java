@@ -22,10 +22,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
@@ -47,7 +43,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
@@ -58,25 +53,13 @@ import javax.swing.table.DefaultTableCellRenderer;
 import org.antlr.v4.runtime.RecognitionException;
 import org.jfree.chart.ChartPanel;
 
-import results.AssistantPercentageClassResults;
 import results.Results;
 import results.ResultsDataKeeper;
-import results.ResultsFactory;
-import visualization.IntensiveTablesFromTwoSchemasVisualization;
-import visualization.LongLivedTablesVisualization;
-import visualization.MostUpdatedAttributesVisualization;
-import visualization.MostUpdatedTablesVisualization;
-import visualization.PercentageOfChangesVisualization;
-import visualization.PercentageOfChangesVisualization.Rotator;
-import visualization.Visualization;
 import algorithms.Algorithm;
 import algorithms.FindCoChanges;
-import algorithms.IntensiveTablesFromTwoSchemasAlgo;
-import algorithms.LongLivedTablesAlgo;
-import algorithms.MostUpdatedAttributesAlgo;
-import algorithms.MostUpdatedTablesAlgo;
-import algorithms.PercentageOfChangesAlgo;
+import commons.PhaseExtractionParameters;
 import data.dataKeeper.GlobalDataKeeper;
+import engine.MainEngine;
 
 
 public class Gui extends JFrame implements ActionListener{
@@ -95,21 +78,15 @@ public class Gui extends JFrame implements ActionListener{
 	private MyTableModel generalModel = null;
 	private JTable LifeTimeTable=null;
 	
-	private JButton buttonStop=null;
 	
 	private JLabel labelLongLivedTables=new JLabel();
 	private JLabel labelMostUpdatedTables=new JLabel();
 	private JLabel labelMostUpdatedAttributes=new JLabel();
 	private JLabel labelMostIntensiveTables=new JLabel();
-	private JLabel labelMostIntensiveInsersionsByPercentage=new JLabel();
-	private JLabel labelMostIntensiveUpdatesByPercentage=new JLabel();
-	private JLabel labelMostIntensiveDeletionsByPercentage=new JLabel();
 	
 	private JTextArea jTextAreaMostUpdatedAttributes=new JTextArea();
 	private JTextArea jTextAreaMostIntensiveTables=new JTextArea();
-	private JTextArea jTextAreaMostIntensiveInsersionsByPercentage=new JTextArea();
-	private JTextArea jTextAreaMostIntensiveUpdatesByPercentage=new JTextArea();
-	private JTextArea jTextAreaMostIntensiveDeletionsByPercentage=new JTextArea();
+	
 	
 	@SuppressWarnings("rawtypes")
 	private JList jListKLongLivedTables=new JList();
@@ -124,36 +101,12 @@ public class Gui extends JFrame implements ActionListener{
 	private JScrollPane jScrollPaneKMostUpdatedTables=null;
 	private JScrollPane jScrollPaneKMostUpdatedAttributes=null;
 	private JScrollPane jScrollPaneKMostIntensiveTables=null;
-	private JScrollPane jScrollPaneKMostIntensiveInsersionsByPercentage=null;
-	private JScrollPane jScrollPaneKMostIntensiveUpdatesByPercentage=null;
-	private JScrollPane jScrollPaneKMostIntensiveDeletionsByPercentage=null;
 	
-	//private ArrayList<Schema> AllSchemas=new ArrayList<Schema>();
-	//private TreeMap<String,PPLSchema> allPPLSchemas=new TreeMap<String,PPLSchema>();
-	//private ArrayList<TransitionList> allTransitions=new ArrayList<TransitionList>();
-	//private ArrayList<PPLSchema> levelizedSchemas=new ArrayList<PPLSchema>();
-	//private ArrayList<TransitionList> levelizedTransitions=new ArrayList<TransitionList>();
-	//private ArrayList<PPLTable> longLivedTables=new ArrayList<PPLTable>();
-	//private ArrayList<PPLTable> mostUpdatedTables=new ArrayList<PPLTable>();
-	//private ArrayList<PPLTable> mostIntensiveTables=new ArrayList<PPLTable>();
-	//private ArrayList<PPLTable> assistantList=new ArrayList<PPLTable>();
-	//private ArrayList<PPLTable> assistantListLineChart=new ArrayList<PPLTable>();
-	//private TreeMap<String,ArrayList<AssistantPercentageClassResults>> percentageOfChangesAboutTables=new TreeMap<String,ArrayList<AssistantPercentageClassResults>>();
-	//private ArrayList<PPLAttribute> mostUpdatedAttributes=new ArrayList<PPLAttribute>();
-	//private TreeMap<String,PPLTable> allTables=new TreeMap<String,PPLTable>();
-	//private TreeMap<String,PPLTransition> allPPLTransitions = new TreeMap<String,PPLTransition>();
+	
 	private ArrayList<Integer> selectedRows=new ArrayList<Integer>();
 	private GlobalDataKeeper globalDataKeeper=null;
 	private ResultsDataKeeper resultsDataKeeper = null;
 
-	
-	private Rotator rotator=null;
-	private Rotator rotator1=null;
-	private Rotator rotator2=null;
-	
-	private Visualization chart=null;
-	private Visualization chart1=null;
-	private Visualization l=null;
 	private ChartPanel chartPanel=null;
 	private ChartPanel chartPanelPie=null;
 	private ChartPanel chartPanelPie2=null;
@@ -165,11 +118,9 @@ public class Gui extends JFrame implements ActionListener{
 	private String project=null;
 	
 	private Float[][] mostIntensiveInsersions=null;
-	private Float[][] mostIntensiveUpdates=null;
-	private Float[][] mostIntensiveDeletions=null;
+	
 	
 	private Integer[] segmentSize=new Integer[3];
-	private int rotation=0;
 	
 	private Results resultsLLTR=null;
 	private Results resultsPOCR=null;
@@ -184,6 +135,12 @@ public class Gui extends JFrame implements ActionListener{
 	private Algorithm changes=null;
 	
 	private boolean levelizedTable;
+	
+	private Float timeWeight=null;
+	private Float changeWeight=null;
+	private Integer numberOfPhases=null;
+	private Boolean preProcessingTime=null;
+	private Boolean preProcessingChange=null;
 	
 	
 	/**
@@ -230,8 +187,11 @@ public class Gui extends JFrame implements ActionListener{
 					
 		            File file = fcOpen1.getSelectedFile();
 		            System.out.println(file.toString());
-		            project=file.toString();
+		            project=file.getName();
 		            fileName=file.toString();
+		            System.out.println("!!"+project);
+		          
+
 				
 				}
 				else{
@@ -446,572 +406,519 @@ public class Gui extends JFrame implements ActionListener{
 		});
 		mnTable.add(mntmSwapRows);
 		
-		JMenu mnStatistics = new JMenu("Statistics");
-		menuBar.add(mnStatistics);
 		
-		JMenuItem mntmShowLongLivedTables = new JMenuItem("Show K Long Lived Tables");
-		mntmShowLongLivedTables.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(!(currentProject==null)){
-					//assistantList=new ArrayList<PPLTable>();
-					//longLivedTables=new ArrayList<PPLTable>();
-					
-					final JDialog  insertKDialog=new JDialog();
-					insertKDialog.setBounds(400,350,200, 200);
-					insertKDialog.getContentPane().setLayout(null);
-					
-					JLabel  label=new JLabel("Insert K");
-					label.setBounds(67, 10, 80, 30);
-					insertKDialog.getContentPane().add(label);
-					
-					final JTextField insertKTextField=new JTextField("");
-					insertKTextField.setBounds(67, 55, 40, 20);
-					insertKDialog.getContentPane().add(insertKTextField);
-					
-					JButton insertKOK=new JButton("OK");
-					insertKOK.setBounds(62,120 , 60, 20);
-					
-					insertKOK.addActionListener(new ActionListener() {
-						@SuppressWarnings("unchecked")
-						public void actionPerformed(ActionEvent arg0) {
-							int kNumber;
-							
-							String kString=insertKTextField.getText();
-							
-							if(kString.equals("")){
-								JOptionPane.showMessageDialog(null, "K Cannot Be Empty");
-								return;
-							}
-							try{
-				                kNumber=Integer.parseInt(kString);
-				            } catch(NumberFormatException nfe) {
-				                JOptionPane.showMessageDialog(null, "K must be numeric");
-				                return;
-				            }
-							
-							insertKDialog.setVisible(false);
-							
-							tabbedPane.setSelectedIndex(1);
-							
-							finalLongLivedTables=new LongLivedTablesAlgo(globalDataKeeper.getAllPPLSchemas(),kNumber);
-							
-							
-							ResultsFactory rf = new ResultsFactory("LongLivedTablesResults");
-							resultsLLTR=rf.createResult();
-							resultsLLTR=finalLongLivedTables.compute();
-							resultsDataKeeper.setLongLivedTables(resultsLLTR.getResults());
-							
-						
-							showKLongLivedTables();
-							
-							if(resultsDataKeeper.getLongLivedTables().size()==0){
-								JOptionPane.showMessageDialog(null, "Calculate K Long Lived Tables first");
-								return;
-							}
-							
-							
-							
-							chart=new LongLivedTablesVisualization();
-							chart.draw(resultsLLTR);
-							chartPanel=chart.getChart();
-							
-							
-							
-							statistics.add(chartPanel);
-							statistics.revalidate();
-							statistics.repaint();
-							
-						
-						}
-	
-						
-					});
-					insertKDialog.getContentPane().add(insertKOK);
-					
-					
-					insertKDialog.setVisible(true);
-				
-				}
-				else{
-					JOptionPane.showMessageDialog(null, "Select a Project first");
-					return;
-				}
-				
-				
-			}
-		});
-		mnStatistics.add(mntmShowLongLivedTables);
-		
-		JMenuItem mntmShowKMostUpdatedTable = new JMenuItem("Show K Most Updated Tables");
-		mntmShowKMostUpdatedTable.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(!(currentProject==null)){
-					final JDialog  insertKDialog=new JDialog();
-					insertKDialog.setBounds(400,350,200, 200);
-					insertKDialog.getContentPane().setLayout(null);
-					
-					JLabel  label=new JLabel("Insert K");
-					label.setBounds(67, 10, 80, 30);
-					insertKDialog.getContentPane().add(label);
-					
-					final JTextField insertKTextField=new JTextField("");
-					insertKTextField.setBounds(67, 55, 40, 20);
-					insertKDialog.getContentPane().add(insertKTextField);
-					
-					JButton insertKOK=new JButton("OK");
-					insertKOK.setBounds(62,120 , 60, 20);
-					
-					insertKOK.addActionListener(new ActionListener() {
-						@SuppressWarnings("unchecked")
-						public void actionPerformed(ActionEvent arg0) {
-							int kNumber;
-							String kString=insertKTextField.getText();
-							
-							if(kString.equals("")){
-								JOptionPane.showMessageDialog(null, "K Cannot Be Empty");
-								return;
-							}
-							try{
-				                kNumber=Integer.parseInt(kString);
-				            } catch(NumberFormatException nfe) {
-				                JOptionPane.showMessageDialog(null, "K must be numeric");
-				                return;
-				            }
-							
-							insertKDialog.setVisible(false);
-							
-							TableConstruction table=new TableConstruction(globalDataKeeper.getAllPPLSchemas(), globalDataKeeper.getAllPPLTransitions());
-							table.constructColumns();
-							table.constructRows();
-							
-							tabbedPane.setSelectedIndex(1);
-							
-							finalMostUpdatedTables=new MostUpdatedTablesAlgo(globalDataKeeper.getAllPPLSchemas(), kNumber);
-							
-							ResultsFactory rf = new ResultsFactory("MostUpdatedTablesResults");
-							resultsMUTR=rf.createResult();
-							resultsMUTR=finalMostUpdatedTables.compute();
-							
-							resultsDataKeeper.setMostUpdatedTables(resultsMUTR.getResults());
-							
-							showKMostUpdatedTables();
-							
-							if(resultsDataKeeper.getMostUpdatedTables().size()==0){
-								JOptionPane.showMessageDialog(null, "Calculate K Most Updated Tables first");
-								return;
-							}
-							
-							
-							try {
-								l = new MostUpdatedTablesVisualization(globalDataKeeper.getAllPPLTransitions());
-								l.draw(resultsMUTR);
-								//l.calculateChangesforTheseVersions();
-								
-								chartPanel=l.getChart();
-								
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-							
-							JLabel searchVersion=new JLabel("Search Version With Version ID");
-							searchVersion.setBounds(10, 320, 180, 30);
-							final JTextField id=new JTextField();
-							id.setBounds(48, 360, 50, 20);
-							JButton search=new JButton("Search");
-							search.setBounds(30, 405, 80, 30);
-							search.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent e) {
-									int idNumber;
-									String k=id.getText();
-									try{
-										idNumber=Integer.parseInt(k);
-										
-									}
-									catch(Exception ex){
-										JOptionPane.showMessageDialog(null,"id must be Numeric !!!");
-										return;
-									}
-									
-									JOptionPane.showMessageDialog(null,globalDataKeeper.getAllPPLSchemas().get(idNumber).getName() );
-									
-								}
-						
-							});
-							
-							statistics.add(search);
-							statistics.add(searchVersion);
-							statistics.add(id);
-							statistics.add(chartPanel);
-							statistics.revalidate();
-							statistics.repaint();
-						
-						}
-	
-						
-					});
-					insertKDialog.getContentPane().add(insertKOK);
-	
-					insertKDialog.setVisible(true);
-				}
-				else{
-					JOptionPane.showMessageDialog(null, "Select a Project first");
-					return;
-				}
-				
-			}
-		});
-		mnStatistics.add(mntmShowKMostUpdatedTable);
-		
-		JMenuItem mntmShowKMostUpdatedAttributes = new JMenuItem("Show K Most Updated Attributes");
-		mntmShowKMostUpdatedAttributes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(!(currentProject==null)){
-					final JDialog  insertKDialog=new JDialog();
-					insertKDialog.setBounds(400,350,200, 200);
-					insertKDialog.getContentPane().setLayout(null);
-					
-					JLabel  label=new JLabel("Insert K");
-					label.setBounds(67, 10, 80, 30);
-					insertKDialog.getContentPane().add(label);
-					
-					final JTextField insertKTextField=new JTextField("");
-					insertKTextField.setBounds(67, 55, 40, 20);
-					insertKDialog.getContentPane().add(insertKTextField);
-					
-					JButton insertKOK=new JButton("OK");
-					insertKOK.setBounds(62,120 , 60, 20);
-					
-					insertKOK.addActionListener(new ActionListener() {
-						@SuppressWarnings("unchecked")
-						public void actionPerformed(ActionEvent arg0) {
-							int kNumber;
-							String kString=insertKTextField.getText();
-							
-							if(kString.equals("")){
-								JOptionPane.showMessageDialog(null, "K Cannot Be Empty");
-								return;
-							}
-							try{
-				                kNumber=Integer.parseInt(kString);
-				            } catch(NumberFormatException nfe) {
-				                JOptionPane.showMessageDialog(null, "K must be numeric");
-				                return;
-				            }
-							
-							insertKDialog.setVisible(false);
-							
-							tabbedPane.setSelectedIndex(1);
-							
-							finalMostUpdatedAttributes=new MostUpdatedAttributesAlgo(globalDataKeeper.getAllPPLSchemas(), globalDataKeeper.getAllPPLTransitions(),kNumber);
-							
-							ResultsFactory rf = new ResultsFactory("MostUpdatedAttributesResults");
-							resultsMUAR= rf.createResult();
-							resultsMUAR=finalMostUpdatedAttributes.compute();
-							
-							resultsDataKeeper.setMostUpdatedAttributes(resultsMUAR.getResults());
-							
-						
-							showKMostUpdatedAttributes();
-							
-							if(resultsDataKeeper.getMostUpdatedAttributes().size()==0){
-								JOptionPane.showMessageDialog(null, "Calculate K Most Updated Attributes first");
-								return;
-							}
-							
-							/*for(int i=0;i<7;i++){
-								assistantList.add(elderTables.get(i));
-							}*/
-							
-							chart1=new MostUpdatedAttributesVisualization();
-							chart1.draw(resultsMUAR);
-							chartPanel=chart1.getChart();
-							
-							
-							
-							statistics.add(chartPanel);
-							statistics.revalidate();
-							statistics.repaint();
-						
-						}
-	
-						
-					});
-					insertKDialog.getContentPane().add(insertKOK);
-	
-					insertKDialog.setVisible(true);
-				}
-				else{
-					JOptionPane.showMessageDialog(null, "Select a Project first");
-					return;
-				}
-			}
-		});
-		mnStatistics.add(mntmShowKMostUpdatedAttributes);
-		
-		JMenuItem mntmShowKMost = new JMenuItem("Show K Most Intensive Tables Between Two Schemas");
-		mntmShowKMost.addActionListener(new ActionListener() {
-			@SuppressWarnings({ "rawtypes", "unchecked" })
-			public void actionPerformed(ActionEvent arg0) {
-				
-				if(currentProject==null){
-					JOptionPane.showMessageDialog(null, "Select a Project first");
-					return;
-					
-				}
-				
-				final JDialog  insertKDialog=new JDialog();
-				insertKDialog.setBounds(400,350,400, 200);
-				insertKDialog.getContentPane().setLayout(null);
-				
-				JLabel  label=new JLabel("From Version");
-				label.setBounds(10, 0, 80, 30);
-				insertKDialog.getContentPane().add(label);
-				
-				String[] allSchemasNames=new String[globalDataKeeper.getAllPPLSchemas().size()];
-				Set<String> alSchNa = globalDataKeeper.getAllPPLSchemas().keySet();
-				int howMany=0;
-				for(String s:alSchNa){
-					allSchemasNames[howMany]=s;
-					howMany++;
-
-				}
-				
-				
-				
-				final JComboBox jComboBoxAllSchemas=new JComboBox(allSchemasNames);
-				jComboBoxAllSchemas.setBounds(10,30,180,30);
-				jComboBoxAllSchemas.setSelectedIndex(0);
-				
-				insertKDialog.getContentPane().add(jComboBoxAllSchemas);
-				
-				JLabel  label2=new JLabel("To Version");
-				label2.setBounds(10, 60, 80, 30);
-				insertKDialog.getContentPane().add(label2);
-				
-				
-				final JComboBox jComboBoxAllSchemas2=new JComboBox(allSchemasNames);
-				jComboBoxAllSchemas2.setBounds(10,90,180,30);
-				jComboBoxAllSchemas2.setSelectedIndex(0);
-				
-				insertKDialog.getContentPane().add(jComboBoxAllSchemas2);
-				
-				
-				JLabel  label3=new JLabel("Insert K");
-				label3.setBounds(250, 10, 80, 30);
-				insertKDialog.getContentPane().add(label3);
-				
-				final JTextField insertKTextField=new JTextField("");
-				insertKTextField.setBounds(250, 40, 40, 20);
-				insertKDialog.getContentPane().add(insertKTextField);
-				
-				JButton insertKOK=new JButton("OK");
-				insertKOK.setBounds(250,90 , 60, 20);
-				
-				insertKOK.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						int kNumber;
-						String kString=insertKTextField.getText();
-						
-						if(kString.equals("")){
-							JOptionPane.showMessageDialog(null, "K Cannot Be Empty");
-							return;
-						}
-						try{
-			                kNumber=Integer.parseInt(kString);
-			            } catch(NumberFormatException nfe) {
-			                JOptionPane.showMessageDialog(null, "K must be numeric");
-			                return;
-			            }
-						
-						if(jComboBoxAllSchemas.getSelectedItem()==null || jComboBoxAllSchemas2.getSelectedItem()==null){
-							JOptionPane.showMessageDialog(null, " You must select both FROM and TO versions ");
-							return;
-						}
-						
-						
-						String fromVersion=(String)jComboBoxAllSchemas.getSelectedItem();
-						String toVersion=(String)jComboBoxAllSchemas2.getSelectedItem();
-						
-						//PPLSchema firstSchema=null;
-						//PPLSchema secondSchema=null;
-						
-						//firstSchema=globalDataKeeper.getAllPPLSchemas().get(fromVersion);
-						//secondSchema=globalDataKeeper.getAllPPLSchemas().get(toVersion);
-							
-						insertKDialog.setVisible(false);
-						
-						tabbedPane.setSelectedIndex(1);
-						System.out.println("!!!!"+fromVersion+" "+toVersion);
-						
-						GlobalDataKeeper dataKeeperDiff = new GlobalDataKeeper(fromVersion,toVersion,currentProjectDataFolder);
-						dataKeeperDiff.setDataForTwoVersions();
-				
-//						DiffFromTwoSchemas diffForTwoSch= new DiffFromTwoSchemas(fromVersion, toVersion, currentProjectDataFolder);
-//						try {
-//							diffForTwoSch.findDifferenciesFromTwoSchemas();
-//						} catch (IOException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
+//		
+//		
+//		JMenu mnStatistics = new JMenu("Statistics");
+//		menuBar.add(mnStatistics);
+//		
+//		JMenuItem mntmShowLongLivedTables = new JMenuItem("Show K Long Lived Tables");
+//		mntmShowLongLivedTables.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//				if(!(currentProject==null)){
+//					//assistantList=new ArrayList<PPLTable>();
+//					//longLivedTables=new ArrayList<PPLTable>();
+//					
+//					final JDialog  insertKDialog=new JDialog();
+//					insertKDialog.setBounds(400,350,200, 200);
+//					insertKDialog.getContentPane().setLayout(null);
+//					
+//					JLabel  label=new JLabel("Insert K");
+//					label.setBounds(67, 10, 80, 30);
+//					insertKDialog.getContentPane().add(label);
+//					
+//					final JTextField insertKTextField=new JTextField("");
+//					insertKTextField.setBounds(67, 55, 40, 20);
+//					insertKDialog.getContentPane().add(insertKTextField);
+//					
+//					JButton insertKOK=new JButton("OK");
+//					insertKOK.setBounds(62,120 , 60, 20);
+//					
+//					insertKOK.addActionListener(new ActionListener() {
+//						@SuppressWarnings("unchecked")
+//						public void actionPerformed(ActionEvent arg0) {
+//							int kNumber;
+//							
+//							String kString=insertKTextField.getText();
+//							
+//							if(kString.equals("")){
+//								JOptionPane.showMessageDialog(null, "K Cannot Be Empty");
+//								return;
+//							}
+//							try{
+//				                kNumber=Integer.parseInt(kString);
+//				            } catch(NumberFormatException nfe) {
+//				                JOptionPane.showMessageDialog(null, "K must be numeric");
+//				                return;
+//				            }
+//							
+//							insertKDialog.setVisible(false);
+//							
+//							tabbedPane.setSelectedIndex(1);
+//							
+//							finalLongLivedTables=new LongLivedTablesAlgo(globalDataKeeper.getAllPPLSchemas(),kNumber);
+//							
+//							
+//							ResultsFactory rf = new ResultsFactory("LongLivedTablesResults");
+//							resultsLLTR=rf.createResult();
+//							resultsLLTR=finalLongLivedTables.compute();
+//							resultsDataKeeper.setLongLivedTables(resultsLLTR.getResults());
+//							
+//						
+//							showKLongLivedTables();
+//							
+//							if(resultsDataKeeper.getLongLivedTables().size()==0){
+//								JOptionPane.showMessageDialog(null, "Calculate K Long Lived Tables first");
+//								return;
+//							}
+//							
+//							
+//							statistics.add(chartPanel);
+//							statistics.revalidate();
+//							statistics.repaint();
+//							
+//						
 //						}
-						//TreeMap<String,TableChange> tbChForTwoSch=dataKeeperDiff.getTmpTableChanges();
-						IntensiveTablesFromTwoSchemasAlgo  finalmostIntensiveTables=new IntensiveTablesFromTwoSchemasAlgo(globalDataKeeper.getAllPPLSchemas().get(fromVersion),
-								globalDataKeeper.getAllPPLSchemas().get(toVersion),dataKeeperDiff.getTmpTableChanges(), kNumber);
-					
-						
-						intensiveTables=finalmostIntensiveTables;
-						
-						ResultsFactory rf = new ResultsFactory("IntensiveTablesFromTwoSchemaResults");
-						resultsITFTR=rf.createResult();
-						resultsITFTR=intensiveTables.compute();
-						
-						resultsDataKeeper.setMostIntensiveTables(resultsITFTR.getResults());
-						
-						
-					
-						showKMostIntensiveTablesBetweenTwoSchemas(fromVersion,toVersion);
-						
-						if(resultsDataKeeper.getMostIntensiveTables().size()==0){
-							JOptionPane.showMessageDialog(null, "Calculate K Most Intensive Tables first");
-							return;
-						}
-						
-						Visualization k=new IntensiveTablesFromTwoSchemasVisualization();
-						k.draw(resultsITFTR);
-						chartPanel=k.getChart();
-						
-						statistics.add(chartPanel);
-						//statistics.add(chartPanelPie);
-						//statistics.add(chartPanelPie2);
-						statistics.revalidate();
-						statistics.repaint();
-					
-					}
-
-					
-				});
-				insertKDialog.getContentPane().add(insertKOK);
-				
-				
-				
-				insertKDialog.setVisible(true);
-				
-			}
-		});
-		mnStatistics.add(mntmShowKMost);
-		
-		JMenuItem mntmShowKMost_1 = new JMenuItem("Show K Most Intensive Changes by Percentage");
-		mntmShowKMost_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(currentProject==null){
-					JOptionPane.showMessageDialog(null, "Select a Project first");
-					return;
-					
-				}
-				final JDialog  insertKDialog=new JDialog();
-				insertKDialog.setBounds(400,350,200, 200);
-				insertKDialog.getContentPane().setLayout(null);
-				
-				JLabel  label=new JLabel("Insert K");
-				label.setBounds(67, 10, 80, 30);
-				insertKDialog.getContentPane().add(label);
-				
-				final JTextField insertKTextField=new JTextField("");
-				insertKTextField.setBounds(67, 55, 40, 20);
-				insertKDialog.getContentPane().add(insertKTextField);
-				
-				JButton insertKOK=new JButton("OK");
-				insertKOK.setBounds(62,120 , 60, 20);
-				
-				insertKOK.addActionListener(new ActionListener() {
-					@SuppressWarnings("unchecked")
-					public void actionPerformed(ActionEvent arg0) {
-						int kNumber;
-						String kString=insertKTextField.getText();
-						
-						if(kString.equals("")){
-							JOptionPane.showMessageDialog(null, "K Cannot Be Empty");
-							return;
-						}
-						try{
-			                kNumber=Integer.parseInt(kString);
-			            } catch(NumberFormatException nfe) {
-			                JOptionPane.showMessageDialog(null, "K must be numeric");
-			                return;
-			            }
-						
-						insertKDialog.setVisible(false);
-						
-						tabbedPane.setSelectedIndex(1);
-						
-						changes=new PercentageOfChangesAlgo(globalDataKeeper.getAllPPLSchemas(),globalDataKeeper.getAllPPLTransitions());
-						
-						
-						ResultsFactory rf = new ResultsFactory("");
-						resultsPOCR=rf.createResult();
-						resultsPOCR=changes.compute();
-						
-						resultsDataKeeper.setPercentageOfChangesAboutTables(resultsPOCR.getResults("lala"));
-					
-						showKMostIntensiveChanges(kNumber);
-						
-						if(mostIntensiveInsersions==null){
-							JOptionPane.showMessageDialog(null, "Calculate K Most Intensive Changes by percentage first");
-							return;
-						}
-						
-						
-						
-						Visualization pie=new PercentageOfChangesVisualization(mostIntensiveInsersions,"Insersions");
-						
-						PercentageOfChangesVisualization tmp=(PercentageOfChangesVisualization) pie;
-						
-						pie.draw(resultsPOCR);
-						chartPanel=pie.getChart();
-						
-						rotator=tmp.getRotator();
-						
-						pie=new PercentageOfChangesVisualization(mostIntensiveUpdates,"Updates");
-						
-						tmp=(PercentageOfChangesVisualization) pie;
-						pie.draw(resultsPOCR);
-
-						chartPanelPie=pie.getChart();
-						
-						rotator1=tmp.getRotator();
-						
-						pie=new PercentageOfChangesVisualization(mostIntensiveDeletions,"Deletions");
-						
-						tmp=(PercentageOfChangesVisualization) pie;
-						
-						pie.draw(resultsPOCR);
-
-						chartPanelPie2=pie.getChart();
-						
-						rotator2=tmp.getRotator();
-						
-						
-						rotation=1;
-						
-						statistics.add(chartPanel);
-						statistics.add(chartPanelPie);
-						statistics.add(chartPanelPie2);
-						statistics.revalidate();
-						statistics.repaint();
-					
-					}
-
-					
-				});
-				insertKDialog.getContentPane().add(insertKOK);
-
-				insertKDialog.setVisible(true);
-				
-				
-			}
-		});
-		mnStatistics.add(mntmShowKMost_1);
-		
+//	
+//						
+//					});
+//					insertKDialog.getContentPane().add(insertKOK);
+//					
+//					
+//					insertKDialog.setVisible(true);
+//				
+//				}
+//				else{
+//					JOptionPane.showMessageDialog(null, "Select a Project first");
+//					return;
+//				}
+//				
+//				
+//			}
+//		});
+//		mnStatistics.add(mntmShowLongLivedTables);
+//		
+//		JMenuItem mntmShowKMostUpdatedTable = new JMenuItem("Show K Most Updated Tables");
+//		mntmShowKMostUpdatedTable.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//				if(!(currentProject==null)){
+//					final JDialog  insertKDialog=new JDialog();
+//					insertKDialog.setBounds(400,350,200, 200);
+//					insertKDialog.getContentPane().setLayout(null);
+//					
+//					JLabel  label=new JLabel("Insert K");
+//					label.setBounds(67, 10, 80, 30);
+//					insertKDialog.getContentPane().add(label);
+//					
+//					final JTextField insertKTextField=new JTextField("");
+//					insertKTextField.setBounds(67, 55, 40, 20);
+//					insertKDialog.getContentPane().add(insertKTextField);
+//					
+//					JButton insertKOK=new JButton("OK");
+//					insertKOK.setBounds(62,120 , 60, 20);
+//					
+//					insertKOK.addActionListener(new ActionListener() {
+//						@SuppressWarnings("unchecked")
+//						public void actionPerformed(ActionEvent arg0) {
+//							int kNumber;
+//							String kString=insertKTextField.getText();
+//							
+//							if(kString.equals("")){
+//								JOptionPane.showMessageDialog(null, "K Cannot Be Empty");
+//								return;
+//							}
+//							try{
+//				                kNumber=Integer.parseInt(kString);
+//				            } catch(NumberFormatException nfe) {
+//				                JOptionPane.showMessageDialog(null, "K must be numeric");
+//				                return;
+//				            }
+//							
+//							insertKDialog.setVisible(false);
+//							
+//							TableConstruction table=new TableConstruction(globalDataKeeper.getAllPPLSchemas(), globalDataKeeper.getAllPPLTransitions());
+//							table.constructColumns();
+//							table.constructRows();
+//							
+//							tabbedPane.setSelectedIndex(1);
+//							
+//							finalMostUpdatedTables=new MostUpdatedTablesAlgo(globalDataKeeper.getAllPPLSchemas(), kNumber);
+//							
+//							ResultsFactory rf = new ResultsFactory("MostUpdatedTablesResults");
+//							resultsMUTR=rf.createResult();
+//							resultsMUTR=finalMostUpdatedTables.compute();
+//							
+//							resultsDataKeeper.setMostUpdatedTables(resultsMUTR.getResults());
+//							
+//							showKMostUpdatedTables();
+//							
+//							if(resultsDataKeeper.getMostUpdatedTables().size()==0){
+//								JOptionPane.showMessageDialog(null, "Calculate K Most Updated Tables first");
+//								return;
+//							}
+//							
+//							
+//							try {
+//								
+//								
+//							} catch (Exception e1) {
+//								// TODO Auto-generated catch block
+//								e1.printStackTrace();
+//							}
+//							
+//							JLabel searchVersion=new JLabel("Search Version With Version ID");
+//							searchVersion.setBounds(10, 320, 180, 30);
+//							final JTextField id=new JTextField();
+//							id.setBounds(48, 360, 50, 20);
+//							JButton search=new JButton("Search");
+//							search.setBounds(30, 405, 80, 30);
+//							search.addActionListener(new ActionListener() {
+//								public void actionPerformed(ActionEvent e) {
+//									int idNumber;
+//									String k=id.getText();
+//									try{
+//										idNumber=Integer.parseInt(k);
+//										
+//									}
+//									catch(Exception ex){
+//										JOptionPane.showMessageDialog(null,"id must be Numeric !!!");
+//										return;
+//									}
+//									
+//									JOptionPane.showMessageDialog(null,globalDataKeeper.getAllPPLSchemas().get(idNumber).getName() );
+//									
+//								}
+//						
+//							});
+//							
+//							statistics.add(search);
+//							statistics.add(searchVersion);
+//							statistics.add(id);
+//							statistics.add(chartPanel);
+//							statistics.revalidate();
+//							statistics.repaint();
+//						
+//						}
+//	
+//						
+//					});
+//					insertKDialog.getContentPane().add(insertKOK);
+//	
+//					insertKDialog.setVisible(true);
+//				}
+//				else{
+//					JOptionPane.showMessageDialog(null, "Select a Project first");
+//					return;
+//				}
+//				
+//			}
+//		});
+//		mnStatistics.add(mntmShowKMostUpdatedTable);
+//		
+//		JMenuItem mntmShowKMostUpdatedAttributes = new JMenuItem("Show K Most Updated Attributes");
+//		mntmShowKMostUpdatedAttributes.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//				if(!(currentProject==null)){
+//					final JDialog  insertKDialog=new JDialog();
+//					insertKDialog.setBounds(400,350,200, 200);
+//					insertKDialog.getContentPane().setLayout(null);
+//					
+//					JLabel  label=new JLabel("Insert K");
+//					label.setBounds(67, 10, 80, 30);
+//					insertKDialog.getContentPane().add(label);
+//					
+//					final JTextField insertKTextField=new JTextField("");
+//					insertKTextField.setBounds(67, 55, 40, 20);
+//					insertKDialog.getContentPane().add(insertKTextField);
+//					
+//					JButton insertKOK=new JButton("OK");
+//					insertKOK.setBounds(62,120 , 60, 20);
+//					
+//					insertKOK.addActionListener(new ActionListener() {
+//						@SuppressWarnings("unchecked")
+//						public void actionPerformed(ActionEvent arg0) {
+//							int kNumber;
+//							String kString=insertKTextField.getText();
+//							
+//							if(kString.equals("")){
+//								JOptionPane.showMessageDialog(null, "K Cannot Be Empty");
+//								return;
+//							}
+//							try{
+//				                kNumber=Integer.parseInt(kString);
+//				            } catch(NumberFormatException nfe) {
+//				                JOptionPane.showMessageDialog(null, "K must be numeric");
+//				                return;
+//				            }
+//							
+//							insertKDialog.setVisible(false);
+//							
+//							tabbedPane.setSelectedIndex(1);
+//							
+//							finalMostUpdatedAttributes=new MostUpdatedAttributesAlgo(globalDataKeeper.getAllPPLSchemas(), globalDataKeeper.getAllPPLTransitions(),kNumber);
+//							
+//							ResultsFactory rf = new ResultsFactory("MostUpdatedAttributesResults");
+//							resultsMUAR= rf.createResult();
+//							resultsMUAR=finalMostUpdatedAttributes.compute();
+//							
+//							resultsDataKeeper.setMostUpdatedAttributes(resultsMUAR.getResults());
+//							
+//						
+//							showKMostUpdatedAttributes();
+//							
+//							if(resultsDataKeeper.getMostUpdatedAttributes().size()==0){
+//								JOptionPane.showMessageDialog(null, "Calculate K Most Updated Attributes first");
+//								return;
+//							}
+//							
+//							/*for(int i=0;i<7;i++){
+//								assistantList.add(elderTables.get(i));
+//							}*/
+//							
+//							statistics.add(chartPanel);
+//							statistics.revalidate();
+//							statistics.repaint();
+//						
+//						}
+//	
+//						
+//					});
+//					insertKDialog.getContentPane().add(insertKOK);
+//	
+//					insertKDialog.setVisible(true);
+//				}
+//				else{
+//					JOptionPane.showMessageDialog(null, "Select a Project first");
+//					return;
+//				}
+//			}
+//		});
+//		mnStatistics.add(mntmShowKMostUpdatedAttributes);
+//		
+//		JMenuItem mntmShowKMost = new JMenuItem("Show K Most Intensive Tables Between Two Schemas");
+//		mntmShowKMost.addActionListener(new ActionListener() {
+//			@SuppressWarnings({ "rawtypes", "unchecked" })
+//			public void actionPerformed(ActionEvent arg0) {
+//				
+//				if(currentProject==null){
+//					JOptionPane.showMessageDialog(null, "Select a Project first");
+//					return;
+//					
+//				}
+//				
+//				final JDialog  insertKDialog=new JDialog();
+//				insertKDialog.setBounds(400,350,400, 200);
+//				insertKDialog.getContentPane().setLayout(null);
+//				
+//				JLabel  label=new JLabel("From Version");
+//				label.setBounds(10, 0, 80, 30);
+//				insertKDialog.getContentPane().add(label);
+//				
+//				String[] allSchemasNames=new String[globalDataKeeper.getAllPPLSchemas().size()];
+//				Set<String> alSchNa = globalDataKeeper.getAllPPLSchemas().keySet();
+//				int howMany=0;
+//				for(String s:alSchNa){
+//					allSchemasNames[howMany]=s;
+//					howMany++;
+//
+//				}
+//				
+//				
+//				
+//				final JComboBox jComboBoxAllSchemas=new JComboBox(allSchemasNames);
+//				jComboBoxAllSchemas.setBounds(10,30,180,30);
+//				jComboBoxAllSchemas.setSelectedIndex(0);
+//				
+//				insertKDialog.getContentPane().add(jComboBoxAllSchemas);
+//				
+//				JLabel  label2=new JLabel("To Version");
+//				label2.setBounds(10, 60, 80, 30);
+//				insertKDialog.getContentPane().add(label2);
+//				
+//				
+//				final JComboBox jComboBoxAllSchemas2=new JComboBox(allSchemasNames);
+//				jComboBoxAllSchemas2.setBounds(10,90,180,30);
+//				jComboBoxAllSchemas2.setSelectedIndex(0);
+//				
+//				insertKDialog.getContentPane().add(jComboBoxAllSchemas2);
+//				
+//				
+//				JLabel  label3=new JLabel("Insert K");
+//				label3.setBounds(250, 10, 80, 30);
+//				insertKDialog.getContentPane().add(label3);
+//				
+//				final JTextField insertKTextField=new JTextField("");
+//				insertKTextField.setBounds(250, 40, 40, 20);
+//				insertKDialog.getContentPane().add(insertKTextField);
+//				
+//				JButton insertKOK=new JButton("OK");
+//				insertKOK.setBounds(250,90 , 60, 20);
+//				
+//				insertKOK.addActionListener(new ActionListener() {
+//					public void actionPerformed(ActionEvent arg0) {
+//						int kNumber;
+//						String kString=insertKTextField.getText();
+//						
+//						if(kString.equals("")){
+//							JOptionPane.showMessageDialog(null, "K Cannot Be Empty");
+//							return;
+//						}
+//						try{
+//			                kNumber=Integer.parseInt(kString);
+//			            } catch(NumberFormatException nfe) {
+//			                JOptionPane.showMessageDialog(null, "K must be numeric");
+//			                return;
+//			            }
+//						
+//						if(jComboBoxAllSchemas.getSelectedItem()==null || jComboBoxAllSchemas2.getSelectedItem()==null){
+//							JOptionPane.showMessageDialog(null, " You must select both FROM and TO versions ");
+//							return;
+//						}
+//						
+//						
+//						String fromVersion=(String)jComboBoxAllSchemas.getSelectedItem();
+//						String toVersion=(String)jComboBoxAllSchemas2.getSelectedItem();
+//						
+//						//PPLSchema firstSchema=null;
+//						//PPLSchema secondSchema=null;
+//						
+//						//firstSchema=globalDataKeeper.getAllPPLSchemas().get(fromVersion);
+//						//secondSchema=globalDataKeeper.getAllPPLSchemas().get(toVersion);
+//							
+//						insertKDialog.setVisible(false);
+//						
+//						tabbedPane.setSelectedIndex(1);
+//						System.out.println("!!!!"+fromVersion+" "+toVersion);
+//						
+//						GlobalDataKeeper dataKeeperDiff = new GlobalDataKeeper(fromVersion,toVersion,currentProjectDataFolder);
+//						dataKeeperDiff.setDataForTwoVersions();
+//				
+////						DiffFromTwoSchemas diffForTwoSch= new DiffFromTwoSchemas(fromVersion, toVersion, currentProjectDataFolder);
+////						try {
+////							diffForTwoSch.findDifferenciesFromTwoSchemas();
+////						} catch (IOException e) {
+////							// TODO Auto-generated catch block
+////							e.printStackTrace();
+////						}
+//						//TreeMap<String,TableChange> tbChForTwoSch=dataKeeperDiff.getTmpTableChanges();
+//						IntensiveTablesFromTwoSchemasAlgo  finalmostIntensiveTables=new IntensiveTablesFromTwoSchemasAlgo(globalDataKeeper.getAllPPLSchemas().get(fromVersion),
+//								globalDataKeeper.getAllPPLSchemas().get(toVersion),dataKeeperDiff.getTmpTableChanges(), kNumber);
+//					
+//						
+//						intensiveTables=finalmostIntensiveTables;
+//						
+//						ResultsFactory rf = new ResultsFactory("IntensiveTablesFromTwoSchemaResults");
+//						resultsITFTR=rf.createResult();
+//						resultsITFTR=intensiveTables.compute();
+//						
+//						resultsDataKeeper.setMostIntensiveTables(resultsITFTR.getResults());
+//						
+//						
+//					
+//						showKMostIntensiveTablesBetweenTwoSchemas(fromVersion,toVersion);
+//						
+//						if(resultsDataKeeper.getMostIntensiveTables().size()==0){
+//							JOptionPane.showMessageDialog(null, "Calculate K Most Intensive Tables first");
+//							return;
+//						}
+//						
+//						
+//						statistics.add(chartPanel);
+//						//statistics.add(chartPanelPie);
+//						//statistics.add(chartPanelPie2);
+//						statistics.revalidate();
+//						statistics.repaint();
+//					
+//					}
+//
+//					
+//				});
+//				insertKDialog.getContentPane().add(insertKOK);
+//				
+//				
+//				
+//				insertKDialog.setVisible(true);
+//				
+//			}
+//		});
+//		mnStatistics.add(mntmShowKMost);
+//		
+//		JMenuItem mntmShowKMost_1 = new JMenuItem("Show K Most Intensive Changes by Percentage");
+//		mntmShowKMost_1.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//				if(currentProject==null){
+//					JOptionPane.showMessageDialog(null, "Select a Project first");
+//					return;
+//					
+//				}
+//				final JDialog  insertKDialog=new JDialog();
+//				insertKDialog.setBounds(400,350,200, 200);
+//				insertKDialog.getContentPane().setLayout(null);
+//				
+//				JLabel  label=new JLabel("Insert K");
+//				label.setBounds(67, 10, 80, 30);
+//				insertKDialog.getContentPane().add(label);
+//				
+//				final JTextField insertKTextField=new JTextField("");
+//				insertKTextField.setBounds(67, 55, 40, 20);
+//				insertKDialog.getContentPane().add(insertKTextField);
+//				
+//				JButton insertKOK=new JButton("OK");
+//				insertKOK.setBounds(62,120 , 60, 20);
+//				
+//				insertKOK.addActionListener(new ActionListener() {
+//					@SuppressWarnings("unchecked")
+//					public void actionPerformed(ActionEvent arg0) {
+//						String kString=insertKTextField.getText();
+//						
+//						if(kString.equals("")){
+//							JOptionPane.showMessageDialog(null, "K Cannot Be Empty");
+//							return;
+//						}
+//						try{
+//			            } catch(NumberFormatException nfe) {
+//			                JOptionPane.showMessageDialog(null, "K must be numeric");
+//			                return;
+//			            }
+//						
+//						insertKDialog.setVisible(false);
+//						
+//						tabbedPane.setSelectedIndex(1);
+//						
+//						changes=new PercentageOfChangesAlgo(globalDataKeeper.getAllPPLSchemas(),globalDataKeeper.getAllPPLTransitions());
+//						
+//						
+//						ResultsFactory rf = new ResultsFactory("");
+//						resultsPOCR=rf.createResult();
+//						resultsPOCR=changes.compute();
+//						
+//						resultsDataKeeper.setPercentageOfChangesAboutTables(resultsPOCR.getResults("lala"));
+//					
+//						
+//						if(mostIntensiveInsersions==null){
+//							JOptionPane.showMessageDialog(null, "Calculate K Most Intensive Changes by percentage first");
+//							return;
+//						}
+//											
+//						statistics.add(chartPanel);
+//						statistics.add(chartPanelPie);
+//						statistics.add(chartPanelPie2);
+//						statistics.revalidate();
+//						statistics.repaint();
+//					
+//					}
+//
+//					
+//				});
+//				insertKDialog.getContentPane().add(insertKOK);
+//
+//				insertKDialog.setVisible(true);
+//				
+//				
+//			}
+//		});
+//		mnStatistics.add(mntmShowKMost_1);
+//		
 		JButton buttonHelp=new JButton("Help");
 		buttonHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -1047,6 +954,71 @@ public class Gui extends JFrame implements ActionListener{
 		coChangesBtn.setBounds(900,900 , 160, 40);
 		menuBar.add(coChangesBtn);
 		
+		JButton extractPhasesBtn = new JButton("Extract Phases");
+		extractPhasesBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(!(project==null)){
+				
+					ParametersJDialog jD=new ParametersJDialog();
+					
+					jD.setModal(true);
+					
+					
+					jD.setVisible(true);
+					
+					if(jD.getConfirmation()){
+					
+			            timeWeight = jD.getTimeWeight();
+			            changeWeight = jD.getChangeWeight();
+			            preProcessingTime = jD.getPreProcessingTime();
+			            preProcessingChange = jD.getPreProcessingChange();
+					    numberOfPhases = jD.getNumberOfPhases();
+			            
+			            System.out.println(timeWeight+" "+changeWeight);
+			            
+						MainEngine mainEngine = new MainEngine(project.replace(".txt", ".csv"),timeWeight,changeWeight,preProcessingTime,preProcessingChange);
+	
+						//for(int i=0; i<PhaseExtractionParameters.DATASET_AR.size(); i++){
+							
+						mainEngine.parseInput();		
+						System.out.println("\n\n\n");
+						mainEngine.extractPhases(numberOfPhases);
+						try {
+							mainEngine.extractReportAssessment1();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						try {
+							mainEngine.extractReportAssessment2();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						//}
+						
+						try {
+							mainEngine.extractWinnersReport();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						mainEngine.connectTransitionsWithPhases(globalDataKeeper);
+					}
+				}
+				else{
+					
+					JOptionPane.showMessageDialog(null, "Please select a project first!");
+					
+				}
+				
+			}
+		});
+		extractPhasesBtn.setBounds(900,900 , 160, 40);
+		menuBar.add(extractPhasesBtn);
+		
 		
 		contentPane = new JPanel();
 		
@@ -1074,23 +1046,23 @@ public class Gui extends JFrame implements ActionListener{
 		);
 		gl_lifeTimePanel.setVerticalGroup(
 			gl_lifeTimePanel.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 703, Short.MAX_VALUE)
+				.addGap(0, 743, Short.MAX_VALUE)
 		);
 		lifeTimePanel.setLayout(gl_lifeTimePanel);
 		
 		
-		tabbedPane.addTab("Statistics", null, statistics, null);
-		
-		GroupLayout gl_statistics = new GroupLayout(statistics);
-		gl_statistics.setHorizontalGroup(
-			gl_statistics.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 1469, Short.MAX_VALUE)
-		);
-		gl_statistics.setVerticalGroup(
-			gl_statistics.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 703, Short.MAX_VALUE)
-		);
-		statistics.setLayout(gl_statistics);
+//		tabbedPane.addTab("Statistics", null, statistics, null);
+//		
+//		GroupLayout gl_statistics = new GroupLayout(statistics);
+//		gl_statistics.setHorizontalGroup(
+//			gl_statistics.createParallelGroup(Alignment.LEADING)
+//				.addGap(0, 1469, Short.MAX_VALUE)
+//		);
+//		gl_statistics.setVerticalGroup(
+//			gl_statistics.createParallelGroup(Alignment.LEADING)
+//				.addGap(0, 703, Short.MAX_VALUE)
+//		);
+//		statistics.setLayout(gl_statistics);
 		
 		contentPane.setLayout(gl_contentPane);
 		
@@ -1572,7 +1544,7 @@ public class Gui extends JFrame implements ActionListener{
 		
 		resultsDataKeeper = new ResultsDataKeeper();
 		//= w.getDataKeeper();
-		System.out.println("!!"+globalDataKeeper.getDataFolder());
+		//System.out.println("!!"+globalDataKeeper.getDataFolder());
 		
 //		ImportSchemas filesToImportData=new ImportSchemas(fileName);
 //		filesToImportData.loadDataset();
@@ -1859,468 +1831,4 @@ public class Gui extends JFrame implements ActionListener{
 		
 		
 	}
-	
-	public void showKMostIntensiveChanges(int k){
-		
-		
-		buttonStop=new JButton("");
-		buttonStop.setBounds(650, 10, 40, 40);
-		buttonStop.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				if(rotation==1){
-					rotator.stop();
-					rotator1.stop();
-					rotator2.stop();
-					rotation=0;
-				}
-				else{
-					rotator.start();
-					rotator1.start();
-					rotator2.start();
-					rotation=1;
-				}
-				
-			}
-			
-		});
-		
-		mostIntensiveInsersions=new Float[k][2];
-		mostIntensiveUpdates=new Float[k][2];
-		mostIntensiveDeletions=new Float[k][2];
-		
-		//Sort Percentage of Insersions ********************
-		for(int i=0; i<k; i++){
-			mostIntensiveInsersions[i][0]=(float) i;
-			mostIntensiveInsersions[i][1]=(float) 0;
-		}
-		
-		int pos=0;
-		for (Map.Entry<String, ArrayList<AssistantPercentageClassResults>> t : resultsDataKeeper.getPercentageOfChangesAboutTables().entrySet()) {
-			
-			ArrayList<AssistantPercentageClassResults> assistant=t.getValue();
-			
-				for(int j=0; j<assistant.size(); j++){
-					
-					float min = mostIntensiveInsersions[0][1];
-					int minPosition=0;
-					for(int l=0; l<k; l++){
-						if(mostIntensiveInsersions[l][1]<min){
-							min=mostIntensiveInsersions[l][1];
-							minPosition=l;
-							
-						}
-					}
-					if(assistant.get(j).getInsersionsPercentage()>mostIntensiveInsersions[minPosition][1]){
-						mostIntensiveInsersions[minPosition][1]=assistant.get(j).getInsersionsPercentage();
-						mostIntensiveInsersions[minPosition][0]=(float) pos;
-					}
-					
-			
-				}
-				
-				pos++;
-				
-		}
-		
-		Arrays.sort(mostIntensiveInsersions, new Comparator<Float[]>() {
-		    @Override
-		    public int compare(Float[] s1, Float[] s2) {
-		        Float t1 = s1[1];
-		        Float t2 = s2[1];
-		        
-		        return t2.compareTo(t1);
-		        
-		    }
-		});
-		
-		/*for(int i=0;i<k;i++){
-			
-			int l=(int)(Math.round(mostIntensiveInsersions[i][0]));
-			System.out.println("Insersions "+percentageOfChangesAboutTables.get(l).getName()+" "+mostIntensiveInsersions[i][1]);
-		}*/
-		
-		//Sort Percentage of Deletions **********************
-		for(int i=0; i<k; i++){
-			mostIntensiveUpdates[i][0]=(float) i;
-			mostIntensiveUpdates[i][1]=(float) 0;
-		}
-		
-		pos=0;
-		
-		for (Map.Entry<String, ArrayList<AssistantPercentageClassResults>> t : resultsDataKeeper.getPercentageOfChangesAboutTables().entrySet()) {
-			
-			ArrayList<AssistantPercentageClassResults> assistant=t.getValue();
-			
-				for(int j=0; j<assistant.size(); j++){
-					float min = mostIntensiveUpdates[0][1];
-					int minPosition=0;
-					for(int l=0; l<k; l++){
-						if(mostIntensiveUpdates[l][1]<min){
-							min=mostIntensiveUpdates[l][1];
-							minPosition=l;
-						}
-					}
-					if(assistant.get(j).getUpdatesPercentage()>mostIntensiveUpdates[minPosition][1]){
-						mostIntensiveUpdates[minPosition][1]=assistant.get(j).getUpdatesPercentage();
-						mostIntensiveUpdates[minPosition][0]=(float) pos;
-					}
-					
-			
-				}
-				
-				pos++;
-				
-		}
-		
-		Arrays.sort(mostIntensiveUpdates, new Comparator<Float[]>() {
-		    @Override
-		    public int compare(Float[] s1, Float[] s2) {
-		        Float t1 = s1[1];
-		        Float t2 = s2[1];
-		        
-		        return t2.compareTo(t1);
-		        
-		    }
-		});
-		
-		/*for(int i=0;i<k;i++){
-			
-			int l=(int)(Math.round(mostIntensiveUpdates[i][0]));
-			System.out.println("Updates "+percentageOfChangesAboutTables.get(l).getName()+" "+mostIntensiveUpdates[i][1]);
-		}*/
-		
-		//Sort Percentage of Deletions   ********************
-		for(int i=0; i<k; i++){
-			mostIntensiveDeletions[i][0]=(float) i;
-			mostIntensiveDeletions[i][1]=(float) 0;
-		}
-		
-		pos=0;
-		
-		for (Map.Entry<String, ArrayList<AssistantPercentageClassResults>> t : resultsDataKeeper.getPercentageOfChangesAboutTables().entrySet()) {
-			
-			ArrayList<AssistantPercentageClassResults> assistant=t.getValue();
-			
-				for(int j=0; j<assistant.size(); j++){
-					float min = mostIntensiveDeletions[0][1];
-					int minPosition=0;
-					for(int l=0; l<k; l++){
-						if(mostIntensiveDeletions[l][1]<min){
-							min=mostIntensiveDeletions[l][1];
-							minPosition=l;
-						}
-					}
-					if(assistant.get(j).getDeletionsPercentage()>mostIntensiveDeletions[minPosition][1]){
-						mostIntensiveDeletions[minPosition][1]=assistant.get(j).getDeletionsPercentage();
-						mostIntensiveDeletions[minPosition][0]=(float) pos;
-					}
-					
-			
-				}
-				
-				pos++;
-				
-		}
-		
-		Arrays.sort(mostIntensiveDeletions, new Comparator<Float[]>() {
-		    @Override
-		    public int compare(Float[] s1, Float[] s2) {
-		        Float t1 = s1[1];
-		        Float t2 = s2[1];
-		        
-		        return t2.compareTo(t1);
-		        
-		    }
-		});
-		
-		/*for(int i=0;i<k;i++){
-			
-			int l=(int)(Math.round(mostIntensiveDeletions[i][0]));
-			System.out.println("Deletions "+percentageOfChangesAboutTables.get(l).getName()+" "+mostIntensiveDeletions[i][1]);
-		}*/
-		
-		
-		//Insersions GUI **********************
-		labelMostIntensiveInsersionsByPercentage.setText("");
-		labelMostIntensiveInsersionsByPercentage.setText(" Most Intensive Tables By Insersions(Percentage)");
-		labelMostIntensiveInsersionsByPercentage.setBounds(15,0,300,50);
-		
-		
-		jTextAreaMostIntensiveInsersionsByPercentage.setEditable(false);
-		jTextAreaMostIntensiveInsersionsByPercentage.setBounds(0, 1, 600, 300);
-		Color color=new Color(000,191,255);
-		jTextAreaMostIntensiveInsersionsByPercentage.setBackground(color);
-		jTextAreaMostIntensiveInsersionsByPercentage.setTabSize(20);
-		jTextAreaMostIntensiveInsersionsByPercentage.setFont(new Font("PF Isotext Pro",Font.BOLD,16));
-		
-		
-		String[] mapKeys = new String[resultsDataKeeper.getPercentageOfChangesAboutTables().size()];
-		int pos2 = 0;
-		for (String key : resultsDataKeeper.getPercentageOfChangesAboutTables().keySet()) {
-		    mapKeys[pos2++] = key;
-		}
-		
-		
-		String assistant="Table Name"+"\tOld Version"+"\tNew Version"+"\tPercentage";
-		for(int i=0; i<k; i++){
-			String oldVersion="";
-			String newVersion="";
-			int l=(int)(Math.round(mostIntensiveInsersions[i][0]));
-			
-			String pos3=mapKeys[l];
-			ArrayList<AssistantPercentageClassResults> tr = resultsDataKeeper.getPercentageOfChangesAboutTables().get(pos3);
-			for(int t=0;t<tr.size();t++){
-				if(mostIntensiveInsersions[i][1]==tr.get(t).getInsersionsPercentage()){
-					oldVersion=tr.get(t).getOldSchema().getName();
-					newVersion=tr.get(t).getNewSchema().getName();
-				}
-			}
-			if(mostIntensiveInsersions[i][1]!=0){
-				assistant=assistant+"\n"+pos3+"\t "+oldVersion+"\t"+newVersion+"\t"
-					+ mostIntensiveInsersions[i][1];
-			}
-		}
-		
-		jTextAreaMostIntensiveInsersionsByPercentage.setText(assistant);
-		
-		jScrollPaneKMostIntensiveInsersionsByPercentage=new JScrollPane(jTextAreaMostIntensiveInsersionsByPercentage,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-			     ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		jScrollPaneKMostIntensiveInsersionsByPercentage.setBounds(20, 40, 600, 170);
-		
-		//Updates GUI ********************
-		labelMostIntensiveUpdatesByPercentage.setText("");
-		labelMostIntensiveUpdatesByPercentage.setText(" Most Intensive Tables By Updates(Percentage)");
-		labelMostIntensiveUpdatesByPercentage.setBounds(15,208,300,50);
-		
-		
-		jTextAreaMostIntensiveUpdatesByPercentage.setEditable(false);
-		jTextAreaMostIntensiveUpdatesByPercentage.setBounds(0, 300, 600, 300);
-		jTextAreaMostIntensiveUpdatesByPercentage.setBackground(color);
-		jTextAreaMostIntensiveUpdatesByPercentage.setTabSize(20);
-		jTextAreaMostIntensiveUpdatesByPercentage.setFont(new Font("PF Isotext Pro",Font.BOLD,16));
-		
-		assistant="Table Name"+"\tOld Version"+"\tNew Version"+"\tPercentage";
-		for(int i=0; i<k; i++){
-			String oldVersion="";
-			String newVersion="";
-			int l=(int)(Math.round(mostIntensiveUpdates[i][0]));
-			
-			String pos3=mapKeys[l];
-			ArrayList<AssistantPercentageClassResults> tr = resultsDataKeeper.getPercentageOfChangesAboutTables().get(pos3);
-			for(int t=0;t<tr.size();t++){
-				if(mostIntensiveUpdates[i][1]==tr.get(t).getUpdatesPercentage()){
-					oldVersion=tr.get(t).getOldSchema().getName();
-					newVersion=tr.get(t).getNewSchema().getName();
-				}
-			}
-			if(mostIntensiveUpdates[i][1]!=0){
-				assistant=assistant+"\n"+pos3+"\t"+oldVersion+"\t"+newVersion+"\t"
-					+ mostIntensiveUpdates[i][1];
-			}		
-		}
-		
-		jTextAreaMostIntensiveUpdatesByPercentage.setText(assistant);
-		
-		jScrollPaneKMostIntensiveUpdatesByPercentage=new JScrollPane(jTextAreaMostIntensiveUpdatesByPercentage,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-			     ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		jScrollPaneKMostIntensiveUpdatesByPercentage.setBounds(20, 240, 600, 170);
-		
-		
-		//Deletions GUI ******************
-		labelMostIntensiveDeletionsByPercentage.setText("");
-		labelMostIntensiveDeletionsByPercentage.setText(" Most Intensive Tables By Deletions(Percentage)");
-		labelMostIntensiveDeletionsByPercentage.setBounds(15,400,300,50);
-		
-		
-		jTextAreaMostIntensiveDeletionsByPercentage.setEditable(false);
-		jTextAreaMostIntensiveDeletionsByPercentage.setBounds(0, 0, 600, 300);
-		jTextAreaMostIntensiveDeletionsByPercentage.setBackground(color);
-		jTextAreaMostIntensiveDeletionsByPercentage.setTabSize(20);
-		jTextAreaMostIntensiveDeletionsByPercentage.setFont(new Font("PF Isotext Pro",Font.BOLD,16));
-		
-		assistant="Table Name"+"\tOld Version"+"\tNew Version"+"\tPercentage";
-		for(int i=0; i<k; i++){
-			String oldVersion="";
-			String newVersion="";
-			int l=(int)(Math.round(mostIntensiveDeletions[i][0]));
-			
-			String pos3=mapKeys[l];
-			ArrayList<AssistantPercentageClassResults> tr = resultsDataKeeper.getPercentageOfChangesAboutTables().get(pos3);
-			for(int t=0;t<tr.size();t++){
-				if(mostIntensiveDeletions[i][1]==tr.get(t).getDeletionsPercentage()){
-					oldVersion=tr.get(t).getOldSchema().getName();
-					newVersion=tr.get(t).getNewSchema().getName();
-				}
-			}
-			if(mostIntensiveDeletions[i][1]!=0){
-				assistant=assistant+"\n"+pos3+"\t"+oldVersion+"\t"+newVersion+"\t"
-					+ mostIntensiveDeletions[i][1];
-			}		
-		}
-		
-		jTextAreaMostIntensiveDeletionsByPercentage.setText(assistant);
-		
-		jScrollPaneKMostIntensiveDeletionsByPercentage=new JScrollPane(jTextAreaMostIntensiveDeletionsByPercentage,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-			     ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		jScrollPaneKMostIntensiveDeletionsByPercentage.setBounds(20, 430, 600, 170);
-		
-		
-		//Add Components to GUI ************************
-		statistics.removeAll();
-		statistics.revalidate();
-		statistics.repaint();
-		
-		statistics.add(labelMostIntensiveInsersionsByPercentage);
-		statistics.add(jScrollPaneKMostIntensiveInsersionsByPercentage);
-		statistics.add(labelMostIntensiveUpdatesByPercentage);
-		statistics.add(jScrollPaneKMostIntensiveUpdatesByPercentage);
-		statistics.add(labelMostIntensiveDeletionsByPercentage);
-		statistics.add(jScrollPaneKMostIntensiveDeletionsByPercentage);
-		statistics.add(buttonStop);
-		
-	}
-	
-	
-//	private ArrayList<PPLSchema> calculateNumberofVersions(int level){
-//		
-//		int selectedVersion=0;
-//		int assistant;
-//		
-//		ArrayList<PPLSchema> versionsWithLevel=new ArrayList<PPLSchema>();
-//		versionsWithLevel.add(globalDataKeeper.getAllPPLSchemas().get(selectedVersion));
-//		
-//		if(level==3){
-//			
-//			selectedVersion=globalDataKeeper.getAllPPLSchemas().size()/2;
-//			versionsWithLevel.add(globalDataKeeper.getAllPPLSchemas().get(selectedVersion));
-//			
-//			
-//		}
-//		else if(level==4){
-//			
-//			assistant=globalDataKeeper.getAllPPLSchemas().size()/4;
-//			selectedVersion=selectedVersion+assistant;
-//			
-//			while(selectedVersion<globalDataKeeper.getAllPPLSchemas().size()){
-//				
-//				versionsWithLevel.add(globalDataKeeper.getAllPPLSchemas().get(selectedVersion));
-//				selectedVersion=selectedVersion+assistant;
-//				
-//			}
-//			
-//		}
-//		else if(level==5){
-//			
-//			assistant=globalDataKeeper.getAllPPLSchemas().size()/5;
-//			selectedVersion=selectedVersion+assistant;
-//			
-//			while(selectedVersion<globalDataKeeper.getAllPPLSchemas().size()){
-//				
-//				versionsWithLevel.add(globalDataKeeper.getAllPPLSchemas().get(selectedVersion));
-//				selectedVersion=selectedVersion+assistant;
-//				
-//			}
-//			
-//		}
-//		else if(level==6){
-//			
-//			assistant=globalDataKeeper.getAllPPLSchemas().size()/6;
-//			selectedVersion=selectedVersion+assistant;
-//			
-//			while(selectedVersion<globalDataKeeper.getAllPPLSchemas().size()){
-//				
-//				versionsWithLevel.add(globalDataKeeper.getAllPPLSchemas().get(selectedVersion));
-//				selectedVersion=selectedVersion+assistant;
-//				
-//			}
-//			
-//		}
-//		else if(level==7){
-//			
-//			assistant=globalDataKeeper.getAllPPLSchemas().size()/7;
-//			selectedVersion=selectedVersion+assistant;
-//			
-//			while(selectedVersion<globalDataKeeper.getAllPPLSchemas().size()){
-//				
-//				versionsWithLevel.add(globalDataKeeper.getAllPPLSchemas().get(selectedVersion));
-//				selectedVersion=selectedVersion+assistant;
-//				
-//			}
-//			
-//		}
-//		else if(level==8){
-//			
-//			assistant=globalDataKeeper.getAllPPLSchemas().size()/8;
-//			selectedVersion=selectedVersion+assistant;
-//			
-//			while(selectedVersion<globalDataKeeper.getAllPPLSchemas().size()){
-//				
-//				versionsWithLevel.add(globalDataKeeper.getAllPPLSchemas().get(selectedVersion));
-//				selectedVersion=selectedVersion+assistant;
-//				
-//			}
-//			
-//		}
-//		else if(level==9){
-//			
-//			assistant=globalDataKeeper.getAllPPLSchemas().size()/9;
-//			selectedVersion=selectedVersion+assistant;
-//			
-//			while(selectedVersion<globalDataKeeper.getAllPPLSchemas().size()){
-//				
-//				versionsWithLevel.add(globalDataKeeper.getAllPPLSchemas().get(selectedVersion));
-//				selectedVersion=selectedVersion+assistant;
-//				
-//			}
-//			
-//		}
-//		else if(level==10){
-//			
-//			assistant=globalDataKeeper.getAllPPLSchemas().size()/10;
-//			selectedVersion=selectedVersion+assistant;
-//			
-//			while(selectedVersion<globalDataKeeper.getAllPPLSchemas().size()){
-//				
-//				versionsWithLevel.add(globalDataKeeper.getAllPPLSchemas().get(selectedVersion));
-//				selectedVersion=selectedVersion+assistant;
-//				
-//			}
-//			
-//		}
-//		else if(level==11){
-//			
-//			assistant=globalDataKeeper.getAllPPLSchemas().size()/11;
-//			selectedVersion=selectedVersion+assistant;
-//			
-//			while(selectedVersion<globalDataKeeper.getAllPPLSchemas().size()){
-//				
-//				versionsWithLevel.add(globalDataKeeper.getAllPPLSchemas().get(selectedVersion));
-//				selectedVersion=selectedVersion+assistant;
-//				
-//			}
-//			
-//		}
-//		else if(level==12){
-//			
-//			assistant=globalDataKeeper.getAllPPLSchemas().size()/12;
-//			selectedVersion=selectedVersion+assistant;
-//			
-//			while(selectedVersion<globalDataKeeper.getAllPPLSchemas().size()){
-//				
-//				versionsWithLevel.add(globalDataKeeper.getAllPPLSchemas().get(selectedVersion));
-//				selectedVersion=selectedVersion+assistant;
-//				
-//			}
-//			
-//		}
-//		
-//		selectedVersion=globalDataKeeper.getAllPPLSchemas().size()-1;
-//		versionsWithLevel.add(globalDataKeeper.getAllPPLSchemas().get(selectedVersion));
-//		return versionsWithLevel;
-//		
-//	}
-	
-	
-	
 }
