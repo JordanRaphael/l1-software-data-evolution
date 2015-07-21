@@ -89,7 +89,7 @@ public class PhaseCollector {
 	public void connectPhasesWithTransitions(GlobalDataKeeper tmpGlobalDataKeeper){
 		for(Phase p: phases){
 		
-			p.connectWithPPLTransitions(tmpGlobalDataKeeper.getAllPPLTransitions());
+			p.connectWithPPLTransitions(tmpGlobalDataKeeper);
 			
 		}
 		

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import data.dataKeeper.GlobalDataKeeper;
 import data.pplTransition.PPLTransition;
 
 public class Phase {
@@ -131,7 +132,10 @@ public class Phase {
 		return newPhase;
 	}
 	
-	public void connectWithPPLTransitions(TreeMap<String,PPLTransition> allPPLTransitions){
+	public void connectWithPPLTransitions(GlobalDataKeeper tmpGlobalDataKeeper){
+		
+		TreeMap<String,PPLTransition> allPPLTransitions=tmpGlobalDataKeeper.getAllPPLTransitions();
+		
 		boolean found = false;
 
 		for (Map.Entry<String,PPLTransition> tr : allPPLTransitions.entrySet()) {
