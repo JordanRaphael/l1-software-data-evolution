@@ -1,16 +1,17 @@
 /**
  * 
  */
-package parser;
+package phaseAnalyzer.parser;
 
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.StringTokenizer;
-import java.io.FileInputStream;
 
-import commons.*;
+import phaseAnalyzer.commons.TransitionHistory;
+import phaseAnalyzer.commons.TransitionStats;
 
 
 /**

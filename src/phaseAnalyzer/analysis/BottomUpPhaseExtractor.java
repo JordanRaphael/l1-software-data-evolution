@@ -1,15 +1,15 @@
 /**
  * 
  */
-package analysis;
+package phaseAnalyzer.analysis;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import commons.Phase;
-import commons.PhaseCollector;
-import commons.TransitionHistory;
-import commons.TransitionStats;
+import phaseAnalyzer.commons.Phase;
+import phaseAnalyzer.commons.PhaseCollector;
+import phaseAnalyzer.commons.TransitionHistory;
+import phaseAnalyzer.commons.TransitionStats;
 
 /**
  * @author pvassil

@@ -1,7 +1,7 @@
-package analysis;
+package phaseAnalyzer.analysis;
 
-import commons.PhaseCollector;
-import commons.TransitionHistory;
+import phaseAnalyzer.commons.PhaseCollector;
+import phaseAnalyzer.commons.TransitionHistory;
 
 public interface IPhaseExtractor {
 

@@ -1,7 +1,7 @@
 /**
  * One possible breakdown of a transition history into phases
  */
-package commons;
+package phaseAnalyzer.commons;
 
 import java.util.ArrayList;
 import java.util.TreeMap;

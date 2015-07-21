@@ -1,7 +1,7 @@
 /**
  * This class represents the sequence of transitions that we receive as input.
  */
-package commons;
+package phaseAnalyzer.commons;
 
 import java.util.ArrayList;
 

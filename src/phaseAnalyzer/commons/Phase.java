@@ -1,4 +1,4 @@
-package commons;
+package phaseAnalyzer.commons;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

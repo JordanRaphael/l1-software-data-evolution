@@ -1,4 +1,4 @@
-package commons;
+package phaseAnalyzer.commons;
 
 import java.util.Arrays;
 import java.util.List;

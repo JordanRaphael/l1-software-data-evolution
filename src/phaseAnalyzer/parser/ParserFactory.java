@@ -1,7 +1,7 @@
 /**
  * 
  */
-package parser;
+package phaseAnalyzer.parser;
 
 /**
  * @author pvassil

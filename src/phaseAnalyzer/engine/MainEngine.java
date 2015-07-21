@@ -1,4 +1,4 @@
-package engine;
+package phaseAnalyzer.engine;
 
 
 import java.io.BufferedWriter;
@@ -8,15 +8,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
-import commons.*;
+import phaseAnalyzer.analysis.IPhaseExtractor;
+import phaseAnalyzer.analysis.PhaseExtractorFactory;
+import phaseAnalyzer.commons.PhaseCollector;
+import phaseAnalyzer.commons.TransitionHistory;
+import phaseAnalyzer.parser.IParser;
+import phaseAnalyzer.parser.ParserFactory;
 import data.dataKeeper.GlobalDataKeeper;
-import data.pplTransition.PPLTransition;
-import parser.IParser;
-import parser.ParserFactory;
-import analysis.IPhaseExtractor;
-import analysis.PhaseExtractorFactory;
 
 public class MainEngine {
 	

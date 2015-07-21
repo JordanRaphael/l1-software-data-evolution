@@ -1,6 +1,6 @@
-package parser;
+package phaseAnalyzer.parser;
 
-import commons.TransitionHistory;
+import phaseAnalyzer.commons.TransitionHistory;
 
 public interface IParser {
 	public abstract TransitionHistory parse(String fileName, String delimeter);

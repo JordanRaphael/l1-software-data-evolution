@@ -1,7 +1,7 @@
 /**
  * This class represents the stats of a single transition of the input.
  */
-package commons;
+package phaseAnalyzer.commons;
 
 public class TransitionStats {
 	public TransitionStats(int transitionId, int time, String oldVersionFile,

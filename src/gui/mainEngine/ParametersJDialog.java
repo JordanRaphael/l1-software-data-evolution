@@ -53,28 +53,28 @@ public class ParametersJDialog extends JDialog {
 		
 		JLabel lblChooseTimeWeight = new JLabel("Choose Time Weight");
 		
-		JComboBox comboBox = new JComboBox();
+		final JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"0.0", "0.5", "1.0"}));
 		
 		JLabel lblChooseChangeWeight = new JLabel("Choose Change Weight");
 		
-		JComboBox comboBox_1 = new JComboBox();
+		final JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"0.0", "0.5", "1.0"}));
 		
 		JLabel lblTimePreprocessing = new JLabel("Time PreProcessing");
 		
-		JRadioButton rdbtnOn = new JRadioButton("ON");
+		final JRadioButton rdbtnOn = new JRadioButton("ON");
 		buttonGroup.add(rdbtnOn);
 		
-		JRadioButton rdbtnOff = new JRadioButton("OFF");
+		final JRadioButton rdbtnOff = new JRadioButton("OFF");
 		buttonGroup.add(rdbtnOff);
 		
 		JLabel lblNewLabel = new JLabel("Change PreProcessing");
 		
-		JRadioButton rdbtnOn_1 = new JRadioButton("ON");
+		final JRadioButton rdbtnOn_1 = new JRadioButton("ON");
 		buttonGroup_1.add(rdbtnOn_1);
 		
-		JRadioButton rdbtnOff_1 = new JRadioButton("OFF");
+		final JRadioButton rdbtnOff_1 = new JRadioButton("OFF");
 		buttonGroup_1.add(rdbtnOff_1);
 		
 		JLabel lblGiveNumberOf = new JLabel("Give Number of Phases");

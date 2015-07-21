@@ -53,13 +53,13 @@ import javax.swing.table.DefaultTableCellRenderer;
 import org.antlr.v4.runtime.RecognitionException;
 import org.jfree.chart.ChartPanel;
 
+import phaseAnalyzer.commons.PhaseExtractionParameters;
+import phaseAnalyzer.engine.MainEngine;
 import results.Results;
 import results.ResultsDataKeeper;
 import algorithms.Algorithm;
 import algorithms.FindCoChanges;
-import commons.PhaseExtractionParameters;
 import data.dataKeeper.GlobalDataKeeper;
-import engine.MainEngine;
 
 
 public class Gui extends JFrame implements ActionListener{
