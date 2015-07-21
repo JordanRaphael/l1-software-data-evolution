@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.sun.org.apache.regexp.internal.recompile;
+
 import data.pplTransition.TableChange;
 
 public class PPLTable {
@@ -19,15 +21,14 @@ public class PPLTable {
 	private HashMap<String,Integer> coChanges;
 	private HashMap<String,Integer> sequenceCoChanges;
 	private HashMap<String,Integer> windowCoChanges;
-
 	private ArrayList<Integer> changesForChart = new ArrayList<Integer>();
 	private TableChange tableChanges;
-	
 	private Table hecTable;
-	
 	private TreeMap<String, PPLAttribute> attrs;
-	
 	private String name="";
+	private String birth=null;
+	private String death=null;
+	private boolean active=false;
 
 	
 	public PPLTable(String tmpName,Table tmpHecTable){
@@ -42,6 +43,29 @@ public class PPLTable {
 			
 	}
 	
+	public void setBirth(String birth){
+		this.birth=birth;
+	}
+	
+	public void setDeath(String death){
+		this.death=death;
+	}
+	
+	public void setActive(){
+		this.active=!this.active;
+	}
+	
+	public boolean getActive(){
+		return this.active;
+	}
+	
+	public String getBirth(){
+		return this.birth;
+	}
+	
+	public String getDeath(){
+		return this.death;
+	}
 	
 	public void addAttribute(PPLAttribute attr) {
 		

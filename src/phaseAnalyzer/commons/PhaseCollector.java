@@ -4,10 +4,8 @@
 package phaseAnalyzer.commons;
 
 import java.util.ArrayList;
-import java.util.TreeMap;
 
 import data.dataKeeper.GlobalDataKeeper;
-import data.pplTransition.PPLTransition;
 
 /**
  * @author pvassil

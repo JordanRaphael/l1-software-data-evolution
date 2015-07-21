@@ -48,6 +48,7 @@ public class PPLSchemasConstruction {
 				
 				PPLTable tmpPPLTable = new PPLTable(t.getValue().getName(),t.getValue());
 				
+				
 				TreeMap<String,Attribute> tmpHecAttributes = new TreeMap<String,Attribute>();
 				
 				tmpHecAttributes=t.getValue().getAttrs();
@@ -63,11 +64,13 @@ public class PPLSchemasConstruction {
 				tmpPPLSchema.addTable(tmpPPLTable);
 
 			}
-			
+
 			allPPLSchemas.put(tmpPPLSchema.getName(),tmpPPLSchema);
 
 			
 		}
+		
+		
 		
 	}
 	
