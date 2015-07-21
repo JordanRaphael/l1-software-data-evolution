@@ -1,14 +1,12 @@
 package tableClustering.analysis;
 
-import java.util.TreeMap;
-
 import tableClustering.commons.ClusterCollector;
-import data.pplSqlSchema.PPLTable;
+import data.dataKeeper.GlobalDataKeeper;
 
 
 public interface ClusterExtractor {
 
-	public ClusterCollector extractAtMostKClusters(TreeMap<String, PPLTable> tables,
+	public ClusterCollector extractAtMostKClusters(GlobalDataKeeper dataKeeper,
 			int numClusters,float birthWeight,float deathWeight, float changeWeight );
 	
 }

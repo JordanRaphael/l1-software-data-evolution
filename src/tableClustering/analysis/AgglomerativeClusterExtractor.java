@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 import tableClustering.commons.Cluster;
 import tableClustering.commons.ClusterCollector;
+import data.dataKeeper.GlobalDataKeeper;
 import data.pplSqlSchema.PPLTable;
 
 
@@ -15,11 +16,12 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 	
 
 	@Override
-	public ClusterCollector extractAtMostKClusters(TreeMap<String, PPLTable> tables,
+	public ClusterCollector extractAtMostKClusters(GlobalDataKeeper dataKeeper,
 			int numClusters, float birthWeight, float deathWeight, float changeWeight) {
 		
+		
 		ClusterCollector initSolution = new ClusterCollector();
-		this.init(tables, initSolution);
+		this.init(dataKeeper, initSolution);
 		//System.out.println("init "+initSolution.getPhases().size());
 		//this.preProcessingTime(transitionHistory, initSolution);
 		//System.out.println("timePreProcessing "+initSolution.getPhases().size());
@@ -27,16 +29,16 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 		
 		
 		ClusterCollector currentSolution = new ClusterCollector();
-		currentSolution = this.newClusterCollector(tables, initSolution, birthWeight, deathWeight, changeWeight);
+		currentSolution = this.newClusterCollector(initSolution, birthWeight, deathWeight, changeWeight);
 
 		while (currentSolution.getClusters().size() > numClusters){
-			currentSolution = this.newClusterCollector(tables, currentSolution, birthWeight, deathWeight, changeWeight);
+			currentSolution = this.newClusterCollector(currentSolution, birthWeight, deathWeight, changeWeight);
 		}
 		return currentSolution;
 		
 	}
 	
-	public ClusterCollector newClusterCollector(TreeMap<String,PPLTable> pplTables, ClusterCollector prevCollector,float birthWeight, float deathWeight ,float changeWeight){
+	public ClusterCollector newClusterCollector(ClusterCollector prevCollector,float birthWeight, float deathWeight ,float changeWeight){
 		
 		ClusterCollector newCollector = new ClusterCollector();
 		ArrayList<Cluster> newClusters = new ArrayList<Cluster>();
@@ -96,9 +98,12 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 	}
 	
 	
-	public ClusterCollector init(TreeMap<String,PPLTable> pplTables, ClusterCollector clusterCollector){
+	public ClusterCollector init(GlobalDataKeeper dataKeeper, ClusterCollector clusterCollector){
 		
-		for (Map.Entry<String,PPLTable> pplTable : pplTables.entrySet()) {
+		TreeMap<String, PPLTable> tables=dataKeeper.getAllPPLTables();
+
+		
+		for (Map.Entry<String,PPLTable> pplTable : tables.entrySet()) {
 			Cluster c = new Cluster(pplTable.getValue().getBirthVersionID(),pplTable.getValue().getDeathVersionID(),pplTable.getValue().getTotalChanges());
 			clusterCollector.addCluster(c);
 			
