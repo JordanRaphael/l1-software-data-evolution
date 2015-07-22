@@ -19,7 +19,7 @@ import data.dataKeeper.GlobalDataKeeper;
 
 public class PhaseAnalyzerMainEngine {
 	
-	public PhaseAnalyzerMainEngine(String tmpDataset,Float tmpTimeWeight, Float tmpChangeWeight,
+	public PhaseAnalyzerMainEngine(String inputCsv,String outputAssessment1,String outputAssessment2,Float tmpTimeWeight, Float tmpChangeWeight,
 														Boolean tmpPreProcessingTime,Boolean tmpPreProcessingChange){
 		
 		timeWeight=tmpTimeWeight;
@@ -27,7 +27,9 @@ public class PhaseAnalyzerMainEngine {
 		preProcessingTime=tmpPreProcessingTime;
 		preProcessingChange=tmpPreProcessingChange;
 		
-		this.dataset=tmpDataset;
+		this.inputCsv=inputCsv;
+		this.outputAssessment1=outputAssessment1;
+		this.outputAssessment2=outputAssessment2;
 		
 		parserFactory = new ParserFactory();
 		parser = parserFactory.createParser("SimpleTextParser");
@@ -75,15 +77,14 @@ public class PhaseAnalyzerMainEngine {
 		
 		*/
 		
-		allPhaseCollectors.put(dataset, phaseCollectors);
+		allPhaseCollectors.put(inputCsv, phaseCollectors);
 		//phaseCollector = phaseExtractor.extractAtMostKPhases(transitionHistory, numPhases);
 	}
 	
 	public void extractReportAssessment1() throws IOException{
 		String report="";
-		String folder = new String("output/");
 		System.out.println("!!:"+phaseCollectors.size());
-		report=report+dataset+"\n";
+		report=report+inputCsv+"\n";
 		int position=0;
 		
 		String preProcessingTime="";
@@ -115,8 +116,8 @@ public class PhaseAnalyzerMainEngine {
 		
 		
 		
-		File file = new File(folder+dataset.replace(".csv", "")+"Assessment1.txt");
-		 System.out.println(dataset);
+		File file = new File(outputAssessment1);
+		 System.out.println(inputCsv);
 		// if file doesnt exists, then create it
 		if (!file.exists()) {
 			
@@ -129,7 +130,7 @@ public class PhaseAnalyzerMainEngine {
 		bw.write(report);
 		bw.close();
 		
-		System.out.println(dataset+"Done");
+		System.out.println(inputCsv+"Done");
 
 
 		
@@ -137,9 +138,8 @@ public class PhaseAnalyzerMainEngine {
 	
 	public void extractReportAssessment2() throws IOException{
 		String report="";
-		String folder = new String("output/");
 		System.out.println("!!:"+phaseCollectors.size());
-		report=report+dataset+"\n";
+		report=report+inputCsv+"\n";
 		int position=0;
 				
 		String preProcessingTime="";
@@ -172,7 +172,7 @@ public class PhaseAnalyzerMainEngine {
 		
 		position++;
 		
-		File file = new File(folder+dataset.replace(".csv", "")+"Assessment2.txt");
+		File file = new File(outputAssessment2);
 		 
 		// if file doesnt exists, then create it
 		if (!file.exists()) {
@@ -186,7 +186,7 @@ public class PhaseAnalyzerMainEngine {
 		bw.write(report);
 		bw.close();
 		
-		System.out.println(dataset+"Done");
+		System.out.println(inputCsv+"Done");
 
 
 		
@@ -257,9 +257,8 @@ public class PhaseAnalyzerMainEngine {
 	}
 	
 	public void parseInput(){
-		String input="input/"+dataset.replace(".txt", ".csv");
 
-		this.transitionHistory = parser.parse(input, ";"); 
+		this.transitionHistory = parser.parse(inputCsv, ";"); 
 		this.transitionHistory.consoleVerticalReport();
 	}
 	
@@ -272,7 +271,9 @@ public class PhaseAnalyzerMainEngine {
 	//private String report;
 	private ArrayList<PhaseCollector> phaseCollectors;
 	private HashMap<String,ArrayList<PhaseCollector>> allPhaseCollectors;
-	private String dataset;
+	private String inputCsv;
+	private String outputAssessment1;
+	private String outputAssessment2;
 	private float timeWeight;
 	private float changeWeight;
 	private boolean preProcessingTime;

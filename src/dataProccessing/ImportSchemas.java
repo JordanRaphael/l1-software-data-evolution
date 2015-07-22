@@ -45,11 +45,13 @@ public class ImportSchemas {
 	private static ArrayList<Schema> allSchemas = new ArrayList<Schema>();
 
 	private String filepath=null;
+	private String transitionsFile=null;
 	private static ArrayList<TransitionList> allTransitions = new ArrayList<TransitionList>();
 
 	
-	public ImportSchemas(String tmpFilepath) {
+	public ImportSchemas(String tmpFilepath,String transitionsFile) {
 		filepath=tmpFilepath;
+		this.transitionsFile=transitionsFile;
 	}
 
 	@SuppressWarnings("static-access")
@@ -120,7 +122,7 @@ public class ImportSchemas {
 	}
 
 
-	public static void makeTransitions(Transitions tl) throws IOException {
+	public  void makeTransitions(Transitions tl) throws IOException {
 		try {
 
 
@@ -128,14 +130,14 @@ public class ImportSchemas {
 			JAXBContext jaxbContext = JAXBContext.newInstance(Update.class,Deletion.class, Insersion.class, TransitionList.class, Transitions.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			jaxbMarshaller.marshal(tl, new FileOutputStream("Transitions.xml"));
+			jaxbMarshaller.marshal(tl, new FileOutputStream(transitionsFile));
 
 
 			//***********************************************
 
 			JAXBContext jaxbContext1 = JAXBContext.newInstance(Update.class,Deletion.class, Insersion.class, TransitionList.class, Transitions.class);
 			Unmarshaller u=jaxbContext1.createUnmarshaller();
-			File inputFile=new File("Transitions.xml");
+			File inputFile=new File(transitionsFile);
 			Transitions root = (Transitions) u.unmarshal(inputFile);
 
 

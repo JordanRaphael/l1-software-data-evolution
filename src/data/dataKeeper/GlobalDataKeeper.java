@@ -22,13 +22,15 @@ public class GlobalDataKeeper {
 	private TreeMap<String,PPLTransition> allPPLTransitions = new TreeMap<String,PPLTransition>();
 	private String 	projectDataFolder=null;
 	private String filename=null;
+	private String transitionsFile="";
 	private String oldVersion=null;
 	private String newVersion=null;
 	
 
-	public GlobalDataKeeper(String fl){
+	public GlobalDataKeeper(String fl,String transitionsFile){
 		
 		filename=fl;
+		this.transitionsFile=transitionsFile;
 	}
 	
 //	public GlobalDataKeeper(TreeMap<String,PPLSchema> tmpAllPPLSchemas,TreeMap<String,PPLTable> tmpAllTables,ArrayList<AtomicChange> tmpAtomicChanges,
@@ -53,7 +55,7 @@ public class GlobalDataKeeper {
 	
 	public void setData(){
 		
-		Worker w = new Worker(filename);
+		Worker w = new Worker(filename,transitionsFile);
 		try {
 			w.work();
 		} catch (IOException e) {

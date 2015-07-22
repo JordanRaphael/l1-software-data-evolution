@@ -19,6 +19,8 @@ import data.pplTransition.TableChange;
 public class Worker {
 	
 	private String filename=null;
+	private String transitionsFile=null;
+
 	//private GlobalDataKeeper dK;
 	private TreeMap<String,PPLSchema> allPPLSchemas = new TreeMap<String,PPLSchema>();
 	private TreeMap<String,PPLTable> allTables = new TreeMap<String,PPLTable>();
@@ -26,15 +28,16 @@ public class Worker {
 	private TreeMap<String,TableChange> tableChanges = new TreeMap<String,TableChange>();
 	private TreeMap<String,PPLTransition> allPPLTransitions = new TreeMap<String,PPLTransition>();
 	
-	public Worker(String tmpFilename){
+	public Worker(String tmpFilename,String transitionsFile){
 		
 		filename=tmpFilename;
+		this.transitionsFile=transitionsFile;
 		
 	}
 
 	public void work() throws IOException{
 		
-		ImportSchemas filesToImportData=new ImportSchemas(filename);
+		ImportSchemas filesToImportData=new ImportSchemas(filename,transitionsFile);
 		try {
 			filesToImportData.loadDataset();
 		} catch (IOException e) {

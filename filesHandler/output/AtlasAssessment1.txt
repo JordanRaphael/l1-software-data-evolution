@@ -1,6 +1,6 @@
 Atlas.csv
 WC: 0.0	WT: 0.0
-PreProcessingChanges:ON	PreProcessingTime:ON
+PreProcessingChanges:OFF	PreProcessingTime:OFF
 Start	End	TotUpd	mi	ei	abs	pow	sum
 0	83	871	10.37	0	10.37	10.37
 				6	4.37	4.37

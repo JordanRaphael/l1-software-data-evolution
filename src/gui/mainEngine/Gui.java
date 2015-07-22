@@ -19,7 +19,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -143,6 +145,15 @@ public class Gui extends JFrame implements ActionListener{
 	private Boolean preProcessingTime=null;
 	private Boolean preProcessingChange=null;
 	
+	private String projectName="";
+	private String datasetTxt="";
+	private String inputCsv="";
+	private String outputAssessment1="";
+	private String outputAssessment2="";
+	private String transitionsFile="";
+
+	
+	
 	
 	/**
 	 * Launch the application.
@@ -179,9 +190,9 @@ public class Gui extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent arg0) {
 				
 				String fileName=null;
-				
+				File dir=new File("filesHandler/inis");
 				JFileChooser fcOpen1 = new JFileChooser();
-				
+				fcOpen1.setCurrentDirectory(dir);
 				int returnVal = fcOpen1.showDialog(Gui.this, "Open");
 				
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -978,7 +989,7 @@ public class Gui extends JFrame implements ActionListener{
 			            
 			            System.out.println(timeWeight+" "+changeWeight);
 			            
-						PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(project.replace(".txt", ".csv"),timeWeight,changeWeight,preProcessingTime,preProcessingChange);
+						PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(inputCsv,outputAssessment1,outputAssessment2,timeWeight,changeWeight,preProcessingTime,preProcessingChange);
 	
 						Float b=new Float(0.3);
 						Float d=new Float(0.3);
@@ -1548,7 +1559,56 @@ public class Gui extends JFrame implements ActionListener{
 		//w.work();
 		
 		
-		globalDataKeeper=new GlobalDataKeeper(fileName);
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
+		
+		String line;
+		
+		while(true) {
+			line = br.readLine();
+			if (line == null) 
+				break;
+			//System.out.println(line);
+			if(line.contains("Project-name")){
+				String[] projectNameTable=line.split(":");
+				projectName=projectNameTable[1];
+			}
+			else if(line.contains("Dataset-txt")){
+				String[] datasetTxtTable=line.split(":");
+				datasetTxt=datasetTxtTable[1];
+			}
+			else if(line.contains("Input-csv")){
+				String[] inputCsvTable=line.split(":");
+				inputCsv=inputCsvTable[1];
+			}
+			else if(line.contains("Assessement1-output")){
+				String[] outputAss1=line.split(":");
+				outputAssessment1=outputAss1[1];
+			}
+			else if(line.contains("Assessement2-output")){
+				String[] outputAss2=line.split(":");
+				outputAssessment2=outputAss2[1];
+			}
+			else if(line.contains("Transition-xml")){
+				String[] transitionXmlTable=line.split(":");
+				transitionsFile=transitionXmlTable[1];
+			}
+			
+			
+		};	
+		
+		br.close();
+		
+		
+		
+		System.out.println("Project Name:"+projectName);
+		System.out.println("Dataset txt:"+datasetTxt);
+		System.out.println("Input Csv:"+inputCsv);
+		System.out.println("Output Assessment1:"+outputAssessment1);
+		System.out.println("Output Assessment2:"+outputAssessment2);
+		System.out.println("Transitions File:"+transitionsFile);
+
+		
+		globalDataKeeper=new GlobalDataKeeper(datasetTxt,transitionsFile);
 		globalDataKeeper.setData();
 		
 		resultsDataKeeper = new ResultsDataKeeper();
