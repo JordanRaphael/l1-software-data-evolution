@@ -1,53 +1,62 @@
 package algorithms;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
-import results.MostUpdatedAttributesResults;
+import data.pplSqlSchema.PPLAttribute;
+import data.pplSqlSchema.PPLSchema;
+import data.pplSqlSchema.PPLTable;
+import data.pplTransition.AtomicChange;
+import data.pplTransition.PPLTransition;
+import data.pplTransition.TableChange;
 import results.Results;
-import sqlSchema.Attribute;
-import sqlSchema.Schema;
-import sqlSchema.Table;
-import transitions.Transition;
-import transitions.TransitionList;
+import results.ResultsFactory;
 
 public class MostUpdatedAttributesAlgo implements Algorithm{
 	
-	private static ArrayList<Schema> AllSchemas=new ArrayList<Schema>();
-	private ArrayList<TransitionList> AllTransitions=new ArrayList<TransitionList>();
+	private static TreeMap<String,PPLSchema> allPPLSchemas=new TreeMap<String,PPLSchema>();
+	private TreeMap<String,PPLTransition> allPPLTransitions=new TreeMap<String,PPLTransition>();
+	private ArrayList<PPLAttribute> mostUpdatedAttributes=new ArrayList<PPLAttribute>();
 	private int k=0;
 	private Results results=null;
 	
 	
-	public MostUpdatedAttributesAlgo(ArrayList<Schema> tmpAllSchemas,
-			ArrayList<TransitionList> tmpAllTransitions , int tmpk){
-		
-		AllSchemas=tmpAllSchemas;
-		AllTransitions=tmpAllTransitions;
+	public MostUpdatedAttributesAlgo(TreeMap<String,PPLSchema> tmpAllSchemas,
+			TreeMap<String,PPLTransition> tmpAllTransitions , int tmpk){
+		allPPLSchemas=tmpAllSchemas;
+		allPPLTransitions=tmpAllTransitions;
 		k=tmpk;
 		
-		
 	}
-	
+
+//	public void setAll(TreeMap<String,PPLSchema> tmpAllSchemas,
+//			TreeMap<String,PPLTransition> tmpAllTransitions , int tmpk){
+//		
+//		allPPLSchemas=tmpAllSchemas;
+//		allPPLTransitions=tmpAllTransitions;
+//		k=tmpk;
+//		
+//	}
 	
 	public Results compute(){
 		
-		ArrayList<Attribute> mostUpdatedAttributes=new ArrayList<Attribute>();
 		ArrayList<String> attributeName=new ArrayList<String>();
 		
 		int found=0;
 		int attributeTotalChanges=0;
 		
-		for(int i=0; i<AllSchemas.size(); i++){
+		for (Map.Entry<String, PPLSchema> pplSc : allPPLSchemas.entrySet()) {
 			
-			Schema oneSchema=AllSchemas.get(i);
+			PPLSchema oneSchema=pplSc.getValue();
 			
 			for(int j=0; j<oneSchema.getTables().size(); j++){
 				
-				Table currentTable=oneSchema.getTableAt(j);
+				PPLTable currentTable=oneSchema.getTableAt(j);
 				
 				for(int k=0; k<currentTable.getAttrs().size(); k++){
 					
-					Attribute currentAttribute=currentTable.getAttrAt(k);
+					PPLAttribute currentAttribute=currentTable.getAttrAt(k);
 					
 					for(int l=0; l<attributeName.size(); l++){
 						
@@ -61,7 +70,7 @@ public class MostUpdatedAttributesAlgo implements Algorithm{
 					
 					if(found==1){
 						found=0;
-						currentAttribute=new Attribute();
+						currentAttribute=new PPLAttribute();
 					}
 					else{
 						
@@ -69,7 +78,7 @@ public class MostUpdatedAttributesAlgo implements Algorithm{
 						currentAttribute.setTotalAttributeChanges(attributeTotalChanges);
 						mostUpdatedAttributes.add(currentAttribute);
 						attributeName.add(currentAttribute.getName());
-						currentAttribute=new Attribute();
+						currentAttribute=new PPLAttribute();
 						attributeTotalChanges=0;
 						
 						
@@ -78,7 +87,7 @@ public class MostUpdatedAttributesAlgo implements Algorithm{
 					
 				}
 				
-				currentTable=new Table();
+				currentTable=new PPLTable();
 				
 			}
 			
@@ -91,7 +100,8 @@ public class MostUpdatedAttributesAlgo implements Algorithm{
 		}
 		
 		
-		results=new MostUpdatedAttributesResults();
+		ResultsFactory rf = new ResultsFactory("MostUpdatedAttributesResults");
+		results=rf.createResult();
 		results.setResults(mostUpdatedAttributes);
 		
 		return results;
@@ -99,31 +109,29 @@ public class MostUpdatedAttributesAlgo implements Algorithm{
 		
 	}
 	
-	private int calculateAttributeTotalChanges(Attribute currentAttribute){
+	private int calculateAttributeTotalChanges(PPLAttribute currentAttribute){
 		
 		int assistantTotalChanges=0;
 		
-		for(int i=0;i<AllTransitions.size(); i++){
+		for(Map.Entry<String, PPLTransition> pplTr:allPPLTransitions.entrySet()){
 			
-			TransitionList  tmpTL=AllTransitions.get(i);
-			
-			ArrayList<Transition> tmpTR=tmpTL.getList();
+			PPLTransition  tmpTL=pplTr.getValue();
+			ArrayList<TableChange> tmpTR=tmpTL.getTableChanges();
+
 			if(tmpTR!=null){
 				for(int j=0; j<tmpTR.size(); j++){
 					
-					Transition tr=tmpTR.get(j);
-					ArrayList<Attribute> affectedAttributes=(ArrayList<Attribute>) tr.getAffAttributes();
-				
-					for(int l=0; l<affectedAttributes.size(); l++){
-						
-						if(affectedAttributes.get(l).getName().equals(currentAttribute.getName())){
-							assistantTotalChanges++;
+					TableChange tC=tmpTR.get(j);
+					ArrayList<AtomicChange> aCs=tC.getTableAtChForOneTransition();
+					if(aCs!=null){
+
+						for(int l=0; l<aCs.size(); l++){
+							if(aCs.get(l).getAffectedAttrName().equals(currentAttribute.getName())){
+								assistantTotalChanges++;
+							}
+							
 						}
-						
 					}
-					
-					tr=null;
-					affectedAttributes=new ArrayList<Attribute>();
 					
 				}
 			
@@ -136,8 +144,8 @@ public class MostUpdatedAttributesAlgo implements Algorithm{
 		
 	}
 	
-	private ArrayList<Attribute> sortAttributesByTotalChanges(ArrayList<Attribute> tmpMostUpdatedAttributes){
-		ArrayList<Attribute> sortingTables=new ArrayList<Attribute>();
+	private ArrayList<PPLAttribute> sortAttributesByTotalChanges(ArrayList<PPLAttribute> tmpMostUpdatedAttributes){
+		ArrayList<PPLAttribute> sortingTables=new ArrayList<PPLAttribute>();
 		
 		for(int i=0; i<tmpMostUpdatedAttributes.size(); i++){
 			
@@ -168,6 +176,15 @@ public class MostUpdatedAttributesAlgo implements Algorithm{
 		
 		return sortingTables;
 	}
+
+
+	@Override
+	public void compute(String compute) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 	
 
 }

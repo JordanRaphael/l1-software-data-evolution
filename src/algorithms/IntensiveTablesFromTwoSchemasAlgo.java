@@ -1,108 +1,46 @@
 package algorithms;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.TreeMap;
 
-import javax.swing.JOptionPane;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-
-import parser.Delta;
-import parser.HecateParser;
-import results.IntensiveTablesFromTwoSchemasResults;
+import data.pplSqlSchema.PPLSchema;
+import data.pplSqlSchema.PPLTable;
+import data.pplTransition.AtomicChange;
+import data.pplTransition.TableChange;
 import results.Results;
-import sqlSchema.Schema;
-import sqlSchema.Table;
-import transitions.Deletion;
-import transitions.Insersion;
-import transitions.Transition;
-import transitions.TransitionList;
-import transitions.Transitions;
-import transitions.Update;
+import results.ResultsFactory;
 
 public class IntensiveTablesFromTwoSchemasAlgo implements Algorithm {
 	
 	
-	private static ArrayList<TransitionList> CurrentTransitions=new ArrayList<TransitionList>();
-	private Schema firstSchema=null;
-	private Schema secondSchema=null;
-	private String projectDataFolder=null;
+	private PPLSchema firstSchema=null;
+	private PPLSchema secondSchema=null;
 	private int k=0;
+	private TreeMap<String,TableChange> tableChForTwoSchemas=null;
 	private Results results=null;
-	
-	public IntensiveTablesFromTwoSchemasAlgo(
-			Schema tmpFirstSchema,Schema tmpSecondSchema,String tmpProject , int tmpk){
+	private ArrayList<PPLTable> mostIntensiveTables=new ArrayList<PPLTable>();
 
+	
+	public IntensiveTablesFromTwoSchemasAlgo(PPLSchema tmpFirstSchema,PPLSchema tmpSecondSchema,TreeMap<String,TableChange> tmpTableCh,int tmpk){
+	
 		firstSchema=tmpFirstSchema;
 		secondSchema=tmpSecondSchema;
-		projectDataFolder=tmpProject;
+		tableChForTwoSchemas=tmpTableCh;
 		k=tmpk;
-		
 	}
 	
-	public void findDifferenciesFromTwoSchemas() throws IOException{
-		
-		String sStandardString=projectDataFolder+File.separator;
-		Transitions trs = new Transitions();
-		
-		String sFinalString=sStandardString+firstSchema.getName();
-    	
-    	String sFinalString2=sStandardString+secondSchema.getName();
-    	
-    	Schema oldSchema = HecateParser.parse(sFinalString);
-		oldSchema.setTitle(firstSchema.getName());
-		Schema newSchema = HecateParser.parse(sFinalString2);
-		newSchema.setTitle(secondSchema.getName());
-		
-		Delta delta = new Delta();
-		
-		TransitionList tmpTransitionList =new TransitionList();
-		tmpTransitionList=delta.minus(oldSchema, newSchema); 
-		trs.add(tmpTransitionList);
-		
-		test(trs);
-		
-		//calculateChangesforTheseVersions();
-		
-		
-		
-	}
-	
-	private static void test(Transitions tl) throws FileNotFoundException {
-		try {
-			
-			JAXBContext jaxbContext = JAXBContext.newInstance(Update.class,Deletion.class, Insersion.class, TransitionList.class, Transitions.class);
-			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			jaxbMarshaller.marshal(tl, new FileOutputStream("TransitionsBetweenTwoVersions.xml"));
-			
-			
-			//***********************************************
-			
-			JAXBContext jaxbContext1 = JAXBContext.newInstance(Update.class,Deletion.class, Insersion.class, TransitionList.class, Transitions.class);
-			Unmarshaller u=jaxbContext1.createUnmarshaller();
-			File inputFile=new File("TransitionsBetweenTwoVersions.xml");
-			Transitions root = (Transitions) u.unmarshal(inputFile);
-			
-			CurrentTransitions=(ArrayList<TransitionList>) root.getList();
-			
-			
-		} catch (JAXBException e) {
-			JOptionPane.showMessageDialog(null, "Something seems wrong with this file");
-			return;
-			//e.printStackTrace();
-		}
-	}
+//	public void setAll(PPLSchema tmpFirstSchema,PPLSchema tmpSecondSchema,TreeMap<String,TableChange> tmpTableCh,int tmpk){
+//		
+//		firstSchema=tmpFirstSchema;
+//		secondSchema=tmpSecondSchema;
+//		tableChForTwoSchemas=tmpTableCh;
+//		k=tmpk;
+//		
+//	}
 	
 	public Results compute(){
 		
-		ArrayList<Table> mostIntensiveTables=new ArrayList<Table>();
-		ArrayList<Schema> currentSchemas=new ArrayList<Schema>();
+		ArrayList<PPLSchema> currentSchemas=new ArrayList<PPLSchema>();
 		currentSchemas.add(firstSchema);
 		currentSchemas.add(secondSchema);
 		
@@ -113,11 +51,11 @@ public class IntensiveTablesFromTwoSchemasAlgo implements Algorithm {
 		
 		for(int i=0;i<currentSchemas.size(); i++){
 			
-			Schema oneSchema=currentSchemas.get(i);
+			PPLSchema oneSchema=currentSchemas.get(i);
 			
 			for(int j=0; j<oneSchema.getTables().size(); j++){
 				
-				Table currentTable=oneSchema.getTableAt(j);	
+				PPLTable currentTable=oneSchema.getTableAt(j);	
 					
 				for(int l=0; l<tableName.size(); l++){
 						
@@ -130,7 +68,7 @@ public class IntensiveTablesFromTwoSchemasAlgo implements Algorithm {
 	
 				if(found==1){
 					found=0;
-					currentTable=new Table();
+					currentTable=new PPLTable();
 				}
 				else{
 					
@@ -138,7 +76,7 @@ public class IntensiveTablesFromTwoSchemasAlgo implements Algorithm {
 					currentTable.setCurrentChanges(tableCurrentChanges);
 					mostIntensiveTables.add(currentTable);
 					tableName.add(currentTable.getName());
-					currentTable=new Table();
+					currentTable=new PPLTable();
 					tableCurrentChanges=0;
 					
 					
@@ -154,8 +92,8 @@ public class IntensiveTablesFromTwoSchemasAlgo implements Algorithm {
 			mostIntensiveTables.remove(i);
 		}
 		
-		
-		results=new IntensiveTablesFromTwoSchemasResults();
+		ResultsFactory rf = new ResultsFactory("IntensiveTablesFromTwoSchemaResults");
+		results=rf.createResult();
 		results.setResults(mostIntensiveTables);
 		
 		return results;
@@ -163,27 +101,25 @@ public class IntensiveTablesFromTwoSchemasAlgo implements Algorithm {
 		
 	}
 	
-	private int calculateChangesForThisTable(Table currentTable){
+	private int calculateChangesForThisTable(PPLTable currentTable){
 		
 		int changesForThisTable=0;
 		
-		ArrayList<Transition> transitions=CurrentTransitions.get(0).getList();
-		if(transitions!=null){
-			for(int i=0; i<transitions.size(); i++){
+		TableChange t=tableChForTwoSchemas.get(currentTable.getName());
+
+		TreeMap<String, ArrayList<AtomicChange>> atChs=t.getTableAtomicChanges();
+		
+		ArrayList<AtomicChange> atChsAr=atChs.get(secondSchema.getName());
+		
+		changesForThisTable=atChsAr.size();
 				
-				if(currentTable.getName().equals(transitions.get(i).getAffTable().getName())){
-					changesForThisTable=changesForThisTable+transitions.get(i).getNumOfAffAttributes();
-				}
-				
-			}
-		}
 		return changesForThisTable;
 	
 	}
 	
-	private ArrayList<Table> sortByCurrentChanges(ArrayList<Table> mostIntensiveTables){
+	private ArrayList<PPLTable> sortByCurrentChanges(ArrayList<PPLTable> mostIntensiveTables){
 		
-		ArrayList<Table> sortingTables=new ArrayList<Table>();
+		ArrayList<PPLTable> sortingTables=new ArrayList<PPLTable>();
 		
 		for(int i=0; i<mostIntensiveTables.size(); i++){
 			
@@ -215,7 +151,15 @@ public class IntensiveTablesFromTwoSchemasAlgo implements Algorithm {
 		return sortingTables;
 		
 	}
-	
-	
+
+
+
+	@Override
+	public void compute(String compute) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 }

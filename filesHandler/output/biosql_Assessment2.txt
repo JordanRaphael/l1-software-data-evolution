@@ -1,0 +1,6 @@
+filesHandler/input/biosql.csv
+WC: 0.0	WT: 1.0
+PreProcessingChanges:OFF	PreProcessingTime:ON
+Phases	dTime	dChange	avgDChange
+
+
