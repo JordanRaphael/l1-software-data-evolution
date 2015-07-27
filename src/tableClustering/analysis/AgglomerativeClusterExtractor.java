@@ -28,17 +28,17 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 		
 		
 		ClusterCollector currentSolution = new ClusterCollector();
-		currentSolution = this.newClusterCollector(initSolution, birthWeight, deathWeight, changeWeight);
+		currentSolution = this.newClusterCollector(initSolution, birthWeight, deathWeight, changeWeight,dataKeeper.getAllPPLSchemas().size()-1);
 
 		while (currentSolution.getClusters().size() > numClusters){
 
-			currentSolution = this.newClusterCollector(currentSolution, birthWeight, deathWeight, changeWeight);
+			currentSolution = this.newClusterCollector(currentSolution, birthWeight, deathWeight, changeWeight,dataKeeper.getAllPPLSchemas().size()-1);
 		}
 		return currentSolution;
 		
 	}
 	
-	public ClusterCollector newClusterCollector(ClusterCollector prevCollector,float birthWeight, float deathWeight ,float changeWeight){
+	public ClusterCollector newClusterCollector(ClusterCollector prevCollector,float birthWeight, float deathWeight ,float changeWeight,int dbDuration){
 		
 		ClusterCollector newCollector = new ClusterCollector();
 		ArrayList<Cluster> newClusters = new ArrayList<Cluster>();
@@ -61,7 +61,7 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 	    while (clusterIter.hasNext()){
 	      Cluster c = clusterIter.next();
 	      pI++;
-	      distances[pI] = c.distance(previousCluster,birthWeight,deathWeight,changeWeight);
+	      distances[pI] = c.distance(previousCluster,birthWeight,deathWeight,changeWeight,dbDuration);
 	      
 	      previousCluster = c;
 	    }

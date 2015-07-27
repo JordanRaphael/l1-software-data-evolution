@@ -47,16 +47,25 @@ public class Cluster {
 		return this.death;
 	}
 	
-	public double distance(Cluster anotherCluster,float birthWeight, float deathWeight ,float changeWeight){
+	public double distance(Cluster anotherCluster,float birthWeight, float deathWeight ,float changeWeight,int dbDuration){
 		
 		double changeDistance = Math.abs(this.totalChanges - anotherCluster.totalChanges);
-	
+		double normalizedChangeDistance= Math.abs((this.totalChanges - anotherCluster.totalChanges)/((double)(this.totalChanges + anotherCluster.totalChanges)));
+		System.out.println("C:"+changeDistance+"-"+normalizedChangeDistance);
+		
 		double birthDistance = Math.abs(this.birth-anotherCluster.birth);
-		double deathDistance = Math.abs(this.death-anotherCluster.death);
+		double normalizedBirthDistance = Math.abs((this.birth-anotherCluster.birth)/(double)dbDuration);
+		System.out.println("B:"+birthDistance+"-"+normalizedBirthDistance);
 
+		double deathDistance = Math.abs(this.death-anotherCluster.death);
+		double normalizedDeathDistance = Math.abs((this.death-anotherCluster.death)/(double)dbDuration);
+		System.out.println("D:"+deathDistance+"-"+normalizedDeathDistance);
 
 		double totalDistance = changeWeight * changeDistance + birthWeight * birthDistance + deathWeight * deathDistance;
-		return totalDistance;
+		double normalizedTotalDistance = changeWeight * normalizedChangeDistance + birthWeight * normalizedBirthDistance + deathWeight * normalizedDeathDistance;
+		System.out.println("TD:"+totalDistance+"-"+normalizedTotalDistance);
+		
+		return normalizedTotalDistance;
 		
 	}
 	

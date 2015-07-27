@@ -33,6 +33,8 @@ public class PPLTablesConstruction {
 				if(!allPPLTables.containsKey(oneTable.getName())){
 					oneTable.setBirth(oneSchema.getName());
 					oneTable.setBirthVersionID(versionID);
+					oneTable.setDeath(allPPLSchemas.get(allPPLSchemas.lastKey()).getName());
+					oneTable.setDeathVersionID(allPPLSchemas.size()-1);
 					oneTable.setActive();
 					allPPLTables.put(oneTable.getName(),oneTable);
 					oneTable=new PPLTable();
