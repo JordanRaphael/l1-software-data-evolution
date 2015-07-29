@@ -188,7 +188,7 @@ public String[] constructColumns(){
 				TreeMap<Integer,PPLTransition> phasePPLTransitions=phases.get(p).getPhasePPLTransitions();
 				
 				for(Map.Entry<Integer, PPLTransition> tr:phasePPLTransitions.entrySet()){
-					if(tr.getValue().getOldVersionName().equals(schemaName)){
+					if(tr.getValue().getOldVersionName().equals(schemaName)|| tr.getValue().getNewVersionName().equals(schemaName)){
 						pointerCell=p+1;
 						break;
 					}
