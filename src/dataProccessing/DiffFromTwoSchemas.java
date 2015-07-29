@@ -169,7 +169,7 @@ public class DiffFromTwoSchemas {
 						}
 					}
 					
-					AtomicChange tmpAtomicChange= new AtomicChange(transitions.get(j).getAffTable().getName(),tmpHecAttribute.getName(),tmpType,firstSchema,secondSchema);
+					AtomicChange tmpAtomicChange= new AtomicChange(transitions.get(j).getAffTable().getName(),tmpHecAttribute.getName(),tmpType,firstSchema,secondSchema,j);
 					
 					atomicChanges.add(tmpAtomicChange);
 				
@@ -190,33 +190,33 @@ public class DiffFromTwoSchemas {
 			
 			if(tableChangesForTwoSchemas.containsKey(atomicChanges.get(i).getAffectedTableName())){
 				
-				String[] versions=atomicChanges.get(i).getOldNewVersions();
+				Integer transitionID=atomicChanges.get(i).getTransitionID();
 				
-				if(tableChangesForTwoSchemas.get(atomicChanges.get(i).getAffectedTableName()).getTableAtomicChanges().containsKey(versions[1])){
+				if(tableChangesForTwoSchemas.get(atomicChanges.get(i).getAffectedTableName()).getTableAtomicChanges().containsKey(transitionID)){
 				
-					tableChangesForTwoSchemas.get(atomicChanges.get(i).getAffectedTableName()).getTableAtomicChanges().get(versions[1]).add(atomicChanges.get(i));
+					tableChangesForTwoSchemas.get(atomicChanges.get(i).getAffectedTableName()).getTableAtomicChanges().get(transitionID).add(atomicChanges.get(i));
 				
 				}
 				else{
 					
 					ArrayList<AtomicChange> tmpAtomicChanges = new ArrayList<AtomicChange>();
 					
-					tableChangesForTwoSchemas.get(atomicChanges.get(i).getAffectedTableName()).getTableAtomicChanges().put(versions[1], tmpAtomicChanges);
+					tableChangesForTwoSchemas.get(atomicChanges.get(i).getAffectedTableName()).getTableAtomicChanges().put(transitionID, tmpAtomicChanges);
 					
-					tableChangesForTwoSchemas.get(atomicChanges.get(i).getAffectedTableName()).getTableAtomicChanges().get(versions[1]).add(atomicChanges.get(i));
+					tableChangesForTwoSchemas.get(atomicChanges.get(i).getAffectedTableName()).getTableAtomicChanges().get(transitionID).add(atomicChanges.get(i));
 					
 				}
 				
 			}
 			else{
 				
-				TreeMap<String,ArrayList<AtomicChange>> tmpAtomicChanges = new TreeMap<String,ArrayList<AtomicChange>>();
+				TreeMap<Integer,ArrayList<AtomicChange>> tmpAtomicChanges = new TreeMap<Integer,ArrayList<AtomicChange>>();
 						
-				String[] versions=atomicChanges.get(i).getOldNewVersions();
+				Integer transitionID=atomicChanges.get(i).getTransitionID();
 
-				tmpAtomicChanges.put(versions[1],new ArrayList<AtomicChange>());
+				tmpAtomicChanges.put(transitionID,new ArrayList<AtomicChange>());
 				
-				tmpAtomicChanges.get(versions[1]).add(atomicChanges.get(i));
+				tmpAtomicChanges.get(transitionID).add(atomicChanges.get(i));
 
 				TableChange tmpTableChange= new TableChange(atomicChanges.get(i).getAffectedTableName(), tmpAtomicChanges);
 				

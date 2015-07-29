@@ -26,7 +26,7 @@ public class Worker {
 	private TreeMap<String,PPLTable> allTables = new TreeMap<String,PPLTable>();
 	private ArrayList<AtomicChange> atomicChanges = new ArrayList<AtomicChange>();
 	private TreeMap<String,TableChange> tableChanges = new TreeMap<String,TableChange>();
-	private TreeMap<String,PPLTransition> allPPLTransitions = new TreeMap<String,PPLTransition>();
+	private TreeMap<Integer,PPLTransition> allPPLTransitions = new TreeMap<Integer,PPLTransition>();
 	
 	public Worker(String tmpFilename,String transitionsFile){
 		
@@ -102,7 +102,7 @@ public class Worker {
 		
 	}
 	
-	public TreeMap<String,PPLTransition> getAllPPLTransitions(){
+	public TreeMap<Integer,PPLTransition> getAllPPLTransitions(){
 		
 		return allPPLTransitions;
 		

@@ -25,12 +25,12 @@ public class FindCoChanges implements Algorithm {
 	
 	@SuppressWarnings("unused")
 	private static TreeMap<String,PPLSchema> allPPLSchemas=new TreeMap<String,PPLSchema>();
-	private TreeMap<String,PPLTransition> allPPLTransitions=new TreeMap<String,PPLTransition>();
+	private TreeMap<Integer,PPLTransition> allPPLTransitions=new TreeMap<Integer,PPLTransition>();
 	private TreeMap<String,PPLTable> allTables=new TreeMap<String,PPLTable>();
 	private String project=null;
 	
 	public FindCoChanges(TreeMap<String,PPLSchema> tmpAllSchemas,
-			TreeMap<String,PPLTransition> tmpAllTransitions,TreeMap<String,PPLTable> tmpAllTables,String tmpProject){
+			TreeMap<Integer,PPLTransition> tmpAllTransitions,TreeMap<String,PPLTable> tmpAllTables,String tmpProject){
 		allPPLSchemas=tmpAllSchemas;
 		allPPLTransitions=tmpAllTransitions;
 		allTables=tmpAllTables;
@@ -259,7 +259,7 @@ public class FindCoChanges implements Algorithm {
 		
 		System.out.println("23r2dfcsdd! "+allPPLTransitions.size());
 
-		for(Map.Entry<String, PPLTransition> pplTr:allPPLTransitions.entrySet()){
+		for(Map.Entry<Integer, PPLTransition> pplTr:allPPLTransitions.entrySet()){
 			
 			PPLTransition  tmpTL=pplTr.getValue();
 			ArrayList<TableChange> tmpTR=tmpTL.getTableChanges();
@@ -346,13 +346,13 @@ public class FindCoChanges implements Algorithm {
 		
 		int pos=0;
 		
-		String[] mapKeys = new String[allPPLTransitions.size()];
+		Integer[] mapKeys = new Integer[allPPLTransitions.size()];
 		int pos2 = 0;
-		for (String key : allPPLTransitions.keySet()) {
+		for (Integer key : allPPLTransitions.keySet()) {
 		    mapKeys[pos2++] = key;
 		}
 		
-		for(Map.Entry<String, PPLTransition> pplTr:allPPLTransitions.entrySet()){
+		for(Map.Entry<Integer, PPLTransition> pplTr:allPPLTransitions.entrySet()){
 			
 			PPLTransition  tmpTL=pplTr.getValue();
 			ArrayList<TableChange> tmpTR=tmpTL.getTableChanges();
@@ -394,7 +394,7 @@ public class FindCoChanges implements Algorithm {
 					
 					for(int k=pos; k<decision; k++){
 						
-						String pos3=mapKeys[k];
+						Integer pos3=mapKeys[k];
 
 						PPLTransition  tmpTL1=allPPLTransitions.get(pos3);
 						ArrayList<TableChange> tmpTR1=tmpTL1.getTableChanges();
@@ -464,13 +464,13 @@ public class FindCoChanges implements Algorithm {
 		
 		int pos=0;
 		
-		String[] mapKeys = new String[allPPLTransitions.size()];
+		Integer[] mapKeys = new Integer[allPPLTransitions.size()];
 		int pos2 = 0;
-		for (String key : allPPLTransitions.keySet()) {
+		for (Integer key : allPPLTransitions.keySet()) {
 		    mapKeys[pos2++] = key;
 		}
 		
-		for(Map.Entry<String, PPLTransition> pplTr:allPPLTransitions.entrySet()){
+		for(Map.Entry<Integer, PPLTransition> pplTr:allPPLTransitions.entrySet()){
 			
 			PPLTransition  tmpTL=pplTr.getValue();
 			ArrayList<TableChange> tmpTR=tmpTL.getTableChanges();
@@ -512,7 +512,7 @@ public class FindCoChanges implements Algorithm {
 					
 					for(int k=pos; k<decision; k++){
 						
-						String pos3=mapKeys[k];
+						Integer pos3=mapKeys[k];
 
 						
 						PPLTransition  tmpTL1=allPPLTransitions.get(pos3);

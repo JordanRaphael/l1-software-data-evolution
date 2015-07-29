@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import phaseAnalyzer.commons.PhaseCollector;
 import data.pplSqlSchema.PPLSchema;
 import data.pplSqlSchema.PPLTable;
 import data.pplTransition.AtomicChange;
@@ -19,7 +20,8 @@ public class GlobalDataKeeper {
 	private ArrayList<AtomicChange> atomicChanges = new ArrayList<AtomicChange>();
 	private TreeMap<String,TableChange> tableChanges = new TreeMap<String,TableChange>();
 	private TreeMap<String,TableChange> tableChangesForTwo = new TreeMap<String,TableChange>();
-	private TreeMap<String,PPLTransition> allPPLTransitions = new TreeMap<String,PPLTransition>();
+	private TreeMap<Integer,PPLTransition> allPPLTransitions = new TreeMap<Integer,PPLTransition>();
+	private ArrayList<PhaseCollector> phaseCollectors = new ArrayList<PhaseCollector>();
 	private String 	projectDataFolder=null;
 	private String filename=null;
 	private String transitionsFile="";
@@ -72,6 +74,10 @@ public class GlobalDataKeeper {
 		
 	}
 	
+	public void setPhaseCollectors(ArrayList<PhaseCollector> phaseCollectors){
+		this.phaseCollectors=phaseCollectors;
+	}
+	
 	public void setDataForTwoVersions(){
 		
 		DiffFromTwoSchemas diffForTwoSch= new DiffFromTwoSchemas(oldVersion, newVersion, projectDataFolder);
@@ -117,7 +123,7 @@ public class GlobalDataKeeper {
 		
 	}
 	
-	private void setAllPPLTransitions(TreeMap<String,PPLTransition> tmpAllPPLTransitions){
+	private void setAllPPLTransitions(TreeMap<Integer,PPLTransition> tmpAllPPLTransitions){
 		
 		 allPPLTransitions=tmpAllPPLTransitions;
 		
@@ -157,7 +163,7 @@ public class GlobalDataKeeper {
 		
 	}
 	
-	public TreeMap<String,PPLTransition> getAllPPLTransitions(){
+	public TreeMap<Integer,PPLTransition> getAllPPLTransitions(){
 		
 		return allPPLTransitions;
 		
@@ -167,5 +173,8 @@ public class GlobalDataKeeper {
 		return projectDataFolder;
 	}
 	
+	public ArrayList<PhaseCollector> getPhaseCollectors(){
+		return this.phaseCollectors;
+	}
 	
 }

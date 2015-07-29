@@ -12,7 +12,7 @@ import data.pplTransition.TableChange;
 
 public class PPLTransitionConstruction {
 	
-	private static TreeMap<String,PPLTransition> allPPLTransitions = new TreeMap<String,PPLTransition>();
+	private static TreeMap<Integer,PPLTransition> allPPLTransitions = new TreeMap<Integer,PPLTransition>();
 	private static TreeMap<String,PPLSchema> allPPLSchemas = new TreeMap<String,PPLSchema>();
 	private static TreeMap<String,TableChange> allTableChanges = new  TreeMap<String,TableChange>();
 
@@ -33,7 +33,7 @@ public class PPLTransitionConstruction {
 		
 		*/
 		
-		allPPLTransitions  = new TreeMap<String,PPLTransition>();
+		allPPLTransitions  = new TreeMap<Integer,PPLTransition>();
 		
 		ArrayList<TableChange> tmpTableChanges = new ArrayList<TableChange>();
 		
@@ -48,20 +48,20 @@ public class PPLTransitionConstruction {
 			
 			PPLTransition tmpPPLTransition = new PPLTransition(assistantKeys.get(i),assistantKeys.get(i+1));
 			
-			allPPLTransitions.put(tmpPPLTransition.getNewVersionName(),tmpPPLTransition);
+			allPPLTransitions.put(i,tmpPPLTransition);
 			
 		}
 		
 		
-		for (Map.Entry<String,PPLTransition> tr : allPPLTransitions.entrySet()) {
+		for (Map.Entry<Integer,PPLTransition> tr : allPPLTransitions.entrySet()) {
 
 			for (Map.Entry<String, TableChange> t : allTableChanges.entrySet()) {
 				
 				TableChange tmpTableChange = t.getValue();
 				
-				TreeMap<String,ArrayList<AtomicChange>> tmpAtomicChanges = tmpTableChange.getTableAtomicChanges();
+				TreeMap<Integer,ArrayList<AtomicChange>> tmpAtomicChanges = tmpTableChange.getTableAtomicChanges();
 				
-				for (Map.Entry<String,ArrayList<AtomicChange>> at : tmpAtomicChanges.entrySet()) {
+				for (Map.Entry<Integer,ArrayList<AtomicChange>> at : tmpAtomicChanges.entrySet()) {
 	
 					if(at.getKey().equals(tr.getKey())){
 					
@@ -82,7 +82,7 @@ public class PPLTransitionConstruction {
 
 	}
 	
-	public  TreeMap<String,PPLTransition> getAllPPLTransitions(){
+	public  TreeMap<Integer,PPLTransition> getAllPPLTransitions(){
 		
 		return allPPLTransitions;
 	}

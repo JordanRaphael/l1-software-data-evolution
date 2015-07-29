@@ -8,16 +8,17 @@ public class AtomicChange {
 	private String type;
 	private String oldSchema;
 	private String newSchema;
+	private Integer transitionID;
 	
 	
-	public AtomicChange(String tmpAffectedTable, String tmpAffectedAttribute, String tmpType, String tmpOldSchema, String tmpNewSchema){
+	public AtomicChange(String tmpAffectedTable, String tmpAffectedAttribute, String tmpType, String tmpOldSchema, String tmpNewSchema,Integer transitionID){
 		
 		affectedTable = tmpAffectedTable;
 		affectedAttribute = tmpAffectedAttribute;
 		type = tmpType;
 		oldSchema = tmpOldSchema;
 		newSchema = tmpNewSchema;
-		
+		this.transitionID=transitionID;
 	}
 	
 	public String toString(){
@@ -53,6 +54,10 @@ public class AtomicChange {
 		
 		return versions;
 		
+	}
+	
+	public Integer getTransitionID(){
+		return transitionID;
 	}
 
 }

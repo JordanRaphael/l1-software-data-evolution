@@ -4,18 +4,19 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import data.dataKeeper.GlobalDataKeeper;
 import data.pplSqlSchema.PPLSchema;
 import data.pplSqlSchema.PPLTable;
 import data.pplTransition.AtomicChange;
 import data.pplTransition.PPLTransition;
 import data.pplTransition.TableChange;
 
-public class TableConstruction {
+public class TableConstructionAllSquaresIncluded implements Pld {
 	
 	
 	private static TreeMap<String,PPLSchema> allPPLSchemas=new TreeMap<String,PPLSchema>();
 	private ArrayList<PPLTable>	tables=new ArrayList<PPLTable>();
-	private TreeMap<String,PPLTransition> allPPLTransitions = new TreeMap<String,PPLTransition>();
+	private TreeMap<Integer,PPLTransition> allPPLTransitions = new TreeMap<Integer,PPLTransition>();
 
 
 	private int columnsNumber=0;
@@ -26,11 +27,10 @@ public class TableConstruction {
 	private Integer segmentSize[]=new Integer[3];
 	private int totalChanges=0;
 	
-	public TableConstruction(TreeMap<String,PPLSchema> tmpAllSchemas,
-			TreeMap<String,PPLTransition> tmpAllPPLTransitions){
+	public TableConstructionAllSquaresIncluded(GlobalDataKeeper globalDataKeeper){
 		
-		allPPLSchemas=tmpAllSchemas;
-		allPPLTransitions=tmpAllPPLTransitions;
+		allPPLSchemas=globalDataKeeper.getAllPPLSchemas();
+		allPPLTransitions=globalDataKeeper.getAllPPLTransitions();
 		
 		
 	}
@@ -224,13 +224,13 @@ public class TableConstruction {
 			initialization=schemaVersion-1;
 		}
 		
-		String[] mapKeys = new String[allPPLTransitions.size()];
+		Integer[] mapKeys = new Integer[allPPLTransitions.size()];
 		int pos2 = 0;
-		for (String key : allPPLTransitions.keySet()) {
+		for (Integer key : allPPLTransitions.keySet()) {
 		    mapKeys[pos2++] = key;
 		}
 		
-		String pos3=null;
+		Integer pos3=null;
 
 		for(int i=initialization; i<allPPLTransitions.size(); i++){
 			
@@ -259,9 +259,6 @@ public class TableConstruction {
 						
 						for(int k=0; k<atChs.size(); k++){
 							
-							if(oneTable.getName().equals("l1_muon_threshold_set")){
-								System.out.println(atChs.get(k).toString());
-							}
 							
 							if (atChs.get(k).getType().contains("Addition")){
 								

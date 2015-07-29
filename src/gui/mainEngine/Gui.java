@@ -1,8 +1,13 @@
 package gui.mainEngine;
 
 //try to extract relationship beetween gui and pplSchema and pplTransition
+import gui.dialogs.CreateProjectJDialog;
+import gui.dialogs.ParametersJDialog;
 import gui.tableElements.MyTableModel;
-import gui.tableElements.TableConstruction;
+import gui.tableElements.TableConstructionAllSquaresIncluded;
+import gui.tableElements.TableConstructionIDU;
+import gui.tableElements.TableConstructionPhases;
+import gui.treeElements.TreeConstruction;
 
 import java.awt.AWTException;
 import java.awt.Color;
@@ -46,17 +51,20 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTree;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.antlr.v4.runtime.RecognitionException;
 import org.jfree.chart.ChartPanel;
 
-import phaseAnalyzer.commons.PhaseExtractionParameters;
 import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
 import results.Results;
 import results.ResultsDataKeeper;
@@ -152,6 +160,10 @@ public class Gui extends JFrame implements ActionListener{
 	private String outputAssessment1="";
 	private String outputAssessment2="";
 	private String transitionsFile="";
+	
+	private JTree tablesTree=new JTree();
+	private JPanel sideMenu=new JPanel();
+	private JPanel tablesTreePanel=new JPanel();
 
 	
 	
@@ -430,7 +442,7 @@ public class Gui extends JFrame implements ActionListener{
 		mntmShowLifetimeTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!(currentProject==null)){
-					TableConstruction table=new TableConstruction(globalDataKeeper.getAllPPLSchemas(), globalDataKeeper.getAllPPLTransitions());
+					TableConstructionAllSquaresIncluded table=new TableConstructionAllSquaresIncluded(globalDataKeeper);
 					final String[] columns=table.constructColumns();
 					final String[][] rows=table.constructRows();
 					segmentSize=table.getSegmentSize();
@@ -450,7 +462,7 @@ public class Gui extends JFrame implements ActionListener{
 		mntmShowGeneralLifetime.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				 if(!(currentProject==null)){
-					TableConstruction table=new TableConstruction(globalDataKeeper.getAllPPLSchemas(), globalDataKeeper.getAllPPLTransitions());
+					TableConstructionAllSquaresIncluded table=new TableConstructionAllSquaresIncluded(globalDataKeeper);
 					final String[] columns=table.constructColumns();
 					final String[][] rows=table.constructRows();
 					segmentSize=table.getSegmentSize();
@@ -470,6 +482,56 @@ public class Gui extends JFrame implements ActionListener{
 			}
 		});
 		mnTable.add(mntmShowGeneralLifetime);
+		
+		JMenuItem mntmShowGeneralLifetimeIDU = new JMenuItem("Show PLD");
+		mntmShowGeneralLifetimeIDU.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				 if(!(currentProject==null)){
+					TableConstructionIDU table=new TableConstructionIDU(globalDataKeeper);
+					final String[] columns=table.constructColumns();
+					final String[][] rows=table.constructRows();
+					segmentSize=table.getSegmentSize();
+					System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
+					System.out.println("C: "+columns.length+" R: "+rows.length);
+
+					finalColumns=columns;
+					finalRows=rows;
+					tabbedPane.setSelectedIndex(0);
+					makeGeneralTableIDU();
+					
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Select a Project first");
+					return;
+				}
+			}
+		});
+		mnTable.add(mntmShowGeneralLifetimeIDU);
+		
+		JMenuItem mntmShowGeneralLifetimePhasesPLD = new JMenuItem("Show Phases PLD");
+		mntmShowGeneralLifetimePhasesPLD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				 if(!(currentProject==null)){
+					TableConstructionPhases table=new TableConstructionPhases(globalDataKeeper);
+					final String[] columns=table.constructColumns();
+					final String[][] rows=table.constructRows();
+					segmentSize=table.getSegmentSize();
+					System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
+					System.out.println("C: "+columns.length+" R: "+rows.length);
+
+					finalColumns=columns;
+					finalRows=rows;
+					tabbedPane.setSelectedIndex(0);
+					makeGeneralTableIDU();
+					
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Select a Project first");
+					return;
+				}
+			}
+		});
+		mnTable.add(mntmShowGeneralLifetimePhasesPLD);
 		
 		JMenuItem mntmShowLifetimeTable_1 = new JMenuItem("Show LifeTime Table With Selected Level");
 		mntmShowLifetimeTable_1.addActionListener(new ActionListener() {
@@ -522,7 +584,7 @@ public class Gui extends JFrame implements ActionListener{
 							LevelizedSchemas=levelizedLifeTime.getLevelizedSchemas();
 							LevelizedTransitions=levelizedLifeTime.getLevelizedTransitions();
 							
-							TableConstruction table=new TableConstruction(LevelizedSchemas, LevelizedTransitions);
+							TableConstructionAllSquaresIncluded table=new TableConstructionAllSquaresIncluded(LevelizedSchemas, LevelizedTransitions);
 							segmentSize=table.getSegmentSize();
 							finalColumns=table.constructColumns();
 							finalRows=table.constructRows();
@@ -585,6 +647,60 @@ public class Gui extends JFrame implements ActionListener{
 			}
 		});
 		mnTable.add(mntmSwapRows);
+		
+		
+
+		sideMenu.setName("lala");
+		sideMenu.setBounds(0, 0, 280, 600);
+		sideMenu.setBackground(Color.DARK_GRAY);
+		
+		
+		
+		GroupLayout gl_sideMenu = new GroupLayout(sideMenu);
+		gl_sideMenu.setHorizontalGroup(
+				gl_sideMenu.createParallelGroup(Alignment.LEADING)
+				//.addGap(0, 1469, Short.MAX_VALUE)
+		);
+		gl_sideMenu.setVerticalGroup(
+				gl_sideMenu.createParallelGroup(Alignment.LEADING)
+				//.addGap(0, 743, Short.MAX_VALUE)
+		);
+		
+		sideMenu.setLayout(gl_sideMenu);
+		
+		tablesTreePanel.setBounds(10, 400, 260, 180);
+		tablesTreePanel.setBackground(Color.LIGHT_GRAY);
+		
+		GroupLayout gl_tablesTreePanel = new GroupLayout(tablesTreePanel);
+		gl_tablesTreePanel.setHorizontalGroup(
+				gl_tablesTreePanel.createParallelGroup(Alignment.LEADING)
+				//.addGap(0, 1469, Short.MAX_VALUE)
+		);
+		gl_tablesTreePanel.setVerticalGroup(
+				gl_tablesTreePanel.createParallelGroup(Alignment.LEADING)
+				//.addGap(0, 743, Short.MAX_VALUE)
+		);
+		
+		tablesTreePanel.setLayout(gl_tablesTreePanel);
+		
+
+	   
+	   tablesTree.setBounds(0, 0, 260, 180);
+	   
+	   
+		 sideMenu.add(tablesTreePanel);
+	  
+	   
+	   //TreeConstruction tc=new TreeConstruction(globalDataKeeper);
+	   // tablesTree=tc.constructTree();
+		//tablesTreePanel.add(scr);
+		//JScrollPane sp = new JScrollPane(jtree);
+		
+		   
+
+		lifeTimePanel.add(sideMenu);
+		
+		
 		
 		
 //		
@@ -716,7 +832,7 @@ public class Gui extends JFrame implements ActionListener{
 //							
 //							insertKDialog.setVisible(false);
 //							
-//							TableConstruction table=new TableConstruction(globalDataKeeper.getAllPPLSchemas(), globalDataKeeper.getAllPPLTransitions());
+//							TableConstructionAllSquaresIncluded table=new TableConstructionAllSquaresIncluded(globalDataKeeper.getAllPPLSchemas(), globalDataKeeper.getAllPPLTransitions());
 //							table.constructColumns();
 //							table.constructRows();
 //							
@@ -1117,7 +1233,7 @@ public class Gui extends JFrame implements ActionListener{
 		coChangesBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				TableConstruction table=new TableConstruction(globalDataKeeper.getAllPPLSchemas(), globalDataKeeper.getAllPPLTransitions());
+				TableConstructionAllSquaresIncluded table=new TableConstructionAllSquaresIncluded(globalDataKeeper);
 				table.constructColumns();
 				table.constructRows();
 				
@@ -1183,14 +1299,15 @@ public class Gui extends JFrame implements ActionListener{
 						}
 						//}
 						
-						try {
+						/*try {
 							mainEngine.extractWinnersReport();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}
+						}*/
 						
 						mainEngine.connectTransitionsWithPhases(globalDataKeeper);
+						globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
 						TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,b,d,c);
 						mainEngine2.extractClusters(4);
 						mainEngine2.print();
@@ -1260,6 +1377,7 @@ public class Gui extends JFrame implements ActionListener{
 		
 	}
 	
+	
 	private void makeGeneralTable() {
 		
 		int numberOfColumns=finalRows[0].length;
@@ -1281,6 +1399,7 @@ public class Gui extends JFrame implements ActionListener{
 		
 		generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
+		
 		for(int i=0; i<generalTable.getColumnCount(); i++){
 			if(i==0){
 				generalTable.getColumnModel().getColumn(0).setPreferredWidth(150);
@@ -1288,9 +1407,9 @@ public class Gui extends JFrame implements ActionListener{
 				generalTable.getColumnModel().getColumn(0).setMinWidth(150);
 			}
 			else{
-				generalTable.getColumnModel().getColumn(i).setPreferredWidth(1);
-				generalTable.getColumnModel().getColumn(i).setMaxWidth(1);
-				generalTable.getColumnModel().getColumn(i).setMinWidth(1);
+				generalTable.getColumnModel().getColumn(i).setPreferredWidth(20);
+				generalTable.getColumnModel().getColumn(i).setMaxWidth(20);
+				generalTable.getColumnModel().getColumn(i).setMinWidth(20);
 			}
 		}
 		
@@ -1427,7 +1546,146 @@ public class Gui extends JFrame implements ActionListener{
 		tmpScrollPane.setViewportView(LifeTimeTable);
 		tmpScrollPane.setAlignmentX(0);
 		tmpScrollPane.setAlignmentY(0);
-        tmpScrollPane.setBounds(0,0,1250,600);
+        tmpScrollPane.setBounds(300,0,950,300);
+        tmpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        tmpScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        
+		lifeTimePanel.setCursor(getCursor());
+		lifeTimePanel.add(tmpScrollPane);
+		
+		
+		
+	}
+	
+private void makeGeneralTableIDU() {
+		
+		int numberOfColumns=finalRows[0].length;
+		int numberOfRows=finalRows.length;
+		
+		selectedRows=new ArrayList<Integer>();
+		
+		String[][] rows=new String[numberOfRows][numberOfColumns];
+		
+		for(int i=0; i<numberOfRows; i++){
+			
+			rows[i][0]=finalRows[i][0];
+			
+		}
+		
+		generalModel=new MyTableModel(finalColumns, rows);
+		
+		JTable generalTable=new JTable(generalModel);
+		
+		generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
+		
+		for(int i=0; i<generalTable.getColumnCount(); i++){
+			if(i==0){
+				generalTable.getColumnModel().getColumn(0).setPreferredWidth(150);
+				generalTable.getColumnModel().getColumn(0).setMaxWidth(150);
+				generalTable.getColumnModel().getColumn(0).setMinWidth(150);
+			}
+			else{
+				generalTable.getColumnModel().getColumn(i).setPreferredWidth(20);
+				generalTable.getColumnModel().getColumn(i).setMaxWidth(20);
+				generalTable.getColumnModel().getColumn(i).setMinWidth(20);
+			}
+		}
+		
+		generalTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
+		{
+		    
+			private static final long serialVersionUID = 1L;
+
+			@Override
+		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+		    {
+		        final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		        
+		        String tmpValue=finalRows[row][column];
+		        String columnName=table.getColumnName(column);
+		        Color fr=new Color(0,0,0);
+		        c.setForeground(fr);
+
+		        try{
+		        	int numericValue=Integer.parseInt(tmpValue);
+		        	Color insersionColor=null;
+					setToolTipText(Integer.toString(numericValue));
+
+		        	
+	        		if(numericValue==0){
+	        			insersionColor=new Color(0,100,0);
+	        		}
+	        		else if(numericValue> 0&& numericValue<=segmentSize[1]){
+	        			
+	        			insersionColor=new Color(176,226,255);
+		        	}
+	        		else if(numericValue>segmentSize[1] && numericValue<=2*segmentSize[1]){
+	        			insersionColor=new Color(92,172,238);
+	        		}
+	        		else if(numericValue>2*segmentSize[1] && numericValue<=3*segmentSize[1]){
+	        			
+	        			insersionColor=new Color(28,134,238);
+	        		}
+	        		else{
+	        			insersionColor=new Color(16,78,139);
+	        		}
+	        		c.setBackground(insersionColor);
+		        	
+		        	return c;
+		        }
+		        catch(Exception e){
+		        		
+
+		        	
+	        		if(tmpValue.equals("")){
+	        			c.setBackground(Color.DARK_GRAY);
+	        			return c; 
+	        		}
+	        		else{
+	        			if(columnName.contains("v")){
+	        				c.setBackground(Color.lightGray);
+	        				setToolTipText(columnName);
+	        			}
+	        			else{
+	        				Color tableNameColor=new Color(205,175,149);
+	        				c.setBackground(tableNameColor);
+	        			}
+		        		return c; 
+	        		}
+		        		
+		        		
+		        }
+		    }
+		});
+		
+		generalTable.addMouseListener(new MouseAdapter() {
+			
+			   public void mouseClicked(MouseEvent e) {
+			      if (e.getClickCount() == 2) {
+			         JTable target = (JTable)e.getSource();
+			         
+			         int row = target.getSelectedRow();
+			         int column = target.getSelectedColumn();
+			         
+			         makeDetailedTable(finalColumns, finalRows,levelizedTable);
+			         
+			         LifeTimeTable.setCellSelectionEnabled(true);
+			         
+			         LifeTimeTable.changeSelection(row, column, false, false);
+			         LifeTimeTable.requestFocus();
+			         
+			      }
+			   }
+		});
+		
+		
+		LifeTimeTable=generalTable;
+		
+		tmpScrollPane.setViewportView(LifeTimeTable);
+		tmpScrollPane.setAlignmentX(0);
+		tmpScrollPane.setAlignmentY(0);
+        tmpScrollPane.setBounds(300,0,950,300);
         tmpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         tmpScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         
@@ -1778,7 +2036,7 @@ public class Gui extends JFrame implements ActionListener{
 		
 		globalDataKeeper=new GlobalDataKeeper(datasetTxt,transitionsFile);
 		globalDataKeeper.setData();
-		
+		System.out.println(globalDataKeeper.getAllPPLTransitions().size());
 		resultsDataKeeper = new ResultsDataKeeper();
 		//= w.getDataKeeper();
 		//System.out.println("!!"+globalDataKeeper.getDataFolder());
@@ -1840,9 +2098,49 @@ public class Gui extends JFrame implements ActionListener{
 		
         System.out.println(fileName);
 
+        fillTree();
+        fillTable();
         
 		currentProject=fileName;
 		currentProjectDataFolder=globalDataKeeper.getDataFolder();
+		
+	}
+	
+	public void fillTable() {
+		TableConstructionAllSquaresIncluded table=new TableConstructionAllSquaresIncluded(globalDataKeeper);
+		final String[] columns=table.constructColumns();
+		final String[][] rows=table.constructRows();
+		segmentSize=table.getSegmentSize();
+		System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
+		System.out.println("C: "+columns.length+" R: "+rows.length);
+
+		finalColumns=columns;
+		finalRows=rows;
+		tabbedPane.setSelectedIndex(0);
+		makeGeneralTable();
+	}
+	
+	public void fillTree(){
+		
+		
+
+		
+		 TreeConstruction tc=new TreeConstruction(globalDataKeeper);
+		 tablesTree=tc.constructTree();
+		 
+		 tablesTree.addTreeSelectionListener(new TreeSelectionListener () {
+			    public void valueChanged(TreeSelectionEvent ae) { 
+			     System.out.println(ae.getPath()+" is selected");
+			    }
+			  });
+		 
+		 JScrollPane scr=new JScrollPane(tablesTree,ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+			     ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		 scr.setBounds(5, 5, 250, 170);
+		 
+		 tablesTreePanel.add(scr);
+
+		 
 		
 	}
 	

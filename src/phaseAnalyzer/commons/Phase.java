@@ -51,6 +51,9 @@ public class Phase {
 		return sum;
 	}
 	
+	public TreeMap<Integer,PPLTransition> getPhasePPLTransitions(){
+		return phasePPLTransitions;
+	}
 	
 	public String toStringShort(){
 		String s = new String();
@@ -134,30 +137,30 @@ public class Phase {
 	
 	public void connectWithPPLTransitions(GlobalDataKeeper tmpGlobalDataKeeper){
 		
-		TreeMap<String,PPLTransition> allPPLTransitions=tmpGlobalDataKeeper.getAllPPLTransitions();
+		TreeMap<Integer,PPLTransition> allPPLTransitions=tmpGlobalDataKeeper.getAllPPLTransitions();
 		
 		boolean found = false;
 
-		for (Map.Entry<String,PPLTransition> tr : allPPLTransitions.entrySet()) {
+		for (Map.Entry<Integer,PPLTransition> tr : allPPLTransitions.entrySet()) {
 			
 			
-			if(tr.getKey().equals(startSQLFile)){
+			if(tr.getValue().getOldVersionName().equals(startSQLFile)){
 				
 				found=true;
 				
 			}
 			if(found) {
-				this.allPPLTransitions.put(tr.getKey(), tr.getValue());
+				this.phasePPLTransitions.put(tr.getKey(), tr.getValue());
 
 			}
-			if(tr.getKey().equals(endSQLFile)){
+			if(tr.getValue().getNewVersionName().equals(endSQLFile)){
 				
 				break;				
 			}
 		}
 		System.out.println(startPos+" "+startSQLFile+" "+endPos+" "+endSQLFile);
-		for (Map.Entry<String,PPLTransition> tr : this.allPPLTransitions.entrySet()){
-			System.out.println(tr.getKey());
+		for (Map.Entry<Integer,PPLTransition> tr : this.phasePPLTransitions.entrySet()){
+			System.out.println("????????"+tr.getKey());
 		}
 		
 	}
@@ -172,7 +175,7 @@ public class Phase {
 	private int totalUpdates;
 	private TransitionHistory transitionHistory;
 	private double sum=0;
-	private TreeMap<String,PPLTransition> allPPLTransitions = new TreeMap<String,PPLTransition>();
+	private TreeMap<Integer,PPLTransition> phasePPLTransitions = new TreeMap<Integer,PPLTransition>();
 
 
 
