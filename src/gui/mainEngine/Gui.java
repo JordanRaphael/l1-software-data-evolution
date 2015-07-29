@@ -522,7 +522,7 @@ public class Gui extends JFrame implements ActionListener{
 					finalColumns=columns;
 					finalRows=rows;
 					tabbedPane.setSelectedIndex(0);
-					makeGeneralTableIDU();
+					makeGeneralTablePhases();
 					
 				}
 				else{
@@ -1695,6 +1695,145 @@ private void makeGeneralTableIDU() {
 		
 		
 	}
+
+private void makeGeneralTablePhases() {
+	
+	int numberOfColumns=finalRows[0].length;
+	int numberOfRows=finalRows.length;
+	
+	selectedRows=new ArrayList<Integer>();
+	
+	String[][] rows=new String[numberOfRows][numberOfColumns];
+	
+	for(int i=0; i<numberOfRows; i++){
+		
+		rows[i][0]=finalRows[i][0];
+		
+	}
+	
+	generalModel=new MyTableModel(finalColumns, rows);
+	
+	JTable generalTable=new JTable(generalModel);
+	
+	generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	
+	
+	for(int i=0; i<generalTable.getColumnCount(); i++){
+		if(i==0){
+			generalTable.getColumnModel().getColumn(0).setPreferredWidth(150);
+			generalTable.getColumnModel().getColumn(0).setMaxWidth(150);
+			generalTable.getColumnModel().getColumn(0).setMinWidth(150);
+		}
+		else{
+			generalTable.getColumnModel().getColumn(i).setPreferredWidth(70);
+			generalTable.getColumnModel().getColumn(i).setMaxWidth(70);
+			generalTable.getColumnModel().getColumn(i).setMinWidth(70);
+		}
+	}
+	
+	generalTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
+	{
+	    
+		private static final long serialVersionUID = 1L;
+
+		@Override
+	    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+	    {
+	        final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+	        
+	        String tmpValue=finalRows[row][column];
+	        String columnName=table.getColumnName(column);
+	        Color fr=new Color(0,0,0);
+	        c.setForeground(fr);
+
+	        try{
+	        	int numericValue=Integer.parseInt(tmpValue);
+	        	Color insersionColor=null;
+				setToolTipText(Integer.toString(numericValue));
+
+	        	
+        		if(numericValue==0){
+        			insersionColor=new Color(0,100,0);
+        		}
+        		else if(numericValue> 0&& numericValue<=segmentSize[1]){
+        			
+        			insersionColor=new Color(176,226,255);
+	        	}
+        		else if(numericValue>segmentSize[1] && numericValue<=2*segmentSize[1]){
+        			insersionColor=new Color(92,172,238);
+        		}
+        		else if(numericValue>2*segmentSize[1] && numericValue<=3*segmentSize[1]){
+        			
+        			insersionColor=new Color(28,134,238);
+        		}
+        		else{
+        			insersionColor=new Color(16,78,139);
+        		}
+        		c.setBackground(insersionColor);
+	        	
+	        	return c;
+	        }
+	        catch(Exception e){
+	        		
+
+	        	
+        		if(tmpValue.equals("")){
+        			c.setBackground(Color.DARK_GRAY);
+        			return c; 
+        		}
+        		else{
+        			if(columnName.contains("v")){
+        				c.setBackground(Color.lightGray);
+        				setToolTipText(columnName);
+        			}
+        			else{
+        				Color tableNameColor=new Color(205,175,149);
+        				c.setBackground(tableNameColor);
+        			}
+	        		return c; 
+        		}
+	        		
+	        		
+	        }
+	    }
+	});
+	
+	generalTable.addMouseListener(new MouseAdapter() {
+		
+		   public void mouseClicked(MouseEvent e) {
+		      if (e.getClickCount() == 2) {
+		         JTable target = (JTable)e.getSource();
+		         
+		         int row = target.getSelectedRow();
+		         int column = target.getSelectedColumn();
+		         
+		         makeDetailedTable(finalColumns, finalRows,levelizedTable);
+		         
+		         LifeTimeTable.setCellSelectionEnabled(true);
+		         
+		         LifeTimeTable.changeSelection(row, column, false, false);
+		         LifeTimeTable.requestFocus();
+		         
+		      }
+		   }
+	});
+	
+	
+	LifeTimeTable=generalTable;
+	
+	tmpScrollPane.setViewportView(LifeTimeTable);
+	tmpScrollPane.setAlignmentX(0);
+	tmpScrollPane.setAlignmentY(0);
+    tmpScrollPane.setBounds(300,0,950,300);
+    tmpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    tmpScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    
+	lifeTimePanel.setCursor(getCursor());
+	lifeTimePanel.add(tmpScrollPane);
+	
+	
+	
+}
 
 	private void makeDetailedTable(String[] columns , String[][] rows, final boolean levelized){
 		

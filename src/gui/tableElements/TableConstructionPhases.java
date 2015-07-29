@@ -227,7 +227,7 @@ public String[] constructColumns(){
 			
 			Integer pos3=null;
 
-			for(int i=initialization; i<phasePPLTransitions.size(); i++){
+			for(int i=0; i<phasePPLTransitions.size(); i++){
 				
 				pos3=mapKeys[i];
 				
