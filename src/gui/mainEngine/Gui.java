@@ -47,6 +47,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -54,6 +55,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTree;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -165,7 +167,7 @@ public class Gui extends JFrame implements ActionListener{
 	private JPanel sideMenu=new JPanel();
 	private JPanel tablesTreePanel=new JPanel();
 
-	private int selectedRow;
+	private int[] selectedRowsFromMouse;
 	private int selectedColumn;
 	
 	
@@ -1403,7 +1405,7 @@ public class Gui extends JFrame implements ActionListener{
 		
 		generalModel=new MyTableModel(finalColumns, rows);
 		
-		JTable generalTable=new JTable(generalModel);
+		final JTable generalTable=new JTable(generalModel);
 		
 		generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
@@ -1560,27 +1562,64 @@ public class Gui extends JFrame implements ActionListener{
 		generalTable.addMouseListener(new MouseAdapter() {
 			@Override
 			   public void mouseClicked(MouseEvent e) {
+				
 				if (e.getClickCount() == 1) {
 					JTable target = (JTable)e.getSource();
 			         
-			         selectedRow = target.getSelectedRow();
+			         selectedRowsFromMouse = target.getSelectedRows();
 			         selectedColumn = target.getSelectedColumn();
 			         LifeTimeTable.repaint();
-			         System.out.println(selectedColumn);
+			         //System.out.println(selectedColumn);
 				}
 			      if (e.getClickCount() == 2) {
 			         JTable target = (JTable)e.getSource();
 			         
-			         selectedRow = target.getSelectedRow();
+			         selectedRowsFromMouse = target.getSelectedRows();
 			         selectedColumn = target.getSelectedColumn();
-			         System.out.println(selectedColumn);
+			         //System.out.println(selectedColumn);
 			         makeDetailedTable(finalColumns, finalRows,levelizedTable);
 			         
 			         LifeTimeTable.setCellSelectionEnabled(true);
-			         LifeTimeTable.changeSelection(selectedRow, selectedColumn, false, false);
+			         LifeTimeTable.changeSelection(selectedRowsFromMouse[0], selectedColumn, false, false);
 			         LifeTimeTable.requestFocus();
 			         
 			      }
+			   }
+		});
+		
+		generalTable.addMouseListener(new MouseAdapter() {
+			@Override
+			   public void mouseReleased(MouseEvent e) {
+				
+					if(SwingUtilities.isRightMouseButton(e)){
+						System.out.println("Right Click");
+						//if (e.getClickCount() == 1) {
+
+							JTable target1 = (JTable)e.getSource();
+							selectedColumn=target1.getSelectedColumn();
+							selectedRowsFromMouse=target1.getSelectedRows();
+							System.out.println(target1.getSelectedColumn());
+							System.out.println(target1.getSelectedRow());
+							for(int rowsSelected=0; rowsSelected<selectedRowsFromMouse.length; rowsSelected++){
+								System.out.println(generalTable.getValueAt(selectedRowsFromMouse[rowsSelected], 0));
+							}
+							if(target1.getSelectedColumn()==0){
+								final JPopupMenu popupMenu = new JPopupMenu();
+						        JMenuItem showDetailsItem = new JMenuItem("Show Details for the selection");
+						        showDetailsItem.addActionListener(new ActionListener() {
+	
+						            @Override
+						            public void actionPerformed(ActionEvent e) {
+						                JOptionPane.showMessageDialog(null, "Right-click performed on table and choose DELETE");
+						            }
+						        });
+						        popupMenu.add(showDetailsItem);
+						        generalTable.setComponentPopupMenu(popupMenu);
+						        
+							}
+						//}
+					}
+				
 			   }
 		});
 		
@@ -2296,7 +2335,7 @@ private void makeGeneralTablePhases() {
 	}
 	
 	public void fillTable() {
-		TableConstructionAllSquaresIncluded table=new TableConstructionAllSquaresIncluded(globalDataKeeper);
+		TableConstructionIDU table=new TableConstructionIDU(globalDataKeeper);
 		final String[] columns=table.constructColumns();
 		final String[][] rows=table.constructRows();
 		segmentSize=table.getSegmentSize();
@@ -2306,7 +2345,7 @@ private void makeGeneralTablePhases() {
 		finalColumns=columns;
 		finalRows=rows;
 		tabbedPane.setSelectedIndex(0);
-		makeGeneralTable();
+		makeGeneralTableIDU();
 	}
 	
 	public void fillTree(){

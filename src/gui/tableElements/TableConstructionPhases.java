@@ -189,7 +189,7 @@ public String[] constructColumns(){
 				for(Map.Entry<Integer, PPLTransition> tr:phasePPLTransitions.entrySet()){
 					//System.out.println(oneTable.getName()+" "+schemaName+" "+tr.getValue().getOldVersionName()+" "+tr.getValue().getNewVersionName());
 					if(tr.getValue().getOldVersionName().equals(schemaName)|| tr.getValue().getNewVersionName().equals(schemaName)){
-						pointerCell=p+1;
+						pointerCell=p;
 						break;
 					}
 				}
