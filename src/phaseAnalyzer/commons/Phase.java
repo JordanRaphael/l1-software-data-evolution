@@ -33,8 +33,10 @@ public class Phase {
 
 	public void setStartPos(int startPos) {
 		this.startPos = startPos;
-		startSQLFile = this.transitionHistory.getValues().get(startPos).getNewVersionFile();
+		startSQLFile = this.transitionHistory.getValues().get(startPos).getOldVersionFile();
 	}
+	
+	
 	public void setEndPos(int endPos) {
 		this.endPos = endPos;
 		endSQLFile = this.transitionHistory.getValues().get(endPos).getNewVersionFile();
@@ -143,7 +145,6 @@ public class Phase {
 
 		for (Map.Entry<Integer,PPLTransition> tr : allPPLTransitions.entrySet()) {
 			
-			
 			if(tr.getValue().getOldVersionName().equals(startSQLFile)){
 				
 				found=true;
@@ -159,11 +160,14 @@ public class Phase {
 			}
 		}
 		System.out.println(startPos+" "+startSQLFile+" "+endPos+" "+endSQLFile);
-		for (Map.Entry<Integer,PPLTransition> tr : this.phasePPLTransitions.entrySet()){
-			System.out.println("????????"+tr.getKey());
-		}
+		
 		
 	}
+	
+	public int getSize(){
+		return phasePPLTransitions.size();
+	}
+	
 	
 	
 	

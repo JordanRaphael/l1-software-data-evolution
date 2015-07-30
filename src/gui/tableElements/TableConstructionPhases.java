@@ -26,7 +26,8 @@ public class TableConstructionPhases implements Pld {
 	private int maxDeletions=1;
 	private int maxInsersions=1;
 	private int maxUpdates=1;
-	private Integer segmentSize[]=new Integer[3];
+	private int maxTotalChangesForOneTr=1;
+	private Integer[] segmentSize=new Integer[4];
 	private int totalChanges=0;
 	
 	public TableConstructionPhases(GlobalDataKeeper globalDataKeeper){
@@ -54,9 +55,7 @@ public String[] constructColumns(){
 			}
 		}
 		
-		for(int i=0; i<schemaColumnId.length; i++){
-			System.out.println(schemaColumnId[i][0]+":"+schemaColumnId[i][1]);
-		}
+		
 		
 		columnsList.add("Table name");
 		
@@ -67,7 +66,6 @@ public String[] constructColumns(){
 		}
 		
 		columnsNumber=columnsList.size();
-		System.out.println(columnsNumber);
 		String[] tmpcolumns=new String[columnsList.size()];
 		
 		for(int j=0; j<columnsList.size(); j++ ){
@@ -162,6 +160,9 @@ public String[] constructColumns(){
 		float maxD=(float) maxDeletions/4;
 		segmentSize[2]=(int) Math.rint(maxD);
 		
+		float maxT=(float) maxTotalChangesForOneTr/4;
+		segmentSize[3]=(int) Math.rint(maxT);
+		
 		return tmpRows;
 		
 	}
@@ -182,12 +183,11 @@ public String[] constructColumns(){
 			
 		}
 		else{
-			
 			for(int p=0; p<phases.size(); p++){
 				
 				TreeMap<Integer,PPLTransition> phasePPLTransitions=phases.get(p).getPhasePPLTransitions();
-				
 				for(Map.Entry<Integer, PPLTransition> tr:phasePPLTransitions.entrySet()){
+					//System.out.println(oneTable.getName()+" "+schemaName+" "+tr.getValue().getOldVersionName()+" "+tr.getValue().getNewVersionName());
 					if(tr.getValue().getOldVersionName().equals(schemaName)|| tr.getValue().getNewVersionName().equals(schemaName)){
 						pointerCell=p+1;
 						break;
@@ -217,8 +217,11 @@ public String[] constructColumns(){
 		for(int p=0; p<phases.size(); p++){
 			
 			TreeMap<Integer,PPLTransition> phasePPLTransitions=phases.get(p).getPhasePPLTransitions();
+			if (totalChangesForOnePhase>maxTotalChangesForOneTr) {
+				maxTotalChangesForOneTr=totalChangesForOnePhase;
+			}
 			totalChangesForOnePhase=0;
-
+			/*
 			Integer[] mapKeys = new Integer[phasePPLTransitions.size()];
 			int pos2 = 0;
 			for (Integer key : phasePPLTransitions.keySet()) {
@@ -226,16 +229,17 @@ public String[] constructColumns(){
 			}
 			
 			Integer pos3=null;
+			*/
+			//for(int i=0; i<phasePPLTransitions.size(); i++){
+			
+			for(Map.Entry<Integer, PPLTransition> tmpTL:phasePPLTransitions.entrySet()){
 
-			for(int i=0; i<phasePPLTransitions.size(); i++){
+				//pos3=mapKeys[i];
 				
-				pos3=mapKeys[i];
+				//PPLTransition  tmpTL=phasePPLTransitions.get(pos3);
+				String sc=tmpTL.getValue().getNewVersionName();
 				
-				PPLTransition  tmpTL=phasePPLTransitions.get(pos3);
-				
-				String sc=tmpTL.getNewVersionName();
-				
-				ArrayList<TableChange> tmpTR=tmpTL.getTableChanges();
+				ArrayList<TableChange> tmpTR=tmpTL.getValue().getTableChanges();
 				
 				updn=0;
 				deln=0;
@@ -246,12 +250,12 @@ public String[] constructColumns(){
 					for(int j=0; j<tmpTR.size(); j++){
 						
 						TableChange tableChange=tmpTR.get(j);
-						
+						//System.out.println(tableChange.getAffectedTableName()+":"+oneTable.getName()+"!");
+						//System.out.println(tableChange.getAffectedTableName()+":");
 						if(tableChange.getAffectedTableName().equals(oneTable.getName())){
 							
 							
 							ArrayList<AtomicChange> atChs = tableChange.getTableAtChForOneTransition();
-							
 							for(int k=0; k<atChs.size(); k++){
 								
 								if (atChs.get(k).getType().contains("Addition")){
@@ -306,10 +310,6 @@ public String[] constructColumns(){
 					
 				}
 				
-				if (oneTable.getName().contains("t_trigger_type")) {
-					System.out.println(oneTable.getName()+"@@"+totalChangesForOnePhase+" "+pointerCell);
-				}
-				
 				if(pointerCell>=columnsNumber){
 					
 					break;
@@ -321,7 +321,6 @@ public String[] constructColumns(){
 				oneRow[pointerCell]=Integer.toString(updn);
 				pointerCell++;
 				oneRow[pointerCell]=Integer.toString(deln);*/
-				pointerCell++;
 				if(deletedAllTable==1){
 					break;
 				}
@@ -334,8 +333,11 @@ public String[] constructColumns(){
 				
 				
 			}
-			
-			
+			if(deletedAllTable==1){
+				break;
+			}
+			pointerCell++;
+
 		}
 		
 		for(int i=0; i<oneRow.length; i++){

@@ -165,7 +165,8 @@ public class Gui extends JFrame implements ActionListener{
 	private JPanel sideMenu=new JPanel();
 	private JPanel tablesTreePanel=new JPanel();
 
-	
+	private int selectedRow;
+	private int selectedColumn;
 	
 	
 	/**
@@ -512,21 +513,28 @@ public class Gui extends JFrame implements ActionListener{
 		mntmShowGeneralLifetimePhasesPLD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				 if(!(currentProject==null)){
-					TableConstructionPhases table=new TableConstructionPhases(globalDataKeeper);
-					final String[] columns=table.constructColumns();
-					final String[][] rows=table.constructRows();
-					segmentSize=table.getSegmentSize();
-					System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
-					System.out.println("C: "+columns.length+" R: "+rows.length);
-
-					finalColumns=columns;
-					finalRows=rows;
-					tabbedPane.setSelectedIndex(0);
-					makeGeneralTablePhases();
-					
+					if(globalDataKeeper.getPhaseCollectors().size()!=0){
+						TableConstructionPhases table=new TableConstructionPhases(globalDataKeeper);
+						final String[] columns=table.constructColumns();
+						final String[][] rows=table.constructRows();
+						segmentSize=table.getSegmentSize();
+						System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
+						System.out.println("C: "+columns.length+" R: "+rows.length);
+	
+						finalColumns=columns;
+						finalRows=rows;
+						tabbedPane.setSelectedIndex(0);
+						makeGeneralTablePhases();
+					}
+					else{
+						JOptionPane.showMessageDialog(null, "Extract Phases first");
+					}
 				}
 				else{
-					JOptionPane.showMessageDialog(null, "Select a Project first");
+					if(currentProject==null){
+						JOptionPane.showMessageDialog(null, "Select a Project first");
+					}
+					
 					return;
 				}
 			}
@@ -1428,6 +1436,28 @@ public class Gui extends JFrame implements ActionListener{
 		        Color fr=new Color(0,0,0);
 		        c.setForeground(fr);
 		      
+		        if(selectedColumn==0){
+		        	if (isSelected){
+		        	/*if(hasFocus)
+		        	{		        	
+		        		System.out.println(row+" "+column);
+		        		c.setBackground(Color.YELLOW);
+		        		return c;
+		        	}*/
+		        	//else{
+		        		//System.out.println(row+" "+column);
+		        		c.setBackground(Color.YELLOW);
+		        		return c;
+		        	}
+		        }
+		        else{
+		        	if (isSelected && hasFocus){
+			        	
+		        		c.setBackground(Color.YELLOW);
+		        		return c;
+			        }
+		        	
+		        }
 		        try{
 		        	int numericValue=Integer.parseInt(tmpValue);
 		        	Color insersionColor=null;
@@ -1495,6 +1525,13 @@ public class Gui extends JFrame implements ActionListener{
 		        		c.setBackground(insersionColor);
 		        	}
 		        	
+		        	
+			        //else if (column == 0){
+			          //  c.setBackground(new Color(0xDDDDD));}
+			        //else{ 
+			          //  c.setBackground(new Color(0xFFFFFF));
+			    	//}
+		        	
 		        	return c;
 		        }
 		        catch(Exception e){
@@ -1521,19 +1558,26 @@ public class Gui extends JFrame implements ActionListener{
 		});
 		
 		generalTable.addMouseListener(new MouseAdapter() {
-			
+			@Override
 			   public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					JTable target = (JTable)e.getSource();
+			         
+			         selectedRow = target.getSelectedRow();
+			         selectedColumn = target.getSelectedColumn();
+			         LifeTimeTable.repaint();
+			         System.out.println(selectedColumn);
+				}
 			      if (e.getClickCount() == 2) {
 			         JTable target = (JTable)e.getSource();
 			         
-			         int row = target.getSelectedRow();
-			         int column = target.getSelectedColumn();
-			         
+			         selectedRow = target.getSelectedRow();
+			         selectedColumn = target.getSelectedColumn();
+			         System.out.println(selectedColumn);
 			         makeDetailedTable(finalColumns, finalRows,levelizedTable);
 			         
 			         LifeTimeTable.setCellSelectionEnabled(true);
-			         
-			         LifeTimeTable.changeSelection(row, column, false, false);
+			         LifeTimeTable.changeSelection(selectedRow, selectedColumn, false, false);
 			         LifeTimeTable.requestFocus();
 			         
 			      }
@@ -1718,15 +1762,19 @@ private void makeGeneralTablePhases() {
 	generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	
 	
+	
 	for(int i=0; i<generalTable.getColumnCount(); i++){
 		if(i==0){
 			generalTable.getColumnModel().getColumn(0).setPreferredWidth(150);
-			generalTable.getColumnModel().getColumn(0).setMaxWidth(150);
-			generalTable.getColumnModel().getColumn(0).setMinWidth(150);
+			//generalTable.getColumnModel().getColumn(0).setMaxWidth(150);
+			//generalTable.getColumnModel().getColumn(0).setMinWidth(150);
 		}
 		else{
-			generalTable.getColumnModel().getColumn(i).setPreferredWidth(70);
-			generalTable.getColumnModel().getColumn(i).setMaxWidth(70);
+			int tot=800/globalDataKeeper.getAllPPLTransitions().size();
+			int sizeOfColumn=globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(i-1).getSize()*tot;
+			
+			generalTable.getColumnModel().getColumn(i).setPreferredWidth(sizeOfColumn);
+			generalTable.getColumnModel().getColumn(i).setMaxWidth(sizeOfColumn);
 			generalTable.getColumnModel().getColumn(i).setMinWidth(70);
 		}
 	}
@@ -1740,6 +1788,8 @@ private void makeGeneralTablePhases() {
 	    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
 	    {
 	        final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+	        
+	        
 	        
 	        String tmpValue=finalRows[row][column];
 	        String columnName=table.getColumnName(column);
@@ -1755,14 +1805,14 @@ private void makeGeneralTablePhases() {
         		if(numericValue==0){
         			insersionColor=new Color(0,100,0);
         		}
-        		else if(numericValue> 0&& numericValue<=segmentSize[1]){
+        		else if(numericValue> 0&& numericValue<=segmentSize[3]){
         			
         			insersionColor=new Color(176,226,255);
 	        	}
-        		else if(numericValue>segmentSize[1] && numericValue<=2*segmentSize[1]){
+        		else if(numericValue>segmentSize[3] && numericValue<=2*segmentSize[3]){
         			insersionColor=new Color(92,172,238);
         		}
-        		else if(numericValue>2*segmentSize[1] && numericValue<=3*segmentSize[1]){
+        		else if(numericValue>2*segmentSize[3] && numericValue<=3*segmentSize[3]){
         			
         			insersionColor=new Color(28,134,238);
         		}
@@ -2030,7 +2080,7 @@ private void makeGeneralTablePhases() {
 		tmpScrollPane.setViewportView(LifeTimeTable);
 		tmpScrollPane.setAlignmentX(0);
 		tmpScrollPane.setAlignmentY(0);
-		tmpScrollPane.setBounds(0,0,1250,600);
+        tmpScrollPane.setBounds(300,0,950,300);
         tmpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         tmpScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
        

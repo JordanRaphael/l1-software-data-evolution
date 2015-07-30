@@ -50,9 +50,6 @@ public class TableConstructionIDU implements Pld {
 			}
 		}
 		
-		for(int i=0; i<schemaColumnId.length; i++){
-			System.out.println(schemaColumnId[i][0]+":"+schemaColumnId[i][1]);
-		}
 		
 		columnsList.add("Table name");
 		

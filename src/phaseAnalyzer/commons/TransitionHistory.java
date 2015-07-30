@@ -35,7 +35,6 @@ public class TransitionHistory {
 		System.out.println();
 	}
 
-	//Fanis
 	public ArrayList<TransitionStats> getValues() {
 		return values;
 	}

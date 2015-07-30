@@ -46,7 +46,7 @@ public class PPLTransitionConstruction {
 		
 		for(int i=0; i<assistantKeys.size()-1; i++){
 			
-			PPLTransition tmpPPLTransition = new PPLTransition(assistantKeys.get(i),assistantKeys.get(i+1));
+			PPLTransition tmpPPLTransition = new PPLTransition(assistantKeys.get(i),assistantKeys.get(i+1),i);
 			
 			allPPLTransitions.put(i,tmpPPLTransition);
 			
