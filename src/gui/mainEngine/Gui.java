@@ -629,10 +629,10 @@ public class Gui extends JFrame implements ActionListener{
 				}
 			}
 		});
-		mnTable.add(mntmShowLifetimeTable_1);
+		//mnTable.add(mntmShowLifetimeTable_1);
 		mnTable.add(mntmShowLifetimeTable);
 		
-		JMenuItem mntmSwapRows = new JMenuItem("Swap Two Rows of Detailed Table (S)");
+		/*JMenuItem mntmSwapRows = new JMenuItem("Swap Two Rows of Detailed Table (S)");
 		mntmSwapRows.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -669,7 +669,7 @@ public class Gui extends JFrame implements ActionListener{
 		});
 		mnTable.add(mntmSwapRows);
 		
-		
+		*/
 
 		sideMenu.setName("lala");
 		sideMenu.setBounds(0, 0, 280, 600);
@@ -2086,10 +2086,6 @@ private void makeGeneralTablePhases() {
 
 private void showSelectionToZoomArea(int selectedColumn){
 	
-	System.out.println("NE TI");
-	for(int i=0; i<tablesSelected.size(); i++){
-		System.out.println(tablesSelected.get(i));
-	}
 	TableConstructionZoomArea table=new TableConstructionZoomArea(globalDataKeeper,tablesSelected,selectedColumn);
 	final String[] columns=table.constructColumns();
 	final String[][] rows=table.constructRows();

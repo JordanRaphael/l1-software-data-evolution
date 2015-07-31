@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.sun.org.apache.bcel.internal.classfile.PMGClass;
+
 import data.dataKeeper.GlobalDataKeeper;
 import data.pplSqlSchema.PPLSchema;
 import data.pplSqlSchema.PPLTable;
@@ -130,51 +132,54 @@ public class TableConstructionZoomArea implements Pld {
 
 		
 		int found=0;
-		int i=0;
+		//int i=0;
 		
-		for (Map.Entry<String,PPLSchema> pplSc : selectedPPLSchemas.entrySet()) {
+		//for (Map.Entry<String,PPLSchema> pplSc : selectedPPLSchemas.entrySet()) {
 			
 			//PPLSchema oneSchema=pplSc.getValue();
 			
 			
 			//for(int j=0; j<oneSchema.getTables().size(); j++){
 			for(Map.Entry<String, PPLTable> oneTable:selectedTables.entrySet()){
-				//PPLTable oneTable=oneSchema.getTableAt(j);
 				
-				String tmpTableName=oneTable.getKey();
-				for(int k=0; k<allTables.size(); k++){
 					
+				
+					//PPLTable oneTable=oneSchema.getTableAt(j);
 					
-					if(!tmpTableName.equals(allTables.get(k))){
-						found=0;
+					String tmpTableName=oneTable.getKey();
+					for(int k=0; k<allTables.size(); k++){
 						
+						
+						if(!tmpTableName.equals(allTables.get(k))){
+							found=0;
+							
+						}
+						else{
+							found=1;
+							break;
+							
+						}
+						
+					}
+					
+					if(found==0){
+						
+						allTables.add(tmpTableName);
+						tables.add(oneTable.getValue());
+						String[] tmpOneRow=constructOneRow(oneTable.getValue());
+						allRows.add(tmpOneRow);
+						//oneTable=new PPLTable();
+						tmpOneRow=new String[columnsNumber];
 					}
 					else{
-						found=1;
-						break;
-						
+						found=0;
 					}
-					
-				}
-				
-				if(found==0){
-					
-					allTables.add(tmpTableName);
-					tables.add(oneTable.getValue());
-					String[] tmpOneRow=constructOneRow(oneTable.getValue(),i);
-					allRows.add(tmpOneRow);
-					//oneTable=new PPLTable();
-					tmpOneRow=new String[columnsNumber];
-				}
-				else{
-					found=0;
-				}
 				
 				
 			}
 			
-			i++;
-		}
+			//i++;
+		//}
 		
 		String[][] tmpRows=new String[allRows.size()][columnsNumber];
 		
@@ -203,7 +208,7 @@ public class TableConstructionZoomArea implements Pld {
 		
 	}
 	
-	private String[] constructOneRow(PPLTable oneTable,int schemaVersion){
+	private String[] constructOneRow(PPLTable oneTable){
 		
 		String[] oneRow=new String[columnsNumber];
 		int deletedAllTable=0;
@@ -213,30 +218,27 @@ public class TableConstructionZoomArea implements Pld {
 		int insn=0;
 		int totalChangesForOneTransition=0;
 		oneRow[pointerCell]=oneTable.getName();
-		
-		if(schemaVersion==0){
+		boolean exists=false;
+		for (Map.Entry<Integer,PPLTransition> pplTr : pplTransitions.entrySet()) {
+						
 			pointerCell++;
 			
-			
-		}
-		else{
-			
-			for(int i=0; i<schemaColumnId.length; i++){
-				
-				if(schemaVersion==schemaColumnId[i][0]){
-					pointerCell=schemaColumnId[i][1];
-					break;
-				}
-				
+			PPLSchema oldS = allPPLSchemas.get(pplTr.getValue().getOldVersionName());
+			PPLSchema newS = allPPLSchemas.get(pplTr.getValue().getNewVersionName());
+
+			if(oldS.getTables().containsKey(oneTable.getName())|| newS.getTables().containsKey(oneTable.getName())){
+				exists=true;
+				break;
 			}
 			
 		}
 		
+		System.out.println(oneTable.getName()+" "+pointerCell+" "+selectedPPLSchemas.size()+" "+pplTransitions.size());
 		
-		int initialization=0;
-		if(schemaVersion>0){
-			initialization=schemaVersion-1;
-		}
+		
+		
+		int initialization=pointerCell-1;
+		
 		
 		Integer[] mapKeys = new Integer[pplTransitions.size()];
 		int pos2 = 0;
@@ -245,109 +247,111 @@ public class TableConstructionZoomArea implements Pld {
 		}
 		
 		Integer pos3=null;
-
-		for(int i=initialization; i<pplTransitions.size(); i++){
-			
-			pos3=mapKeys[i];
-			
-			PPLTransition  tmpTL=pplTransitions.get(pos3);
-			
-			String sc=tmpTL.getNewVersionName();
-			
-			ArrayList<TableChange> tmpTR=tmpTL.getTableChanges();
-			
-			updn=0;
-			deln=0;
-			insn=0;
-			
-			if(tmpTR!=null){
-				totalChangesForOneTransition=0;
+		if(exists){
+			for(int i=initialization; i<pplTransitions.size(); i++){
 				
-				for(int j=0; j<tmpTR.size(); j++){
+				pos3=mapKeys[i];
+				
+				PPLTransition  tmpTL=pplTransitions.get(pos3);
+				
+				String sc=tmpTL.getNewVersionName();
+				
+				ArrayList<TableChange> tmpTR=tmpTL.getTableChanges();
+				
+				updn=0;
+				deln=0;
+				insn=0;
+				
+				if(tmpTR!=null){
+					totalChangesForOneTransition=0;
 					
-					TableChange tableChange=tmpTR.get(j);
-					
-					if(tableChange.getAffectedTableName().equals(oneTable.getName())){
+					for(int j=0; j<tmpTR.size(); j++){
 						
+						TableChange tableChange=tmpTR.get(j);
 						
-						
-						ArrayList<AtomicChange> atChs = tableChange.getTableAtChForOneTransition();
-						
-						for(int k=0; k<atChs.size(); k++){
+						if(tableChange.getAffectedTableName().equals(oneTable.getName())){
 							
 							
 							
-							if (atChs.get(k).getType().contains("Addition")){
+							ArrayList<AtomicChange> atChs = tableChange.getTableAtChForOneTransition();
+							
+							for(int k=0; k<atChs.size(); k++){
 								
-								insn++;
 								
-								if(insn>maxInsersions){
-									maxInsersions=insn;
+								
+								if (atChs.get(k).getType().contains("Addition")){
+									
+									insn++;
+									
+									if(insn>maxInsersions){
+										maxInsersions=insn;
+									}
+									//totalChangesForOneTransition=totalChangesForOneTransition+insn;
+									
 								}
-								//totalChangesForOneTransition=totalChangesForOneTransition+insn;
-								
-							}
-							else if(atChs.get(k).getType().contains("Deletion")){
-								
-								deln++;
-								
-								 if(deln>maxDeletions){
-										maxDeletions=deln;
-										
-								 }
-								 
-								//totalChangesForOneTransition=totalChangesForOneTransition+deln;
-								 
-								 int num=getNumOfAttributesOfNextSchema(sc, oneTable.getName());
-								 
-								 if(num==0){
+								else if(atChs.get(k).getType().contains("Deletion")){
+									
+									deln++;
+									
+									 if(deln>maxDeletions){
+											maxDeletions=deln;
+											
+									 }
 									 
-									 deletedAllTable=1;
-								 }
-							}
-							else{
-								
-								updn++;
-								
-								if(updn>maxUpdates){
-									maxUpdates=updn;
+									//totalChangesForOneTransition=totalChangesForOneTransition+deln;
+									 
+									 int num=getNumOfAttributesOfNextSchema(sc, oneTable.getName());
+									 
+									 if(num==0){
+										 
+										 deletedAllTable=1;
+									 }
+								}
+								else{
+									
+									updn++;
+									
+									if(updn>maxUpdates){
+										maxUpdates=updn;
+									}
+									
+									//totalChangesForOneTransition=totalChangesForOneTransition+updn;
+									
 								}
 								
-								//totalChangesForOneTransition=totalChangesForOneTransition+updn;
-								
 							}
-							
 						}
+						 
+						 
 					}
-					 
-					 
+					
+					
+				}
+				System.out.println("poc:"+pointerCell+" "+columnsNumber );
+				if(pointerCell>=columnsNumber){
+					
+					break;
 				}
 				
+				totalChangesForOneTransition=insn+deln+updn;
+				oneRow[pointerCell]=Integer.toString(totalChangesForOneTransition);
+				/*pointerCell++;
+				oneRow[pointerCell]=Integer.toString(updn);
+				pointerCell++;
+				oneRow[pointerCell]=Integer.toString(deln);*/
+				pointerCell++;
+				if(deletedAllTable==1){
+					break;
+				}
+				//oneRow[pointerCell]="------";
+				//pointerCell++;
+				
+				insn=0;
+				updn=0;
+				deln=0;
+				
 				
 			}
-			if(pointerCell>=columnsNumber){
-				
-				break;
-			}
-			
-			totalChangesForOneTransition=insn+deln+updn;
-			oneRow[pointerCell]=Integer.toString(totalChangesForOneTransition);
-			/*pointerCell++;
-			oneRow[pointerCell]=Integer.toString(updn);
-			pointerCell++;
-			oneRow[pointerCell]=Integer.toString(deln);*/
-			pointerCell++;
-			if(deletedAllTable==1){
-				break;
-			}
-			//oneRow[pointerCell]="------";
-			//pointerCell++;
-			
-			insn=0;
-			updn=0;
-			deln=0;
-			
-			
 		}
 		
 		for(int i=0; i<oneRow.length; i++){
@@ -355,6 +359,12 @@ public class TableConstructionZoomArea implements Pld {
 				oneRow[i]="";
 			}
 		}
+		
+		String lala="";
+		for (int i = 0; i < oneRow.length; i++) {
+			lala=lala+oneRow[i]+",";
+		}
+		System.out.println(oneTable.getName()+" "+lala);
 	
 		return oneRow;
 		
