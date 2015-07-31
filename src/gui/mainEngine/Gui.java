@@ -2020,8 +2020,7 @@ private void makeGeneralTablePhases() {
 	generalTable.addMouseListener(new MouseAdapter() {
 		@Override
 		   public void mouseReleased(MouseEvent e) {
-			
-				if(SwingUtilities.isRightMouseButton(e)){
+				if(e.getButton() == MouseEvent.BUTTON3){
 					System.out.println("Right Click");
 					//if (e.getClickCount() == 1) {
 
@@ -2042,22 +2041,22 @@ private void makeGeneralTablePhases() {
 						}
 						//Arrays.fill(selectedRowsFromMouse, (Integer) null);
 						//if(target1.getSelectedColumn()==0){
-							final JPopupMenu popupMenu = new JPopupMenu();
+							JPopupMenu popupMenu = new JPopupMenu();
 					        JMenuItem showDetailsItem = new JMenuItem("Show Details for the selection");
 					        showDetailsItem.addActionListener(new ActionListener() {
 
 					            @Override
-					            public void actionPerformed(ActionEvent e) {
-					            	for(int rowsSelected=0; rowsSelected<selectedRowsFromMouse.length; rowsSelected++){
-										System.out.println("2:"+tablesSelected.get(rowsSelected));
-									}
+					            public void actionPerformed(ActionEvent le) {
+					            	
+					            	//JOptionPane.showMessageDialog(null, "dleus?");
 					                showSelectionToZoomArea(selectedColumn);
 					               
 					               // selectedRowsFromMouse=new int[];
 					            }
 					        });
 					        popupMenu.add(showDetailsItem);
-					        generalTable.setComponentPopupMenu(popupMenu);
+					        popupMenu.show(generalTable, e.getX(),e.getY());
+					        //generalTable.setComponentPopupMenu(popupMenu);
 					        
 						//}
 					//}

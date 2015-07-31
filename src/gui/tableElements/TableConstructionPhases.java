@@ -185,9 +185,10 @@ public String[] constructColumns(){
 				
 				TreeMap<Integer,PPLTransition> phasePPLTransitions=phases.get(p).getPhasePPLTransitions();
 				for(Map.Entry<Integer, PPLTransition> tr:phasePPLTransitions.entrySet()){
-					//System.out.println(oneTable.getName()+" "+schemaName+" "+tr.getValue().getOldVersionName()+" "+tr.getValue().getNewVersionName());
-					if(tr.getValue().getOldVersionName().equals(schemaName)|| tr.getValue().getNewVersionName().equals(schemaName)){
-						pointerCell=p;
+					
+					//if(tr.getValue().getOldVersionName().equals(schemaName)|| tr.getValue().getNewVersionName().equals(schemaName)){
+					if(tr.getValue().getNewVersionName().equals(schemaName)){	
+						pointerCell=p+1;
 						break;
 					}
 				}
@@ -208,12 +209,12 @@ public String[] constructColumns(){
 		System.out.println(oneTable.getName()+" "+pointerCell);
 		
 		int initialization=0;
-		if(schemaVersion>0){
-			initialization=pointerCell;
+		if(pointerCell>0){
+			initialization=pointerCell-1;
 		}
 		
 		for(int p=initialization; p<phases.size(); p++){
-			
+			System.out.println("P:"+p);
 			TreeMap<Integer,PPLTransition> phasePPLTransitions=phases.get(p).getPhasePPLTransitions();
 //			for(Map.Entry<Integer,PPLTransition> trleme:phasePPLTransitions.entrySet()){
 //				System.out.println(p+" "+trleme.getKey());
@@ -325,7 +326,6 @@ public String[] constructColumns(){
 				
 				
 			}
-			//System.out.println("poc "+pointerCell+" "+totalChangesForOnePhase);
 			
 			if(pointerCell>=columnsNumber){
 				System.err.println("POC"+oneTable.getName());
@@ -334,7 +334,7 @@ public String[] constructColumns(){
 			}
 			
 			totalChangesForOnePhase=insn+updn+deln;
-			
+
 			oneRow[pointerCell]=Integer.toString(totalChangesForOnePhase);
 			
 			pointerCell++;

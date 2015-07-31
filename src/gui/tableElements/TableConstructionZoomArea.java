@@ -86,9 +86,9 @@ public class TableConstructionZoomArea implements Pld {
 		
 		ArrayList<String> columnsList=new ArrayList<String>();
 		
-		schemaColumnId=new Integer[selectedPPLSchemas.size()][2];
+		schemaColumnId=new Integer[pplTransitions.size()][2];
 		
-		for(int i=0;i<selectedPPLSchemas.size();i++){
+		for(int i=0;i<pplTransitions.size();i++){
 			schemaColumnId[i][0]=i;
 			if(i==0){
 				schemaColumnId[i][1]=1;
@@ -134,7 +134,7 @@ public class TableConstructionZoomArea implements Pld {
 		
 		for (Map.Entry<String,PPLSchema> pplSc : selectedPPLSchemas.entrySet()) {
 			
-			PPLSchema oneSchema=pplSc.getValue();
+			//PPLSchema oneSchema=pplSc.getValue();
 			
 			
 			//for(int j=0; j<oneSchema.getTables().size(); j++){
