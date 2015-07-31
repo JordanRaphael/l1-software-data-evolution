@@ -31,19 +31,18 @@ public class TableChangeConstruction {
 		for(int i=0; i<atomicChanges.size(); i++){
 			
 			
-			
 			if(allTableChanges.containsKey(atomicChanges.get(i).getAffectedTableName())){
-				
+
 				Integer transitionID=atomicChanges.get(i).getTransitionID();
 				
 				
 				if(allTableChanges.get(atomicChanges.get(i).getAffectedTableName()).getTableAtomicChanges().containsKey(transitionID)){
-				
+
 					allTableChanges.get(atomicChanges.get(i).getAffectedTableName()).getTableAtomicChanges().get(transitionID).add(atomicChanges.get(i));
 				
 				}
 				else{
-					
+
 					ArrayList<AtomicChange> tmpAtomicChanges = new ArrayList<AtomicChange>();
 					
 					allTableChanges.get(atomicChanges.get(i).getAffectedTableName()).getTableAtomicChanges().put(transitionID, tmpAtomicChanges);
@@ -54,7 +53,7 @@ public class TableChangeConstruction {
 				
 			}
 			else{
-				
+
 				TreeMap<Integer,ArrayList<AtomicChange>> tmpAtomicChanges = new TreeMap<Integer,ArrayList<AtomicChange>>();
 						
 				Integer transitionID=atomicChanges.get(i).getTransitionID();
@@ -72,12 +71,11 @@ public class TableChangeConstruction {
 		}
 		
 		for (Map.Entry<String, TableChange> t : allTableChanges.entrySet()) {
-			
-			TableChange tmpTableChange = t.getValue();
-			allTables.get(t.getKey()).setTableChanges(tmpTableChange);
+
+			//TableChange tmpTableChange = t.getValue();
+			allTables.get(t.getKey()).setTableChanges(t.getValue());
 			allTables.get(t.getKey()).setTotalChanges();
 
-				
 		}
 		
 		/*

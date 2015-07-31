@@ -61,4 +61,8 @@ public class TableClusteringMainEngine {
 		System.out.println(toPrint);
 	}
 	
+	public ArrayList<ClusterCollector> getClusterCollectors(){
+		return allClusterCollectors;
+	}
+	
 }

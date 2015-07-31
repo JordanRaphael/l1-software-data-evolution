@@ -7,6 +7,7 @@ import gui.tableElements.MyTableModel;
 import gui.tableElements.TableConstructionAllSquaresIncluded;
 import gui.tableElements.TableConstructionIDU;
 import gui.tableElements.TableConstructionPhases;
+import gui.tableElements.TableConstructionWithClusters;
 import gui.tableElements.TableConstructionZoomArea;
 import gui.treeElements.TreeConstruction;
 
@@ -553,6 +554,38 @@ public class Gui extends JFrame implements ActionListener{
 			}
 		});
 		mnTable.add(mntmShowGeneralLifetimePhasesPLD);
+		
+		JMenuItem mntmShowGeneralLifetimePhasesWithClustersPLD = new JMenuItem("Show Phases With Clusters PLD");
+		mntmShowGeneralLifetimePhasesWithClustersPLD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				 if(!(currentProject==null)){
+					if(globalDataKeeper.getPhaseCollectors().size()!=0){
+						TableConstructionWithClusters table=new TableConstructionWithClusters(globalDataKeeper);
+						final String[] columns=table.constructColumns();
+						final String[][] rows=table.constructRows();
+						segmentSize=table.getSegmentSize();
+						System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
+						System.out.println("C: "+columns.length+" R: "+rows.length);
+	
+						finalColumns=columns;
+						finalRows=rows;
+						tabbedPane.setSelectedIndex(0);
+						makeGeneralTablePhases();
+					}
+					else{
+						JOptionPane.showMessageDialog(null, "Extract Phases first");
+					}
+				}
+				else{
+					if(currentProject==null){
+						JOptionPane.showMessageDialog(null, "Select a Project first");
+					}
+					
+					return;
+				}
+			}
+		});
+		mnTable.add(mntmShowGeneralLifetimePhasesWithClustersPLD);
 		
 		JMenuItem mntmShowLifetimeTable_1 = new JMenuItem("Show LifeTime Table With Selected Level");
 		mntmShowLifetimeTable_1.addActionListener(new ActionListener() {
@@ -1331,6 +1364,7 @@ public class Gui extends JFrame implements ActionListener{
 						globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
 						TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,b,d,c);
 						mainEngine2.extractClusters(4);
+						globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
 						mainEngine2.print();
 					}
 				}
@@ -1788,19 +1822,19 @@ private void makeGeneralTableIDU() {
 			         LifeTimeTable.repaint();
 			         //System.out.println(selectedColumn);
 				}
-			      if (e.getClickCount() == 2) {
-			         JTable target = (JTable)e.getSource();
-			         
-			         selectedRowsFromMouse = target.getSelectedRows();
-			         selectedColumn = target.getSelectedColumn();
-			         //System.out.println(selectedColumn);
-			         makeDetailedTable(finalColumns, finalRows,levelizedTable);
-			         
-			         LifeTimeTable.setCellSelectionEnabled(true);
-			         LifeTimeTable.changeSelection(selectedRowsFromMouse[0], selectedColumn, false, false);
-			         LifeTimeTable.requestFocus();
-			         
-			      }
+//			      if (e.getClickCount() == 2) {
+//			         JTable target = (JTable)e.getSource();
+//			         
+//			         selectedRowsFromMouse = target.getSelectedRows();
+//			         selectedColumn = target.getSelectedColumn();
+//			         //System.out.println(selectedColumn);
+//			         makeDetailedTable(finalColumns, finalRows,levelizedTable);
+//			         
+//			         LifeTimeTable.setCellSelectionEnabled(true);
+//			         LifeTimeTable.changeSelection(selectedRowsFromMouse[0], selectedColumn, false, false);
+//			         LifeTimeTable.requestFocus();
+//			         
+//			      }
 			   }
 		});
 		
@@ -2001,19 +2035,19 @@ private void makeGeneralTablePhases() {
 		         LifeTimeTable.repaint();
 		         //System.out.println(selectedColumn);
 			}
-		      if (e.getClickCount() == 2) {
-		         JTable target = (JTable)e.getSource();
-		         
-		         selectedRowsFromMouse = target.getSelectedRows();
-		         selectedColumn = target.getSelectedColumn();
-		         //System.out.println(selectedColumn);
-		         makeDetailedTable(finalColumns, finalRows,levelizedTable);
-		         
-		         LifeTimeTable.setCellSelectionEnabled(true);
-		         LifeTimeTable.changeSelection(selectedRowsFromMouse[0], selectedColumn, false, false);
-		         LifeTimeTable.requestFocus();
-		         
-		      }
+//		      if (e.getClickCount() == 2) {
+//		         JTable target = (JTable)e.getSource();
+//		         
+//		         selectedRowsFromMouse = target.getSelectedRows();
+//		         selectedColumn = target.getSelectedColumn();
+//		         //System.out.println(selectedColumn);
+//		         makeDetailedTable(finalColumns, finalRows,levelizedTable);
+//		         
+//		         LifeTimeTable.setCellSelectionEnabled(true);
+//		         LifeTimeTable.changeSelection(selectedRowsFromMouse[0], selectedColumn, false, false);
+//		         LifeTimeTable.requestFocus();
+//		         
+//		      }
 		   }
 	});
 	

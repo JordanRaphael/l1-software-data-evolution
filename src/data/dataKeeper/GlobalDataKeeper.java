@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 import phaseAnalyzer.commons.PhaseCollector;
+import tableClustering.commons.ClusterCollector;
 import data.pplSqlSchema.PPLSchema;
 import data.pplSqlSchema.PPLTable;
 import data.pplTransition.AtomicChange;
@@ -22,6 +23,8 @@ public class GlobalDataKeeper {
 	private TreeMap<String,TableChange> tableChangesForTwo = new TreeMap<String,TableChange>();
 	private TreeMap<Integer,PPLTransition> allPPLTransitions = new TreeMap<Integer,PPLTransition>();
 	private ArrayList<PhaseCollector> phaseCollectors = new ArrayList<PhaseCollector>();
+	private ArrayList<ClusterCollector> clusterCollectors = new ArrayList<ClusterCollector>();
+
 	private String 	projectDataFolder=null;
 	private String filename=null;
 	private String transitionsFile="";
@@ -81,6 +84,10 @@ public class GlobalDataKeeper {
 	
 	public void setPhaseCollectors(ArrayList<PhaseCollector> phaseCollectors){
 		this.phaseCollectors=phaseCollectors;
+	}
+	
+	public void setClusterCollectors(ArrayList<ClusterCollector> clusterCollectors){
+		this.clusterCollectors=clusterCollectors;
 	}
 	
 	public void setDataForTwoVersions(){
@@ -180,6 +187,10 @@ public class GlobalDataKeeper {
 	
 	public ArrayList<PhaseCollector> getPhaseCollectors(){
 		return this.phaseCollectors;
+	}
+	
+	public ArrayList<ClusterCollector> getClusterCollectors(){
+		return this.clusterCollectors;
 	}
 	
 }

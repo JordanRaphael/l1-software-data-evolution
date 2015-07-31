@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.antlr.v4.runtime.tree.Tree;
+
+import data.pplTransition.AtomicChange;
 import data.pplTransition.TableChange;
 
 public class PPLTable {
@@ -156,7 +159,11 @@ public class PPLTable {
 	
 	
 	public void setTotalChanges(){
-		totalChanges=tableChanges.getTableAtomicChanges().size();
+		TreeMap<Integer,ArrayList<AtomicChange>> tc=tableChanges.getTableAtomicChanges();
+		for(Map.Entry<Integer, ArrayList<AtomicChange>> tcr:tc.entrySet()){
+			totalChanges=totalChanges+tcr.getValue().size();
+		}
+		System.out.println(this.name+" "+totalChanges);
 	}
 	
 	public void setChangesForChart(ArrayList<Integer> tmpChangesForChart){
