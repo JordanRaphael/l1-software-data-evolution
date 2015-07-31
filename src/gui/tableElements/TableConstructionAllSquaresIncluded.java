@@ -25,7 +25,6 @@ public class TableConstructionAllSquaresIncluded implements Pld {
 	private int maxInsersions=1;
 	private int maxUpdates=1;
 	private Integer segmentSize[]=new Integer[3];
-	private int totalChanges=0;
 	
 	public TableConstructionAllSquaresIncluded(GlobalDataKeeper globalDataKeeper){
 		
@@ -147,8 +146,6 @@ public class TableConstructionAllSquaresIncluded implements Pld {
 					tables.add(oneTable);
 					String[] tmpOneRow=constructOneRow(oneTable,i);
 					allRows.add(tmpOneRow);
-					allPPLSchemas.get(pplSc.getKey()).getTableAt(j).setTotalChanges(totalChanges);
-					totalChanges=0;
 					oneTable=new PPLTable();
 					tmpOneRow=new String[columnsNumber];
 				}
@@ -268,7 +265,6 @@ public class TableConstructionAllSquaresIncluded implements Pld {
 									maxInsersions=insn;
 								}
 							
-								totalChanges=totalChanges+insn;
 								
 							}
 							else if(atChs.get(k).getType().contains("Deletion")){
@@ -281,7 +277,6 @@ public class TableConstructionAllSquaresIncluded implements Pld {
 								 }
 								 
 								 
-								 totalChanges=totalChanges+deln;
 								 
 								 int num=getNumOfAttributesOfNextSchema(sc, oneTable.getName());
 								 
@@ -298,7 +293,6 @@ public class TableConstructionAllSquaresIncluded implements Pld {
 									maxUpdates=updn;
 								}
 								
-								totalChanges=totalChanges+updn;
 								
 							}
 							

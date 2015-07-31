@@ -11,12 +11,16 @@ import data.pplTransition.AtomicChange;
 import data.pplTransition.PPLTransition;
 import data.pplTransition.TableChange;
 
-public class TableConstructionIDU implements Pld {
+public class TableConstructionZoomArea implements Pld {
 
 	private static TreeMap<String,PPLSchema> allPPLSchemas=new TreeMap<String,PPLSchema>();
+	private static TreeMap<String,PPLSchema> selectedPPLSchemas=new TreeMap<String,PPLSchema>();
 	private ArrayList<PPLTable>	tables=new ArrayList<PPLTable>();
-	private TreeMap<Integer,PPLTransition> allPPLTransitions = new TreeMap<Integer,PPLTransition>();
-
+	private TreeMap<String,PPLTable> selectedTables = new TreeMap<String,PPLTable>();
+	private ArrayList<String> sSelectedTables = new ArrayList<String>();
+	private TreeMap<Integer,PPLTransition> pplTransitions = new TreeMap<Integer,PPLTransition>();
+	private GlobalDataKeeper globalDataKeeper = new GlobalDataKeeper();
+	private int selectedColumn;
 
 	private int columnsNumber=0;
 	private Integer[][] schemaColumnId=null;
@@ -25,11 +29,56 @@ public class TableConstructionIDU implements Pld {
 	private int maxUpdates=1;
 	private Integer segmentSize[]=new Integer[3];
 	
-	public TableConstructionIDU(GlobalDataKeeper globalDataKeeper){
+	public TableConstructionZoomArea(GlobalDataKeeper globalDataKeeper,ArrayList<String> sSelectedTables,int selectedColumn){
 		
+		this.globalDataKeeper=globalDataKeeper;
 		allPPLSchemas=globalDataKeeper.getAllPPLSchemas();
-		allPPLTransitions=globalDataKeeper.getAllPPLTransitions();
+		this.sSelectedTables=sSelectedTables;
+		this.selectedColumn=selectedColumn;
+		fillSelectedPPLTransitions();
+		fillSelectedPPLSchemas();
+		fillSelectedTables();
+	}
+	
+	private void fillSelectedPPLTransitions() {
 		
+		if(selectedColumn==0){
+			pplTransitions=globalDataKeeper.getAllPPLTransitions();
+		}
+		else{
+			pplTransitions=globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(selectedColumn-1).getPhasePPLTransitions();
+
+		}
+		/*
+		for (Map.Entry<Integer,PPLTransition> pplTr : pplTransitions.entrySet()) {
+			System.out.println(pplTr.getKey());
+		}
+		*/
+	}
+	
+	private void fillSelectedPPLSchemas(){
+		
+		for (Map.Entry<Integer,PPLTransition> pplTr : pplTransitions.entrySet()) {
+			
+			selectedPPLSchemas.put(pplTr.getValue().getOldVersionName(), allPPLSchemas.get(pplTr.getValue().getOldVersionName()));
+			
+		}
+		/*for (Map.Entry<String,PPLSchema> pplSc : selectedPPLSchemas.entrySet()) {
+			System.out.println(pplSc.getKey());
+		}*/
+		
+		
+	}
+	
+	private void fillSelectedTables(){
+		
+		for(int i=0; i<sSelectedTables.size(); i++){
+			selectedTables.put(sSelectedTables.get(i),this.globalDataKeeper.getAllPPLTables().get(sSelectedTables.get(i)) );
+		}
+		
+		/*for (Map.Entry<String,PPLTable> pplTab : selectedTables.entrySet()) {
+			System.out.println(pplTab.getKey());
+		}*/
 		
 	}
 	
@@ -37,9 +86,9 @@ public class TableConstructionIDU implements Pld {
 		
 		ArrayList<String> columnsList=new ArrayList<String>();
 		
-		schemaColumnId=new Integer[allPPLSchemas.size()][2];
+		schemaColumnId=new Integer[selectedPPLSchemas.size()][2];
 		
-		for(int i=0;i<allPPLTransitions.size();i++){
+		for(int i=0;i<selectedPPLSchemas.size();i++){
 			schemaColumnId[i][0]=i;
 			if(i==0){
 				schemaColumnId[i][1]=1;
@@ -53,7 +102,7 @@ public class TableConstructionIDU implements Pld {
 		columnsList.add("Table name");
 		
 		
-		for (Map.Entry<Integer,PPLTransition> pplTr : allPPLTransitions.entrySet()) {
+		for (Map.Entry<Integer,PPLTransition> pplTr : pplTransitions.entrySet()) {
 			
 				String label=Integer.toString(pplTr.getKey());
 				columnsList.add(label);
@@ -83,16 +132,16 @@ public class TableConstructionIDU implements Pld {
 		int found=0;
 		int i=0;
 		
-		for (Map.Entry<String,PPLSchema> pplSc : allPPLSchemas.entrySet()) {
+		for (Map.Entry<String,PPLSchema> pplSc : selectedPPLSchemas.entrySet()) {
 			
 			PPLSchema oneSchema=pplSc.getValue();
 			
 			
-			for(int j=0; j<oneSchema.getTables().size(); j++){
+			//for(int j=0; j<oneSchema.getTables().size(); j++){
+			for(Map.Entry<String, PPLTable> oneTable:selectedTables.entrySet()){
+				//PPLTable oneTable=oneSchema.getTableAt(j);
 				
-				PPLTable oneTable=oneSchema.getTableAt(j);
-				
-				String tmpTableName=oneTable.getName();
+				String tmpTableName=oneTable.getKey();
 				for(int k=0; k<allTables.size(); k++){
 					
 					
@@ -111,10 +160,10 @@ public class TableConstructionIDU implements Pld {
 				if(found==0){
 					
 					allTables.add(tmpTableName);
-					tables.add(oneTable);
-					String[] tmpOneRow=constructOneRow(oneTable,i-1);
+					tables.add(oneTable.getValue());
+					String[] tmpOneRow=constructOneRow(oneTable.getValue(),i);
 					allRows.add(tmpOneRow);
-					oneTable=new PPLTable();
+					//oneTable=new PPLTable();
 					tmpOneRow=new String[columnsNumber];
 				}
 				else{
@@ -165,7 +214,7 @@ public class TableConstructionIDU implements Pld {
 		int totalChangesForOneTransition=0;
 		oneRow[pointerCell]=oneTable.getName();
 		
-		if(schemaVersion==-1){
+		if(schemaVersion==0){
 			pointerCell++;
 			
 			
@@ -186,22 +235,22 @@ public class TableConstructionIDU implements Pld {
 		
 		int initialization=0;
 		if(schemaVersion>0){
-			initialization=schemaVersion;
+			initialization=schemaVersion-1;
 		}
 		
-		Integer[] mapKeys = new Integer[allPPLTransitions.size()];
+		Integer[] mapKeys = new Integer[pplTransitions.size()];
 		int pos2 = 0;
-		for (Integer key : allPPLTransitions.keySet()) {
+		for (Integer key : pplTransitions.keySet()) {
 		    mapKeys[pos2++] = key;
 		}
 		
 		Integer pos3=null;
 
-		for(int i=initialization; i<allPPLTransitions.size(); i++){
+		for(int i=initialization; i<pplTransitions.size(); i++){
 			
 			pos3=mapKeys[i];
 			
-			PPLTransition  tmpTL=allPPLTransitions.get(pos3);
+			PPLTransition  tmpTL=pplTransitions.get(pos3);
 			
 			String sc=tmpTL.getNewVersionName();
 			
@@ -221,12 +270,12 @@ public class TableConstructionIDU implements Pld {
 					if(tableChange.getAffectedTableName().equals(oneTable.getName())){
 						
 						
+						
 						ArrayList<AtomicChange> atChs = tableChange.getTableAtChForOneTransition();
 						
 						for(int k=0; k<atChs.size(); k++){
 							
-							System.out.println(oneTable.getName()+totalChangesForOneTransition);
-
+							
 							
 							if (atChs.get(k).getType().contains("Addition")){
 								
@@ -281,7 +330,7 @@ public class TableConstructionIDU implements Pld {
 				break;
 			}
 			
-			totalChangesForOneTransition=insn+updn+deln;
+			totalChangesForOneTransition=insn+deln+updn;
 			oneRow[pointerCell]=Integer.toString(totalChangesForOneTransition);
 			/*pointerCell++;
 			oneRow[pointerCell]=Integer.toString(updn);
@@ -335,5 +384,6 @@ public class TableConstructionIDU implements Pld {
 		}
 		return num;
 	}
+
 
 }

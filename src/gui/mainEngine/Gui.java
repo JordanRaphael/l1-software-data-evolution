@@ -7,6 +7,7 @@ import gui.tableElements.MyTableModel;
 import gui.tableElements.TableConstructionAllSquaresIncluded;
 import gui.tableElements.TableConstructionIDU;
 import gui.tableElements.TableConstructionPhases;
+import gui.tableElements.TableConstructionZoomArea;
 import gui.treeElements.TreeConstruction;
 
 import java.awt.AWTException;
@@ -30,6 +31,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
@@ -90,7 +93,10 @@ public class Gui extends JFrame implements ActionListener{
 	
 	private MyTableModel detailedModel = null;
 	private MyTableModel generalModel = null;
+	private MyTableModel zoomModel = null;
+
 	private JTable LifeTimeTable=null;
+	private JTable zoomAreaTable=null;
 	
 	
 	private JLabel labelLongLivedTables=new JLabel();
@@ -111,6 +117,7 @@ public class Gui extends JFrame implements ActionListener{
 	@SuppressWarnings("rawtypes")
 	private DefaultListModel listModelMostUpdatedTables=new DefaultListModel();
 	private JScrollPane tmpScrollPane =new JScrollPane();
+	private JScrollPane tmpScrollPaneZoomArea =new JScrollPane();
 	private JScrollPane jScrollPaneKLongLivedTables=null;
 	private JScrollPane jScrollPaneKMostUpdatedTables=null;
 	private JScrollPane jScrollPaneKMostUpdatedAttributes=null;
@@ -127,6 +134,8 @@ public class Gui extends JFrame implements ActionListener{
 	
 	private String[] finalColumns=null;
 	private String[][] finalRows=null;
+	private String[] finalColumnsZoomArea=null;
+	private String[][] finalRowsZoomArea=null;
 	private String currentProject=null;
 	private String currentProjectDataFolder=null;
 	private String project=null;
@@ -169,6 +178,8 @@ public class Gui extends JFrame implements ActionListener{
 
 	private int[] selectedRowsFromMouse;
 	private int selectedColumn;
+	private ArrayList<String> tablesSelected = new ArrayList<String>();
+
 	
 	
 	/**
@@ -1657,7 +1668,7 @@ private void makeGeneralTableIDU() {
 		
 		generalModel=new MyTableModel(finalColumns, rows);
 		
-		JTable generalTable=new JTable(generalModel);
+		final JTable generalTable=new JTable(generalModel);
 		
 		generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
@@ -1689,6 +1700,29 @@ private void makeGeneralTableIDU() {
 		        String columnName=table.getColumnName(column);
 		        Color fr=new Color(0,0,0);
 		        c.setForeground(fr);
+		        
+		        if(selectedColumn==0){
+		        	if (isSelected){
+		        	/*if(hasFocus)
+		        	{		        	
+		        		System.out.println(row+" "+column);
+		        		c.setBackground(Color.YELLOW);
+		        		return c;
+		        	}*/
+		        	//else{
+		        		//System.out.println(row+" "+column);
+		        		c.setBackground(Color.YELLOW);
+		        		return c;
+		        	}
+		        }
+		        else{
+		        	if (isSelected && hasFocus){
+			        	
+		        		c.setBackground(Color.YELLOW);
+		        		return c;
+			        }
+		        	
+		        }
 
 		        try{
 		        	int numericValue=Integer.parseInt(tmpValue);
@@ -1743,22 +1777,66 @@ private void makeGeneralTableIDU() {
 		});
 		
 		generalTable.addMouseListener(new MouseAdapter() {
-			
+			@Override
 			   public void mouseClicked(MouseEvent e) {
+				
+				if (e.getClickCount() == 1) {
+					JTable target = (JTable)e.getSource();
+			         
+			         selectedRowsFromMouse = target.getSelectedRows();
+			         selectedColumn = target.getSelectedColumn();
+			         LifeTimeTable.repaint();
+			         //System.out.println(selectedColumn);
+				}
 			      if (e.getClickCount() == 2) {
 			         JTable target = (JTable)e.getSource();
 			         
-			         int row = target.getSelectedRow();
-			         int column = target.getSelectedColumn();
-			         
+			         selectedRowsFromMouse = target.getSelectedRows();
+			         selectedColumn = target.getSelectedColumn();
+			         //System.out.println(selectedColumn);
 			         makeDetailedTable(finalColumns, finalRows,levelizedTable);
 			         
 			         LifeTimeTable.setCellSelectionEnabled(true);
-			         
-			         LifeTimeTable.changeSelection(row, column, false, false);
+			         LifeTimeTable.changeSelection(selectedRowsFromMouse[0], selectedColumn, false, false);
 			         LifeTimeTable.requestFocus();
 			         
 			      }
+			   }
+		});
+		
+		generalTable.addMouseListener(new MouseAdapter() {
+			@Override
+			   public void mouseReleased(MouseEvent e) {
+				
+					if(SwingUtilities.isRightMouseButton(e)){
+						System.out.println("Right Click");
+						//if (e.getClickCount() == 1) {
+
+							JTable target1 = (JTable)e.getSource();
+							selectedColumn=target1.getSelectedColumn();
+							selectedRowsFromMouse=target1.getSelectedRows();
+							System.out.println(target1.getSelectedColumn());
+							System.out.println(target1.getSelectedRow());
+							for(int rowsSelected=0; rowsSelected<selectedRowsFromMouse.length; rowsSelected++){
+								System.out.println(generalTable.getValueAt(selectedRowsFromMouse[rowsSelected], 0));
+							}
+							if(target1.getSelectedColumn()==0){
+								final JPopupMenu popupMenu = new JPopupMenu();
+						        JMenuItem showDetailsItem = new JMenuItem("Show Details for the selection");
+						        showDetailsItem.addActionListener(new ActionListener() {
+	
+						            @Override
+						            public void actionPerformed(ActionEvent e) {
+						                JOptionPane.showMessageDialog(null, "Right-click performed on table and choose DELETE");
+						            }
+						        });
+						        popupMenu.add(showDetailsItem);
+						        generalTable.setComponentPopupMenu(popupMenu);
+						        
+							}
+						//}
+					}
+				
 			   }
 		});
 		
@@ -1796,7 +1874,7 @@ private void makeGeneralTablePhases() {
 	
 	generalModel=new MyTableModel(finalColumns, rows);
 	
-	JTable generalTable=new JTable(generalModel);
+	final JTable generalTable=new JTable(generalModel);
 	
 	generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	
@@ -1834,6 +1912,30 @@ private void makeGeneralTablePhases() {
 	        String columnName=table.getColumnName(column);
 	        Color fr=new Color(0,0,0);
 	        c.setForeground(fr);
+	        
+	        if(selectedColumn==0){
+	        	if (isSelected){
+	        	/*if(hasFocus)
+	        	{		        	
+	        		System.out.println(row+" "+column);
+	        		c.setBackground(Color.YELLOW);
+	        		return c;
+	        	}*/
+	        	//else{
+	        		//System.out.println(row+" "+column);
+	        		c.setBackground(Color.YELLOW);
+	        		return c;
+	        	}
+	        }
+	        else{
+	        	if (isSelected && hasFocus){
+		        	
+	        		c.setBackground(Color.YELLOW);
+	        		return c;
+		        }
+	        	
+	        }
+
 
 	        try{
 	        	int numericValue=Integer.parseInt(tmpValue);
@@ -1888,22 +1990,79 @@ private void makeGeneralTablePhases() {
 	});
 	
 	generalTable.addMouseListener(new MouseAdapter() {
-		
+		@Override
 		   public void mouseClicked(MouseEvent e) {
+			
+			if (e.getClickCount() == 1) {
+				JTable target = (JTable)e.getSource();
+		         
+		         selectedRowsFromMouse = target.getSelectedRows();
+		         selectedColumn = target.getSelectedColumn();
+		         LifeTimeTable.repaint();
+		         //System.out.println(selectedColumn);
+			}
 		      if (e.getClickCount() == 2) {
 		         JTable target = (JTable)e.getSource();
 		         
-		         int row = target.getSelectedRow();
-		         int column = target.getSelectedColumn();
-		         
+		         selectedRowsFromMouse = target.getSelectedRows();
+		         selectedColumn = target.getSelectedColumn();
+		         //System.out.println(selectedColumn);
 		         makeDetailedTable(finalColumns, finalRows,levelizedTable);
 		         
 		         LifeTimeTable.setCellSelectionEnabled(true);
-		         
-		         LifeTimeTable.changeSelection(row, column, false, false);
+		         LifeTimeTable.changeSelection(selectedRowsFromMouse[0], selectedColumn, false, false);
 		         LifeTimeTable.requestFocus();
 		         
 		      }
+		   }
+	});
+	
+	generalTable.addMouseListener(new MouseAdapter() {
+		@Override
+		   public void mouseReleased(MouseEvent e) {
+			
+				if(SwingUtilities.isRightMouseButton(e)){
+					System.out.println("Right Click");
+					//if (e.getClickCount() == 1) {
+
+						JTable target1 = (JTable)e.getSource();
+						selectedColumn=target1.getSelectedColumn();
+						selectedRowsFromMouse=new int[target1.getSelectedRows().length];
+						selectedRowsFromMouse=target1.getSelectedRows();
+						System.out.println(target1.getSelectedColumn());
+						System.out.println(target1.getSelectedRow());
+						final String sSelectedColumn=generalTable.getColumnName(selectedColumn);
+						tablesSelected = new ArrayList<String>();
+//						for(int rowsSelected=tablesSelected.size()-1; rowsSelected>=tablesSelected.size(); rowsSelected--){
+//							tablesSelected.remove(rowsSelected);
+//						}
+						for(int rowsSelected=0; rowsSelected<selectedRowsFromMouse.length; rowsSelected++){
+							tablesSelected.add((String) generalTable.getValueAt(selectedRowsFromMouse[rowsSelected], 0));
+							System.out.println("1:"+tablesSelected.get(rowsSelected));
+						}
+						//Arrays.fill(selectedRowsFromMouse, (Integer) null);
+						//if(target1.getSelectedColumn()==0){
+							final JPopupMenu popupMenu = new JPopupMenu();
+					        JMenuItem showDetailsItem = new JMenuItem("Show Details for the selection");
+					        showDetailsItem.addActionListener(new ActionListener() {
+
+					            @Override
+					            public void actionPerformed(ActionEvent e) {
+					            	for(int rowsSelected=0; rowsSelected<selectedRowsFromMouse.length; rowsSelected++){
+										System.out.println("2:"+tablesSelected.get(rowsSelected));
+									}
+					                showSelectionToZoomArea(selectedColumn);
+					               
+					               // selectedRowsFromMouse=new int[];
+					            }
+					        });
+					        popupMenu.add(showDetailsItem);
+					        generalTable.setComponentPopupMenu(popupMenu);
+					        
+						//}
+					//}
+				}
+			
 		   }
 	});
 	
@@ -1919,6 +2078,253 @@ private void makeGeneralTablePhases() {
     
 	lifeTimePanel.setCursor(getCursor());
 	lifeTimePanel.add(tmpScrollPane);
+	
+	
+	
+}
+
+
+
+private void showSelectionToZoomArea(int selectedColumn){
+	
+	System.out.println("NE TI");
+	for(int i=0; i<tablesSelected.size(); i++){
+		System.out.println(tablesSelected.get(i));
+	}
+	TableConstructionZoomArea table=new TableConstructionZoomArea(globalDataKeeper,tablesSelected,selectedColumn);
+	final String[] columns=table.constructColumns();
+	final String[][] rows=table.constructRows();
+	//segmentSize=table.getSegmentSize();
+	System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
+	System.out.println("C: "+columns.length+" R: "+rows.length);
+
+	finalColumnsZoomArea=columns;
+	finalRowsZoomArea=rows;
+	tabbedPane.setSelectedIndex(0);
+	makeZoomAreaTable();
+	
+	
+	
+}
+
+private void makeZoomAreaTable() {
+	
+	int numberOfColumns=finalRowsZoomArea[0].length;
+	int numberOfRows=finalRowsZoomArea.length;
+	
+	//selectedRows=new ArrayList<Integer>();
+	
+	String[][] rowsZoom=new String[numberOfRows][numberOfColumns];
+	
+	for(int i=0; i<numberOfRows; i++){
+		
+		rowsZoom[i][0]=finalRowsZoomArea[i][0];
+		
+	}
+	
+	zoomModel=new MyTableModel(finalColumnsZoomArea, rowsZoom);
+	
+	final JTable zoomTable=new JTable(zoomModel);
+	
+	zoomTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	
+	
+	
+	for(int i=0; i<zoomTable.getColumnCount(); i++){
+		if(i==0){
+			zoomTable.getColumnModel().getColumn(0).setPreferredWidth(150);
+			//generalTable.getColumnModel().getColumn(0).setMaxWidth(150);
+			//generalTable.getColumnModel().getColumn(0).setMinWidth(150);
+		}
+		else{
+			int tot;
+			if(selectedColumn>0){
+				tot=800/globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(selectedColumn-1).getSize();
+			}
+			else{
+				tot=800/globalDataKeeper.getAllPPLTransitions().size();
+			}
+			//int sizeOfColumn=globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(i-1).getSize()*tot;
+			
+			zoomTable.getColumnModel().getColumn(i).setPreferredWidth(20);
+			zoomTable.getColumnModel().getColumn(i).setMaxWidth(20);
+			zoomTable.getColumnModel().getColumn(i).setMinWidth(20);
+		}
+	}
+	
+	zoomTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
+	{
+	    
+		private static final long serialVersionUID = 1L;
+
+		@Override
+	    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+	    {
+	        final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+	        
+	        
+	        
+	        String tmpValue=finalRowsZoomArea[row][column];
+	        String columnName=table.getColumnName(column);
+	        Color fr=new Color(0,0,0);
+	        c.setForeground(fr);
+	        
+	        if(selectedColumn==0){
+	        	if (isSelected){
+	        	/*if(hasFocus)
+	        	{		        	
+	        		System.out.println(row+" "+column);
+	        		c.setBackground(Color.YELLOW);
+	        		return c;
+	        	}*/
+	        	//else{
+	        		//System.out.println(row+" "+column);
+	        		c.setBackground(Color.YELLOW);
+	        		return c;
+	        	}
+	        }
+	        else{
+	        	if (isSelected && hasFocus){
+		        	
+	        		c.setBackground(Color.YELLOW);
+	        		return c;
+		        }
+	        	
+	        }
+
+
+	        try{
+	        	int numericValue=Integer.parseInt(tmpValue);
+	        	Color insersionColor=null;
+				setToolTipText(Integer.toString(numericValue));
+
+	        	
+        		if(numericValue==0){
+        			insersionColor=new Color(0,100,0);
+        		}
+        		else if(numericValue> 0&& numericValue<=segmentSize[3]){
+        			
+        			insersionColor=new Color(176,226,255);
+	        	}
+        		else if(numericValue>segmentSize[3] && numericValue<=2*segmentSize[3]){
+        			insersionColor=new Color(92,172,238);
+        		}
+        		else if(numericValue>2*segmentSize[3] && numericValue<=3*segmentSize[3]){
+        			
+        			insersionColor=new Color(28,134,238);
+        		}
+        		else{
+        			insersionColor=new Color(16,78,139);
+        		}
+        		c.setBackground(insersionColor);
+	        	
+	        	return c;
+	        }
+	        catch(Exception e){
+	        		
+
+	        	
+        		if(tmpValue.equals("")){
+        			c.setBackground(Color.DARK_GRAY);
+        			return c; 
+        		}
+        		else{
+        			if(columnName.contains("v")){
+        				c.setBackground(Color.lightGray);
+        				setToolTipText(columnName);
+        			}
+        			else{
+        				Color tableNameColor=new Color(205,175,149);
+        				c.setBackground(tableNameColor);
+        			}
+	        		return c; 
+        		}
+	        		
+	        		
+	        }
+	    }
+	});
+	
+	zoomTable.addMouseListener(new MouseAdapter() {
+		@Override
+		   public void mouseClicked(MouseEvent e) {
+			
+			if (e.getClickCount() == 1) {
+				JTable target = (JTable)e.getSource();
+		         
+		         selectedRowsFromMouse = target.getSelectedRows();
+		         selectedColumn = target.getSelectedColumn();
+		         LifeTimeTable.repaint();
+		         //System.out.println(selectedColumn);
+			}
+		      if (e.getClickCount() == 2) {
+		         JTable target = (JTable)e.getSource();
+		         
+		         selectedRowsFromMouse = target.getSelectedRows();
+		         selectedColumn = target.getSelectedColumn();
+		         //System.out.println(selectedColumn);
+		         makeDetailedTable(finalColumns, finalRows,levelizedTable);
+		         
+		         //LifeTimeTable.setCellSelectionEnabled(true);
+		         //LifeTimeTable.changeSelection(selectedRowsFromMouse[0], selectedColumn, false, false);
+		         //LifeTimeTable.requestFocus();
+		         
+		      }
+		   }
+	});
+	
+	zoomTable.addMouseListener(new MouseAdapter() {
+		@Override
+		   public void mouseReleased(MouseEvent e) {
+			
+				if(SwingUtilities.isRightMouseButton(e)){
+					System.out.println("Right Click");
+					//if (e.getClickCount() == 1) {
+
+						JTable target1 = (JTable)e.getSource();
+						selectedColumn=target1.getSelectedColumn();
+						selectedRowsFromMouse=target1.getSelectedRows();
+						System.out.println(target1.getSelectedColumn());
+						System.out.println(target1.getSelectedRow());
+						final String sSelectedColumn=zoomTable.getColumnName(selectedColumn);
+						final ArrayList<String> tablesSelected = new ArrayList<String>();
+						for(int rowsSelected=0; rowsSelected<selectedRowsFromMouse.length; rowsSelected++){
+							tablesSelected.add((String) zoomTable.getValueAt(selectedRowsFromMouse[rowsSelected], 0));
+							System.out.println(tablesSelected.get(rowsSelected));
+						}
+						//if(target1.getSelectedColumn()==0){
+							final JPopupMenu popupMenu = new JPopupMenu();
+					        JMenuItem showDetailsItem = new JMenuItem("Show Details for the selection");
+					        showDetailsItem.addActionListener(new ActionListener() {
+
+					            @Override
+					            public void actionPerformed(ActionEvent e) {
+					                JOptionPane.showMessageDialog(null, "Right-click performed on table and choose ShowDetails");
+					                showSelectionToZoomArea(selectedColumn);
+					            }
+					        });
+					        popupMenu.add(showDetailsItem);
+					        zoomTable.setComponentPopupMenu(popupMenu);
+					        
+						//}
+					//}
+				}
+			
+		   }
+	});
+	
+	
+	zoomAreaTable=zoomTable;
+	
+	tmpScrollPaneZoomArea.setViewportView(zoomAreaTable);
+	tmpScrollPaneZoomArea.setAlignmentX(0);
+	tmpScrollPaneZoomArea.setAlignmentY(0);
+	tmpScrollPaneZoomArea.setBounds(300,350,950,250);
+	tmpScrollPaneZoomArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	tmpScrollPaneZoomArea.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    
+	lifeTimePanel.setCursor(getCursor());
+	lifeTimePanel.add(tmpScrollPaneZoomArea);
 	
 	
 	

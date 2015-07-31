@@ -154,10 +154,6 @@ public class PPLTable {
 		age=tmpAge;
 	}
 	
-	public void setTotalChanges(int tmpTotalChanges){
-				
-		totalChanges=tmpTotalChanges;
-	}
 	
 	public void setTotalChanges(){
 		totalChanges=tableChanges.getTableAtomicChanges().size();

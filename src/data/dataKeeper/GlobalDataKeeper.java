@@ -47,6 +47,11 @@ public class GlobalDataKeeper {
 //		
 //	}
 	
+	public GlobalDataKeeper(){
+		
+		
+	}
+	
 	public GlobalDataKeeper(String tmpOldVersion, String tmpNewVersion,String tmpDataFolder){
 		
 		oldVersion=tmpOldVersion;
