@@ -37,7 +37,7 @@ public class TableConstructionIDU implements Pld {
 		
 		ArrayList<String> columnsList=new ArrayList<String>();
 		
-		schemaColumnId=new Integer[allPPLSchemas.size()][2];
+		schemaColumnId=new Integer[allPPLTransitions.size()][2];
 		
 		for(int i=0;i<allPPLTransitions.size();i++){
 			schemaColumnId[i][0]=i;
@@ -225,8 +225,6 @@ public class TableConstructionIDU implements Pld {
 						
 						for(int k=0; k<atChs.size(); k++){
 							
-							System.out.println(oneTable.getName()+totalChangesForOneTransition);
-
 							
 							if (atChs.get(k).getType().contains("Addition")){
 								

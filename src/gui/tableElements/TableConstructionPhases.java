@@ -65,6 +65,7 @@ public String[] constructColumns(){
 		}
 		
 		columnsNumber=columnsList.size();
+		System.out.println(columnsNumber);
 		String[] tmpcolumns=new String[columnsList.size()];
 		
 		for(int j=0; j<columnsList.size(); j++ ){
@@ -204,20 +205,22 @@ public String[] constructColumns(){
 //			}
 			
 		}
-		//System.out.println(oneTable.getName()+" "+pointerCell);
+		System.out.println(oneTable.getName()+" "+pointerCell);
 		
 		int initialization=0;
 		if(schemaVersion>0){
-			initialization=schemaVersion-1;
+			initialization=pointerCell;
 		}
 		
-		for(int p=0; p<phases.size(); p++){
+		for(int p=initialization; p<phases.size(); p++){
 			
 			TreeMap<Integer,PPLTransition> phasePPLTransitions=phases.get(p).getPhasePPLTransitions();
+//			for(Map.Entry<Integer,PPLTransition> trleme:phasePPLTransitions.entrySet()){
+//				System.out.println(p+" "+trleme.getKey());
+//			}
 			if (totalChangesForOnePhase>maxTotalChangesForOneTr) {
 				maxTotalChangesForOneTr=totalChangesForOnePhase;
 			}
-			//System.out.println(oneTable.getName()+" "+totalChangesForOnePhase);
 			totalChangesForOnePhase=0;
 			/*
 			Integer[] mapKeys = new Integer[phasePPLTransitions.size()];
@@ -233,7 +236,8 @@ public String[] constructColumns(){
 			for(Map.Entry<Integer, PPLTransition> tmpTL:phasePPLTransitions.entrySet()){
 
 				//pos3=mapKeys[i];
-				
+				//System.out.println(p+" "+tmpTL.getKey()+" "+oneTable);
+
 				//PPLTransition  tmpTL=phasePPLTransitions.get(pos3);
 				String sc=tmpTL.getValue().getNewVersionName();
 				
@@ -247,7 +251,7 @@ public String[] constructColumns(){
 						
 						TableChange tableChange=tmpTR.get(j);
 						//System.out.println(tableChange.getAffectedTableName()+":"+oneTable.getName()+"!");
-						System.out.println(tableChange.getAffectedTableName()+":"+tmpTL.getValue().getOldVersionName()+" "+tmpTL.getValue().getNewVersionName());
+						//System.out.println(tableChange.getAffectedTableName()+":"+tmpTL.getValue().getOldVersionName()+" "+tmpTL.getValue().getNewVersionName());
 						
 						
 						if(tableChange.getAffectedTableName().equals(oneTable.getName())){
@@ -324,7 +328,8 @@ public String[] constructColumns(){
 			//System.out.println("poc "+pointerCell+" "+totalChangesForOnePhase);
 			
 			if(pointerCell>=columnsNumber){
-				
+				System.err.println("POC"+oneTable.getName());
+
 				break;
 			}
 			
@@ -335,6 +340,7 @@ public String[] constructColumns(){
 			pointerCell++;
 			
 			if(deletedAllTable==1){
+				System.err.println("DEL"+oneTable.getName());
 				break;
 			}
 			
