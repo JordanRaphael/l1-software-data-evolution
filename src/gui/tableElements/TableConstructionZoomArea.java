@@ -42,6 +42,8 @@ public class TableConstructionZoomArea implements Pld {
 		fillSelectedTables();
 	}
 	
+	
+	
 	private void fillSelectedPPLTransitions() {
 		
 		if(selectedColumn==0){

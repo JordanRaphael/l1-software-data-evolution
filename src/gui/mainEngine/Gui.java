@@ -2065,6 +2065,7 @@ private void makeGeneralTablePhases() {
 						System.out.println(target1.getSelectedColumn());
 						System.out.println(target1.getSelectedRow());
 						final String sSelectedColumn=generalTable.getColumnName(selectedColumn);
+						final String sSelectedRow = (String) generalTable.getValueAt(target1.getSelectedRow(),0);
 						tablesSelected = new ArrayList<String>();
 //						for(int rowsSelected=tablesSelected.size()-1; rowsSelected>=tablesSelected.size(); rowsSelected--){
 //							tablesSelected.remove(rowsSelected);
@@ -2081,10 +2082,14 @@ private void makeGeneralTablePhases() {
 
 					            @Override
 					            public void actionPerformed(ActionEvent le) {
-					            	
-					            	//JOptionPane.showMessageDialog(null, "dleus?");
-					                showSelectionToZoomArea(selectedColumn);
-					               
+					            	if(sSelectedRow.contains("Cluster ")){
+					            		System.out.println("Cluster");
+					            		showClusterSelectionToZoomArea(selectedColumn,sSelectedRow);
+
+					            	}
+					            	else{
+					            		showSelectionToZoomArea(selectedColumn);
+					            	}
 					               // selectedRowsFromMouse=new int[];
 					            }
 					        });
@@ -2121,6 +2126,27 @@ private void makeGeneralTablePhases() {
 private void showSelectionToZoomArea(int selectedColumn){
 	
 	TableConstructionZoomArea table=new TableConstructionZoomArea(globalDataKeeper,tablesSelected,selectedColumn);
+	final String[] columns=table.constructColumns();
+	final String[][] rows=table.constructRows();
+	//segmentSize=table.getSegmentSize();
+	System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
+	System.out.println("C: "+columns.length+" R: "+rows.length);
+
+	finalColumnsZoomArea=columns;
+	finalRowsZoomArea=rows;
+	tabbedPane.setSelectedIndex(0);
+	makeZoomAreaTable();
+	
+	
+	
+}
+
+private void showClusterSelectionToZoomArea(int selectedColumn,String selectedCluster){
+	
+	String[] selectedClusterSplit= selectedCluster.split(" ");
+	ArrayList<String> tablesOfCluster = globalDataKeeper.getClusterCollectors().get(0).getClusters().get(Integer.parseInt(selectedClusterSplit[1])).getNamesOfTables();
+	
+	TableConstructionZoomArea table=new TableConstructionZoomArea(globalDataKeeper,tablesOfCluster,selectedColumn);
 	final String[] columns=table.constructColumns();
 	final String[][] rows=table.constructRows();
 	//segmentSize=table.getSegmentSize();

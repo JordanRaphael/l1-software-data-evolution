@@ -1,5 +1,6 @@
 package tableClustering.commons;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -33,6 +34,14 @@ public class Cluster {
 	
 	public TreeMap<String,PPLTable> getTables(){
 		return tables;
+	}
+	
+	public ArrayList<String> getNamesOfTables(){
+		ArrayList<String> tablesNames = new ArrayList<String>();
+		for(Map.Entry<String, PPLTable> pplTb:tables.entrySet()){
+			tablesNames.add(pplTb.getKey());
+		}
+		return tablesNames;
 	}
 	
 	public void addTable(PPLTable table){

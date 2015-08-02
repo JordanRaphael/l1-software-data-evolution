@@ -134,135 +134,150 @@ public String[] constructColumns(){
 		int insn=0;
 		int totalChangesForOnePhase=0;
 		oneRow[pointerCell]="Cluster "+clusteNum;
+		int deadCell=0;
 		
 		for(int p=0; p<phases.size(); p++){
 			if(phases.get(p).getPhasePPLTransitions().containsKey(cl.getBirth())){
 				pointerCell=p+1;
+				break;
+			}
+		}
+		System.out.println(cl.getDeath());
+
+		for(int p=0; p<phases.size(); p++){
+			if(phases.get(p).getPhasePPLTransitions().containsKey(cl.getDeath()-1)){
+				deadCell=p+1;
+				break;
 			}
 		}
 		
-		System.out.println(oneRow[0]+" "+pointerCell);
+		
+		
+		System.out.println(oneRow[0]+" "+pointerCell+" "+deadCell);
 		
 		int initialization=0;
 		if(pointerCell>0){
 			initialization=pointerCell-1;
 		}
 		
-		for(int p=0; p<phases.size(); p++){
-			TreeMap<Integer,PPLTransition> phasePPLTransitions=phases.get(p).getPhasePPLTransitions();
-//			for(Map.Entry<Integer,PPLTransition> trleme:phasePPLTransitions.entrySet()){
-//				System.out.println(p+" "+trleme.getKey());
-//			}
-			if (totalChangesForOnePhase>maxTotalChangesForOneTr) {
-				maxTotalChangesForOneTr=totalChangesForOnePhase;
-			}
-			totalChangesForOnePhase=0;
-			
-			
-			for(Map.Entry<Integer, PPLTransition> tmpTL:phasePPLTransitions.entrySet()){
+		for(int p=initialization; p<phases.size(); p++){
+			if(p<deadCell){
+				TreeMap<Integer,PPLTransition> phasePPLTransitions=phases.get(p).getPhasePPLTransitions();
+	//			for(Map.Entry<Integer,PPLTransition> trleme:phasePPLTransitions.entrySet()){
+	//				System.out.println(p+" "+trleme.getKey());
+	//			}
+				if (totalChangesForOnePhase>maxTotalChangesForOneTr) {
+					maxTotalChangesForOneTr=totalChangesForOnePhase;
+				}
+				totalChangesForOnePhase=0;
 				
-				ArrayList<TableChange> tmpTR=tmpTL.getValue().getTableChanges();
 				
-				if(tmpTR!=null){
+				for(Map.Entry<Integer, PPLTransition> tmpTL:phasePPLTransitions.entrySet()){
 					
-					for(int j=0; j<tmpTR.size(); j++){
+					ArrayList<TableChange> tmpTR=tmpTL.getValue().getTableChanges();
+					
+					if(tmpTR!=null){
 						
-						TableChange tableChange=tmpTR.get(j);
-						//System.out.println(tableChange.getAffectedTableName()+":"+oneTable.getName()+"!");
-						//System.out.println(tableChange.getAffectedTableName()+":"+tmpTL.getValue().getOldVersionName()+" "+tmpTL.getValue().getNewVersionName());
-						
-						if(cl.getTables().containsKey(tableChange.getAffectedTableName())){
+						for(int j=0; j<tmpTR.size(); j++){
 							
-							ArrayList<AtomicChange> atChs = tableChange.getTableAtChForOneTransition();
+							TableChange tableChange=tmpTR.get(j);
+							//System.out.println(tableChange.getAffectedTableName()+":"+oneTable.getName()+"!");
+							//System.out.println(tableChange.getAffectedTableName()+":"+tmpTL.getValue().getOldVersionName()+" "+tmpTL.getValue().getNewVersionName());
 							
-							
-							
-							for(int k=0; k<atChs.size(); k++){
+							if(cl.getTables().containsKey(tableChange.getAffectedTableName())){
+								
+								ArrayList<AtomicChange> atChs = tableChange.getTableAtChForOneTransition();
 								
 								
-								if (atChs.get(k).getType().contains("Addition")){
+								
+								for(int k=0; k<atChs.size(); k++){
 									
-									insn++;
 									
-									if(insn>maxInsersions){
-										maxInsersions=insn;
+									if (atChs.get(k).getType().contains("Addition")){
+										
+										insn++;
+										
+										if(insn>maxInsersions){
+											maxInsersions=insn;
+										}
+										//totalChangesForOnePhase=totalChangesForOnePhase+insn;
+										
 									}
-									//totalChangesForOnePhase=totalChangesForOnePhase+insn;
-									
-								}
-								else if(atChs.get(k).getType().contains("Deletion")){
-									
-									deln++;
-									
-									 if(deln>maxDeletions){
-											maxDeletions=deln;
-											
-									 }
-									 
-									//totalChangesForOnePhase=totalChangesForOnePhase+deln;
-									 
-									 //boolean existsLater=getNumOfAttributesOfNextSchema(sc, oneTable.getName());
-									 
-									 //if(!existsLater){
+									else if(atChs.get(k).getType().contains("Deletion")){
+										
+										deln++;
+										
+										 if(deln>maxDeletions){
+												maxDeletions=deln;
+												
+										 }
 										 
-										// deletedAllTable=1;
-									 //}
-								}
-								else{
-									
-									updn++;
-									
-									if(updn>maxUpdates){
-										maxUpdates=updn;
+										//totalChangesForOnePhase=totalChangesForOnePhase+deln;
+										 
+										 //boolean existsLater=getNumOfAttributesOfNextSchema(sc, oneTable.getName());
+										 
+										 //if(!existsLater){
+											 
+											// deletedAllTable=1;
+										 //}
+									}
+									else{
+										
+										updn++;
+										
+										if(updn>maxUpdates){
+											maxUpdates=updn;
+										}
+										
+										//totalChangesForOnePhase=totalChangesForOnePhase+updn;
+										
 									}
 									
-									//totalChangesForOnePhase=totalChangesForOnePhase+updn;
-									
 								}
-								
 							}
+							 
+							 
 						}
-						 
-						 
+						
+						
 					}
+					
+					
+					
+					
+					if(deletedAllTable==1){
+						break;
+					}
+					
+					
 					
 					
 				}
 				
+				if(pointerCell>=columnsNumber){
+	
+					break;
+				}
 				
+				totalChangesForOnePhase=insn+updn+deln;
+	
+				oneRow[pointerCell]=Integer.toString(totalChangesForOnePhase);
 				
+				pointerCell++;
 				
 				if(deletedAllTable==1){
 					break;
 				}
 				
-				
-				
-				
+				insn=0;
+				updn=0;
+				deln=0;
+	
 			}
-			
-			if(pointerCell>=columnsNumber){
-
+			else{
 				break;
 			}
-			
-			totalChangesForOnePhase=insn+updn+deln;
-
-			oneRow[pointerCell]=Integer.toString(totalChangesForOnePhase);
-			
-			pointerCell++;
-			
-			if(deletedAllTable==1){
-				break;
-			}
-			
-			insn=0;
-			updn=0;
-			deln=0;
-			
-
 		}
-		
 		for(int i=0; i<oneRow.length; i++){
 			if(oneRow[i]==null){
 				oneRow[i]="";

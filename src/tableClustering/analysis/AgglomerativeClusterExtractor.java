@@ -105,7 +105,6 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 		
 		for (Map.Entry<String,PPLTable> pplTable : tables.entrySet()) {
 			Cluster c = new Cluster(pplTable.getValue().getBirthVersionID(),pplTable.getValue().getDeath(),pplTable.getValue().getDeathVersionID(),pplTable.getValue().getDeath(),pplTable.getValue().getTotalChanges());
-			System.out.println(pplTable.getValue().getName()+" C "+pplTable.getValue().getTotalChanges());
 			c.addTable(pplTable.getValue());
 			clusterCollector.addCluster(c);
 			

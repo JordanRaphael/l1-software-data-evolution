@@ -34,6 +34,10 @@ public class MyTableModel extends AbstractTableModel {
         return columns[col];
     }
 
+    public String getRowName(int row) {
+        return rows[row][0];
+    }
+    
     public Object getValueAt(int row, int col) {
         return rows[row][col];
     }
