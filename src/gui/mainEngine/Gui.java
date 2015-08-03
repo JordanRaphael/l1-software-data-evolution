@@ -182,6 +182,8 @@ public class Gui extends JFrame implements ActionListener{
 
 	private int[] selectedRowsFromMouse;
 	private int selectedColumn;
+	private int selectedRow;
+
 	private int[] selectedColumnsFromMouse;
 
 
@@ -1769,23 +1771,18 @@ private void makeGeneralTableIDU() {
 		        	}
 		        }
 		        else{
-			        /*
+			        
 		        	if(selectedColumnsFromMouse!=null){
 
 			        	for(int i=0;i<selectedColumnsFromMouse.length; i++){
-			        		System.out.println(selectedColumnsFromMouse[i]+" "+selectedRowsFromMouse[i]);
-			        		System.out.println(column+" "+row);
+			        		
 				        	 if(selectedColumnsFromMouse[i]==column){
-					        	 if(selectedRowsFromMouse[i]==row){
-
-					        		foundBoth=true;
-				        		 	break;
-					        	 }
+					        	 foundColumn=true;
 				        	 }
 				        }
 		        	
 			        }
-			        
+			        /*
 			        if(selectedRowsFromMouse!=null){
 
 			        	for(int i=0;i<selectedRowsFromMouse.length; i++){
@@ -1805,7 +1802,8 @@ private void makeGeneralTableIDU() {
 		        		c.setBackground(cl);
 		        		return c;
 			        }
-		        	/*if(foundBoth){
+		        	/*
+		        	if(selectedColumn==column && selectedRow==row){
 		        		
 		        		Color cl = new Color(255,69,0,100);
 		        		
@@ -1877,6 +1875,8 @@ private void makeGeneralTableIDU() {
 			         
 			         selectedRowsFromMouse = target.getSelectedRows();
 			         selectedColumn = target.getSelectedColumn();
+			         //selectedRow = target.getSelectedRow();
+
 			         selectedColumnsFromMouse=target.getSelectedColumns();
 			         
 			         
