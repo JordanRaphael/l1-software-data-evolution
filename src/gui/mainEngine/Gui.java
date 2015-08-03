@@ -11,6 +11,7 @@ import gui.tableElements.TableConstructionWithClusters;
 import gui.tableElements.TableConstructionZoomArea;
 import gui.treeElements.TreeConstructionGeneral;
 import gui.treeElements.TreeConstructionPhases;
+import gui.treeElements.TreeConstructionPhasesWithClusters;
 
 import java.awt.AWTException;
 import java.awt.Color;
@@ -33,8 +34,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
@@ -67,8 +66,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.vecmath.Color4f;
 
 import org.antlr.v4.runtime.RecognitionException;
 import org.jfree.chart.ChartPanel;
@@ -521,6 +518,7 @@ public class Gui extends JFrame implements ActionListener{
 					finalRows=rows;
 					tabbedPane.setSelectedIndex(0);
 					makeGeneralTableIDU();
+					fillTree();
 					
 				}
 				else{
@@ -580,6 +578,7 @@ public class Gui extends JFrame implements ActionListener{
 						finalRows=rows;
 						tabbedPane.setSelectedIndex(0);
 						makeGeneralTablePhases();
+						fillClustersTree();
 					}
 					else{
 						JOptionPane.showMessageDialog(null, "Extract Phases first");
@@ -1372,7 +1371,7 @@ public class Gui extends JFrame implements ActionListener{
 						mainEngine.connectTransitionsWithPhases(globalDataKeeper);
 						globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
 						TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,b,d,c);
-						mainEngine2.extractClusters(4);
+						mainEngine2.extractClusters(globalDataKeeper.getAllPPLTables().size()/8);
 						globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
 						mainEngine2.print();
 					}
@@ -2880,9 +2879,9 @@ private void makeZoomAreaTable() {
 		
         System.out.println(fileName);
 
-        fillTree();
         fillTable();
-        
+        fillTree();
+
 		currentProject=fileName;
 		currentProjectDataFolder=globalDataKeeper.getDataFolder();
 		
@@ -2906,12 +2905,15 @@ private void makeZoomAreaTable() {
 		
 		 TreeConstructionGeneral tc=new TreeConstructionGeneral(globalDataKeeper);
 		 tablesTree=tc.constructTree();
-		 
+
 		 tablesTree.addTreeSelectionListener(new TreeSelectionListener () {
 			    public void valueChanged(TreeSelectionEvent ae) { 
-			     System.out.println(ae.getPath()+" is selected");
+			    	String lala=ae.getPath().getLastPathComponent().toString();
+
+			    	System.out.println(lala+" is selected");
+			    	
 			    }
-			  });
+		 });
 		 
 		 treeScrollPane.setViewportView(tablesTree);
 		 
@@ -2923,16 +2925,41 @@ private void makeZoomAreaTable() {
 		 tablesTreePanel.add(treeScrollPane);
 		 sideMenu.removeAll();
 		 sideMenu.add(tablesTreePanel);
-
+		 sideMenu.revalidate();
+		 sideMenu.repaint();
 		
-		 
 		
 	}
 	
 	public void fillPhasesTree(){
 		
 		 TreeConstructionPhases tc=new TreeConstructionPhases(globalDataKeeper);
-		 tablesTree=new JTree();
+		 tablesTree=tc.constructTree();
+		 //tablesTree.repaint();
+		 
+		 tablesTree.addTreeSelectionListener(new TreeSelectionListener () {
+			    public void valueChanged(TreeSelectionEvent ae) { 
+			     System.out.println(ae.getPath()+" is selected");
+			    }
+			  });
+		 
+		 treeScrollPane.setViewportView(tablesTree);
+		 
+		 
+		 treeScrollPane.setBounds(5, 5, 250, 170);
+		 treeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		 treeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		 tablesTreePanel.add(treeScrollPane);
+		 sideMenu.removeAll();
+		 sideMenu.add(tablesTreePanel);
+		 
+		
+	}
+	
+	public void fillClustersTree(){
+		
+		 TreeConstructionPhasesWithClusters tc=new TreeConstructionPhasesWithClusters(globalDataKeeper);
+		 //tablesTree=new JTree();
 		 tablesTree=tc.constructTree();
 		 //tablesTree.repaint();
 		 
