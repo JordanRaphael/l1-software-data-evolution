@@ -9,7 +9,8 @@ import gui.tableElements.TableConstructionIDU;
 import gui.tableElements.TableConstructionPhases;
 import gui.tableElements.TableConstructionWithClusters;
 import gui.tableElements.TableConstructionZoomArea;
-import gui.treeElements.TreeConstruction;
+import gui.treeElements.TreeConstructionGeneral;
+import gui.treeElements.TreeConstructionPhases;
 
 import java.awt.AWTException;
 import java.awt.Color;
@@ -67,6 +68,7 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.vecmath.Color4f;
 
 import org.antlr.v4.runtime.RecognitionException;
 import org.jfree.chart.ChartPanel;
@@ -118,6 +120,7 @@ public class Gui extends JFrame implements ActionListener{
 	@SuppressWarnings("rawtypes")
 	private DefaultListModel listModelMostUpdatedTables=new DefaultListModel();
 	private JScrollPane tmpScrollPane =new JScrollPane();
+	private JScrollPane treeScrollPane= new JScrollPane();
 	private JScrollPane tmpScrollPaneZoomArea =new JScrollPane();
 	private JScrollPane jScrollPaneKLongLivedTables=null;
 	private JScrollPane jScrollPaneKMostUpdatedTables=null;
@@ -179,6 +182,9 @@ public class Gui extends JFrame implements ActionListener{
 
 	private int[] selectedRowsFromMouse;
 	private int selectedColumn;
+	private int[] selectedColumnsFromMouse;
+
+
 	private ArrayList<String> tablesSelected = new ArrayList<String>();
 
 	
@@ -539,6 +545,7 @@ public class Gui extends JFrame implements ActionListener{
 						finalRows=rows;
 						tabbedPane.setSelectedIndex(0);
 						makeGeneralTablePhases();
+						fillPhasesTree();
 					}
 					else{
 						JOptionPane.showMessageDialog(null, "Extract Phases first");
@@ -739,13 +746,13 @@ public class Gui extends JFrame implements ActionListener{
 		
 
 	   
-	   tablesTree.setBounds(0, 0, 260, 180);
+	  //tablesTree.setBounds(0, 0, 260, 180);
 	   
 	   
 		 sideMenu.add(tablesTreePanel);
 	  
 	   
-	   //TreeConstruction tc=new TreeConstruction(globalDataKeeper);
+	   //TreeConstructionGeneral tc=new TreeConstructionGeneral(globalDataKeeper);
 	   // tablesTree=tc.constructTree();
 		//tablesTreePanel.add(scr);
 		//JScrollPane sp = new JScrollPane(jtree);
@@ -1733,28 +1740,79 @@ private void makeGeneralTableIDU() {
 		        String tmpValue=finalRows[row][column];
 		        String columnName=table.getColumnName(column);
 		        Color fr=new Color(0,0,0);
+		       
 		        c.setForeground(fr);
+		        setOpaque(true);
+		        boolean foundZero=false;
+		        boolean foundColumn=false;
+		        boolean foundRow=false;
+		        boolean foundBoth=false;
 		        
-		        if(selectedColumn==0){
+		        /*
+		        if(selectedColumnsFromMouse!=null){
+			        for(int i=0;i<selectedColumnsFromMouse.length; i++){
+			        	 if(selectedColumnsFromMouse[i]==0){
+			        		 foundZero=true;
+			        		 break;
+			        	 }
+			         }
+		        }
+		        */
+		        
+		    	if(selectedColumn==0){
 		        	if (isSelected){
-		        	/*if(hasFocus)
-		        	{		        	
-		        		System.out.println(row+" "+column);
-		        		c.setBackground(Color.YELLOW);
-		        		return c;
-		        	}*/
-		        	//else{
-		        		//System.out.println(row+" "+column);
-		        		c.setBackground(Color.YELLOW);
+		        		Color cl = new Color(255,69,0,100);
+		        		
+		        		c.setBackground(cl);
+		        		
 		        		return c;
 		        	}
 		        }
 		        else{
+			        /*
+		        	if(selectedColumnsFromMouse!=null){
+
+			        	for(int i=0;i<selectedColumnsFromMouse.length; i++){
+			        		System.out.println(selectedColumnsFromMouse[i]+" "+selectedRowsFromMouse[i]);
+			        		System.out.println(column+" "+row);
+				        	 if(selectedColumnsFromMouse[i]==column){
+					        	 if(selectedRowsFromMouse[i]==row){
+
+					        		foundBoth=true;
+				        		 	break;
+					        	 }
+				        	 }
+				        }
+		        	
+			        }
+			        
+			        if(selectedRowsFromMouse!=null){
+
+			        	for(int i=0;i<selectedRowsFromMouse.length; i++){
+				        	 if(selectedRowsFromMouse[i]==row){
+				        		 foundRow=true;
+				        		 break;
+				        	 }
+				        }
+		        	
+			        }*/
+			        
+		        	
 		        	if (isSelected && hasFocus){
 			        	
-		        		c.setBackground(Color.YELLOW);
+		        		Color cl = new Color(255,69,0,100);
+		        		
+		        		c.setBackground(cl);
 		        		return c;
 			        }
+		        	/*if(foundBoth){
+		        		
+		        		Color cl = new Color(255,69,0,100);
+		        		
+		        		c.setBackground(cl);
+		        		return c;
+		        	}*/
+		        	
 		        	
 		        }
 
@@ -1819,6 +1877,10 @@ private void makeGeneralTableIDU() {
 			         
 			         selectedRowsFromMouse = target.getSelectedRows();
 			         selectedColumn = target.getSelectedColumn();
+			         selectedColumnsFromMouse=target.getSelectedColumns();
+			         
+			         
+			         
 			         LifeTimeTable.repaint();
 			         //System.out.println(selectedColumn);
 				}
@@ -1847,14 +1909,15 @@ private void makeGeneralTableIDU() {
 						//if (e.getClickCount() == 1) {
 
 							JTable target1 = (JTable)e.getSource();
-							selectedColumn=target1.getSelectedColumn();
+							//selectedColumn=target1.getSelectedColumn();
+							selectedColumnsFromMouse=target1.getSelectedColumns();
 							selectedRowsFromMouse=target1.getSelectedRows();
-							System.out.println(target1.getSelectedColumn());
+							System.out.println(target1.getSelectedColumns().length);
 							System.out.println(target1.getSelectedRow());
 							for(int rowsSelected=0; rowsSelected<selectedRowsFromMouse.length; rowsSelected++){
 								System.out.println(generalTable.getValueAt(selectedRowsFromMouse[rowsSelected], 0));
 							}
-							if(target1.getSelectedColumn()==0){
+							//if(target1.getSelectedColumn()==0){
 								final JPopupMenu popupMenu = new JPopupMenu();
 						        JMenuItem showDetailsItem = new JMenuItem("Show Details for the selection");
 						        showDetailsItem.addActionListener(new ActionListener() {
@@ -1867,16 +1930,21 @@ private void makeGeneralTableIDU() {
 						        popupMenu.add(showDetailsItem);
 						        generalTable.setComponentPopupMenu(popupMenu);
 						        
-							}
+							//}
 						//}
 					}
 				
 			   }
 		});
 		
+		//generalTable.getColumnModel().setColumnSelectionAllowed(true); 
+		//generalTable.getr
+		//generalTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION); 
+		//generalTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		//generalTable.setCellSelectionEnabled(true);
 		
 		LifeTimeTable=generalTable;
-		
+		//LifeTimeTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		tmpScrollPane.setViewportView(LifeTimeTable);
 		tmpScrollPane.setAlignmentX(0);
 		tmpScrollPane.setAlignmentY(0);
@@ -1957,14 +2025,20 @@ private void makeGeneralTablePhases() {
 	        	}*/
 	        	//else{
 	        		//System.out.println(row+" "+column);
-	        		c.setBackground(Color.YELLOW);
+	        		//c.setBackground(Color.YELLOW);
+	        		Color cl = new Color(255,69,0,100);
+	        		
+	        		c.setBackground(cl);
 	        		return c;
 	        	}
 	        }
 	        else{
 	        	if (isSelected && hasFocus){
 		        	
-	        		c.setBackground(Color.YELLOW);
+	        		//c.setBackground(Color.YELLOW);
+	        		Color cl = new Color(255,69,0,100);
+	        		
+	        		c.setBackground(cl);
 	        		return c;
 		        }
 	        	
@@ -2240,7 +2314,7 @@ private void makeZoomAreaTable() {
 	        }
 	        else{
 	        	if (isSelected && hasFocus){
-		        	
+		        	//Color lala=new Color(207,0,255,255);
 	        		c.setBackground(Color.YELLOW);
 	        		return c;
 		        }
@@ -2449,6 +2523,25 @@ private void makeZoomAreaTable() {
 		        String columnName=table.getColumnName(column);
 		        Color fr=new Color(0,0,0);
 		        c.setForeground(fr);
+		        
+		        
+		        if(selectedColumn==0){
+		        	if (isSelected){
+		        		Color cl = new Color(255,69,0, 100);
+
+		        		c.setBackground(cl);
+		        		
+		        		return c;
+		        	}
+		        }
+		        else{
+		        	if (isSelected && hasFocus){
+			        	
+		        		c.setBackground(Color.YELLOW);
+		        		return c;
+			        }
+		        	
+		        }
 		        
 		        try{
 		        	int numericValue=Integer.parseInt(tmpValue);
@@ -2811,10 +2904,7 @@ private void makeZoomAreaTable() {
 	
 	public void fillTree(){
 		
-		
-
-		
-		 TreeConstruction tc=new TreeConstruction(globalDataKeeper);
+		 TreeConstructionGeneral tc=new TreeConstructionGeneral(globalDataKeeper);
 		 tablesTree=tc.constructTree();
 		 
 		 tablesTree.addTreeSelectionListener(new TreeSelectionListener () {
@@ -2823,15 +2913,48 @@ private void makeZoomAreaTable() {
 			    }
 			  });
 		 
-		 JScrollPane scr=new JScrollPane(tablesTree,ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-			     ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		 scr.setBounds(5, 5, 250, 170);
+		 treeScrollPane.setViewportView(tablesTree);
 		 
-		 tablesTreePanel.add(scr);
+		 //=new JScrollPane(tablesTree,ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+			//     ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		 treeScrollPane.setBounds(5, 5, 250, 170);
+		 treeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		 treeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		 tablesTreePanel.add(treeScrollPane);
+		 sideMenu.removeAll();
+		 sideMenu.add(tablesTreePanel);
 
+		
 		 
 		
 	}
+	
+	public void fillPhasesTree(){
+		
+		 TreeConstructionPhases tc=new TreeConstructionPhases(globalDataKeeper);
+		 tablesTree=new JTree();
+		 tablesTree=tc.constructTree();
+		 //tablesTree.repaint();
+		 
+		 tablesTree.addTreeSelectionListener(new TreeSelectionListener () {
+			    public void valueChanged(TreeSelectionEvent ae) { 
+			     System.out.println(ae.getPath()+" is selected");
+			    }
+			  });
+		 
+		 treeScrollPane.setViewportView(tablesTree);
+		 
+		 
+		 treeScrollPane.setBounds(5, 5, 250, 170);
+		 treeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		 treeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		 tablesTreePanel.add(treeScrollPane);
+		 sideMenu.removeAll();
+		 sideMenu.add(tablesTreePanel);
+		 
+		
+	}
+	
 	
 	@SuppressWarnings("unchecked")
 	public void showKLongLivedTables(){

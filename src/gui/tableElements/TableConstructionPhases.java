@@ -214,7 +214,6 @@ public String[] constructColumns(){
 		}
 		
 		for(int p=initialization; p<phases.size(); p++){
-			System.out.println("P:"+p);
 			TreeMap<Integer,PPLTransition> phasePPLTransitions=phases.get(p).getPhasePPLTransitions();
 //			for(Map.Entry<Integer,PPLTransition> trleme:phasePPLTransitions.entrySet()){
 //				System.out.println(p+" "+trleme.getKey());
