@@ -163,6 +163,7 @@ public class TableConstructionIDU implements Pld {
 		int deln=0;
 		int insn=0;
 		int totalChangesForOneTransition=0;
+		boolean reborn = true;
 		oneRow[pointerCell]=oneTable.getName();
 		
 		if(schemaVersion==-1){
@@ -219,15 +220,17 @@ public class TableConstructionIDU implements Pld {
 					
 					TableChange tableChange=tmpTR.get(j);
 					if(tableChange.getAffectedTableName().equals(oneTable.getName())){
+						if(deletedAllTable==1){
+							reborn=true;
+						}
+						deletedAllTable=0;
 						
 						ArrayList<AtomicChange> atChs = tableChange.getTableAtChForOneTransition();
-						System.out.println(tableChange.getAffectedTableName()+" "+atChs.size());
 
 						for(int k=0; k<atChs.size(); k++){
 							
 							
 							if (atChs.get(k).getType().contains("Addition")){
-								System.out.println("Addition");
 								deletedAllTable=0;
 								insn++;
 								
@@ -238,7 +241,6 @@ public class TableConstructionIDU implements Pld {
 								
 							}
 							else if(atChs.get(k).getType().contains("Deletion")){
-								System.out.println("Deletion");
 
 								deln++;
 								
@@ -250,15 +252,14 @@ public class TableConstructionIDU implements Pld {
 								//totalChangesForOneTransition=totalChangesForOneTransition+deln;
 								 
 								 int num=getNumOfAttributesOfNextSchema(sc, oneTable.getName());
-								 System.out.println("NUM"+tableChange.getAffectedTableName()+" "+num);
 								 if(num==0){
 									 
 									 deletedAllTable=1;
+									 
 								 }
 								 
 							}
 							else{
-								System.out.println("Update");
 
 								updn++;
 								
@@ -283,22 +284,28 @@ public class TableConstructionIDU implements Pld {
 				break;
 			}
 			totalChangesForOneTransition=insn+updn+deln;
-			if(totalChangesForOneTransition>=0 && deletedAllTable!=1){
+			if(totalChangesForOneTransition>=0 && reborn){
 
 				oneRow[pointerCell]=Integer.toString(totalChangesForOneTransition);
 				
 			}
-			else{
-				oneRow[pointerCell]="";
-
-			}
+			
 			/*pointerCell++;
 			oneRow[pointerCell]=Integer.toString(updn);
 			pointerCell++;
 			oneRow[pointerCell]=Integer.toString(deln);*/
 			pointerCell++;
 			if(deletedAllTable==1){
-				//break;
+				if(pointerCell>=columnsNumber){
+					break;
+				}
+				if(!reborn){
+					oneRow[pointerCell]="";
+					pointerCell++;
+				}
+				reborn=false;
+				
+				
 			}
 			//oneRow[pointerCell]="------";
 			//pointerCell++;

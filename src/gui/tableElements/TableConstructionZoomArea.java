@@ -218,7 +218,8 @@ public class TableConstructionZoomArea implements Pld {
 		int updn=0;
 		int deln=0;
 		int insn=0;
-		int totalChangesForOneTransition=0;
+		int totalChangesForOneTransition=-1;
+		boolean reborn = true;
 		oneRow[pointerCell]=oneTable.getName();
 		boolean exists=false;
 		for (Map.Entry<Integer,PPLTransition> pplTr : pplTransitions.entrySet()) {
@@ -262,18 +263,21 @@ public class TableConstructionZoomArea implements Pld {
 				insn=0;
 				
 				if(tmpTR!=null){
-					totalChangesForOneTransition=0;
+					totalChangesForOneTransition=-1;
 					
 					for(int j=0; j<tmpTR.size(); j++){
 						
 						TableChange tableChange=tmpTR.get(j);
 						
 						if(tableChange.getAffectedTableName().equals(oneTable.getName())){
-							
-							
+							if(deletedAllTable==1){
+								reborn=true;
+							}
+							deletedAllTable=0;
 							
 							ArrayList<AtomicChange> atChs = tableChange.getTableAtChForOneTransition();
-							
+							System.out.println(tableChange.getAffectedTableName()+" "+atChs.size());
+
 							for(int k=0; k<atChs.size(); k++){
 								
 								
@@ -330,16 +334,30 @@ public class TableConstructionZoomArea implements Pld {
 					
 					break;
 				}
+				totalChangesForOneTransition=insn+updn+deln;
+
+				if(totalChangesForOneTransition>=0 && reborn){
+
+					oneRow[pointerCell]=Integer.toString(totalChangesForOneTransition);
+					
+				}
 				
-				totalChangesForOneTransition=insn+deln+updn;
-				oneRow[pointerCell]=Integer.toString(totalChangesForOneTransition);
 				/*pointerCell++;
 				oneRow[pointerCell]=Integer.toString(updn);
 				pointerCell++;
 				oneRow[pointerCell]=Integer.toString(deln);*/
 				pointerCell++;
 				if(deletedAllTable==1){
-					break;
+					if(pointerCell>=columnsNumber){
+						break;
+					}
+					if(!reborn){
+						oneRow[pointerCell]="";
+						pointerCell++;
+					}
+					reborn=false;
+					
+					
 				}
 				//oneRow[pointerCell]="------";
 				//pointerCell++;
