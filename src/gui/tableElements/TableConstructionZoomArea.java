@@ -233,10 +233,7 @@ public class TableConstructionZoomArea implements Pld {
 				break;
 			}
 			
-		}
-		
-		System.out.println(oneTable.getName()+" "+pointerCell+" "+selectedPPLSchemas.size()+" "+pplTransitions.size());
-		
+		}		
 		
 		
 		int initialization=pointerCell-1;
@@ -329,7 +326,6 @@ public class TableConstructionZoomArea implements Pld {
 					
 					
 				}
-				System.out.println("poc:"+pointerCell+" "+columnsNumber );
 				if(pointerCell>=columnsNumber){
 					
 					break;

@@ -163,7 +163,6 @@ public class PPLTable {
 		for(Map.Entry<Integer, ArrayList<AtomicChange>> tcr:tc.entrySet()){
 			totalChanges=totalChanges+tcr.getValue().size();
 		}
-		System.out.println(this.name+" "+totalChanges);
 	}
 	
 	public void setChangesForChart(ArrayList<Integer> tmpChangesForChart){

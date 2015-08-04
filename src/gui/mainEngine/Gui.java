@@ -66,6 +66,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.tree.TreePath;
 
 import org.antlr.v4.runtime.RecognitionException;
 import org.jfree.chart.ChartPanel;
@@ -172,13 +173,14 @@ public class Gui extends JFrame implements ActionListener{
 	private String outputAssessment1="";
 	private String outputAssessment2="";
 	private String transitionsFile="";
+	private ArrayList<String> selectedFromTree=new ArrayList<String>();
 	
 	private JTree tablesTree=new JTree();
 	private JPanel sideMenu=new JPanel();
 	private JPanel tablesTreePanel=new JPanel();
 
 	private int[] selectedRowsFromMouse;
-	private int selectedColumn;
+	private int selectedColumn=-1;
 	private int selectedRow;
 
 	private int[] selectedColumnsFromMouse;
@@ -1506,6 +1508,8 @@ public class Gui extends JFrame implements ActionListener{
 		        	}
 		        }
 		        else{
+		        	
+		        	
 		        	if (isSelected && hasFocus){
 			        	
 		        		c.setBackground(Color.YELLOW);
@@ -1667,7 +1671,8 @@ public class Gui extends JFrame implements ActionListener{
 						            }
 						        });
 						        popupMenu.add(showDetailsItem);
-						        generalTable.setComponentPopupMenu(popupMenu);
+						        popupMenu.show(generalTable, e.getX(),e.getY());
+						        
 						        
 							}
 						//}
@@ -1741,7 +1746,10 @@ private void makeGeneralTableIDU() {
 		        String tmpValue=finalRows[row][column];
 		        String columnName=table.getColumnName(column);
 		        Color fr=new Color(0,0,0);
-		       
+		        /*String lala="";
+		        if(tablesTree.getLastSelectedPathComponent()!=null){
+		        	 lala=tablesTree.getLastSelectedPathComponent().toString();
+		        }*/
 		        c.setForeground(fr);
 		        setOpaque(true);
 		        boolean foundZero=false;
@@ -1759,8 +1767,9 @@ private void makeGeneralTableIDU() {
 			         }
 		        }
 		        */
-		        
+
 		    	if(selectedColumn==0){
+
 		        	if (isSelected){
 		        		Color cl = new Color(255,69,0,100);
 		        		
@@ -1770,7 +1779,7 @@ private void makeGeneralTableIDU() {
 		        	}
 		        }
 		        else{
-			        
+/*
 		        	if(selectedColumnsFromMouse!=null){
 
 			        	for(int i=0;i<selectedColumnsFromMouse.length; i++){
@@ -1780,7 +1789,18 @@ private void makeGeneralTableIDU() {
 				        	 }
 				        }
 		        	
-			        }
+			        }*/
+		        	
+		        	if(selectedFromTree.contains(finalRows[row][0])){
+
+
+		        		Color cl = new Color(255,69,0,100);
+		        		
+		        		c.setBackground(cl);
+		        		
+		        		return c;
+		        	}
+		        	
 			        /*
 			        if(selectedRowsFromMouse!=null){
 
@@ -1795,7 +1815,7 @@ private void makeGeneralTableIDU() {
 			        
 		        	
 		        	if (isSelected && hasFocus){
-			        	
+
 		        		Color cl = new Color(255,69,0,100);
 		        		
 		        		c.setBackground(cl);
@@ -1918,16 +1938,19 @@ private void makeGeneralTableIDU() {
 							}
 							//if(target1.getSelectedColumn()==0){
 								final JPopupMenu popupMenu = new JPopupMenu();
-						        JMenuItem showDetailsItem = new JMenuItem("Show Details for the selection");
+						        JMenuItem showDetailsItem = new JMenuItem("Clear Selection");
 						        showDetailsItem.addActionListener(new ActionListener() {
 	
 						            @Override
 						            public void actionPerformed(ActionEvent e) {
-						                JOptionPane.showMessageDialog(null, "Right-click performed on table and choose DELETE");
+						            	selectedFromTree=new ArrayList<String>();
+						            	LifeTimeTable.repaint();
 						            }
 						        });
 						        popupMenu.add(showDetailsItem);
-						        generalTable.setComponentPopupMenu(popupMenu);
+						        popupMenu.show(generalTable, e.getX(),e.getY());
+						        						        
+						        //generalTable.setComponentPopupMenu(popupMenu);
 						        
 							//}
 						//}
@@ -2032,6 +2055,17 @@ private void makeGeneralTablePhases() {
 	        	}
 	        }
 	        else{
+	        	
+	        	if(selectedFromTree.contains(finalRows[row][0])){
+			        System.out.println("selectedFromTree?");
+
+	        		Color cl = new Color(255,69,0,100);
+	        		
+	        		c.setBackground(cl);
+	        		
+	        		return c;
+	        	}
+	        	
 	        	if (isSelected && hasFocus){
 		        	
 	        		//c.setBackground(Color.YELLOW);
@@ -2167,6 +2201,17 @@ private void makeGeneralTablePhases() {
 					            }
 					        });
 					        popupMenu.add(showDetailsItem);
+					        JMenuItem clearSelectionItem = new JMenuItem("Clear Selection");
+					        clearSelectionItem.addActionListener(new ActionListener() {
+
+					            @Override
+					            public void actionPerformed(ActionEvent le) {
+					            	
+					            	selectedFromTree=new ArrayList<String>();
+					            	LifeTimeTable.repaint();
+					            }
+					        });
+					        popupMenu.add(clearSelectionItem);
 					        popupMenu.show(generalTable, e.getX(),e.getY());
 					        //generalTable.setComponentPopupMenu(popupMenu);
 					        
@@ -2432,7 +2477,7 @@ private void makeZoomAreaTable() {
 					            }
 					        });
 					        popupMenu.add(showDetailsItem);
-					        zoomTable.setComponentPopupMenu(popupMenu);
+					        popupMenu.show(zoomTable, e.getX(),e.getY());
 					        
 						//}
 					//}
@@ -2904,16 +2949,52 @@ private void makeZoomAreaTable() {
 	public void fillTree(){
 		
 		 TreeConstructionGeneral tc=new TreeConstructionGeneral(globalDataKeeper);
+		 tablesTree=new JTree();
 		 tablesTree=tc.constructTree();
-
 		 tablesTree.addTreeSelectionListener(new TreeSelectionListener () {
 			    public void valueChanged(TreeSelectionEvent ae) { 
-			    	String lala=ae.getPath().getLastPathComponent().toString();
-
-			    	System.out.println(lala+" is selected");
+			    	TreePath selection = ae.getPath();
+			    	selectedFromTree.add(selection.getLastPathComponent().toString());
+			    	System.out.println(selection.getLastPathComponent().toString()+" is selected");
 			    	
 			    }
 		 });
+		 
+		 tablesTree.addMouseListener(new MouseAdapter() {
+				@Override
+				   public void mouseReleased(MouseEvent e) {
+					
+						if(SwingUtilities.isRightMouseButton(e)){
+							System.out.println("Right Click Tree");
+							//if (e.getClickCount() == 1) {
+								JTree target1 = (JTree)e.getSource();
+								//selectedColumn=target1.getSelectedColumn();
+								
+								//final String lala=target1.getLastSelectedPathComponent().toString();
+								
+								//System.out.println(selectedFromTree);
+								
+								//if(target1.getSelectedColumn()==0){
+									final JPopupMenu popupMenu = new JPopupMenu();
+							        JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
+							        showDetailsItem.addActionListener(new ActionListener() {
+		
+							            @Override
+							            public void actionPerformed(ActionEvent e) {
+							          
+							                LifeTimeTable.repaint();
+							            	
+							            }
+							        });
+							        popupMenu.add(showDetailsItem);
+							        popupMenu.show(tablesTree, e.getX(),e.getY());
+							        							        
+								//}
+							//}
+						}
+					
+				   }
+			});
 		 
 		 treeScrollPane.setViewportView(tablesTree);
 		 
@@ -2939,9 +3020,48 @@ private void makeZoomAreaTable() {
 		 
 		 tablesTree.addTreeSelectionListener(new TreeSelectionListener () {
 			    public void valueChanged(TreeSelectionEvent ae) { 
-			     System.out.println(ae.getPath()+" is selected");
+			    	TreePath selection = ae.getPath();
+			    	selectedFromTree.add(selection.getLastPathComponent().toString());
+			    	System.out.println(selection.getLastPathComponent().toString()+" is selected");
+			    	
 			    }
-			  });
+		 });
+		 
+		 tablesTree.addMouseListener(new MouseAdapter() {
+				@Override
+				   public void mouseReleased(MouseEvent e) {
+					
+						if(SwingUtilities.isRightMouseButton(e)){
+							System.out.println("Right Click Tree");
+							//if (e.getClickCount() == 1) {
+								JTree target1 = (JTree)e.getSource();
+								//selectedColumn=target1.getSelectedColumn();
+								
+								//final String lala=target1.getLastSelectedPathComponent().toString();
+								
+								//System.out.println(selectedFromTree);
+								
+								//if(target1.getSelectedColumn()==0){
+									final JPopupMenu popupMenu = new JPopupMenu();
+							        JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
+							        showDetailsItem.addActionListener(new ActionListener() {
+		
+							            @Override
+							            public void actionPerformed(ActionEvent e) {
+							          
+							                LifeTimeTable.repaint();
+							            	
+							            }
+							        });
+							        popupMenu.add(showDetailsItem);
+							        popupMenu.show(tablesTree, e.getX(),e.getY());
+							        							        
+								//}
+							//}
+						}
+					
+				   }
+			});
 		 
 		 treeScrollPane.setViewportView(tablesTree);
 		 
@@ -2965,9 +3085,48 @@ private void makeZoomAreaTable() {
 		 
 		 tablesTree.addTreeSelectionListener(new TreeSelectionListener () {
 			    public void valueChanged(TreeSelectionEvent ae) { 
-			     System.out.println(ae.getPath()+" is selected");
+			    	TreePath selection = ae.getPath();
+			    	selectedFromTree.add(selection.getLastPathComponent().toString());
+			    	System.out.println(selection.getLastPathComponent().toString()+" is selected");
+			    	
 			    }
-			  });
+		 });
+		 
+		 tablesTree.addMouseListener(new MouseAdapter() {
+				@Override
+				   public void mouseReleased(MouseEvent e) {
+					
+						if(SwingUtilities.isRightMouseButton(e)){
+							System.out.println("Right Click Tree");
+							//if (e.getClickCount() == 1) {
+								JTree target1 = (JTree)e.getSource();
+								//selectedColumn=target1.getSelectedColumn();
+								
+								//final String lala=target1.getLastSelectedPathComponent().toString();
+								
+								//System.out.println(selectedFromTree);
+								
+								//if(target1.getSelectedColumn()==0){
+									final JPopupMenu popupMenu = new JPopupMenu();
+							        JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
+							        showDetailsItem.addActionListener(new ActionListener() {
+		
+							            @Override
+							            public void actionPerformed(ActionEvent e) {
+							          
+							                LifeTimeTable.repaint();
+							            	
+							            }
+							        });
+							        popupMenu.add(showDetailsItem);
+							        popupMenu.show(tablesTree, e.getX(),e.getY());
+							        							        
+								//}
+							//}
+						}
+					
+				   }
+			});
 		 
 		 treeScrollPane.setViewportView(tablesTree);
 		 

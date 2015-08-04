@@ -327,7 +327,6 @@ public String[] constructColumns(){
 			}
 			
 			if(pointerCell>=columnsNumber){
-				System.err.println("POC"+oneTable.getName());
 
 				break;
 			}

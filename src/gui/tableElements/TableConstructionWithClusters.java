@@ -188,7 +188,7 @@ public String[] constructColumns(){
 								
 								ArrayList<AtomicChange> atChs = tableChange.getTableAtChForOneTransition();
 								
-								
+								System.out.println("Phase "+p+" "+tableChange.getAffectedTableName()+" "+atChs.size());
 								
 								for(int k=0; k<atChs.size(); k++){
 									

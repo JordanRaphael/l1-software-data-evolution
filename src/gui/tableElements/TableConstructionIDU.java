@@ -205,6 +205,7 @@ public class TableConstructionIDU implements Pld {
 			
 			String sc=tmpTL.getNewVersionName();
 			
+			
 			ArrayList<TableChange> tmpTR=tmpTL.getTableChanges();
 			
 			updn=0;
@@ -212,22 +213,22 @@ public class TableConstructionIDU implements Pld {
 			insn=0;
 			
 			if(tmpTR!=null){
-				totalChangesForOneTransition=0;
+				totalChangesForOneTransition=-1;
 				
 				for(int j=0; j<tmpTR.size(); j++){
 					
 					TableChange tableChange=tmpTR.get(j);
-					
 					if(tableChange.getAffectedTableName().equals(oneTable.getName())){
 						
-						
 						ArrayList<AtomicChange> atChs = tableChange.getTableAtChForOneTransition();
-						
+						System.out.println(tableChange.getAffectedTableName()+" "+atChs.size());
+
 						for(int k=0; k<atChs.size(); k++){
 							
 							
 							if (atChs.get(k).getType().contains("Addition")){
-								
+								System.out.println("Addition");
+								deletedAllTable=0;
 								insn++;
 								
 								if(insn>maxInsersions){
@@ -237,7 +238,8 @@ public class TableConstructionIDU implements Pld {
 								
 							}
 							else if(atChs.get(k).getType().contains("Deletion")){
-								
+								System.out.println("Deletion");
+
 								deln++;
 								
 								 if(deln>maxDeletions){
@@ -248,14 +250,16 @@ public class TableConstructionIDU implements Pld {
 								//totalChangesForOneTransition=totalChangesForOneTransition+deln;
 								 
 								 int num=getNumOfAttributesOfNextSchema(sc, oneTable.getName());
-								 
+								 System.out.println("NUM"+tableChange.getAffectedTableName()+" "+num);
 								 if(num==0){
 									 
 									 deletedAllTable=1;
 								 }
+								 
 							}
 							else{
-								
+								System.out.println("Update");
+
 								updn++;
 								
 								if(updn>maxUpdates){
@@ -278,16 +282,23 @@ public class TableConstructionIDU implements Pld {
 				
 				break;
 			}
-			
 			totalChangesForOneTransition=insn+updn+deln;
-			oneRow[pointerCell]=Integer.toString(totalChangesForOneTransition);
+			if(totalChangesForOneTransition>=0 && deletedAllTable!=1){
+
+				oneRow[pointerCell]=Integer.toString(totalChangesForOneTransition);
+				
+			}
+			else{
+				oneRow[pointerCell]="";
+
+			}
 			/*pointerCell++;
 			oneRow[pointerCell]=Integer.toString(updn);
 			pointerCell++;
 			oneRow[pointerCell]=Integer.toString(deln);*/
 			pointerCell++;
 			if(deletedAllTable==1){
-				break;
+				//break;
 			}
 			//oneRow[pointerCell]="------";
 			//pointerCell++;
@@ -304,7 +315,11 @@ public class TableConstructionIDU implements Pld {
 				oneRow[i]="";
 			}
 		}
-		
+		String lala="";
+		for (int i = 0; i < oneRow.length; i++) {
+			lala=lala+oneRow[i]+",";
+		}
+		System.out.println(oneTable.getName()+" "+lala);
 	
 	
 		return oneRow;
