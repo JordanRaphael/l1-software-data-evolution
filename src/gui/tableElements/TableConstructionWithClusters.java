@@ -66,7 +66,7 @@ public String[] constructColumns(){
 		}
 		
 		columnsNumber=columnsList.size();
-		System.out.println(columnsNumber);
+		//System.out.println(columnsNumber);
 		String[] tmpcolumns=new String[columnsList.size()];
 		
 		for(int j=0; j<columnsList.size(); j++ ){
@@ -142,7 +142,7 @@ public String[] constructColumns(){
 				break;
 			}
 		}
-		System.out.println(cl.getDeath());
+		//System.out.println(cl.getDeath());
 
 		for(int p=0; p<phases.size(); p++){
 			if(phases.get(p).getPhasePPLTransitions().containsKey(cl.getDeath()-1)){
@@ -153,7 +153,7 @@ public String[] constructColumns(){
 		
 		
 		
-		System.out.println(oneRow[0]+" "+pointerCell+" "+deadCell);
+		//System.out.println(oneRow[0]+" "+pointerCell+" "+deadCell);
 		
 		int initialization=0;
 		if(pointerCell>0){
@@ -188,7 +188,7 @@ public String[] constructColumns(){
 								
 								ArrayList<AtomicChange> atChs = tableChange.getTableAtChForOneTransition();
 								
-								System.out.println("Phase "+p+" "+tableChange.getAffectedTableName()+" "+atChs.size());
+								//System.out.println("Phase "+p+" "+tableChange.getAffectedTableName()+" "+atChs.size());
 								
 								for(int k=0; k<atChs.size(); k++){
 									
@@ -288,7 +288,7 @@ public String[] constructColumns(){
 		for (int i = 0; i < oneRow.length; i++) {
 			lala=lala+oneRow[i]+",";
 		}
-		System.out.println(oneRow[0]+" "+lala);
+		//System.out.println(oneRow[0]+" "+lala);
 		return oneRow;
 
 		

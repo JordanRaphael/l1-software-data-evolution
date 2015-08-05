@@ -56,6 +56,18 @@ public class Cluster {
 		return this.death;
 	}
 	
+	public String getBirthSqlFile(){
+		return this.birthVersion;
+	}
+	
+	public String getDeathSqlFile(){
+		return this.deathVersion;
+	}
+	
+	public int getTotalChanges(){
+		return totalChanges;
+	}
+	
 	public double distance(Cluster anotherCluster,float birthWeight, float deathWeight ,float changeWeight,int dbDuration){
 		
 		double changeDistance = Math.abs(this.totalChanges - anotherCluster.totalChanges);

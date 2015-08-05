@@ -178,6 +178,12 @@ public class Gui extends JFrame implements ActionListener{
 	private JTree tablesTree=new JTree();
 	private JPanel sideMenu=new JPanel();
 	private JPanel tablesTreePanel=new JPanel();
+	private JPanel descriptionPanel=new JPanel();
+	private JLabel treeLabel;
+	private JLabel generalTableLabel;
+	private JLabel zoomAreaLabel;
+	private JLabel descriptionLabel;
+	private JTextArea descriptionText;
 
 	private int[] selectedRowsFromMouse;
 	private int selectedColumn=-1;
@@ -534,6 +540,93 @@ public class Gui extends JFrame implements ActionListener{
 		JMenuItem mntmShowGeneralLifetimePhasesPLD = new JMenuItem("Show Phases PLD");
 		mntmShowGeneralLifetimePhasesPLD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				if(!(project==null)){
+					
+					ParametersJDialog jD=new ParametersJDialog();
+					
+					jD.setModal(true);
+					
+					
+					jD.setVisible(true);
+					
+					if(jD.getConfirmation()){
+					
+			            timeWeight = jD.getTimeWeight();
+			            changeWeight = jD.getChangeWeight();
+			            preProcessingTime = jD.getPreProcessingTime();
+			            preProcessingChange = jD.getPreProcessingChange();
+					    numberOfPhases = jD.getNumberOfPhases();
+			            
+			            System.out.println(timeWeight+" "+changeWeight);
+			            
+						PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(inputCsv,outputAssessment1,outputAssessment2,timeWeight,changeWeight,preProcessingTime,preProcessingChange);
+	
+						Float b=new Float(0.3);
+						Float d=new Float(0.3);
+						Float c=new Float(0.3);
+
+						
+						//for(int i=0; i<PhaseExtractionParameters.DATASET_AR.size(); i++){
+							
+						mainEngine.parseInput();		
+						System.out.println("\n\n\n");
+						mainEngine.extractPhases(numberOfPhases);
+						try {
+							mainEngine.extractReportAssessment1();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						try {
+							mainEngine.extractReportAssessment2();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						//}
+						
+						/*try {
+							mainEngine.extractWinnersReport();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}*/
+						
+						mainEngine.connectTransitionsWithPhases(globalDataKeeper);
+						globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
+						TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,b,d,c);
+						mainEngine2.extractClusters(globalDataKeeper.getAllPPLTables().size()/8);
+						globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
+						mainEngine2.print();
+						
+						if(globalDataKeeper.getPhaseCollectors().size()!=0){
+							TableConstructionPhases table=new TableConstructionPhases(globalDataKeeper);
+							final String[] columns=table.constructColumns();
+							final String[][] rows=table.constructRows();
+							segmentSize=table.getSegmentSize();
+							System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
+							System.out.println("C: "+columns.length+" R: "+rows.length);
+		
+							finalColumns=columns;
+							finalRows=rows;
+							tabbedPane.setSelectedIndex(0);
+							makeGeneralTablePhases();
+							fillPhasesTree();
+						}
+						else{
+							JOptionPane.showMessageDialog(null, "Extract Phases first");
+						}
+					}
+				}
+				else{
+					
+					JOptionPane.showMessageDialog(null, "Please select a project first!");
+					
+				}
+				
+				
+				/*
 				 if(!(currentProject==null)){
 					if(globalDataKeeper.getPhaseCollectors().size()!=0){
 						TableConstructionPhases table=new TableConstructionPhases(globalDataKeeper);
@@ -559,7 +652,7 @@ public class Gui extends JFrame implements ActionListener{
 					}
 					
 					return;
-				}
+				}*/
 			}
 		});
 		mnTable.add(mntmShowGeneralLifetimePhasesPLD);
@@ -567,31 +660,88 @@ public class Gui extends JFrame implements ActionListener{
 		JMenuItem mntmShowGeneralLifetimePhasesWithClustersPLD = new JMenuItem("Show Phases With Clusters PLD");
 		mntmShowGeneralLifetimePhasesWithClustersPLD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				 if(!(currentProject==null)){
-					if(globalDataKeeper.getPhaseCollectors().size()!=0){
-						TableConstructionWithClusters table=new TableConstructionWithClusters(globalDataKeeper);
-						final String[] columns=table.constructColumns();
-						final String[][] rows=table.constructRows();
-						segmentSize=table.getSegmentSize();
-						System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
-						System.out.println("C: "+columns.length+" R: "+rows.length);
+if(!(project==null)){
+					
+					ParametersJDialog jD=new ParametersJDialog();
+					
+					jD.setModal(true);
+					
+					
+					jD.setVisible(true);
+					
+					if(jD.getConfirmation()){
+					
+			            timeWeight = jD.getTimeWeight();
+			            changeWeight = jD.getChangeWeight();
+			            preProcessingTime = jD.getPreProcessingTime();
+			            preProcessingChange = jD.getPreProcessingChange();
+					    numberOfPhases = jD.getNumberOfPhases();
+			            
+			            System.out.println(timeWeight+" "+changeWeight);
+			            
+						PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(inputCsv,outputAssessment1,outputAssessment2,timeWeight,changeWeight,preProcessingTime,preProcessingChange);
 	
-						finalColumns=columns;
-						finalRows=rows;
-						tabbedPane.setSelectedIndex(0);
-						makeGeneralTablePhases();
-						fillClustersTree();
-					}
-					else{
-						JOptionPane.showMessageDialog(null, "Extract Phases first");
+						Float b=new Float(0.3);
+						Float d=new Float(0.3);
+						Float c=new Float(0.3);
+
+						
+						//for(int i=0; i<PhaseExtractionParameters.DATASET_AR.size(); i++){
+							
+						mainEngine.parseInput();		
+						System.out.println("\n\n\n");
+						mainEngine.extractPhases(numberOfPhases);
+						try {
+							mainEngine.extractReportAssessment1();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						try {
+							mainEngine.extractReportAssessment2();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						//}
+						
+						/*try {
+							mainEngine.extractWinnersReport();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}*/
+						
+						mainEngine.connectTransitionsWithPhases(globalDataKeeper);
+						globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
+						TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,b,d,c);
+						mainEngine2.extractClusters(globalDataKeeper.getAllPPLTables().size()/8);
+						globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
+						mainEngine2.print();
+						
+						if(globalDataKeeper.getPhaseCollectors().size()!=0){
+							TableConstructionWithClusters table=new TableConstructionWithClusters(globalDataKeeper);
+							final String[] columns=table.constructColumns();
+							final String[][] rows=table.constructRows();
+							segmentSize=table.getSegmentSize();
+							System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
+							System.out.println("C: "+columns.length+" R: "+rows.length);
+		
+							finalColumns=columns;
+							finalRows=rows;
+							tabbedPane.setSelectedIndex(0);
+							makeGeneralTablePhases();
+							fillClustersTree();
+						}
+						else{
+							JOptionPane.showMessageDialog(null, "Extract Phases first");
+						}
 					}
 				}
 				else{
-					if(currentProject==null){
-						JOptionPane.showMessageDialog(null, "Select a Project first");
-					}
 					
-					return;
+					JOptionPane.showMessageDialog(null, "Please select a project first!");
+					
 				}
 			}
 		});
@@ -714,7 +864,6 @@ public class Gui extends JFrame implements ActionListener{
 		
 		*/
 
-		sideMenu.setName("lala");
 		sideMenu.setBounds(0, 0, 280, 600);
 		sideMenu.setBackground(Color.DARK_GRAY);
 		
@@ -747,14 +896,46 @@ public class Gui extends JFrame implements ActionListener{
 		
 		tablesTreePanel.setLayout(gl_tablesTreePanel);
 		
+		treeLabel=new JLabel();
+		treeLabel.setBounds(10, 370, 260, 40);
+		treeLabel.setForeground(Color.WHITE);
+		treeLabel.setText("Tree");
+		
+		descriptionPanel.setBounds(10, 190, 260, 180);
+		descriptionPanel.setBackground(Color.LIGHT_GRAY);
+		
+		GroupLayout gl_descriptionPanel = new GroupLayout(descriptionPanel);
+		gl_descriptionPanel.setHorizontalGroup(
+				gl_descriptionPanel.createParallelGroup(Alignment.LEADING)
+				//.addGap(0, 1469, Short.MAX_VALUE)
+		);
+		gl_descriptionPanel.setVerticalGroup(
+				gl_descriptionPanel.createParallelGroup(Alignment.LEADING)
+				//.addGap(0, 743, Short.MAX_VALUE)
+		);
+		
+		descriptionPanel.setLayout(gl_descriptionPanel);
+		
+		descriptionText=new JTextArea();
+		descriptionText.setBounds(5, 5, 250, 170);
+		descriptionText.setForeground(Color.BLACK);
+		descriptionText.setText("");
+		descriptionText.setBackground(Color.LIGHT_GRAY);
+		
+		descriptionPanel.add(descriptionText);
+		
+		
+		descriptionLabel=new JLabel();
+		descriptionLabel.setBounds(10, 160, 260, 40);
+		descriptionLabel.setForeground(Color.WHITE);
+		descriptionLabel.setText("Description");
+	   
+		sideMenu.add(treeLabel);
+		sideMenu.add(tablesTreePanel);
+		
+		sideMenu.add(descriptionLabel);
+		sideMenu.add(descriptionPanel);
 
-	   
-	  //tablesTree.setBounds(0, 0, 260, 180);
-	   
-	   
-		 sideMenu.add(tablesTreePanel);
-	  
-	   
 	   //TreeConstructionGeneral tc=new TreeConstructionGeneral(globalDataKeeper);
 	   // tablesTree=tc.constructTree();
 		//tablesTreePanel.add(scr);
@@ -1313,7 +1494,7 @@ public class Gui extends JFrame implements ActionListener{
 		});
 		coChangesBtn.setBounds(900,900 , 160, 40);
 		menuBar.add(coChangesBtn);
-		
+		/*
 		JButton extractPhasesBtn = new JButton("Extract Phases");
 		extractPhasesBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -1363,12 +1544,7 @@ public class Gui extends JFrame implements ActionListener{
 						}
 						//}
 						
-						/*try {
-							mainEngine.extractWinnersReport();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}*/
+						
 						
 						mainEngine.connectTransitionsWithPhases(globalDataKeeper);
 						globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
@@ -1388,7 +1564,7 @@ public class Gui extends JFrame implements ActionListener{
 		});
 		extractPhasesBtn.setBounds(900,900 , 160, 40);
 		menuBar.add(extractPhasesBtn);
-		
+		*/
 		
 		contentPane = new JPanel();
 		
@@ -1420,6 +1596,21 @@ public class Gui extends JFrame implements ActionListener{
 		);
 		lifeTimePanel.setLayout(gl_lifeTimePanel);
 		
+		
+		generalTableLabel=new JLabel("Parallel Lives Diagram");
+		generalTableLabel.setBounds(300, 0, 400, 30);
+		generalTableLabel.setForeground(Color.BLACK);
+		
+		zoomAreaLabel=new JLabel();
+		zoomAreaLabel.setText("<HTML>Z<br>o<br>o<br>m<br><br>A<br>r<br>e<br>a</HTML>");
+		zoomAreaLabel.setBounds(1255, 325, 15, 300);
+		zoomAreaLabel.setForeground(Color.BLACK);
+		
+		lifeTimePanel.add(zoomAreaLabel);
+		
+		lifeTimePanel.add(generalTableLabel);
+		
+		//generalTableLabel.setText("Tree");
 		
 //		tabbedPane.addTab("Statistics", null, statistics, null);
 //		
@@ -1752,11 +1943,7 @@ private void makeGeneralTableIDU() {
 		        }*/
 		        c.setForeground(fr);
 		        setOpaque(true);
-		        boolean foundZero=false;
-		        boolean foundColumn=false;
-		        boolean foundRow=false;
-		        boolean foundBoth=false;
-		        
+		      
 		        /*
 		        if(selectedColumnsFromMouse!=null){
 			        for(int i=0;i<selectedColumnsFromMouse.length; i++){
@@ -1775,7 +1962,19 @@ private void makeGeneralTableIDU() {
 		        		
 		        		c.setBackground(cl);
 		        		
+		        		String description="Table:"+finalRows[row][0]+"\n";
+		        		description=description+"Birth Version Name:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getBirth()+"\n";
+		        		description=description+"Birth Version ID:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getBirthVersionID()+"\n";
+		        		description=description+"Death Version Name:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getDeath()+"\n";
+		        		description=description+"Death Version ID:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getDeathVersionID()+"\n";
+		        		description=description+"Total Changes:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getTotalChanges()+"\n";
+
+		        		
+		        		descriptionText.setText(description);
+		        		
 		        		return c;
+		        		
+		        		
 		        	}
 		        }
 		        else{
@@ -1970,7 +2169,7 @@ private void makeGeneralTableIDU() {
 		tmpScrollPane.setViewportView(LifeTimeTable);
 		tmpScrollPane.setAlignmentX(0);
 		tmpScrollPane.setAlignmentY(0);
-        tmpScrollPane.setBounds(300,0,950,300);
+        tmpScrollPane.setBounds(300,30,950,300);
         tmpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         tmpScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         
@@ -2039,15 +2238,31 @@ private void makeGeneralTablePhases() {
 	        
 	        if(selectedColumn==0){
 	        	if (isSelected){
-	        	/*if(hasFocus)
-	        	{		        	
-	        		System.out.println(row+" "+column);
-	        		c.setBackground(Color.YELLOW);
-	        		return c;
-	        	}*/
-	        	//else{
-	        		//System.out.println(row+" "+column);
-	        		//c.setBackground(Color.YELLOW);
+	        		
+	        		if(finalRows[row][0].contains("Cluster")){
+		        		String description="Cluster:"+finalRows[row][0]+"\n";
+		        		description=description+"Birth Version Name:"+globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getBirthSqlFile()+"\n";
+		        		description=description+"Birth Version ID:"+globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getBirth()+"\n";
+		        		description=description+"Death Version Name:"+globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getDeathSqlFile()+"\n";
+		        		description=description+"Death Version ID:"+globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getDeath()+"\n";
+		        		description=description+"Tables:"+globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getNamesOfTables().size()+"\n";
+		        		description=description+"Total Changes:"+globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getTotalChanges()+"\n";
+		        		
+		        		descriptionText.setText(description);
+	        		}
+	        		else{
+		        		String description="Table:"+finalRows[row][0]+"\n";
+		        		description=description+"Birth Version Name:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getBirth()+"\n";
+		        		description=description+"Birth Version ID:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getBirthVersionID()+"\n";
+		        		description=description+"Death Version Name:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getDeath()+"\n";
+		        		description=description+"Death Version ID:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getDeathVersionID()+"\n";
+		        		description=description+"Total Changes:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getTotalChanges()+"\n";
+		        		descriptionText.setText(description);
+
+	        		}
+
+	        		
+	        		
 	        		Color cl = new Color(255,69,0,100);
 	        		
 	        		c.setBackground(cl);
@@ -2057,7 +2272,6 @@ private void makeGeneralTablePhases() {
 	        else{
 	        	
 	        	if(selectedFromTree.contains(finalRows[row][0])){
-			        System.out.println("selectedFromTree?");
 
 	        		Color cl = new Color(255,69,0,100);
 	        		
@@ -2228,7 +2442,7 @@ private void makeGeneralTablePhases() {
 	tmpScrollPane.setViewportView(LifeTimeTable);
 	tmpScrollPane.setAlignmentX(0);
 	tmpScrollPane.setAlignmentY(0);
-    tmpScrollPane.setBounds(300,0,950,300);
+    tmpScrollPane.setBounds(300,30,950,300);
     tmpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     tmpScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     
@@ -2301,7 +2515,8 @@ private void makeZoomAreaTable() {
 	
 	zoomTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	
-	
+	zoomTable.setBackground(Color.DARK_GRAY);
+
 	
 	for(int i=0; i<zoomTable.getColumnCount(); i++){
 		if(i==0){
@@ -2344,22 +2559,29 @@ private void makeZoomAreaTable() {
 	        
 	        if(selectedColumn==0){
 	        	if (isSelected){
-	        	/*if(hasFocus)
-	        	{		        	
-	        		System.out.println(row+" "+column);
-	        		c.setBackground(Color.YELLOW);
-	        		return c;
-	        	}*/
-	        	//else{
-	        		//System.out.println(row+" "+column);
-	        		c.setBackground(Color.YELLOW);
+	        		/*
+	        		String description="Cluster:"+finalRows[row][0]+"\n";
+	        		description=description+"Birth Version Name:"+globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getBirthSqlFile()+"\n";
+	        		description=description+"Birth Version ID:"+globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getBirth()+"\n";
+	        		description=description+"Death Version Name:"+globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getDeathSqlFile()+"\n";
+	        		description=description+"Death Version ID:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getDeathVersionID()+"\n";
+	        		description=description+"Total Changes:"+globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getDeath()+"\n";
+
+	        		
+	        		descriptionText.setText(description);
+	        		*/
+	        		Color cl = new Color(255,69,0,100);
+
+	        		c.setBackground(cl);
 	        		return c;
 	        	}
 	        }
 	        else{
 	        	if (isSelected && hasFocus){
 		        	//Color lala=new Color(207,0,255,255);
-	        		c.setBackground(Color.YELLOW);
+	        		Color cl = new Color(255,69,0,100);
+
+	        		c.setBackground(cl);
 	        		return c;
 		        }
 	        	
@@ -2488,6 +2710,7 @@ private void makeZoomAreaTable() {
 	
 	
 	zoomAreaTable=zoomTable;
+	//zoomAreaTable.setBackground(Color.DARK_GRAY);
 	
 	tmpScrollPaneZoomArea.setViewportView(zoomAreaTable);
 	tmpScrollPaneZoomArea.setAlignmentX(0);
@@ -2495,7 +2718,9 @@ private void makeZoomAreaTable() {
 	tmpScrollPaneZoomArea.setBounds(300,350,950,250);
 	tmpScrollPaneZoomArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 	tmpScrollPaneZoomArea.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-    
+	tmpScrollPaneZoomArea.setBackground(Color.DARK_GRAY);
+	tmpScrollPaneZoomArea.getViewport().setBackground(Color.GRAY);
+
 	lifeTimePanel.setCursor(getCursor());
 	lifeTimePanel.add(tmpScrollPaneZoomArea);
 	
@@ -3004,8 +3229,11 @@ private void makeZoomAreaTable() {
 		 treeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		 treeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		 tablesTreePanel.add(treeScrollPane);
-		 sideMenu.removeAll();
-		 sideMenu.add(tablesTreePanel);
+		 
+		 treeLabel.setText("General Tree");
+
+		 //sideMenu.removeAll();
+		 //sideMenu.add(tablesTreePanel);
 		 sideMenu.revalidate();
 		 sideMenu.repaint();
 		
@@ -3064,15 +3292,18 @@ private void makeZoomAreaTable() {
 			});
 		 
 		 treeScrollPane.setViewportView(tablesTree);
-		 
-		 
 		 treeScrollPane.setBounds(5, 5, 250, 170);
 		 treeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		 treeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		 tablesTreePanel.add(treeScrollPane);
-		 sideMenu.removeAll();
-		 sideMenu.add(tablesTreePanel);
 		 
+		 treeLabel.setText("Phases Tree");
+
+		 
+		 //sideMenu.removeAll();
+		 //sideMenu.add(tablesTreePanel);
+		 sideMenu.revalidate();
+		 sideMenu.repaint();
 		
 	}
 	
@@ -3135,8 +3366,14 @@ private void makeZoomAreaTable() {
 		 treeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		 treeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		 tablesTreePanel.add(treeScrollPane);
-		 sideMenu.removeAll();
-		 sideMenu.add(tablesTreePanel);
+
+		 treeLabel.setText("Clusters Tree");
+
+		 
+		 //sideMenu.removeAll();
+		 //sideMenu.add(tablesTreePanel);
+		 sideMenu.revalidate();
+		 sideMenu.repaint();
 		 
 		
 	}

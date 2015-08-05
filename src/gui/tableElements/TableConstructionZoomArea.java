@@ -276,7 +276,7 @@ public class TableConstructionZoomArea implements Pld {
 							deletedAllTable=0;
 							
 							ArrayList<AtomicChange> atChs = tableChange.getTableAtChForOneTransition();
-							System.out.println(tableChange.getAffectedTableName()+" "+atChs.size());
+							//System.out.println(tableChange.getAffectedTableName()+" "+atChs.size());
 
 							for(int k=0; k<atChs.size(); k++){
 								
@@ -380,7 +380,7 @@ public class TableConstructionZoomArea implements Pld {
 		for (int i = 0; i < oneRow.length; i++) {
 			lala=lala+oneRow[i]+",";
 		}
-		System.out.println(oneTable.getName()+" "+lala);
+		//System.out.println(oneTable.getName()+" "+lala);
 	
 		return oneRow;
 		

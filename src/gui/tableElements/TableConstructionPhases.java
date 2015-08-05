@@ -65,7 +65,7 @@ public String[] constructColumns(){
 		}
 		
 		columnsNumber=columnsList.size();
-		System.out.println(columnsNumber);
+		//System.out.println(columnsNumber);
 		String[] tmpcolumns=new String[columnsList.size()];
 		
 		for(int j=0; j<columnsList.size(); j++ ){
@@ -206,7 +206,6 @@ public String[] constructColumns(){
 //			}
 			
 		}
-		System.out.println(oneTable.getName()+" "+pointerCell);
 		
 		int initialization=0;
 		if(pointerCell>0){
@@ -359,7 +358,7 @@ public String[] constructColumns(){
 		for (int i = 0; i < oneRow.length; i++) {
 			lala=lala+oneRow[i]+",";
 		}
-		System.out.println(oneTable.getName()+" "+lala);
+		//System.out.println(oneTable.getName()+" "+lala);
 		return oneRow;
 
 		
