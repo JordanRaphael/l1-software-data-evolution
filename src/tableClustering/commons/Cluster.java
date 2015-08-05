@@ -144,7 +144,6 @@ public class Cluster {
 	
 	public String toString(){
 		
-		System.out.println(this.tables.size());
 
 		String toReturn="Cluster: ";
 		

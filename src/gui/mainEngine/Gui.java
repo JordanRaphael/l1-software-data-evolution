@@ -188,6 +188,7 @@ public class Gui extends JFrame implements ActionListener{
 
 	private int[] selectedRowsFromMouse;
 	private int selectedColumn=-1;
+	private int selectedColumnZoomArea=-1;
 	private int selectedRow;
 
 	private int[] selectedColumnsFromMouse;
@@ -2281,7 +2282,61 @@ private void makeGeneralTablePhases() {
 	        	
 	        	if (isSelected && hasFocus){
 		        	
-	        		//c.setBackground(Color.YELLOW);
+	        		String description="";
+	        		if(!table.getColumnName(column).contains("Table name")){
+	        			
+		        		if(finalRows[row][0].contains("Cluster")){
+
+			        		description=finalRows[row][0]+"\n";
+			        		description=description+"Tables:"+globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getNamesOfTables().size()+"\n\n";
+
+			        		description=description+table.getColumnName(column)+"\n";
+			        		description=description+"First Transition ID:"+globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+			        				get(column-1).getStartPos()+"\n";
+			        		description=description+"Last Transition ID:"+globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+			        				get(column-1).getEndPos()+"\n\n";
+			        		description=description+"Total Changes For This Phase:"+tmpValue+"\n";
+
+			        		/*if(globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
+			        				getTableChanges().getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(column)))!=null){
+			        			description=description+"Transition Changes:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
+			        				getTableChanges().getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(column))).size()+"\n";
+			        			description=description+"Additions:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
+			        					getNumberOfAdditionsForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
+			        			description=description+"Deletions:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
+			        					getNumberOfDeletionsForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
+			        			description=description+"Updates:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
+			        					getNumberOfUpdatesForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
+			        			
+			        		}
+			        		else{
+			        			description=description+"Transition Changes:0"+"\n";
+			        			description=description+"Additions:0"+"\n";
+			        			description=description+"Deletions:0"+"\n";
+			        			description=description+"Updates:0"+"\n";
+			        			
+			        		}*/
+			        		
+		        		}
+		        		else{
+		        			description=table.getColumnName(column)+"\n";
+			        		description=description+"First Transition ID:"+globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+			        				get(column-1).getStartPos()+"\n";
+			        		description=description+"Last Transition ID:"+globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+			        				get(column-1).getEndPos()+"\n\n";
+		        			description=description+"Table:"+finalRows[row][0]+"\n";
+			        		description=description+"Birth Version Name:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getBirth()+"\n";
+			        		description=description+"Birth Version ID:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getBirthVersionID()+"\n";
+			        		description=description+"Death Version Name:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getDeath()+"\n";
+			        		description=description+"Death Version ID:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getDeathVersionID()+"\n";
+			        		description=description+"Total Changes For This Phase:"+tmpValue+"\n";
+			        		
+		        		}
+		        		
+		        		descriptionText.setText(description);
+
+	        		}
+	        		
 	        		Color cl = new Color(255,69,0,100);
 	        		
 	        		c.setBackground(cl);
@@ -2382,8 +2437,7 @@ private void makeGeneralTablePhases() {
 						selectedColumn=target1.getSelectedColumn();
 						selectedRowsFromMouse=new int[target1.getSelectedRows().length];
 						selectedRowsFromMouse=target1.getSelectedRows();
-						System.out.println(target1.getSelectedColumn());
-						System.out.println(target1.getSelectedRow());
+						
 						final String sSelectedColumn=generalTable.getColumnName(selectedColumn);
 						final String sSelectedRow = (String) generalTable.getValueAt(target1.getSelectedRow(),0);
 						tablesSelected = new ArrayList<String>();
@@ -2392,7 +2446,6 @@ private void makeGeneralTablePhases() {
 //						}
 						for(int rowsSelected=0; rowsSelected<selectedRowsFromMouse.length; rowsSelected++){
 							tablesSelected.add((String) generalTable.getValueAt(selectedRowsFromMouse[rowsSelected], 0));
-							System.out.println("1:"+tablesSelected.get(rowsSelected));
 						}
 						//Arrays.fill(selectedRowsFromMouse, (Integer) null);
 						//if(target1.getSelectedColumn()==0){
@@ -2403,7 +2456,6 @@ private void makeGeneralTablePhases() {
 					            @Override
 					            public void actionPerformed(ActionEvent le) {
 					            	if(sSelectedRow.contains("Cluster ")){
-					            		System.out.println("Cluster");
 					            		showClusterSelectionToZoomArea(selectedColumn,sSelectedRow);
 
 					            	}
@@ -2556,7 +2608,7 @@ private void makeZoomAreaTable() {
 	        Color fr=new Color(0,0,0);
 	        c.setForeground(fr);
 	        
-	        if(selectedColumn==0){
+	        if(selectedColumnZoomArea==0){
 	        	if (isSelected){
 	        		/*
 	        		String description="Cluster:"+finalRows[row][0]+"\n";
@@ -2647,7 +2699,7 @@ private void makeZoomAreaTable() {
 				JTable target = (JTable)e.getSource();
 		         
 		         selectedRowsFromMouse = target.getSelectedRows();
-		         selectedColumn = target.getSelectedColumn();
+		         //selectedColumnZoomArea = target.getSelectedColumn();
 		         LifeTimeTable.repaint();
 		         //System.out.println(selectedColumn);
 			}
@@ -2655,7 +2707,7 @@ private void makeZoomAreaTable() {
 		         JTable target = (JTable)e.getSource();
 		         
 		         selectedRowsFromMouse = target.getSelectedRows();
-		         selectedColumn = target.getSelectedColumn();
+		         selectedColumnZoomArea = target.getSelectedColumn();
 		         //System.out.println(selectedColumn);
 		         makeDetailedTable(finalColumns, finalRows,levelizedTable);
 		         
@@ -2676,11 +2728,11 @@ private void makeZoomAreaTable() {
 					//if (e.getClickCount() == 1) {
 
 						JTable target1 = (JTable)e.getSource();
-						selectedColumn=target1.getSelectedColumn();
+						selectedColumnZoomArea=target1.getSelectedColumn();
 						selectedRowsFromMouse=target1.getSelectedRows();
 						System.out.println(target1.getSelectedColumn());
 						System.out.println(target1.getSelectedRow());
-						final String sSelectedColumn=zoomTable.getColumnName(selectedColumn);
+						final String sSelectedColumn=zoomTable.getColumnName(selectedColumnZoomArea);
 						final ArrayList<String> tablesSelected = new ArrayList<String>();
 						for(int rowsSelected=0; rowsSelected<selectedRowsFromMouse.length; rowsSelected++){
 							tablesSelected.add((String) zoomTable.getValueAt(selectedRowsFromMouse[rowsSelected], 0));
@@ -2694,7 +2746,7 @@ private void makeZoomAreaTable() {
 					            @Override
 					            public void actionPerformed(ActionEvent e) {
 					                JOptionPane.showMessageDialog(null, "Right-click performed on table and choose ShowDetails");
-					                showSelectionToZoomArea(selectedColumn);
+					                //showSelectionToZoomArea(selectedColumn);
 					            }
 					        });
 					        popupMenu.add(showDetailsItem);
@@ -2717,8 +2769,8 @@ private void makeZoomAreaTable() {
 	tmpScrollPaneZoomArea.setBounds(300,350,950,250);
 	tmpScrollPaneZoomArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 	tmpScrollPaneZoomArea.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-	tmpScrollPaneZoomArea.setBackground(Color.DARK_GRAY);
-	tmpScrollPaneZoomArea.getViewport().setBackground(Color.GRAY);
+	//tmpScrollPaneZoomArea.setBackground(Color.DARK_GRAY);
+	//tmpScrollPaneZoomArea.getViewport().setBackground(Color.GRAY);
 
 	lifeTimePanel.setCursor(getCursor());
 	lifeTimePanel.add(tmpScrollPaneZoomArea);

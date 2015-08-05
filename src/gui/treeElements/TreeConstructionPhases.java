@@ -39,7 +39,6 @@ public class TreeConstructionPhases implements TreeConstruction {
 			for(Map.Entry<Integer, PPLTransition> tr:transitions.entrySet()){
 				DefaultMutableTreeNode a1=new DefaultMutableTreeNode(tr.getKey());
 				ArrayList<TableChange> tableChanges=tr.getValue().getTableChanges();
-				System.out.println(tableChanges.size());
 				for(int j=0; j<tableChanges.size(); j++){
 					DefaultMutableTreeNode a2=new DefaultMutableTreeNode(tableChanges.get(j).getAffectedTableName());
 					a1.add(a2);
