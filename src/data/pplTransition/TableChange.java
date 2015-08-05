@@ -45,6 +45,43 @@ public class TableChange {
 	}
 	
 	
+	public int getNumberOfAdditionsForOneTr(Integer transition){
+		int additions=0;
+		ArrayList<AtomicChange> tmpAtChs=atomicChanges.get(transition);
+		for(int i=0;i<tmpAtChs.size();i++){
+			AtomicChange atCh=tmpAtChs.get(i);
+			if(atCh.getType().contains("Addition")) {
+				additions++;
+			}
+		}
+		return additions;
+	}
+	
+	public int getNumberOfDeletionsForOneTr(Integer transition){
+		int deletions=0;
+		ArrayList<AtomicChange> tmpAtChs=atomicChanges.get(transition);
+		for(int i=0;i<tmpAtChs.size();i++){
+			AtomicChange atCh=tmpAtChs.get(i);
+			if(atCh.getType().contains("Deletion")) {
+				deletions++;
+			}
+		}
+		return deletions;
+	}
+	
+	public int getNumberOfUpdatesForOneTr(Integer transition){
+		int updates=0;
+		ArrayList<AtomicChange> tmpAtChs=atomicChanges.get(transition);
+		for(int i=0;i<tmpAtChs.size();i++){
+			AtomicChange atCh=tmpAtChs.get(i);
+			if(atCh.getType().contains("Change")) {
+				updates++;
+			}
+		}
+		return updates;
+	}
+	
+	
 	public String toString(){
 		
 		String message = "Table Change \n";

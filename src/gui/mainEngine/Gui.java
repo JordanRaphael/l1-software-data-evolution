@@ -78,6 +78,7 @@ import tableClustering.engine.TableClusteringMainEngine;
 import algorithms.Algorithm;
 import algorithms.FindCoChanges;
 import data.dataKeeper.GlobalDataKeeper;
+import data.pplTransition.AtomicChange;
 
 
 public class Gui extends JFrame implements ActionListener{
@@ -1937,29 +1938,17 @@ private void makeGeneralTableIDU() {
 		        String tmpValue=finalRows[row][column];
 		        String columnName=table.getColumnName(column);
 		        Color fr=new Color(0,0,0);
-		        /*String lala="";
-		        if(tablesTree.getLastSelectedPathComponent()!=null){
-		        	 lala=tablesTree.getLastSelectedPathComponent().toString();
-		        }*/
+		        
 		        c.setForeground(fr);
 		        setOpaque(true);
 		      
-		        /*
-		        if(selectedColumnsFromMouse!=null){
-			        for(int i=0;i<selectedColumnsFromMouse.length; i++){
-			        	 if(selectedColumnsFromMouse[i]==0){
-			        		 foundZero=true;
-			        		 break;
-			        	 }
-			         }
-		        }
-		        */
+		       
+//        		System.err.println(row+" "+column+" "+selectedColumn);
 
 		    	if(selectedColumn==0){
-
+		    		
 		        	if (isSelected){
 		        		Color cl = new Color(255,69,0,100);
-		        		
 		        		c.setBackground(cl);
 		        		
 		        		String description="Table:"+finalRows[row][0]+"\n";
@@ -1978,18 +1967,8 @@ private void makeGeneralTableIDU() {
 		        	}
 		        }
 		        else{
-/*
-		        	if(selectedColumnsFromMouse!=null){
 
-			        	for(int i=0;i<selectedColumnsFromMouse.length; i++){
-			        		
-				        	 if(selectedColumnsFromMouse[i]==column){
-					        	 foundColumn=true;
-				        	 }
-				        }
-		        	
-			        }*/
-		        	
+
 		        	if(selectedFromTree.contains(finalRows[row][0])){
 
 
@@ -2000,24 +1979,44 @@ private void makeGeneralTableIDU() {
 		        		return c;
 		        	}
 		        	
-			        /*
-			        if(selectedRowsFromMouse!=null){
-
-			        	for(int i=0;i<selectedRowsFromMouse.length; i++){
-				        	 if(selectedRowsFromMouse[i]==row){
-				        		 foundRow=true;
-				        		 break;
-				        	 }
-				        }
-		        	
-			        }*/
-			        
+			      
 		        	
 		        	if (isSelected && hasFocus){
 
+		        		String description="";
+		        		if(!table.getColumnName(column).contains("Table name")){
+			        		description="Table:"+finalRows[row][0]+"\n";
+			        		
+			        		description=description+"Old Version Name:"+globalDataKeeper.getAllPPLTransitions().
+			        				get(Integer.parseInt(table.getColumnName(column))).getOldVersionName()+"\n";
+			        		description=description+"New Version Name:"+globalDataKeeper.getAllPPLTransitions().
+			        				get(Integer.parseInt(table.getColumnName(column))).getNewVersionName()+"\n";		        		description=description+"Death Version ID:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getDeathVersionID()+"\n";
+			        		if(globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
+			        				getTableChanges().getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(column)))!=null){
+			        			description=description+"Transition Changes:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
+			        				getTableChanges().getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(column))).size()+"\n";
+			        			description=description+"Additions:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
+			        					getNumberOfAdditionsForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
+			        			description=description+"Deletions:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
+			        					getNumberOfDeletionsForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
+			        			description=description+"Updates:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
+			        					getNumberOfUpdatesForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
+			        			
+			        		}
+			        		else{
+			        			description=description+"Transition Changes:0"+"\n";
+			        			description=description+"Additions:0"+"\n";
+			        			description=description+"Deletions:0"+"\n";
+			        			description=description+"Updates:0"+"\n";
+			        			
+			        		}
+			        		
+			        		descriptionText.setText(description);
+		        		}
 		        		Color cl = new Color(255,69,0,100);
 		        		
 		        		c.setBackground(cl);
+		        		
 		        		return c;
 			        }
 		        	/*

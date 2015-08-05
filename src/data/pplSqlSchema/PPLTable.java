@@ -196,5 +196,20 @@ public class PPLTable {
 		return attrs.size();
 	}
 	
+	public int getNumberOfAdditionsForOneTr(Integer transition){
+		int additions=tableChanges.getNumberOfAdditionsForOneTr(transition);
+		return additions;
+	}
+	
+	public int getNumberOfDeletionsForOneTr(Integer transition){
+		int deletions=tableChanges.getNumberOfDeletionsForOneTr(transition);
+		return deletions;
+	}
+	
+	public int getNumberOfUpdatesForOneTr(Integer transition){
+		int updates=tableChanges.getNumberOfUpdatesForOneTr(transition);
+		return updates;
+	}
+	
 	
 }
