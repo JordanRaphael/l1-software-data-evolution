@@ -49,6 +49,37 @@ public class Phase {
 		this.totalUpdates = totalUpdates;
 	}
 	
+	public int getTotalAdditionsOfPhase(){
+		int additions=0;
+		for(Map.Entry<Integer, PPLTransition> pplTr:phasePPLTransitions.entrySet()){
+			additions=additions+pplTr.getValue().getNumberOfAdditionsForOneTr();
+		}
+		return additions;
+	}
+	
+	public int getTotalDeletionsOfPhase(){
+		
+		int deletions=0;
+		
+		for(Map.Entry<Integer, PPLTransition> pplTr:phasePPLTransitions.entrySet()){
+			deletions=deletions+pplTr.getValue().getNumberOfDeletionsForOneTr();
+		}
+		
+		return deletions;
+	}
+	
+	public int getTotalUpdatesOfPhase(){
+		
+		int updates=0;
+		
+		for(Map.Entry<Integer, PPLTransition> pplTr:phasePPLTransitions.entrySet()){
+			updates=updates+pplTr.getValue().getNumberOfUpdatesForOneTr();
+		}
+		
+		return updates;
+	}
+	
+	
 	public double getSum(){
 		return sum;
 	}
@@ -167,7 +198,6 @@ public class Phase {
 	public int getSize(){
 		return phasePPLTransitions.size();
 	}
-	
 	
 	
 	

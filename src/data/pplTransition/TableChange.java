@@ -81,6 +81,39 @@ public class TableChange {
 		return updates;
 	}
 	
+	public int getNumberOfAdditionsForOneTr(){
+		int additions=0;
+		for(int i=0;i<atomicChangesForOneTransition.size();i++){
+			AtomicChange atCh=atomicChangesForOneTransition.get(i);
+			if(atCh.getType().contains("Addition")) {
+				additions++;
+			}
+		}
+		return additions;
+	}
+	
+	public int getNumberOfDeletionsForOneTr(){
+		int deletions=0;
+		for(int i=0;i<atomicChangesForOneTransition.size();i++){
+			AtomicChange atCh=atomicChangesForOneTransition.get(i);
+			if(atCh.getType().contains("Deletion")) {
+				deletions++;
+			}
+		}
+		return deletions;
+	}
+	
+	public int getNumberOfUpdatesForOneTr(){
+		int updates=0;
+		for(int i=0;i<atomicChangesForOneTransition.size();i++){
+			AtomicChange atCh=atomicChangesForOneTransition.get(i);
+			if(atCh.getType().contains("Change")) {
+				updates++;
+			}
+		}
+		return updates;
+	}
+	
 	
 	public String toString(){
 		

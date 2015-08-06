@@ -192,7 +192,8 @@ public class Gui extends JFrame implements ActionListener{
 	private int selectedRow;
 
 	private int[] selectedColumnsFromMouse;
-
+	private int wholeCol=-1;
+	private int wholeColZoomArea=-1;
 
 	private ArrayList<String> tablesSelected = new ArrayList<String>();
 
@@ -1943,10 +1944,28 @@ private void makeGeneralTableIDU() {
 		        c.setForeground(fr);
 		        setOpaque(true);
 		      
-		       
-//        		System.err.println(row+" "+column+" "+selectedColumn);
+		        if(column==wholeCol){
+		        	
+		        	String description="Transition ID:"+table.getColumnName(column)+"\n";
+		        	description=description+"Old Version Name:"+globalDataKeeper.getAllPPLTransitions().
+	        				get(Integer.parseInt(table.getColumnName(column))).getOldVersionName()+"\n";
+	        		description=description+"New Version Name:"+globalDataKeeper.getAllPPLTransitions().
+	        				get(Integer.parseInt(table.getColumnName(column))).getNewVersionName()+"\n";		        		
+	        		
+        			description=description+"Transition Changes:"+globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfChangesForOneTr()+"\n";
+        			description=description+"Additions:"+globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfAdditionsForOneTr()+"\n";
+        			description=description+"Deletions:"+globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfDeletionsForOneTr()+"\n";
+        			description=description+"Updates:"+globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfUpdatesForOneTr()+"\n";
 
-		    	if(selectedColumn==0){
+        			
+	        		descriptionText.setText(description);
+		        	
+		        	Color cl = new Color(255,69,0,100);
+
+	        		c.setBackground(cl);
+	        		return c;
+		        }
+		        else if(selectedColumn==0){
 		    		
 		        	if (isSelected){
 		        		Color cl = new Color(255,69,0,100);
@@ -1991,7 +2010,7 @@ private void makeGeneralTableIDU() {
 			        		description=description+"Old Version Name:"+globalDataKeeper.getAllPPLTransitions().
 			        				get(Integer.parseInt(table.getColumnName(column))).getOldVersionName()+"\n";
 			        		description=description+"New Version Name:"+globalDataKeeper.getAllPPLTransitions().
-			        				get(Integer.parseInt(table.getColumnName(column))).getNewVersionName()+"\n";		        		description=description+"Death Version ID:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getDeathVersionID()+"\n";
+			        				get(Integer.parseInt(table.getColumnName(column))).getNewVersionName()+"\n";		        		
 			        		if(globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
 			        				getTableChanges().getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(column)))!=null){
 			        			description=description+"Transition Changes:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
@@ -2102,20 +2121,8 @@ private void makeGeneralTableIDU() {
 			         LifeTimeTable.repaint();
 			         //System.out.println(selectedColumn);
 				}
-//			      if (e.getClickCount() == 2) {
-//			         JTable target = (JTable)e.getSource();
-//			         
-//			         selectedRowsFromMouse = target.getSelectedRows();
-//			         selectedColumn = target.getSelectedColumn();
-//			         //System.out.println(selectedColumn);
-//			         makeDetailedTable(finalColumns, finalRows,levelizedTable);
-//			         
-//			         LifeTimeTable.setCellSelectionEnabled(true);
-//			         LifeTimeTable.changeSelection(selectedRowsFromMouse[0], selectedColumn, false, false);
-//			         LifeTimeTable.requestFocus();
-//			         
-//			      }
-			   }
+				
+			  }
 		});
 		
 		generalTable.addMouseListener(new MouseAdapter() {
@@ -2158,11 +2165,41 @@ private void makeGeneralTableIDU() {
 			   }
 		});
 		
-		//generalTable.getColumnModel().setColumnSelectionAllowed(true); 
-		//generalTable.getr
-		//generalTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION); 
-		//generalTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		//generalTable.setCellSelectionEnabled(true);
+		
+		generalTable.getTableHeader().addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        wholeCol = generalTable.columnAtPoint(e.getPoint());
+		        String name = generalTable.getColumnName(wholeCol);
+		        System.out.println("Column index selected " + wholeCol + " " + name);
+		        generalTable.repaint();
+		    }
+		});
+		
+		generalTable.getTableHeader().addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseReleased(MouseEvent e) {
+		    	if(SwingUtilities.isRightMouseButton(e)){
+					System.out.println("Right Click");
+					
+							final JPopupMenu popupMenu = new JPopupMenu();
+					        JMenuItem showDetailsItem = new JMenuItem("Clear Column Selection");
+					        showDetailsItem.addActionListener(new ActionListener() {
+
+					            @Override
+					            public void actionPerformed(ActionEvent e) {
+					            	wholeCol=-1;
+					            	generalTable.repaint();
+					            }
+					        });
+					        popupMenu.add(showDetailsItem);
+					        popupMenu.show(generalTable, e.getX(),e.getY());
+					    
+				}
+			
+		   }
+		    
+		});
 		
 		LifeTimeTable=generalTable;
 		//LifeTimeTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -2236,7 +2273,47 @@ private void makeGeneralTablePhases() {
 	        Color fr=new Color(0,0,0);
 	        c.setForeground(fr);
 	        
-	        if(selectedColumn==0){
+	        if(column==wholeCol){
+	        	
+	        	String description=table.getColumnName(column)+"\n";
+	          	description=description+"First Transition ID:"+globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+        				get(column-1).getStartPos()+"\n";
+        		description=description+"Last Transition ID:"+globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+        				get(column-1).getEndPos()+"\n";
+        		description=description+"Total Changes For This Phase:"+globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+        				get(column-1).getTotalUpdates()+"\n";
+        		description=description+"Additions For This Phase:"+globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+        				get(column-1).getTotalAdditionsOfPhase()+"\n";
+        		description=description+"Deletions For This Phase:"+globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+        				get(column-1).getTotalDeletionsOfPhase()+"\n";
+        		description=description+"Updates For This Phase:"+globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+        				get(column-1).getTotalUpdatesOfPhase()+"\n";
+	        	/*description=description+"Old Version Name:"+globalDataKeeper.getAllPPLTransitions().
+        				get(Integer.parseInt(table.getColumnName(column))).getOldVersionName()+"\n";
+        		description=description+"New Version Name:"+globalDataKeeper.getAllPPLTransitions().
+        				get(Integer.parseInt(table.getColumnName(column))).getNewVersionName()+"\n";		        		
+        		
+    			description=description+"Transition Changes:"+globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfChangesForOneTr()+"\n";
+    			description=description+"Additions:"+globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfAdditionsForOneTr()+"\n";
+    			description=description+"Deletions:"+globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfDeletionsForOneTr()+"\n";
+    			description=description+"Updates:"+globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfUpdatesForOneTr()+"\n";
+*/
+    			/*description=description+"Additions:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
+    					getNumberOfAdditionsForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
+    			description=description+"Deletions:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
+    					getNumberOfDeletionsForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
+    			description=description+"Updates:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
+    					getNumberOfUpdatesForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
+        			
+        		*/
+        		descriptionText.setText(description);
+	        	
+	        	Color cl = new Color(255,69,0,100);
+
+        		c.setBackground(cl);
+        		return c;
+	        }
+	        else if(selectedColumn==0){
 	        	if (isSelected){
 	        		
 	        		if(finalRows[row][0].contains("Cluster")){
@@ -2441,9 +2518,7 @@ private void makeGeneralTablePhases() {
 						final String sSelectedColumn=generalTable.getColumnName(selectedColumn);
 						final String sSelectedRow = (String) generalTable.getValueAt(target1.getSelectedRow(),0);
 						tablesSelected = new ArrayList<String>();
-//						for(int rowsSelected=tablesSelected.size()-1; rowsSelected>=tablesSelected.size(); rowsSelected--){
-//							tablesSelected.remove(rowsSelected);
-//						}
+
 						for(int rowsSelected=0; rowsSelected<selectedRowsFromMouse.length; rowsSelected++){
 							tablesSelected.add((String) generalTable.getValueAt(selectedRowsFromMouse[rowsSelected], 0));
 						}
@@ -2485,6 +2560,41 @@ private void makeGeneralTablePhases() {
 				}
 			
 		   }
+	});
+	
+	generalTable.getTableHeader().addMouseListener(new MouseAdapter() {
+	    @Override
+	    public void mouseClicked(MouseEvent e) {
+	        wholeCol = generalTable.columnAtPoint(e.getPoint());
+	        String name = generalTable.getColumnName(wholeCol);
+	        System.out.println("Column index selected " + wholeCol + " " + name);
+	        generalTable.repaint();
+	    }
+	});
+	
+	generalTable.getTableHeader().addMouseListener(new MouseAdapter() {
+	    @Override
+	    public void mouseReleased(MouseEvent e) {
+	    	if(SwingUtilities.isRightMouseButton(e)){
+				System.out.println("Right Click");
+				
+						final JPopupMenu popupMenu = new JPopupMenu();
+				        JMenuItem showDetailsItem = new JMenuItem("Clear Column Selection");
+				        showDetailsItem.addActionListener(new ActionListener() {
+
+				            @Override
+				            public void actionPerformed(ActionEvent e) {
+				            	wholeCol=-1;
+				            	generalTable.repaint();
+				            }
+				        });
+				        popupMenu.add(showDetailsItem);
+				        popupMenu.show(generalTable, e.getX(),e.getY());
+				    
+			}
+		
+	   }
+	    
 	});
 	
 	
@@ -2552,7 +2662,7 @@ private void makeZoomAreaTable() {
 	
 	//selectedRows=new ArrayList<Integer>();
 	
-	String[][] rowsZoom=new String[numberOfRows][numberOfColumns];
+	final String[][] rowsZoom=new String[numberOfRows][numberOfColumns];
 	
 	for(int i=0; i<numberOfRows; i++){
 		
@@ -2566,7 +2676,7 @@ private void makeZoomAreaTable() {
 	
 	zoomTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	
-	zoomTable.setBackground(Color.DARK_GRAY);
+	//zoomTable.setBackground(Color.DARK_GRAY);
 
 	
 	for(int i=0; i<zoomTable.getColumnCount(); i++){
@@ -2608,19 +2718,39 @@ private void makeZoomAreaTable() {
 	        Color fr=new Color(0,0,0);
 	        c.setForeground(fr);
 	        
-	        if(selectedColumnZoomArea==0){
-	        	if (isSelected){
-	        		/*
-	        		String description="Cluster:"+finalRows[row][0]+"\n";
-	        		description=description+"Birth Version Name:"+globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getBirthSqlFile()+"\n";
-	        		description=description+"Birth Version ID:"+globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getBirth()+"\n";
-	        		description=description+"Death Version Name:"+globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getDeathSqlFile()+"\n";
-	        		description=description+"Death Version ID:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getDeathVersionID()+"\n";
-	        		description=description+"Total Changes:"+globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getDeath()+"\n";
+	        if(column==wholeColZoomArea){
+	        	
+	        	String description="Transition ID:"+table.getColumnName(column)+"\n";
+	        	description=description+"Old Version Name:"+globalDataKeeper.getAllPPLTransitions().
+        				get(Integer.parseInt(table.getColumnName(column))).getOldVersionName()+"\n";
+        		description=description+"New Version Name:"+globalDataKeeper.getAllPPLTransitions().
+        				get(Integer.parseInt(table.getColumnName(column))).getNewVersionName()+"\n";		        		
+        		
+    			description=description+"Transition Changes:"+globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfClusterChangesForOneTr(rowsZoom)+"\n";
+    			description=description+"Additions:"+globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfClusterAdditionsForOneTr(rowsZoom)+"\n";
+    			description=description+"Deletions:"+globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfClusterDeletionsForOneTr(rowsZoom)+"\n";
+    			description=description+"Updates:"+globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfClusterUpdatesForOneTr(rowsZoom)+"\n";
 
-	        		
+    		
+	        	
+	        	descriptionText.setText(description);
+	        	Color cl = new Color(255,69,0,100);
+        		c.setBackground(cl);
+        		
+        		return c;
+	        }
+	        else if(selectedColumnZoomArea==0){
+	        	if (isSelected){
+	        		//wholeCol=-1;
+	        		String description="Table:"+finalRowsZoomArea[row][0]+"\n";
+	        		description=description+"Birth Version Name:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).getBirth()+"\n";
+	        		description=description+"Birth Version ID:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).getBirthVersionID()+"\n";
+	        		description=description+"Death Version Name:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).getDeath()+"\n";
+	        		description=description+"Death Version ID:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).getDeathVersionID()+"\n";
+	        		description=description+"Total Changes:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).
+	        				getTotalChangesForOnePhase(Integer.parseInt(table.getColumnName(1)), Integer.parseInt(table.getColumnName(table.getColumnCount()-1)))+"\n";
 	        		descriptionText.setText(description);
-	        		*/
+	        		
 	        		Color cl = new Color(255,69,0,100);
 
 	        		c.setBackground(cl);
@@ -2630,6 +2760,39 @@ private void makeZoomAreaTable() {
 	        else{
 	        	if (isSelected && hasFocus){
 		        	//Color lala=new Color(207,0,255,255);
+	        		//wholeCol=-1;
+
+	        		String description="";
+	        		if(!table.getColumnName(column).contains("Table name")){
+		        		description="Table:"+finalRowsZoomArea[row][0]+"\n";
+		        		
+		        		description=description+"Old Version Name:"+globalDataKeeper.getAllPPLTransitions().
+		        				get(Integer.parseInt(table.getColumnName(column))).getOldVersionName()+"\n";
+		        		description=description+"New Version Name:"+globalDataKeeper.getAllPPLTransitions().
+		        				get(Integer.parseInt(table.getColumnName(column))).getNewVersionName()+"\n";		        		
+		        		if(globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).
+		        				getTableChanges().getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(column)))!=null){
+		        			description=description+"Transition Changes:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).
+		        				getTableChanges().getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(column))).size()+"\n";
+		        			description=description+"Additions:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).
+		        					getNumberOfAdditionsForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
+		        			description=description+"Deletions:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).
+		        					getNumberOfDeletionsForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
+		        			description=description+"Updates:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).
+		        					getNumberOfUpdatesForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
+		        			
+		        		}
+		        		else{
+		        			description=description+"Transition Changes:0"+"\n";
+		        			description=description+"Additions:0"+"\n";
+		        			description=description+"Deletions:0"+"\n";
+		        			description=description+"Updates:0"+"\n";
+		        			
+		        		}
+		        		
+		        		descriptionText.setText(description);
+	        		}
+	        		
 	        		Color cl = new Color(255,69,0,100);
 
 	        		c.setBackground(cl);
@@ -2699,11 +2862,11 @@ private void makeZoomAreaTable() {
 				JTable target = (JTable)e.getSource();
 		         
 		         selectedRowsFromMouse = target.getSelectedRows();
-		         //selectedColumnZoomArea = target.getSelectedColumn();
-		         LifeTimeTable.repaint();
+		         selectedColumnZoomArea = target.getSelectedColumn();
+		         zoomAreaTable.repaint();
 		         //System.out.println(selectedColumn);
 			}
-		      if (e.getClickCount() == 2) {
+		    /*if (e.getClickCount() == 2) {
 		         JTable target = (JTable)e.getSource();
 		         
 		         selectedRowsFromMouse = target.getSelectedRows();
@@ -2715,7 +2878,7 @@ private void makeZoomAreaTable() {
 		         //LifeTimeTable.changeSelection(selectedRowsFromMouse[0], selectedColumn, false, false);
 		         //LifeTimeTable.requestFocus();
 		         
-		      }
+		     }*/
 		   }
 	});
 	
@@ -2740,13 +2903,12 @@ private void makeZoomAreaTable() {
 						}
 						//if(target1.getSelectedColumn()==0){
 							final JPopupMenu popupMenu = new JPopupMenu();
-					        JMenuItem showDetailsItem = new JMenuItem("Show Details for the selection");
+					        JMenuItem showDetailsItem = new JMenuItem("Right Click");
 					        showDetailsItem.addActionListener(new ActionListener() {
 
 					            @Override
 					            public void actionPerformed(ActionEvent e) {
-					                JOptionPane.showMessageDialog(null, "Right-click performed on table and choose ShowDetails");
-					                //showSelectionToZoomArea(selectedColumn);
+					            	JOptionPane.showMessageDialog(zoomTable, "Right click");
 					            }
 					        });
 					        popupMenu.add(showDetailsItem);
@@ -2757,6 +2919,42 @@ private void makeZoomAreaTable() {
 				}
 			
 		   }
+	});
+	
+	// listener
+	zoomTable.getTableHeader().addMouseListener(new MouseAdapter() {
+	    @Override
+	    public void mouseClicked(MouseEvent e) {
+	    	wholeColZoomArea = zoomTable.columnAtPoint(e.getPoint());
+	        String name = zoomTable.getColumnName(wholeColZoomArea);
+	        System.out.println("Column index selected " + wholeCol + " " + name);
+	        zoomTable.repaint();
+	    }
+	});
+	
+	zoomTable.getTableHeader().addMouseListener(new MouseAdapter() {
+	    @Override
+	    public void mouseReleased(MouseEvent e) {
+	    	if(SwingUtilities.isRightMouseButton(e)){
+				System.out.println("Right Click");
+				
+						final JPopupMenu popupMenu = new JPopupMenu();
+				        JMenuItem showDetailsItem = new JMenuItem("Clear Column Selection");
+				        showDetailsItem.addActionListener(new ActionListener() {
+
+				            @Override
+				            public void actionPerformed(ActionEvent e) {
+				            	wholeColZoomArea=-1;
+				            	zoomTable.repaint();
+				            }
+				        });
+				        popupMenu.add(showDetailsItem);
+				        popupMenu.show(zoomTable, e.getX(),e.getY());
+				    
+			}
+		
+	   }
+	    
 	});
 	
 	

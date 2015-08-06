@@ -196,6 +196,17 @@ public class PPLTable {
 		return attrs.size();
 	}
 	
+	public int getTotalChangesForOnePhase(int startPos,int LastPos){
+		
+		int counter=0;
+		for(int i=startPos;i<=LastPos;i++){
+			if(tableChanges.getTableAtChForOneTransition(i)!=null){
+				counter=counter+tableChanges.getTableAtChForOneTransition(i).size();
+			}
+		}
+		return(counter);
+	}
+	
 	public int getNumberOfAdditionsForOneTr(Integer transition){
 		int additions=tableChanges.getNumberOfAdditionsForOneTr(transition);
 		return additions;

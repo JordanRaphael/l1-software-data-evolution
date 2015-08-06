@@ -46,5 +46,108 @@ public class PPLTransition {
 		
 	}
 	
+
+	public int getNumberOfAdditionsForOneTr(){
+		
+		int additions=0;
+		
+		for(int i=0; i<tableChanges.size(); i++){
+			additions=additions+tableChanges.get(i).getNumberOfAdditionsForOneTr();
+		}
+		return additions;
+	}
+	
+	public int getNumberOfDeletionsForOneTr(){
+		
+		int deletions=0;
+		
+		for(int i=0; i<tableChanges.size(); i++){
+			deletions=deletions+tableChanges.get(i).getNumberOfDeletionsForOneTr();
+		}
+		
+		return deletions;
+	}
+	
+	public int getNumberOfUpdatesForOneTr(){
+		int updates=0;
+		
+		for(int i=0; i<tableChanges.size(); i++){
+			updates=updates+tableChanges.get(i).getNumberOfUpdatesForOneTr();
+		}
+		
+		return updates;
+	}
+	
+	public int getNumberOfChangesForOneTr(){
+		int totalChanges=0;
+		
+		for(int i=0; i<tableChanges.size(); i++){
+			totalChanges=totalChanges+tableChanges.get(i).getTableAtChForOneTransition().size();
+		}
+		
+		return totalChanges;
+	}
+	
+public int getNumberOfClusterAdditionsForOneTr(String[][] rowsZoom){
+		
+		int additions=0;
+		
+		for(int j=0; j<rowsZoom.length; j++){
+			for(int i=0; i<tableChanges.size(); i++){
+				if (tableChanges.get(i).getAffectedTableName().equals(rowsZoom[j][0])) {
+					additions=additions+tableChanges.get(i).getNumberOfAdditionsForOneTr();
+				}
+			}
+		}
+		
+		return additions;
+	}
+	
+	public int getNumberOfClusterDeletionsForOneTr(String[][] rowsZoom){
+		
+		int deletions=0;
+		
+		for(int j=0; j<rowsZoom.length; j++){
+			for(int i=0; i<tableChanges.size(); i++){
+				if (tableChanges.get(i).getAffectedTableName().equals(rowsZoom[j][0])) {
+					deletions=deletions+tableChanges.get(i).getNumberOfDeletionsForOneTr();
+				}
+			}
+		}
+		
+		return deletions;
+	}
+	
+	public int getNumberOfClusterUpdatesForOneTr(String[][] rowsZoom){
+		int updates=0;
+		
+		
+		for(int j=0; j<rowsZoom.length; j++){
+			for(int i=0; i<tableChanges.size(); i++){
+				if (tableChanges.get(i).getAffectedTableName().equals(rowsZoom[j][0])) {
+					updates=updates+tableChanges.get(i).getNumberOfUpdatesForOneTr();
+				}
+			}
+		}
+		
+		
+		return updates;
+	}
+	
+	public int getNumberOfClusterChangesForOneTr(String[][] rowsZoom){
+		int totalChanges=0;
+		for(int j=0; j<rowsZoom.length; j++){
+			for(int i=0; i<tableChanges.size(); i++){
+				if (tableChanges.get(i).getAffectedTableName().equals(rowsZoom[j][0])) {
+					totalChanges=totalChanges+tableChanges.get(i).getTableAtChForOneTransition().size();
+				}
+			}
+		}
+		
+		return totalChanges;
+	}
+	
+	
+	
 	
 }
