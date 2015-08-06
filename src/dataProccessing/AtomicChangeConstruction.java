@@ -85,7 +85,7 @@ public class AtomicChangeConstruction {
 						}
 					}
 					
-					AtomicChange tmpAtomicChange= new AtomicChange(currentTransitions.get(j).getAffTable().getName(),tmpHecAttribute.getName(),tmpType,oldVersion,newVersion);
+					AtomicChange tmpAtomicChange= new AtomicChange(currentTransitions.get(j).getAffTable().getName(),tmpHecAttribute.getName(),tmpType,oldVersion,newVersion,i);
 					
 					atomicChanges.add(tmpAtomicChange);
 				

@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import phaseAnalyzer.analysis.IPhaseExtractor;
 import phaseAnalyzer.analysis.PhaseExtractorFactory;
@@ -43,6 +42,10 @@ public class PhaseAnalyzerMainEngine {
 		
 	}
 
+	public ArrayList<PhaseCollector> getPhaseCollectors(){
+		return phaseCollectors;
+	}
+	
 	public void extractPhases(int numPhases){
 		//report=new String("");
 		phaseCollectors = new ArrayList<PhaseCollector>();
@@ -191,7 +194,7 @@ public class PhaseAnalyzerMainEngine {
 
 		
 	}
-	
+	/*
 	public void extractWinnersReport() throws IOException{
 		String folder = new String("output/");
 
@@ -251,7 +254,7 @@ public class PhaseAnalyzerMainEngine {
 	
 		
 	}
-	
+	*/
 	public void connectTransitionsWithPhases(GlobalDataKeeper tmpGlobalDataKeeper){
 		phaseCollectors.get(0).connectPhasesWithTransitions(tmpGlobalDataKeeper);
 	}

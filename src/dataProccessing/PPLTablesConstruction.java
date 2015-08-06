@@ -69,11 +69,12 @@ public class PPLTablesConstruction {
 			versionID++;
 			
 		}
-		
+		/*
 		for (Map.Entry<String,PPLTable> pplTbl : allPPLTables.entrySet()) {
 			PPLTable oneTable=pplTbl.getValue();
+			System.out.println(oneTable.getName()+" "+oneTable.getDeathVersionID());
 		}
-		
+		*/
 		
 		
 	}

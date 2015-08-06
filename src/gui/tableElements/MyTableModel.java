@@ -22,6 +22,11 @@ public class MyTableModel extends AbstractTableModel {
 		
 	}
 	
+	public void setData(String[] tmpColumns, String [][] tmpRows){
+		columns=tmpColumns;
+		rows=tmpRows;
+	}
+	
 	public int getColumnCount() {
         return columns.length;
     }
@@ -34,9 +39,14 @@ public class MyTableModel extends AbstractTableModel {
         return columns[col];
     }
 
+    public String getRowName(int row) {
+        return rows[row][0];
+    }
+    
     public Object getValueAt(int row, int col) {
         return rows[row][col];
     }
+    
 
     /*
      * JTable uses this method to determine the default renderer/

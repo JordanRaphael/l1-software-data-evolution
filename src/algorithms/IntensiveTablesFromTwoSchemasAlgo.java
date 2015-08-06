@@ -1,6 +1,7 @@
 package algorithms;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.TreeMap;
 
 import data.pplSqlSchema.PPLSchema;
@@ -107,11 +108,22 @@ public class IntensiveTablesFromTwoSchemasAlgo implements Algorithm {
 		
 		TableChange t=tableChForTwoSchemas.get(currentTable.getName());
 
-		TreeMap<String, ArrayList<AtomicChange>> atChs=t.getTableAtomicChanges();
+		TreeMap<Integer, ArrayList<AtomicChange>> atChs=t.getTableAtomicChanges();
+		for(Map.Entry<Integer, ArrayList<AtomicChange>> at:atChs.entrySet()){
+			
+			ArrayList<AtomicChange> tmpAt=at.getValue();
+			for(int i=0; i<tmpAt.size(); i++){
+				String[] versions=tmpAt.get(i).getOldNewVersions();
+				if(versions[1].equals(secondSchema.getName())){
+					changesForThisTable++;
+				}
+			}
+			
+		}
 		
-		ArrayList<AtomicChange> atChsAr=atChs.get(secondSchema.getName());
+		//ArrayList<AtomicChange> atChsAr=atChs.get(secondSchema.getName());
 		
-		changesForThisTable=atChsAr.size();
+		//changesForThisTable=atChsAr.size();
 				
 		return changesForThisTable;
 	
