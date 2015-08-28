@@ -42,14 +42,15 @@ import javax.xml.bind.Unmarshaller;
 
 public class ImportSchemas {
 	
-	private static ArrayList<Schema> allSchemas = new ArrayList<Schema>();
+	private static ArrayList<Schema> allSchemas = null;
 
 	private String filepath=null;
 	private String transitionsFile=null;
-	private static ArrayList<TransitionList> allTransitions = new ArrayList<TransitionList>();
-
+	private static ArrayList<TransitionList> allTransitions = null;
 	
 	public ImportSchemas(String tmpFilepath,String transitionsFile) {
+		allTransitions = new ArrayList<TransitionList>();
+		allSchemas = new ArrayList<Schema>();
 		filepath=tmpFilepath;
 		this.transitionsFile=transitionsFile;
 	}

@@ -19,18 +19,19 @@ import data.pplSqlSchema.PPLTable;
 public class PPLSchemasConstruction {
 
 	private static ArrayList<Schema> allSchemas = new ArrayList<Schema>();
-	private static TreeMap<String,PPLSchema> allPPLSchemas = new TreeMap<String,PPLSchema>();
+	private static TreeMap<String,PPLSchema> allPPLSchemas = null;
 
 	public PPLSchemasConstruction(ArrayList<Schema> tmpAllSchemas){
-		
-		allSchemas = tmpAllSchemas;
-		
+		allPPLSchemas = new TreeMap<String,PPLSchema>();
+		allSchemas = new ArrayList<Schema>();
+		allSchemas=tmpAllSchemas;
+
 	}
 	
 	
 	public void makePPLSchemas(){
 		
-		
+
 		for(int i=0; i<allSchemas.size(); i++){
 			
 			Schema tmpHecSchema = new Schema();
@@ -71,7 +72,7 @@ public class PPLSchemasConstruction {
 			
 		}
 		
-		
+
 		
 	}
 	

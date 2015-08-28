@@ -600,7 +600,7 @@ public class Gui extends JFrame implements ActionListener{
 						mainEngine.connectTransitionsWithPhases(globalDataKeeper);
 						globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
 						TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,b,d,c);
-						mainEngine2.extractClusters(globalDataKeeper.getAllPPLTables().size()/8);
+						//mainEngine2.extractClusters(59);
 						globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
 						mainEngine2.print();
 						
@@ -719,7 +719,7 @@ if(!(project==null)){
 						mainEngine.connectTransitionsWithPhases(globalDataKeeper);
 						globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
 						TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,b,d,c);
-						mainEngine2.extractClusters(globalDataKeeper.getAllPPLTables().size()/8);
+						mainEngine2.extractClusters(16);
 						globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
 						mainEngine2.print();
 						
@@ -3655,7 +3655,6 @@ private void makeZoomAreaTableForCluster() {
 		br.close();
 		
 		
-		
 		System.out.println("Project Name:"+projectName);
 		System.out.println("Dataset txt:"+datasetTxt);
 		System.out.println("Input Csv:"+inputCsv);
@@ -3663,10 +3662,10 @@ private void makeZoomAreaTableForCluster() {
 		System.out.println("Output Assessment2:"+outputAssessment2);
 		System.out.println("Transitions File:"+transitionsFile);
 
-		
+		//globalDataKeeper=null;
 		globalDataKeeper=new GlobalDataKeeper(datasetTxt,transitionsFile);
 		globalDataKeeper.setData();
-		System.out.println(globalDataKeeper.getAllPPLTransitions().size());
+		System.out.println(globalDataKeeper.getAllPPLTables().size());
 		resultsDataKeeper = new ResultsDataKeeper();
 		//= w.getDataKeeper();
 		//System.out.println("!!"+globalDataKeeper.getDataFolder());

@@ -1,6 +1,8 @@
 package tableClustering.commons;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ClusterCollector {
 
@@ -14,6 +16,21 @@ public class ClusterCollector {
 	public void addCluster(Cluster c){
 		this.clusters.add(c);
 	}
+	
+	public void sortClustersByBirth(){
+		
+		 Collections.sort(clusters, new Comparator<Cluster>() {
+		        @Override
+		        public int compare(final Cluster object1, final Cluster object2) {
+		            return Integer.compare(object1.getBirth(),object2.getBirth());
+		        }
+		       } );
+		 
+		 
+	}
+		
+		
+	
 	
 	public ArrayList<Cluster> getClusters(){
 		return clusters;

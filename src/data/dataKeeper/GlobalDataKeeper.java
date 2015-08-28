@@ -16,14 +16,14 @@ import dataProccessing.Worker;
 
 public class GlobalDataKeeper {
 
-	private TreeMap<String,PPLSchema> allPPLSchemas = new TreeMap<String,PPLSchema>();
-	private TreeMap<String,PPLTable> allTables = new  TreeMap<String,PPLTable>();
-	private ArrayList<AtomicChange> atomicChanges = new ArrayList<AtomicChange>();
-	private TreeMap<String,TableChange> tableChanges = new TreeMap<String,TableChange>();
-	private TreeMap<String,TableChange> tableChangesForTwo = new TreeMap<String,TableChange>();
-	private TreeMap<Integer,PPLTransition> allPPLTransitions = new TreeMap<Integer,PPLTransition>();
-	private ArrayList<PhaseCollector> phaseCollectors = new ArrayList<PhaseCollector>();
-	private ArrayList<ClusterCollector> clusterCollectors = new ArrayList<ClusterCollector>();
+	private TreeMap<String,PPLSchema> allPPLSchemas = null;
+	private TreeMap<String,PPLTable> allTables = null;
+	private ArrayList<AtomicChange> atomicChanges = null;
+	private TreeMap<String,TableChange> tableChanges = null;
+	private TreeMap<String,TableChange> tableChangesForTwo = null;
+	private TreeMap<Integer,PPLTransition> allPPLTransitions = null;
+	private ArrayList<PhaseCollector> phaseCollectors = null;
+	private ArrayList<ClusterCollector> clusterCollectors = null;
 
 	private String 	projectDataFolder=null;
 	private String filename=null;
@@ -33,7 +33,14 @@ public class GlobalDataKeeper {
 	
 
 	public GlobalDataKeeper(String fl,String transitionsFile){
-		
+		allPPLSchemas = new TreeMap<String,PPLSchema>();
+		allTables = new  TreeMap<String,PPLTable>();
+		atomicChanges = new ArrayList<AtomicChange>();
+		tableChanges = new TreeMap<String,TableChange>();
+		tableChangesForTwo = new TreeMap<String,TableChange>();
+		allPPLTransitions = new TreeMap<Integer,PPLTransition>();
+		phaseCollectors = new ArrayList<PhaseCollector>();
+		clusterCollectors = new ArrayList<ClusterCollector>();
 		filename=fl;
 		this.transitionsFile=transitionsFile;
 	}
@@ -79,6 +86,8 @@ public class GlobalDataKeeper {
 		setAllTableChanges(w.getAllTableChanges());
 		setAtomicChanges(w.getAtomicChanges());
 		setDataFolder(w.getDataFolder());
+		
+
 		
 	}
 	

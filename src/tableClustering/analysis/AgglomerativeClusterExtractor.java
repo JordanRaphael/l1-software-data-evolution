@@ -29,8 +29,9 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 		
 		ClusterCollector currentSolution = new ClusterCollector();
 		currentSolution = this.newClusterCollector(initSolution, birthWeight, deathWeight, changeWeight,dataKeeper.getAllPPLSchemas().size()-1);
-
+		System.out.println(numClusters+" "+currentSolution.getClusters().size());
 		while (currentSolution.getClusters().size() > numClusters){
+			System.out.println(numClusters+" "+currentSolution.getClusters().size());
 
 			currentSolution = this.newClusterCollector(currentSolution, birthWeight, deathWeight, changeWeight,dataKeeper.getAllPPLSchemas().size()-1);
 		}

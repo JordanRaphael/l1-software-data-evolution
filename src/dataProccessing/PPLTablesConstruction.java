@@ -10,12 +10,12 @@ import data.pplTransition.TableChange;
 public class PPLTablesConstruction {
 	
 	private static TreeMap<String,PPLSchema> allPPLSchemas = new TreeMap<String,PPLSchema>();
-	private static TreeMap<String,PPLTable> allPPLTables = new TreeMap<String,PPLTable>();
+	private TreeMap<String,PPLTable> allPPLTables = null;
 
 	public PPLTablesConstruction(TreeMap<String,PPLSchema> tmpAllPPLSchemas){
-		
+		allPPLTables=new TreeMap<String,PPLTable>();
 		allPPLSchemas=tmpAllPPLSchemas;
-		
+
 	}
 	
 	public void makeAllPPLTables(){
@@ -75,7 +75,7 @@ public class PPLTablesConstruction {
 			System.out.println(oneTable.getName()+" "+oneTable.getDeathVersionID());
 		}
 		*/
-		
+
 		
 	}
 	
