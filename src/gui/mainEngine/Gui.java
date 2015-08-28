@@ -3,6 +3,7 @@ package gui.mainEngine;
 //try to extract relationship beetween gui and pplSchema and pplTransition
 import gui.dialogs.CreateProjectJDialog;
 import gui.dialogs.ParametersJDialog;
+import gui.tableElements.JvTable;
 import gui.tableElements.MyTableModel;
 import gui.tableElements.TableConstructionAllSquaresIncluded;
 import gui.tableElements.TableConstructionIDU;
@@ -17,6 +18,7 @@ import gui.treeElements.TreeConstructionPhasesWithClusters;
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -1913,18 +1915,26 @@ private void makeGeneralTableIDU() {
 		final JTable generalTable=new JTable(generalModel);
 		
 		generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		for(int i=0; i<generalTable.getRowCount(); i++){
+				generalTable.setRowHeight(i, 2);
+				
+		}
+
+		//generalTable.setGridColor(new Color(0,0,0,100));
 		
+		generalTable.setShowGrid(false);
+		generalTable.setIntercellSpacing(new Dimension(0, 0));
 		
 		for(int i=0; i<generalTable.getColumnCount(); i++){
 			if(i==0){
-				generalTable.getColumnModel().getColumn(0).setPreferredWidth(150);
-				generalTable.getColumnModel().getColumn(0).setMaxWidth(150);
-				generalTable.getColumnModel().getColumn(0).setMinWidth(150);
+				generalTable.getColumnModel().getColumn(0).setPreferredWidth(1);
+				generalTable.getColumnModel().getColumn(0).setMaxWidth(1);
+				generalTable.getColumnModel().getColumn(0).setMinWidth(1);
 			}
 			else{
-				generalTable.getColumnModel().getColumn(i).setPreferredWidth(20);
-				generalTable.getColumnModel().getColumn(i).setMaxWidth(20);
-				generalTable.getColumnModel().getColumn(i).setMinWidth(20);
+				generalTable.getColumnModel().getColumn(i).setPreferredWidth(1);
+				generalTable.getColumnModel().getColumn(i).setMaxWidth(1);
+				generalTable.getColumnModel().getColumn(i).setMinWidth(1);
 			}
 		}
 		
@@ -2059,7 +2069,7 @@ private void makeGeneralTableIDU() {
 
 		        	
 	        		if(numericValue==0){
-	        			insersionColor=new Color(0,100,0);
+	        			insersionColor=new Color(154,205,50,200);
 	        		}
 	        		else if(numericValue> 0&& numericValue<=segmentSize[1]){
 	        			
@@ -2084,7 +2094,7 @@ private void makeGeneralTableIDU() {
 
 		        	
 	        		if(tmpValue.equals("")){
-	        			c.setBackground(Color.DARK_GRAY);
+	        			c.setBackground(Color.GRAY);
 	        			return c; 
 	        		}
 	        		else{

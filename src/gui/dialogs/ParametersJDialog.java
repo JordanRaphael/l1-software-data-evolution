@@ -55,11 +55,13 @@ public class ParametersJDialog extends JDialog {
 		
 		final JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"0.0", "0.5", "1.0"}));
+		comboBox.setSelectedIndex(1);
 		
 		JLabel lblChooseChangeWeight = new JLabel("Choose Change Weight");
 		
 		final JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"0.0", "0.5", "1.0"}));
+		comboBox_1.setSelectedIndex(1);
 		
 		JLabel lblTimePreprocessing = new JLabel("Time PreProcessing");
 		
@@ -67,6 +69,7 @@ public class ParametersJDialog extends JDialog {
 		buttonGroup.add(rdbtnOn);
 		
 		final JRadioButton rdbtnOff = new JRadioButton("OFF");
+		rdbtnOff.setSelected(true);
 		buttonGroup.add(rdbtnOff);
 		
 		JLabel lblNewLabel = new JLabel("Change PreProcessing");
@@ -75,11 +78,13 @@ public class ParametersJDialog extends JDialog {
 		buttonGroup_1.add(rdbtnOn_1);
 		
 		final JRadioButton rdbtnOff_1 = new JRadioButton("OFF");
+		rdbtnOff_1.setSelected(true);
 		buttonGroup_1.add(rdbtnOff_1);
 		
 		JLabel lblGiveNumberOf = new JLabel("Give Number of Phases");
 		
 		textField = new JTextField();
+		textField.setText("10");
 		textField.setColumns(10);
 		
 		
