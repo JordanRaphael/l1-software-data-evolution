@@ -36,8 +36,10 @@ public class ParametersJDialog extends JDialog {
 	private Boolean preprocessingTime=null;
 	private Boolean preprocessingChange=null;
 	private Integer numberOfPhases=null;
+	private Integer numberOfClusters=null;
 	private boolean confirm=false;
 	private JTextField textField;
+	private JTextField giveClustersTxtFields;
 	
 
 
@@ -45,8 +47,8 @@ public class ParametersJDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public ParametersJDialog() {
-		setBounds(100, 100, 450, 300);
+	public ParametersJDialog(boolean clusters) {
+		setBounds(100, 100, 509, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.WEST);
@@ -87,6 +89,20 @@ public class ParametersJDialog extends JDialog {
 		textField.setText("10");
 		textField.setColumns(10);
 		
+		giveClustersTxtFields = new JTextField();
+		giveClustersTxtFields.setText("10");
+		giveClustersTxtFields.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("Give Number of Clusters");
+		
+		if(!clusters){
+			giveClustersTxtFields.setVisible(false);
+			lblNewLabel_1.setVisible(false);
+		}
+		else{
+			giveClustersTxtFields.setVisible(true);
+			lblNewLabel_1.setVisible(true);
+		}
 		
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
@@ -100,29 +116,42 @@ public class ParametersJDialog extends JDialog {
 								.addComponent(lblTimePreprocessing, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 							.addGap(35))
 						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addGap(0)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(rdbtnOff_1)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGap(0)
 							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(comboBox_1, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(comboBox, 0, 41, Short.MAX_VALUE))
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPanel.createSequentialGroup()
-									.addGap(48)
-									.addComponent(lblGiveNumberOf))
+									.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
+										.addComponent(comboBox_1, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(comboBox, 0, 41, Short.MAX_VALUE))
+									.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_contentPanel.createSequentialGroup()
+											.addGap(90)
+											.addComponent(textField, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE))
+										.addGroup(gl_contentPanel.createSequentialGroup()
+											.addGap(33)
+											.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+												.addComponent(lblNewLabel_1)
+												.addComponent(lblGiveNumberOf))))
+									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 								.addGroup(gl_contentPanel.createSequentialGroup()
-									.addGap(78)
-									.addComponent(textField, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE))))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+										.addComponent(rdbtnOn)
+										.addGroup(gl_contentPanel.createSequentialGroup()
+											.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+												.addComponent(rdbtnOff)
+												.addComponent(rdbtnOn_1))
+											.addPreferredGap(ComponentPlacement.RELATED, 0, Short.MAX_VALUE)))
+									.addGap(111)
+									.addComponent(giveClustersTxtFields, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+									.addGap(62))))
 						.addGroup(gl_contentPanel.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(rdbtnOn)
-								.addComponent(rdbtnOff)))
-						.addComponent(rdbtnOn_1))
-					.addGap(100))
+							.addComponent(rdbtnOff_1)))
+					.addGap(61))
 		);
 		gl_contentPanel.setVerticalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
@@ -136,23 +165,33 @@ public class ParametersJDialog extends JDialog {
 							.addGap(18)
 							.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblChooseChangeWeight, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-								.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPanel.createSequentialGroup()
 							.addGap(29)
 							.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblTimePreprocessing)
 								.addComponent(rdbtnOn))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(rdbtnOff)
-							.addGap(33)
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblNewLabel)
-								.addComponent(rdbtnOn_1))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(rdbtnOff_1))
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPanel.createSequentialGroup()
+									.addGap(33)
+									.addComponent(lblNewLabel))
+								.addGroup(gl_contentPanel.createSequentialGroup()
+									.addGap(18)
+									.addComponent(rdbtnOn_1)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(rdbtnOff_1))))
 						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGap(7)
+							.addComponent(lblNewLabel_1)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
+							.addComponent(giveClustersTxtFields, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGap(6))
 		);
 		contentPanel.setLayout(gl_contentPanel);
 		{
@@ -170,6 +209,11 @@ public class ParametersJDialog extends JDialog {
 						timeWeight = Float.valueOf((String)comboBox_1.getSelectedItem());
 						if(!textField.getText().isEmpty())
 							numberOfPhases=Integer.parseInt(textField.getText());
+						if(!giveClustersTxtFields.getText().isEmpty()){
+							numberOfClusters=Integer.parseInt(giveClustersTxtFields.getText());
+							System.out.println("LALALALALA"+numberOfClusters);
+						}
+						
 						if(rdbtnOn.isSelected()){
 							preprocessingTime=true;
 						}
@@ -239,6 +283,10 @@ public class ParametersJDialog extends JDialog {
 
 	public Integer getNumberOfPhases() {
 		return numberOfPhases;
+	}
+	
+	public Integer getNumberOfClusters() {
+		return numberOfClusters;
 	}
 	
 	public boolean getPreProcessingTime(){
