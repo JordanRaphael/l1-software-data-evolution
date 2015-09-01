@@ -22,14 +22,19 @@ public class Worker {
 	private String transitionsFile=null;
 
 	//private GlobalDataKeeper dK;
-	private TreeMap<String,PPLSchema> allPPLSchemas = new TreeMap<String,PPLSchema>();
-	private TreeMap<String,PPLTable> allTables = new TreeMap<String,PPLTable>();
-	private ArrayList<AtomicChange> atomicChanges = new ArrayList<AtomicChange>();
-	private TreeMap<String,TableChange> tableChanges = new TreeMap<String,TableChange>();
-	private TreeMap<Integer,PPLTransition> allPPLTransitions = new TreeMap<Integer,PPLTransition>();
+	private TreeMap<String,PPLSchema> allPPLSchemas = null;
+	private TreeMap<String,PPLTable> allTables = null;
+	private ArrayList<AtomicChange> atomicChanges = null;
+	private TreeMap<String,TableChange> tableChanges = null;
+	private TreeMap<Integer,PPLTransition> allPPLTransitions = null;
 	
 	public Worker(String tmpFilename,String transitionsFile){
-		
+		allPPLSchemas = new TreeMap<String,PPLSchema>();
+		allTables = new TreeMap<String,PPLTable>();
+		atomicChanges = new ArrayList<AtomicChange>();
+		tableChanges = new TreeMap<String,TableChange>();
+		allPPLTransitions = new TreeMap<Integer,PPLTransition>();
+		System.out.println("Worker:"+allTables.size());
 		filename=tmpFilename;
 		this.transitionsFile=transitionsFile;
 		
@@ -44,7 +49,9 @@ public class Worker {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ArrayList<Schema> allHecSchemas = filesToImportData.getAllHecSchemas();
+		ArrayList<Schema> allHecSchemas = new ArrayList<Schema>();
+		System.out.println(allHecSchemas.size());
+		allHecSchemas=filesToImportData.getAllHecSchemas();
 		ArrayList<TransitionList> allTransitions=filesToImportData.getAllTransitions();
 
 		
@@ -67,7 +74,8 @@ public class Worker {
 		PPLTransitionConstruction pplTransitionC = new PPLTransitionConstruction(allPPLSchemas, tableChanges);
 		pplTransitionC.makePPLTransitions();
 		allPPLTransitions=pplTransitionC.getAllPPLTransitions();
-		
+		System.out.println("2Worker:"+allTables.size());
+
 		//this.dK=new GlobalDataKeeper(allPPLSchemas, allTables, atomicChanges, tableChanges, allPPLTransitions,filename);
 		
 	}

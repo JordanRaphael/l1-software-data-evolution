@@ -174,6 +174,8 @@ public String[] constructColumns(){
 		int deln=0;
 		int insn=0;
 		int totalChangesForOnePhase=0;
+		boolean reborn = true;
+
 		oneRow[pointerCell]=oneTable.getName();
 		if(schemaVersion==0){
 			pointerCell++;
@@ -254,7 +256,10 @@ public String[] constructColumns(){
 						
 						
 						if(tableChange.getAffectedTableName().equals(oneTable.getName())){
-							
+							if(deletedAllTable==1){
+								reborn=true;
+							}
+							deletedAllTable=0;
 							
 							
 							ArrayList<AtomicChange> atChs = tableChange.getTableAtChForOneTransition();
@@ -265,7 +270,8 @@ public String[] constructColumns(){
 								
 								
 								if (atChs.get(k).getType().contains("Addition")){
-									
+									deletedAllTable=0;
+
 									insn++;
 									
 									if(insn>maxInsersions){
@@ -314,31 +320,35 @@ public String[] constructColumns(){
 				}
 				
 				
-				
-				
-				if(deletedAllTable==1){
-					break;
-				}
-				
-				
-				
-				
 			}
 			
 			if(pointerCell>=columnsNumber){
-
+				
 				break;
 			}
-			
 			totalChangesForOnePhase=insn+updn+deln;
+			if(totalChangesForOnePhase>=0 && reborn){
 
-			oneRow[pointerCell]=Integer.toString(totalChangesForOnePhase);
+				oneRow[pointerCell]=Integer.toString(totalChangesForOnePhase);
+				
+			}
 			
+			/*pointerCell++;
+			oneRow[pointerCell]=Integer.toString(updn);
 			pointerCell++;
-			
+			oneRow[pointerCell]=Integer.toString(deln);*/
+			pointerCell++;
 			if(deletedAllTable==1){
-				System.err.println("DEL"+oneTable.getName());
-				break;
+				if(pointerCell>=columnsNumber){
+					break;
+				}
+				if(!reborn){
+					oneRow[pointerCell]="";
+					pointerCell++;
+				}
+				reborn=false;
+				
+				
 			}
 			
 			insn=0;

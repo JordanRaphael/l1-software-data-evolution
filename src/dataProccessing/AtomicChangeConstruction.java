@@ -22,11 +22,11 @@ import data.pplTransition.AtomicChange;
 
 public class AtomicChangeConstruction {
 	
-	private static ArrayList<AtomicChange> atomicChanges = new ArrayList<AtomicChange>();
+	private static ArrayList<AtomicChange> atomicChanges = null;
 	private static ArrayList<TransitionList> allTransitions = new ArrayList<TransitionList>();
 
 	public AtomicChangeConstruction(ArrayList<TransitionList> tmpAllTransitions){
-		
+		atomicChanges = new ArrayList<AtomicChange>();
 		allTransitions=tmpAllTransitions;
 		
 	}

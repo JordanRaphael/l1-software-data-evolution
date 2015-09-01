@@ -606,16 +606,16 @@
                 <fKey/>
             </table>
             <attribute>
-                <name> (
+                <name> (&#xD;
   </name>
-                <type>SID` INT(11) NOT NULL AUTO_INCREMENT,
-  `PID` VARCHAR(100) NOT NULL DEFAULT '',
-  `IP` VARCHAR(20) NOT NULL DEFAULT '',
-  `SEARCH_PHRASE` VARCHAR(255) NOT NULL DEFAULT '',
-  `SDATE` BIGINT(20) NOT NULL DEFAULT '0',
-  `REFERER` TEXT NOT NULL,
-  `BROWSER` VARCHAR(255) NOT NULL DEFAULT '',
-  `OS` VARCHAR(50) NOT NULL DEFAULT '',
+                <type>SID` INT(11) NOT NULL AUTO_INCREMENT,&#xD;
+  `PID` VARCHAR(100) NOT NULL DEFAULT '',&#xD;
+  `IP` VARCHAR(20) NOT NULL DEFAULT '',&#xD;
+  `SEARCH_PHRASE` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
+  `SDATE` BIGINT(20) NOT NULL DEFAULT '0',&#xD;
+  `REFERER` TEXT NOT NULL,&#xD;
+  `BROWSER` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
+  `OS` VARCHAR(50) NOT NULL DEFAULT '',&#xD;
   PRIMARY KEY  (`SID</type>
                 <isKey>false</isKey>
             </attribute>
@@ -681,16 +681,16 @@
                 <fKey/>
             </table>
             <attribute>
-                <name> (
+                <name> (&#xD;
   </name>
-                <type>SID` INT(11) NOT NULL AUTO_INCREMENT,
-  `PID` VARCHAR(100) NOT NULL DEFAULT '',
-  `IP` VARCHAR(20) NOT NULL DEFAULT '',
-  `SEARCH_PHRASE` VARCHAR(255) NOT NULL DEFAULT '',
-  `SDATE` BIGINT(20) NOT NULL DEFAULT '0',
-  `REFERER` TEXT NOT NULL,
-  `BROWSER` VARCHAR(255) NOT NULL DEFAULT '',
-  `OS` VARCHAR(50) NOT NULL DEFAULT '',
+                <type>SID` INT(11) NOT NULL AUTO_INCREMENT,&#xD;
+  `PID` VARCHAR(100) NOT NULL DEFAULT '',&#xD;
+  `IP` VARCHAR(20) NOT NULL DEFAULT '',&#xD;
+  `SEARCH_PHRASE` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
+  `SDATE` BIGINT(20) NOT NULL DEFAULT '0',&#xD;
+  `REFERER` TEXT NOT NULL,&#xD;
+  `BROWSER` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
+  `OS` VARCHAR(50) NOT NULL DEFAULT '',&#xD;
   PRIMARY KEY  (`SID</type>
                 <isKey>false</isKey>
             </attribute>
@@ -755,34 +755,34 @@
                 <fKey/>
             </table>
             <attribute>
-                <name>(name)
-) TYPE=MyISAM;
-
-#
-# Table structure for table 'CPG_vote_stats
-#
+                <name>(name)&#xD;
+) TYPE=MyISAM;&#xD;
+&#xD;
+#&#xD;
+# Table structure for table 'CPG_vote_stats&#xD;
+#&#xD;
 CREATE TABLE </name>
-                <type>CPG_VOTE_STATS` (
-  `SID` INT(11) NOT NULL AUTO_INCREMENT,
-  `PID` VARCHAR(100) NOT NULL DEFAULT '',
-  `RATING` SMALLINT(6) NOT NULL DEFAULT '0',
-  `IP` VARCHAR(20) NOT NULL DEFAULT '',
-  `SDATE` BIGINT(20) NOT NULL DEFAULT '0',
-  `REFERER` TEXT NOT NULL,
-  `BROWSER` VARCHAR(255) NOT NULL DEFAULT '',
-  `OS` VARCHAR(50) NOT NULL DEFAULT '',
-  PRIMARY KEY  (`SID`)
-);
-
-CREATE TABLE `CPG_HIT_STATS` (
-  `SID` INT(11) NOT NULL AUTO_INCREMENT,
-  `PID` VARCHAR(100) NOT NULL DEFAULT '',
-  `IP` VARCHAR(20) NOT NULL DEFAULT '',
-  `SEARCH_PHRASE` VARCHAR(255) NOT NULL DEFAULT '',
-  `SDATE` BIGINT(20) NOT NULL DEFAULT '0',
-  `REFERER` TEXT NOT NULL,
-  `BROWSER` VARCHAR(255) NOT NULL DEFAULT '',
-  `OS` VARCHAR(50) NOT NULL DEFAULT '',
+                <type>CPG_VOTE_STATS` (&#xD;
+  `SID` INT(11) NOT NULL AUTO_INCREMENT,&#xD;
+  `PID` VARCHAR(100) NOT NULL DEFAULT '',&#xD;
+  `RATING` SMALLINT(6) NOT NULL DEFAULT '0',&#xD;
+  `IP` VARCHAR(20) NOT NULL DEFAULT '',&#xD;
+  `SDATE` BIGINT(20) NOT NULL DEFAULT '0',&#xD;
+  `REFERER` TEXT NOT NULL,&#xD;
+  `BROWSER` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
+  `OS` VARCHAR(50) NOT NULL DEFAULT '',&#xD;
+  PRIMARY KEY  (`SID`)&#xD;
+);&#xD;
+&#xD;
+CREATE TABLE `CPG_HIT_STATS` (&#xD;
+  `SID` INT(11) NOT NULL AUTO_INCREMENT,&#xD;
+  `PID` VARCHAR(100) NOT NULL DEFAULT '',&#xD;
+  `IP` VARCHAR(20) NOT NULL DEFAULT '',&#xD;
+  `SEARCH_PHRASE` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
+  `SDATE` BIGINT(20) NOT NULL DEFAULT '0',&#xD;
+  `REFERER` TEXT NOT NULL,&#xD;
+  `BROWSER` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
+  `OS` VARCHAR(50) NOT NULL DEFAULT '',&#xD;
   PRIMARY KEY  (`SID</type>
                 <isKey>false</isKey>
             </attribute>
@@ -896,34 +896,34 @@ CREATE TABLE `CPG_HIT_STATS` (
                 <fKey/>
             </table>
             <attribute>
-                <name>(name)
-) TYPE=MyISAM;
-
-#
-# Table structure for table 'CPG_vote_stats
-#
+                <name>(name)&#xD;
+) TYPE=MyISAM;&#xD;
+&#xD;
+#&#xD;
+# Table structure for table 'CPG_vote_stats&#xD;
+#&#xD;
 CREATE TABLE </name>
-                <type>CPG_VOTE_STATS` (
-  `SID` INT(11) NOT NULL AUTO_INCREMENT,
-  `PID` VARCHAR(100) NOT NULL DEFAULT '',
-  `RATING` SMALLINT(6) NOT NULL DEFAULT '0',
-  `IP` VARCHAR(20) NOT NULL DEFAULT '',
-  `SDATE` BIGINT(20) NOT NULL DEFAULT '0',
-  `REFERER` TEXT NOT NULL,
-  `BROWSER` VARCHAR(255) NOT NULL DEFAULT '',
-  `OS` VARCHAR(50) NOT NULL DEFAULT '',
-  PRIMARY KEY  (`SID`)
-);
-
-CREATE TABLE `CPG_HIT_STATS` (
-  `SID` INT(11) NOT NULL AUTO_INCREMENT,
-  `PID` VARCHAR(100) NOT NULL DEFAULT '',
-  `IP` VARCHAR(20) NOT NULL DEFAULT '',
-  `SEARCH_PHRASE` VARCHAR(255) NOT NULL DEFAULT '',
-  `SDATE` BIGINT(20) NOT NULL DEFAULT '0',
-  `REFERER` TEXT NOT NULL,
-  `BROWSER` VARCHAR(255) NOT NULL DEFAULT '',
-  `OS` VARCHAR(50) NOT NULL DEFAULT '',
+                <type>CPG_VOTE_STATS` (&#xD;
+  `SID` INT(11) NOT NULL AUTO_INCREMENT,&#xD;
+  `PID` VARCHAR(100) NOT NULL DEFAULT '',&#xD;
+  `RATING` SMALLINT(6) NOT NULL DEFAULT '0',&#xD;
+  `IP` VARCHAR(20) NOT NULL DEFAULT '',&#xD;
+  `SDATE` BIGINT(20) NOT NULL DEFAULT '0',&#xD;
+  `REFERER` TEXT NOT NULL,&#xD;
+  `BROWSER` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
+  `OS` VARCHAR(50) NOT NULL DEFAULT '',&#xD;
+  PRIMARY KEY  (`SID`)&#xD;
+);&#xD;
+&#xD;
+CREATE TABLE `CPG_HIT_STATS` (&#xD;
+  `SID` INT(11) NOT NULL AUTO_INCREMENT,&#xD;
+  `PID` VARCHAR(100) NOT NULL DEFAULT '',&#xD;
+  `IP` VARCHAR(20) NOT NULL DEFAULT '',&#xD;
+  `SEARCH_PHRASE` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
+  `SDATE` BIGINT(20) NOT NULL DEFAULT '0',&#xD;
+  `REFERER` TEXT NOT NULL,&#xD;
+  `BROWSER` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
+  `OS` VARCHAR(50) NOT NULL DEFAULT '',&#xD;
   PRIMARY KEY  (`SID</type>
                 <isKey>false</isKey>
             </attribute>

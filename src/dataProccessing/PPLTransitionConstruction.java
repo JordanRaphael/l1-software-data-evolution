@@ -12,12 +12,12 @@ import data.pplTransition.TableChange;
 
 public class PPLTransitionConstruction {
 	
-	private static TreeMap<Integer,PPLTransition> allPPLTransitions = new TreeMap<Integer,PPLTransition>();
+	private static TreeMap<Integer,PPLTransition> allPPLTransitions = null;
 	private static TreeMap<String,PPLSchema> allPPLSchemas = new TreeMap<String,PPLSchema>();
 	private static TreeMap<String,TableChange> allTableChanges = new  TreeMap<String,TableChange>();
 
 	public PPLTransitionConstruction(TreeMap<String,PPLSchema> tmpSc, TreeMap<String,TableChange> tmpTbs){
-		
+		allPPLTransitions = new TreeMap<Integer,PPLTransition>();
 		allPPLSchemas=tmpSc;
 		allTableChanges = tmpTbs;
 		
