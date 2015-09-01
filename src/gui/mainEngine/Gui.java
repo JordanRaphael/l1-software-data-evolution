@@ -31,6 +31,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -100,7 +102,7 @@ public class Gui extends JFrame implements ActionListener{
 	private MyTableModel generalModel = null;
 	private MyTableModel zoomModel = null;
 
-	private JTable LifeTimeTable=null;
+	private JvTable LifeTimeTable=null;
 	private JTable zoomAreaTable=null;
 	
 	
@@ -191,6 +193,9 @@ public class Gui extends JFrame implements ActionListener{
 	private JTextArea descriptionText;
 	private JButton zoomInButton;
 	private JButton zoomOutButton;
+	private JButton showGridButton;
+	private JButton uniformlyDistributedButton;
+	private JButton notUniformlyDistributedButton;
 
 
 	private int[] selectedRowsFromMouse;
@@ -207,6 +212,7 @@ public class Gui extends JFrame implements ActionListener{
 
 	private ArrayList<String> tablesSelected = new ArrayList<String>();
 
+	private boolean showGrid=false;
 	
 	
 	/**
@@ -234,6 +240,8 @@ public class Gui extends JFrame implements ActionListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		setResizable(false);
+		
+	
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -530,6 +538,8 @@ public class Gui extends JFrame implements ActionListener{
 		mntmShowGeneralLifetimeIDU.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				 if(!(currentProject==null)){
+					zoomInButton.setVisible(true);
+					zoomOutButton.setVisible(true);
 					TableConstructionIDU table=new TableConstructionIDU(globalDataKeeper);
 					final String[] columns=table.constructColumns();
 					final String[][] rows=table.constructRows();
@@ -675,6 +685,7 @@ public class Gui extends JFrame implements ActionListener{
 		JMenuItem mntmShowGeneralLifetimePhasesWithClustersPLD = new JMenuItem("Show Phases With Clusters PLD");
 		mntmShowGeneralLifetimePhasesWithClustersPLD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				if(!(project==null)){
 					
 					ParametersJDialog jD=new ParametersJDialog(true);
@@ -945,13 +956,64 @@ public class Gui extends JFrame implements ActionListener{
 		descriptionLabel.setBounds(10, 160, 260, 40);
 		descriptionLabel.setForeground(Color.WHITE);
 		descriptionLabel.setText("Description");
-	   
+		
+		showGridButton = new JButton("Show Grid"); 
+		showGridButton.setBounds(10, 10, 100, 30);
+		
+		showGridButton.addMouseListener(new MouseAdapter() {
+			@Override
+			   public void mouseClicked(MouseEvent e) {
+				showGrid=!showGrid;
+			    LifeTimeTable.showGrid(showGrid);
+			    
+			  } 
+		});
+		
+		
+		showGridButton.setVisible(false);
+		
+		uniformlyDistributedButton = new JButton("Same Width"); 
+		uniformlyDistributedButton.setBounds(10, 50, 120, 30);
+		
+		uniformlyDistributedButton.addMouseListener(new MouseAdapter() {
+			@Override
+			   public void mouseClicked(MouseEvent e) {
+				//showGrid=!showGrid;
+			    LifeTimeTable.uniformlyDistributed(80);
+			    
+			  } 
+		});
+		
+		uniformlyDistributedButton.setVisible(false);
+		
+		notUniformlyDistributedButton = new JButton("Not Same Width"); 
+		notUniformlyDistributedButton.setBounds(10, 90, 160, 30);
+		
+		notUniformlyDistributedButton.addMouseListener(new MouseAdapter() {
+			@Override
+			   public void mouseClicked(MouseEvent e) {
+				//showGrid=!showGrid;
+			    LifeTimeTable.notUniformlyDistributed(globalDataKeeper);
+			    
+			  } 
+		});
+		
+		notUniformlyDistributedButton.setVisible(false);
+
+		
+		sideMenu.add(showGridButton);
+		sideMenu.add(uniformlyDistributedButton);
+		sideMenu.add(notUniformlyDistributedButton);
+
+
 		sideMenu.add(treeLabel);
 		sideMenu.add(tablesTreePanel);
 		
 		sideMenu.add(descriptionLabel);
 		sideMenu.add(descriptionPanel);
 
+		
+		
 	   //TreeConstructionGeneral tc=new TreeConstructionGeneral(globalDataKeeper);
 	   // tablesTree=tc.constructTree();
 		//tablesTreePanel.add(scr);
@@ -1630,10 +1692,15 @@ public class Gui extends JFrame implements ActionListener{
 		zoomInButton.addMouseListener(new MouseAdapter() {
 			@Override
 			   public void mouseClicked(MouseEvent e) {
-				rowHeight=rowHeight+3;
-				columnWidth=columnWidth+3;
-				System.out.println(rowHeight);
-				makeGeneralTableIDU();
+				rowHeight=rowHeight+2;
+				columnWidth=columnWidth+1;
+				LifeTimeTable.setZoom(rowHeight,columnWidth);
+				//makeGeneralTableIDU();
+				//LifeTimeTable.revalidate();
+				//tmpScrollPane.revalidate();
+				//LifeTimeTable.repaint();
+				//tmpScrollPane.repaint();
+				//lifeTimePanel.repaint();
 
 				
 			}
@@ -1645,16 +1712,23 @@ public class Gui extends JFrame implements ActionListener{
 		zoomOutButton.addMouseListener(new MouseAdapter() {
 			@Override
 			   public void mouseClicked(MouseEvent e) {
-				rowHeight=rowHeight-3;
-				columnWidth=columnWidth-3;
-				System.out.println(rowHeight);
-				makeGeneralTableIDU();
+				rowHeight=rowHeight-2;
+				columnWidth=columnWidth-1;
+				if(rowHeight<1){
+					rowHeight=1;
+				}
+				if (columnWidth<1) {
+					columnWidth=1;
+				}
+				LifeTimeTable.setZoom(rowHeight,columnWidth);
 				
 			}
 		});
 		
 		//zoomInButton = new JButton("Zoom Out");
-
+		zoomInButton.setVisible(false);
+		zoomOutButton.setVisible(false);
+		
 		lifeTimePanel.add(zoomInButton);
 		lifeTimePanel.add(zoomOutButton);
 		
@@ -1705,7 +1779,7 @@ public class Gui extends JFrame implements ActionListener{
 		
 		generalModel=new MyTableModel(finalColumns, rows);
 		
-		final JTable generalTable=new JTable(generalModel);
+		final JvTable generalTable=new JvTable(generalModel);
 		
 		generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
@@ -1944,6 +2018,12 @@ public class Gui extends JFrame implements ActionListener{
 	}
 	
 private void makeGeneralTableIDU() {
+	
+		uniformlyDistributedButton.setVisible(false);
+		zoomInButton.setVisible(true);
+		zoomOutButton.setVisible(true);
+		showGridButton.setVisible(true);
+		notUniformlyDistributedButton.setVisible(false);
 		
 		int numberOfColumns=finalRows[0].length;
 		int numberOfRows=finalRows.length;
@@ -1960,9 +2040,11 @@ private void makeGeneralTableIDU() {
 		
 		generalModel=new MyTableModel(finalColumns, rows);
 		
-		final JTable generalTable=new JTable(generalModel);
+		final JvTable generalTable=new JvTable(generalModel);
 		
 		generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
+		//generalTable.setZoom(rowHeight,columnWidth);
 		
 		System.out.println(columnWidth+" "+rowHeight);
 		
@@ -1988,13 +2070,13 @@ private void makeGeneralTableIDU() {
 		for(int i=0; i<generalTable.getColumnCount(); i++){
 			if(i==0){
 				generalTable.getColumnModel().getColumn(0).setPreferredWidth(columnWidth);
-				generalTable.getColumnModel().getColumn(0).setMaxWidth(columnWidth);
-				generalTable.getColumnModel().getColumn(0).setMinWidth(columnWidth);
+				//generalTable.getColumnModel().getColumn(0).setMaxWidth(columnWidth);
+				//generalTable.getColumnModel().getColumn(0).setMinWidth(columnWidth);
 			}
 			else{
 				generalTable.getColumnModel().getColumn(i).setPreferredWidth(columnWidth);
-				generalTable.getColumnModel().getColumn(i).setMaxWidth(columnWidth);
-				generalTable.getColumnModel().getColumn(i).setMinWidth(columnWidth);
+				//generalTable.getColumnModel().getColumn(i).setMaxWidth(columnWidth);
+				//generalTable.getColumnModel().getColumn(i).setMinWidth(columnWidth);
 			}
 		}
 		
@@ -2289,6 +2371,12 @@ private void makeGeneralTableIDU() {
 	}
 
 private void makeGeneralTablePhases() {
+	uniformlyDistributedButton.setVisible(true);
+	zoomInButton.setVisible(false);
+	zoomOutButton.setVisible(false);
+	showGridButton.setVisible(false);
+	notUniformlyDistributedButton.setVisible(true);
+
 	
 	int numberOfColumns=finalRows[0].length;
 	int numberOfRows=finalRows.length;
@@ -2305,7 +2393,7 @@ private void makeGeneralTablePhases() {
 	
 	generalModel=new MyTableModel(finalColumns, rows);
 	
-	final JTable generalTable=new JTable(generalModel);
+	final JvTable generalTable=new JvTable(generalModel);
 	
 	generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	
@@ -2323,8 +2411,8 @@ private void makeGeneralTablePhases() {
 			int sizeOfColumn=globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(i-1).getSize()*tot;
 			
 			generalTable.getColumnModel().getColumn(i).setPreferredWidth(sizeOfColumn);
-			generalTable.getColumnModel().getColumn(i).setMaxWidth(sizeOfColumn);
-			generalTable.getColumnModel().getColumn(i).setMinWidth(70);
+			//generalTable.getColumnModel().getColumn(i).setMaxWidth(sizeOfColumn);
+			//generalTable.getColumnModel().getColumn(i).setMinWidth(70);
 		}
 	}
 	
@@ -2708,8 +2796,18 @@ private void showSelectionToZoomArea(int selectedColumn){
 
 private void showClusterSelectionToZoomArea(int selectedColumn,String selectedCluster){
 	
-	String[] selectedClusterSplit= selectedCluster.split(" ");
-	ArrayList<String> tablesOfCluster = globalDataKeeper.getClusterCollectors().get(0).getClusters().get(Integer.parseInt(selectedClusterSplit[1])).getNamesOfTables();
+	
+	ArrayList<String> tablesOfCluster=new ArrayList<String>();
+	for(int i=0; i <tablesSelected.size(); i++){
+		String[] selectedClusterSplit= tablesSelected.get(i).split(" ");
+		int cluster=Integer.parseInt(selectedClusterSplit[1]);
+		ArrayList<String> namesOfTables=globalDataKeeper.getClusterCollectors().get(0).getClusters().get(cluster).getNamesOfTables();
+		for(int j=0; j<namesOfTables.size(); j++){
+			tablesOfCluster.add(namesOfTables.get(j));
+		}
+		System.out.println(tablesSelected.get(i));
+	}
+	//ArrayList<String> tablesOfCluster = globalDataKeeper.getClusterCollectors().get(0).getClusters().get(Integer.parseInt(selectedClusterSplit[1])).getNamesOfTables();
 	
 	//TableConstructionZoomArea table=new TableConstructionZoomArea(globalDataKeeper,tablesOfCluster,selectedColumn);
 	TableConstructionPhasesClusterTables table=new TableConstructionPhasesClusterTables(globalDataKeeper,tablesOfCluster);
@@ -3390,7 +3488,7 @@ private void makeZoomAreaTableForCluster() {
 		levelizedTable=levelized;
 		detailedModel=new MyTableModel(columns,rows);
 		
-		final JTable tmpLifeTimeTable= new JTable(detailedModel);
+		final JvTable tmpLifeTimeTable= new JvTable(detailedModel);
 		
 		tmpLifeTimeTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		

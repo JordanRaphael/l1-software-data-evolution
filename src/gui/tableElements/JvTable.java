@@ -2,6 +2,7 @@ package gui.tableElements;
 
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.JTable;
@@ -9,86 +10,91 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
+import data.dataKeeper.GlobalDataKeeper;
+
 public class JvTable extends JTable {
 
-	private Font originalFont;
-    private int originalRowHeight;
-    private float zoomFactor = 1.0f;
+    //private int originalRowHeight=1;
+   // private float zoomFactor = 1.0f;
+	private Dimension initialIntercellSpacing=new Dimension();
 
     public JvTable(TableModel dataModel)
     {
         super(dataModel);
+        initialIntercellSpacing=super.getIntercellSpacing();
     }
 
-    @Override
-    public void setFont(Font font)
+  
+
+    public void setZoom(int rowHeight, int columnWidth)
     {
-        originalFont = font;
-        // When setFont() is first called, zoomFactor is 0.
-        if (zoomFactor != 0.0 && zoomFactor != 1.0)
-        {
-            float scaledSize = originalFont.getSize2D() * zoomFactor;
-            font = originalFont.deriveFont(scaledSize);
-        }
+    	
+		
+		for(int i=0; i<super.getRowCount(); i++){
+			super.setRowHeight(i, rowHeight);
+				
+		}
 
-        super.setFont(font);
+		//generalTable.setGridColor(new Color(0,0,0,100));
+		//super.setIntercellSpacing(new Dimension(0, 0));
+
+		
+		
+		for(int i=0; i<super.getColumnCount(); i++){
+			if(i==0){
+				super.getColumnModel().getColumn(0).setPreferredWidth(columnWidth);
+				//super.getColumnModel().getColumn(0).setMaxWidth(columnWidth);
+				//super.getColumnModel().getColumn(0).setMinWidth(columnWidth);
+			}
+			else{
+				super.getColumnModel().getColumn(i).setPreferredWidth(columnWidth);
+				//super.getColumnModel().getColumn(i).setMaxWidth(columnWidth);
+				//super.getColumnModel().getColumn(i).setMinWidth(columnWidth);
+			}
+		}
+        firePropertyChange("zoom", 1500, 5000);
+    }
+    
+    public void showGrid(boolean showGridBoolean){
+    	System.out.println("??"+showGridBoolean);
+    	super.setShowGrid(showGridBoolean);
+    	firePropertyChange("grid", !showGridBoolean, showGridBoolean);
+
     }
 
-    @Override
-    public void setRowHeight(int rowHeight)
-    {
-        originalRowHeight = rowHeight;
-        // When setRowHeight() is first called, zoomFactor is 0.
-        if (zoomFactor != 0.0 && zoomFactor != 1.0)
-            rowHeight = (int) Math.ceil(originalRowHeight * zoomFactor);
-
-        super.setRowHeight(rowHeight);
+    public void uniformlyDistributed(int columnWidth){
+    	for(int i=0; i<super.getColumnCount(); i++){
+			if(i==0){
+				super.getColumnModel().getColumn(0).setPreferredWidth(columnWidth);
+				//super.getColumnModel().getColumn(0).setMaxWidth(columnWidth);
+				//super.getColumnModel().getColumn(0).setMinWidth(columnWidth);
+			}
+			else{
+				super.getColumnModel().getColumn(i).setPreferredWidth(columnWidth);
+				//super.getColumnModel().getColumn(i).setMaxWidth(columnWidth);
+				//super.getColumnModel().getColumn(i).setMinWidth(columnWidth);
+			}
+		}
+        firePropertyChange("uniformly", 1500, 5000);
     }
-
-    public float getZoom()
-    {
-        return zoomFactor;
+   
+    
+    public void notUniformlyDistributed(GlobalDataKeeper globalDataKeeper){
+    	for(int i=0; i<super.getColumnCount(); i++){
+    		if(i==0){
+    			super.getColumnModel().getColumn(0).setPreferredWidth(150);
+    			//generalTable.getColumnModel().getColumn(0).setMaxWidth(150);
+    			//generalTable.getColumnModel().getColumn(0).setMinWidth(150);
+    		}
+    		else{
+    			int tot=800/globalDataKeeper.getAllPPLTransitions().size();
+    			int sizeOfColumn=globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(i-1).getSize()*tot;
+    			super.getColumnModel().getColumn(i).setPreferredWidth(sizeOfColumn);
+    			//generalTable.getColumnModel().getColumn(i).setMaxWidth(sizeOfColumn);
+    			//generalTable.getColumnModel().getColumn(i).setMinWidth(70);
+    		}
+		}
+        firePropertyChange("uniformly", 1500, 5000);
     }
-
-    public void setZoom(float zoomFactor)
-    {
-        if (this.zoomFactor == zoomFactor)
-            return;
-
-        if (originalFont == null)
-            originalFont = getFont();
-        if (originalRowHeight == 0)
-            originalRowHeight = getRowHeight();
-
-        float oldZoomFactor = this.zoomFactor;
-        this.zoomFactor = zoomFactor;
-        Font font = originalFont;
-        if (zoomFactor != 1.0)
-        {
-            float scaledSize = originalFont.getSize2D() * zoomFactor;
-            font = originalFont.deriveFont(scaledSize);
-        }
-
-        super.setFont(font);
-        super.setRowHeight((int) Math.ceil(originalRowHeight * zoomFactor));
-        getTableHeader().setFont(font);
-
-        firePropertyChange("zoom", oldZoomFactor, zoomFactor);
-    }
-
-    @Override
-    public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
-    {
-        Component comp = super.prepareRenderer(renderer, row, column);
-        comp.setFont(this.getFont());
-        return comp;
-    }
-
-    @Override
-    public Component prepareEditor(TableCellEditor editor, int row, int column)
-    {
-        Component comp = super.prepareEditor(editor, row, column);
-        comp.setFont(this.getFont());
-        return comp;
-    }
+    
 }

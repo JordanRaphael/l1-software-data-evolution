@@ -1,5 +1,7 @@
 package gui.tableElements;
 
+import java.awt.Font;
+
 import javax.swing.table.AbstractTableModel;
 
 public class MyTableModel extends AbstractTableModel {
@@ -10,6 +12,7 @@ public class MyTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	private boolean DEBUG=false;
 	
+
 	private String[] columns=null;
 	
 	private String[][] rows=null;
@@ -21,6 +24,7 @@ public class MyTableModel extends AbstractTableModel {
 		rows=tmpRows;
 		
 	}
+	
 	
 	public void setData(String[] tmpColumns, String [][] tmpRows){
 		columns=tmpColumns;
