@@ -12,7 +12,7 @@ import data.pplTransition.AtomicChange;
 import data.pplTransition.PPLTransition;
 import data.pplTransition.TableChange;
 
-public class TableConstructionPhasesClusterTables {
+public class TableConstructionPhasesClusterTables implements Pld {
 	
 	private static TreeMap<String,PPLSchema> allPPLSchemas=new TreeMap<String,PPLSchema>();
 	private ArrayList<PPLTable>	tables=new ArrayList<PPLTable>();

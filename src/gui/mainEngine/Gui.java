@@ -2,9 +2,11 @@ package gui.mainEngine;
 
 //try to extract relationship beetween gui and pplSchema and pplTransition
 import gui.dialogs.CreateProjectJDialog;
+import gui.dialogs.EnlargeTable;
 import gui.dialogs.ParametersJDialog;
 import gui.tableElements.JvTable;
 import gui.tableElements.MyTableModel;
+import gui.tableElements.Pld;
 import gui.tableElements.TableConstructionAllSquaresIncluded;
 import gui.tableElements.TableConstructionIDU;
 import gui.tableElements.TableConstructionPhases;
@@ -12,6 +14,7 @@ import gui.tableElements.TableConstructionPhasesClusterTables;
 import gui.tableElements.TableConstructionWithClusters;
 import gui.tableElements.TableConstructionZoomArea;
 import gui.tableElements.tableRenderers.IDUHeaderTableRenderer;
+import gui.tableElements.tableRenderers.IDUTableRenderer;
 import gui.treeElements.TreeConstructionGeneral;
 import gui.treeElements.TreeConstructionPhases;
 import gui.treeElements.TreeConstructionPhasesWithClusters;
@@ -201,6 +204,7 @@ public class Gui extends JFrame implements ActionListener{
 	private JButton showGridButton;
 	private JButton uniformlyDistributedButton;
 	private JButton notUniformlyDistributedButton;
+	private JButton showThisToPopup;
 
 
 	private int[] selectedRowsFromMouse;
@@ -218,7 +222,7 @@ public class Gui extends JFrame implements ActionListener{
 	private ArrayList<String> tablesSelected = new ArrayList<String>();
 
 	private boolean showGrid=false;
-	
+	private boolean showingPld=false;
 	
 	/**
 	 * Launch the application.
@@ -548,12 +552,12 @@ public class Gui extends JFrame implements ActionListener{
 					TableConstructionIDU table=new TableConstructionIDU(globalDataKeeper);
 					final String[] columns=table.constructColumns();
 					final String[][] rows=table.constructRows();
-					segmentSize=table.getSegmentSize();
+					//segmentSize=table.getSegmentSize();
 					System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
 					System.out.println("C: "+columns.length+" R: "+rows.length);
 
-					finalColumns=columns;
-					finalRows=rows;
+					finalColumnsZoomArea=columns;
+					finalRowsZoomArea=rows;
 					tabbedPane.setSelectedIndex(0);
 					makeGeneralTableIDU();
 					fillTree();
@@ -1697,6 +1701,25 @@ public class Gui extends JFrame implements ActionListener{
 		
 		showGridButton.setVisible(false);
 		*/
+		
+		showThisToPopup = new JButton("Enlarge");
+		showThisToPopup.setBounds(800, 560, 100, 30);
+		
+		showThisToPopup.addMouseListener(new MouseAdapter() {
+			@Override
+			   public void mouseClicked(MouseEvent e) {
+				
+				EnlargeTable showEnlargmentPopup= new EnlargeTable(finalRowsZoomArea,finalColumnsZoomArea,segmentSize);
+				showEnlargmentPopup.setBounds(100, 100, 1300, 700);
+				
+				showEnlargmentPopup.setVisible(true);
+				
+				
+			}
+		});
+		
+		showThisToPopup.setVisible(false);
+		
 		uniformlyDistributedButton = new JButton("Same Width"); 
 		uniformlyDistributedButton.setBounds(980, 0, 120, 30);
 		
@@ -1729,6 +1752,7 @@ public class Gui extends JFrame implements ActionListener{
 		lifeTimePanel.add(zoomOutButton);
 		lifeTimePanel.add(uniformlyDistributedButton);
 		lifeTimePanel.add(notUniformlyDistributedButton);
+		lifeTimePanel.add(showThisToPopup);
 		//lifeTimePanel.add(showGridButton);
 
 		lifeTimePanel.add(zoomAreaLabel);
@@ -2017,12 +2041,13 @@ public class Gui extends JFrame implements ActionListener{
 	}
 	
 private void makeGeneralTableIDU() {
-	
+		showingPld=true;
 		uniformlyDistributedButton.setVisible(false);
 		zoomInButton.setVisible(true);
 		zoomOutButton.setVisible(true);
 		//showGridButton.setVisible(true);
 		notUniformlyDistributedButton.setVisible(false);
+		showThisToPopup.setVisible(true);
 		
 		int numberOfColumns=finalRowsZoomArea[0].length;
 		int numberOfRows=finalRowsZoomArea.length;
@@ -2037,9 +2062,9 @@ private void makeGeneralTableIDU() {
 			
 		}
 		
-		generalModel=new MyTableModel(finalColumnsZoomArea, rows);
+		zoomModel=new MyTableModel(finalColumnsZoomArea, rows);
 		
-		final JvTable generalTable=new JvTable(generalModel);
+		final JvTable generalTable=new JvTable(zoomModel);
 		
 		generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
@@ -2425,7 +2450,13 @@ private void makeGeneralTablePhases() {
 	
 	generalTable.setShowGrid(false);
 	generalTable.setIntercellSpacing(new Dimension(0, 0));
-	System.out.println("HM?"+generalTable.getColumnCount());
+	
+	/*
+	for(int i=0; i<generalTable.getRowCount(); i++){
+		generalTable.setRowHeight(i, 10);
+		
+	}*/
+	
 	for(int i=0; i<generalTable.getColumnCount(); i++){
 		if(i==0){
 			generalTable.getColumnModel().getColumn(0).setPreferredWidth(86);
@@ -2755,7 +2786,9 @@ private void makeGeneralTablePhases() {
 	        String name = generalTable.getColumnName(wholeCol);
 	        System.out.println("Column index selected " + wholeCol + " " + name);
 	        generalTable.repaint();
-	        makeGeneralTableIDU();
+	        if (showingPld) {
+		        makeGeneralTableIDU();
+			}
 	    }
 	});
 	
@@ -2773,7 +2806,9 @@ private void makeGeneralTablePhases() {
 				            public void actionPerformed(ActionEvent e) {
 				            	wholeCol=-1;
 				            	generalTable.repaint();
-				            	makeGeneralTableIDU();
+				            	if(showingPld){
+				            		makeGeneralTableIDU();
+				            	}
 				            }
 				        });
 				        popupMenu.add(showDetailsItem);
@@ -2838,7 +2873,13 @@ private void showClusterSelectionToZoomArea(int selectedColumn,String selectedCl
 	//ArrayList<String> tablesOfCluster = globalDataKeeper.getClusterCollectors().get(0).getClusters().get(Integer.parseInt(selectedClusterSplit[1])).getNamesOfTables();
 	
 	//TableConstructionZoomArea table=new TableConstructionZoomArea(globalDataKeeper,tablesOfCluster,selectedColumn);
-	TableConstructionPhasesClusterTables table=new TableConstructionPhasesClusterTables(globalDataKeeper,tablesOfCluster);
+	Pld table;
+	if (selectedColumn==0) {
+		table= new TableConstructionPhasesClusterTables(globalDataKeeper,tablesOfCluster);
+	}
+	else{
+		table= new TableConstructionZoomArea(globalDataKeeper,tablesOfCluster,selectedColumn);
+	}
 	final String[] columns=table.constructColumns();
 	final String[][] rows=table.constructRows();
 	//segmentSize=table.getSegmentSize();
@@ -2855,7 +2896,7 @@ private void showClusterSelectionToZoomArea(int selectedColumn,String selectedCl
 }
 
 private void makeZoomAreaTable() {
-	
+	showingPld=false;
 	int numberOfColumns=finalRowsZoomArea[0].length;
 	int numberOfRows=finalRowsZoomArea.length;
 	
@@ -3166,7 +3207,7 @@ private void makeZoomAreaTable() {
 	tmpScrollPaneZoomArea.setViewportView(zoomAreaTable);
 	tmpScrollPaneZoomArea.setAlignmentX(0);
 	tmpScrollPaneZoomArea.setAlignmentY(0);
-	tmpScrollPaneZoomArea.setBounds(300,350,950,250);
+	tmpScrollPaneZoomArea.setBounds(300,300,950,250);
 	tmpScrollPaneZoomArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 	tmpScrollPaneZoomArea.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 	//tmpScrollPaneZoomArea.setBackground(Color.DARK_GRAY);
@@ -3180,7 +3221,7 @@ private void makeZoomAreaTable() {
 }
 
 private void makeZoomAreaTableForCluster() {
-	
+	showingPld=false;
 	int numberOfColumns=finalRowsZoomArea[0].length;
 	int numberOfRows=finalRowsZoomArea.length;
 	
@@ -3498,7 +3539,7 @@ private void makeZoomAreaTableForCluster() {
 	tmpScrollPaneZoomArea.setViewportView(zoomAreaTable);
 	tmpScrollPaneZoomArea.setAlignmentX(0);
 	tmpScrollPaneZoomArea.setAlignmentY(0);
-	tmpScrollPaneZoomArea.setBounds(300,350,950,250);
+	tmpScrollPaneZoomArea.setBounds(300,300,950,250);
 	tmpScrollPaneZoomArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 	tmpScrollPaneZoomArea.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 	//tmpScrollPaneZoomArea.setBackground(Color.DARK_GRAY);
