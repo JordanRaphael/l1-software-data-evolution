@@ -17,7 +17,7 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 
 	@Override
 	public ClusterCollector extractAtMostKClusters(GlobalDataKeeper dataKeeper,
-			int numClusters, float birthWeight, float deathWeight, float changeWeight) {
+			int numClusters, Double birthWeight, Double deathWeight, Double changeWeight) {
 		
 		ClusterCollector initSolution = new ClusterCollector();
 		this.init(dataKeeper, initSolution);
@@ -25,13 +25,9 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 		//this.preProcessingTime(transitionHistory, initSolution);
 		//System.out.println("timePreProcessing "+initSolution.getPhases().size());
 
-		
-		
 		ClusterCollector currentSolution = new ClusterCollector();
 		currentSolution = this.newClusterCollector(initSolution, birthWeight, deathWeight, changeWeight,dataKeeper.getAllPPLSchemas().size()-1);
-		System.out.println(numClusters+" "+currentSolution.getClusters().size());
 		while (currentSolution.getClusters().size() > numClusters){
-			System.out.println(numClusters+" "+currentSolution.getClusters().size());
 
 			currentSolution = this.newClusterCollector(currentSolution, birthWeight, deathWeight, changeWeight,dataKeeper.getAllPPLSchemas().size()-1);
 		}
@@ -39,7 +35,7 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 		
 	}
 	
-	public ClusterCollector newClusterCollector(ClusterCollector prevCollector,float birthWeight, float deathWeight ,float changeWeight,int dbDuration){
+	public ClusterCollector newClusterCollector(ClusterCollector prevCollector,Double birthWeight, Double deathWeight ,Double changeWeight,int dbDuration){
 		
 		ClusterCollector newCollector = new ClusterCollector();
 		ArrayList<Cluster> newClusters = new ArrayList<Cluster>();

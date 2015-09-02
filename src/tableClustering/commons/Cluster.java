@@ -68,7 +68,7 @@ public class Cluster {
 		return totalChanges;
 	}
 	
-	public double distance(Cluster anotherCluster,float birthWeight, float deathWeight ,float changeWeight,int dbDuration){
+	public double distance(Cluster anotherCluster,Double birthWeight, Double deathWeight ,Double changeWeight,int dbDuration){
 		
 		double changeDistance = Math.abs(this.totalChanges - anotherCluster.totalChanges);
 		double normalizedChangeDistance= Math.abs((this.totalChanges - anotherCluster.totalChanges)/((double)(this.totalChanges + anotherCluster.totalChanges)));

@@ -10,9 +10,9 @@ import data.dataKeeper.GlobalDataKeeper;
 public class TableClusteringMainEngine {
 	
 	private GlobalDataKeeper dataKeeper;
-	private Float birthWeight;
-	private Float deathWeight;
-	private Float changeWeight;
+	private Double birthWeight;
+	private Double deathWeight;
+	private Double changeWeight;
 	private ArrayList<ClusterCollector> clusterCollectors;
 	private ClusterExtractorFactory clusterExtractorFactory;
 	private ClusterExtractor clusterExtractor;
@@ -20,8 +20,8 @@ public class TableClusteringMainEngine {
 
 
 
-	public TableClusteringMainEngine(GlobalDataKeeper dataKeeper,Float birthWeight, Float deathWeight,
-			Float changeWeight){
+	public TableClusteringMainEngine(GlobalDataKeeper dataKeeper,Double birthWeight, Double deathWeight,
+			Double changeWeight){
 		
 		this.dataKeeper=dataKeeper;
 		this.birthWeight=birthWeight;
