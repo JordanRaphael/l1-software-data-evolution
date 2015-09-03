@@ -215,7 +215,7 @@ public class EnlargeTable extends JDialog {
 		zoomInButton.addMouseListener(new MouseAdapter() {
 			@Override
 			   public void mouseClicked(MouseEvent e) {
-				rowHeight=rowHeight+2;
+				rowHeight=rowHeight+1;
 				columnWidth=columnWidth+1;
 				table.setZoom(rowHeight,columnWidth);
 				//makeGeneralTableIDU();
@@ -235,7 +235,7 @@ public class EnlargeTable extends JDialog {
 		zoomOutButton.addMouseListener(new MouseAdapter() {
 			@Override
 			   public void mouseClicked(MouseEvent e) {
-				rowHeight=rowHeight-2;
+				rowHeight=rowHeight-1;
 				columnWidth=columnWidth-1;
 				if(rowHeight<1){
 					rowHeight=1;
