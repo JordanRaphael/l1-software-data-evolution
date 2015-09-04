@@ -65,12 +65,12 @@ public class JvTable extends JTable {
     public void uniformlyDistributed(int columnWidth){
     	for(int i=0; i<super.getColumnCount(); i++){
 			if(i==0){
-				super.getColumnModel().getColumn(0).setPreferredWidth(columnWidth);
+				super.getColumnModel().getColumn(0).setPreferredWidth(86);
 				//super.getColumnModel().getColumn(0).setMaxWidth(columnWidth);
 				//super.getColumnModel().getColumn(0).setMinWidth(columnWidth);
 			}
 			else{
-				super.getColumnModel().getColumn(i).setPreferredWidth(columnWidth);
+				super.getColumnModel().getColumn(i).setPreferredWidth(1);
 				//super.getColumnModel().getColumn(i).setMaxWidth(columnWidth);
 				//super.getColumnModel().getColumn(i).setMinWidth(columnWidth);
 			}
@@ -82,12 +82,12 @@ public class JvTable extends JTable {
     public void notUniformlyDistributed(GlobalDataKeeper globalDataKeeper){
     	for(int i=0; i<super.getColumnCount(); i++){
     		if(i==0){
-    			super.getColumnModel().getColumn(0).setPreferredWidth(150);
+    			super.getColumnModel().getColumn(0).setPreferredWidth(60);
     			//generalTable.getColumnModel().getColumn(0).setMaxWidth(150);
     			//generalTable.getColumnModel().getColumn(0).setMinWidth(150);
     		}
     		else{
-    			int tot=800/globalDataKeeper.getAllPPLTransitions().size();
+    			int tot=750/globalDataKeeper.getAllPPLTransitions().size();
     			int sizeOfColumn=globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(i-1).getSize()*tot;
     			super.getColumnModel().getColumn(i).setPreferredWidth(sizeOfColumn);
     			//generalTable.getColumnModel().getColumn(i).setMaxWidth(sizeOfColumn);

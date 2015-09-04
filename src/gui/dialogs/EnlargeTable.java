@@ -1,0 +1,259 @@
+package gui.dialogs;
+
+import gui.tableElements.JvTable;
+import gui.tableElements.MyTableModel;
+import gui.tableElements.tableRenderers.IDUHeaderTableRenderer;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JTable;
+
+public class EnlargeTable extends JDialog {
+
+	private final JPanel contentPanel = new JPanel();
+	private String[][] finalRowsZoomArea;
+	private String[] finalColumnsZoomArea;
+	private JvTable table;
+	private int rowHeight=1;
+	private int columnWidth=1;
+	private Integer[] segmentSize=new Integer[3];
+	private JScrollPane tmpScrollPane;
+
+	/**
+	 * Create the dialog.
+	 */
+	public EnlargeTable(String[][] frows,String[] columns,Integer[] seg) {
+		finalRowsZoomArea=frows;
+		finalColumnsZoomArea=columns;
+		segmentSize=seg;
+		//setBounds(100, 100, 450, 300);
+		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		
+		int numberOfColumns=finalRowsZoomArea[0].length;
+		int numberOfRows=finalRowsZoomArea.length;
+		
+		
+		String[][] rows=new String[numberOfRows][numberOfColumns];
+		
+		for(int i=0; i<numberOfRows; i++){
+			
+			rows[i][0]=finalRowsZoomArea[i][0];
+			
+		}
+		
+		MyTableModel zoomModel=new MyTableModel(finalColumnsZoomArea, rows);
+		
+		final JvTable generalTable=new JvTable(zoomModel);
+		
+		generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
+		//generalTable.setZoom(rowHeight,columnWidth);
+		
+		
+		
+		
+		for(int i=0; i<generalTable.getRowCount(); i++){
+				generalTable.setRowHeight(i, rowHeight);
+				
+		}
+
+		//generalTable.setGridColor(new Color(0,0,0,100));
+		
+		generalTable.setShowGrid(false);
+		generalTable.setIntercellSpacing(new Dimension(0, 0));
+		
+		
+		
+		for(int i=0; i<generalTable.getColumnCount(); i++){
+			if(i==0){
+				generalTable.getColumnModel().getColumn(0).setPreferredWidth(columnWidth);
+				//generalTable.getColumnModel().getColumn(0).setMaxWidth(columnWidth);
+				//generalTable.getColumnModel().getColumn(0).setMinWidth(columnWidth);
+			}
+			else{
+				generalTable.getColumnModel().getColumn(i).setPreferredWidth(columnWidth);
+				//generalTable.getColumnModel().getColumn(i).setMaxWidth(columnWidth);
+				//generalTable.getColumnModel().getColumn(i).setMinWidth(columnWidth);
+			}
+		}
+		
+		
+		
+		generalTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
+		{
+		    
+			private static final long serialVersionUID = 1L;
+
+			@Override
+		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+		    {
+		        final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		        
+		        
+		        
+		        
+		        
+		        String tmpValue=finalRowsZoomArea[row][column];
+		        String columnName=table.getColumnName(column);
+		        Color fr=new Color(0,0,0);
+		        
+		        c.setForeground(fr);
+		        setOpaque(true);
+		      
+		        
+
+		        try{
+		        	int numericValue=Integer.parseInt(tmpValue);
+		        	Color insersionColor=null;
+					setToolTipText(Integer.toString(numericValue));
+
+		        	
+	        		if(numericValue==0){
+	        			insersionColor=new Color(154,205,50,200);
+	        		}
+	        		else if(numericValue> 0&& numericValue<=segmentSize[1]){
+	        			
+	        			insersionColor=new Color(176,226,255);
+		        	}
+	        		else if(numericValue>segmentSize[1] && numericValue<=2*segmentSize[1]){
+	        			insersionColor=new Color(92,172,238);
+	        		}
+	        		else if(numericValue>2*segmentSize[1] && numericValue<=3*segmentSize[1]){
+	        			
+	        			insersionColor=new Color(28,134,238);
+	        		}
+	        		else{
+	        			insersionColor=new Color(16,78,139);
+	        		}
+	        		c.setBackground(insersionColor);
+		        	
+		        	return c;
+		        }
+		        catch(Exception e){
+		        		
+
+		        	
+	        		if(tmpValue.equals("")){
+	        			c.setBackground(Color.GRAY);
+	        			return c; 
+	        		}
+	        		else{
+	        			if(columnName.contains("v")){
+	        				c.setBackground(Color.lightGray);
+	        				setToolTipText(columnName);
+	        			}
+	        			else{
+	        				Color tableNameColor=new Color(205,175,149);
+	        				c.setBackground(tableNameColor);
+	        			}
+		        		return c; 
+	        		}
+		        		
+		        		
+		        }
+		    }
+		});
+		
+		
+		
+		
+		table = generalTable;
+		table.setBounds(0,0,1100,580);
+		tmpScrollPane=new JScrollPane();
+		tmpScrollPane.setViewportView(table);
+		tmpScrollPane.setAlignmentX(0);
+		tmpScrollPane.setAlignmentY(0);
+	    tmpScrollPane.setBounds(0,30,1270,620);
+	    tmpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	    tmpScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+	    
+	    
+	    
+	    
+		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
+		gl_contentPanel.setHorizontalGroup(
+			gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				
+		);
+		gl_contentPanel.setVerticalGroup(
+			gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				
+		);
+		contentPanel.setLayout(gl_contentPanel);
+		{
+			JPanel buttonPane = new JPanel();
+			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+		}
+		
+		
+		JButton zoomInButton = new JButton("Zoom In");
+		zoomInButton.setBounds(1000, 0, 100, 25);
+		
+		zoomInButton.addMouseListener(new MouseAdapter() {
+			@Override
+			   public void mouseClicked(MouseEvent e) {
+				rowHeight=rowHeight+1;
+				columnWidth=columnWidth+1;
+				table.setZoom(rowHeight,columnWidth);
+				//makeGeneralTableIDU();
+				//LifeTimeTable.revalidate();
+				//tmpScrollPane.revalidate();
+				//LifeTimeTable.repaint();
+				//tmpScrollPane.repaint();
+				//lifeTimePanel.repaint();
+
+				
+			}
+		});
+		
+		JButton zoomOutButton = new JButton("Zoom Out");
+		zoomOutButton.setBounds(1110, 0, 100, 25);
+		
+		zoomOutButton.addMouseListener(new MouseAdapter() {
+			@Override
+			   public void mouseClicked(MouseEvent e) {
+				rowHeight=rowHeight-1;
+				columnWidth=columnWidth-1;
+				if(rowHeight<1){
+					rowHeight=1;
+				}
+				if (columnWidth<1) {
+					columnWidth=1;
+				}
+				table.setZoom(rowHeight,columnWidth);
+				
+			}
+		});
+		
+		
+		contentPanel.add(tmpScrollPane);
+		contentPanel.add(zoomInButton);
+		contentPanel.add(zoomOutButton);
+
+		
+		
+	}
+}

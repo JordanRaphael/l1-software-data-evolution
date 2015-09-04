@@ -7,6 +7,6 @@ import data.dataKeeper.GlobalDataKeeper;
 public interface ClusterExtractor {
 
 	public ClusterCollector extractAtMostKClusters(GlobalDataKeeper dataKeeper,
-			int numClusters,float birthWeight,float deathWeight, float changeWeight );
+			int numClusters,Double birthWeight,Double deathWeight, Double changeWeight );
 	
 }

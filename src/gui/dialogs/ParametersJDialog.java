@@ -37,9 +37,16 @@ public class ParametersJDialog extends JDialog {
 	private Boolean preprocessingChange=null;
 	private Integer numberOfPhases=null;
 	private Integer numberOfClusters=null;
+	private Double birthWeight=null;
+	private Double deathWeight=null;
+	private Double changeWeightCl=null;
+
 	private boolean confirm=false;
 	private JTextField textField;
 	private JTextField giveClustersTxtFields;
+	private JTextField birthWeightTxtF;
+	private JTextField changeWeightTxtF;
+	private JTextField deathWeightTxtF;
 	
 
 
@@ -95,13 +102,45 @@ public class ParametersJDialog extends JDialog {
 		
 		JLabel lblNewLabel_1 = new JLabel("Give Number of Clusters");
 		
+		
+		JLabel lblBirthWeight = new JLabel("Birth Weight");
+		
+		JLabel lblDeathWeight = new JLabel("Death Weight");
+		
+		JLabel lblChangeWeight = new JLabel("Change Weight");
+		
+		birthWeightTxtF = new JTextField();
+		birthWeightTxtF.setText("0.333");
+		birthWeightTxtF.setColumns(10);
+		
+		changeWeightTxtF = new JTextField();
+		changeWeightTxtF.setText("0.333");
+		changeWeightTxtF.setColumns(10);
+		
+		deathWeightTxtF = new JTextField();
+		deathWeightTxtF.setText("0.333");
+		deathWeightTxtF.setColumns(10);
+		
+
 		if(!clusters){
 			giveClustersTxtFields.setVisible(false);
 			lblNewLabel_1.setVisible(false);
+			lblChangeWeight.setVisible(false);
+			lblBirthWeight.setVisible(false);
+			lblDeathWeight.setVisible(false);
+			changeWeightTxtF.setVisible(false);
+			birthWeightTxtF.setVisible(false);
+			deathWeightTxtF.setVisible(false);
 		}
 		else{
 			giveClustersTxtFields.setVisible(true);
 			lblNewLabel_1.setVisible(true);
+			lblChangeWeight.setVisible(true);
+			lblBirthWeight.setVisible(true);
+			lblDeathWeight.setVisible(true);
+			changeWeightTxtF.setVisible(true);
+			birthWeightTxtF.setVisible(true);
+			deathWeightTxtF.setVisible(true);
 		}
 		
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
@@ -133,25 +172,38 @@ public class ParametersJDialog extends JDialog {
 										.addGroup(gl_contentPanel.createSequentialGroup()
 											.addGap(33)
 											.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-												.addComponent(lblNewLabel_1)
-												.addComponent(lblGiveNumberOf))))
-									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+												.addComponent(lblGiveNumberOf)
+												.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+													.addGroup(gl_contentPanel.createSequentialGroup()
+														.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+															.addComponent(lblChangeWeight)
+															.addGroup(gl_contentPanel.createSequentialGroup()
+																.addPreferredGap(ComponentPlacement.RELATED)
+																.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+																	.addComponent(lblDeathWeight)
+																	.addComponent(lblBirthWeight))))
+														.addPreferredGap(ComponentPlacement.UNRELATED)
+														.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+															.addGroup(gl_contentPanel.createSequentialGroup()
+																.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+																	.addComponent(birthWeightTxtF, GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+																	.addComponent(deathWeightTxtF, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
+																.addPreferredGap(ComponentPlacement.RELATED))
+															.addComponent(changeWeightTxtF, GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)))
+													.addComponent(lblNewLabel_1, Alignment.LEADING)))))
+									.addGap(83))
 								.addGroup(gl_contentPanel.createSequentialGroup()
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 										.addComponent(rdbtnOn)
-										.addGroup(gl_contentPanel.createSequentialGroup()
-											.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-												.addComponent(rdbtnOff)
-												.addComponent(rdbtnOn_1))
-											.addPreferredGap(ComponentPlacement.RELATED, 0, Short.MAX_VALUE)))
+										.addComponent(rdbtnOff)
+										.addComponent(rdbtnOn_1))
 									.addGap(111)
-									.addComponent(giveClustersTxtFields, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-									.addGap(62))))
+									.addComponent(giveClustersTxtFields, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))))
 						.addGroup(gl_contentPanel.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(rdbtnOff_1)))
-					.addGap(61))
+					.addContainerGap())
 		);
 		gl_contentPanel.setVerticalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
@@ -190,7 +242,19 @@ public class ParametersJDialog extends JDialog {
 							.addGap(7)
 							.addComponent(lblNewLabel_1)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(giveClustersTxtFields, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(giveClustersTxtFields, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblBirthWeight)
+								.addComponent(birthWeightTxtF, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(deathWeightTxtF, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblDeathWeight))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblChangeWeight)
+								.addComponent(changeWeightTxtF, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))))
 					.addGap(6))
 		);
 		contentPanel.setLayout(gl_contentPanel);
@@ -211,9 +275,16 @@ public class ParametersJDialog extends JDialog {
 							numberOfPhases=Integer.parseInt(textField.getText());
 						if(!giveClustersTxtFields.getText().isEmpty()){
 							numberOfClusters=Integer.parseInt(giveClustersTxtFields.getText());
-							System.out.println("LALALALALA"+numberOfClusters);
 						}
-						
+						if(!birthWeightTxtF.getText().isEmpty()){
+							birthWeight=Double.parseDouble(birthWeightTxtF.getText());
+						}
+						if(!deathWeightTxtF.getText().isEmpty()){
+							deathWeight=Double.parseDouble(deathWeightTxtF.getText());
+						}
+						if(!changeWeightTxtF.getText().isEmpty()){
+							changeWeightCl=Double.parseDouble(changeWeightTxtF.getText());
+						}
 						if(rdbtnOn.isSelected()){
 							preprocessingTime=true;
 						}
@@ -287,6 +358,21 @@ public class ParametersJDialog extends JDialog {
 	
 	public Integer getNumberOfClusters() {
 		return numberOfClusters;
+	}
+	
+	public Double getChangeWeightCluster(){
+		
+		return changeWeightCl; 
+	}
+	
+	public Double geBirthWeight(){
+		
+		return birthWeight; 
+	}
+
+	public Double getDeathWeight(){
+		
+		return deathWeight; 
 	}
 	
 	public boolean getPreProcessingTime(){
