@@ -3821,7 +3821,7 @@ private void makeZoomAreaTableForCluster() {
 	    detailedScrollPane.setViewportView(tmpLifeTimeTable);
 	    detailedScrollPane.setAlignmentX(0);
 	    detailedScrollPane.setAlignmentY(0);
-	    detailedScrollPane.setBounds(10,0,1280,680);
+	    detailedScrollPane.setBounds(0,0,1280,650);
 	    detailedScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 	    detailedScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
        

@@ -81,7 +81,6 @@ public class ClusterCollector {
 		 
 	}
 	
-	
 	public ArrayList<Cluster> getClusters(){
 		return clusters;
 	}
