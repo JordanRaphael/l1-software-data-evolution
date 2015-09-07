@@ -14,7 +14,6 @@ import gui.tableElements.TableConstructionPhasesClusterTables;
 import gui.tableElements.TableConstructionWithClusters;
 import gui.tableElements.TableConstructionZoomArea;
 import gui.tableElements.tableRenderers.IDUHeaderTableRenderer;
-import gui.tableElements.tableRenderers.IDUTableRenderer;
 import gui.treeElements.TreeConstructionGeneral;
 import gui.treeElements.TreeConstructionPhases;
 import gui.treeElements.TreeConstructionPhasesWithClusters;
@@ -29,22 +28,16 @@ import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
@@ -89,9 +82,6 @@ import tableClustering.engine.TableClusteringMainEngine;
 import algorithms.Algorithm;
 import algorithms.FindCoChanges;
 import data.dataKeeper.GlobalDataKeeper;
-import data.pplSqlSchema.PPLTable;
-import data.pplTransition.AtomicChange;
-import data.sorters.PPLTableSortingClass;
 import data.sorters.PldRowSorter;
 
 
@@ -260,7 +250,7 @@ public class Gui extends JFrame implements ActionListener{
 	public Gui() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		setResizable(true);
+		setResizable(false);
 		
 	
 		

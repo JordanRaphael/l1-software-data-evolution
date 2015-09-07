@@ -25,9 +25,9 @@ public class PldRowSorter {
 		
 	    //System.out.println(lala.entriesSortedByValues(globalDataKeeper.getAllPPLTables());
 	    Map<String, PPLTable> wtf=globalDataKeeper.getAllPPLTables();
-	    System.out.println(tablesSorter.entriesSortedByValues(wtf).size());
+	    System.out.println(tablesSorter.entriesSortedByBirthDeath(wtf).size());
 	    int counter=0;
-	    for(Map.Entry<String, PPLTable> ppl:tablesSorter.entriesSortedByValues(wtf)){
+	    for(Map.Entry<String, PPLTable> ppl:tablesSorter.entriesSortedByBirthDeath(wtf)){
 			System.out.println(ppl.getKey());
 			for(int i=0; i<finalRows.length; i++ ){
 				if (finalRows[i][0].equals(ppl.getKey())) {
