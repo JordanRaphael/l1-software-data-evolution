@@ -458,7 +458,7 @@ public class Gui extends JFrame implements ActionListener{
 						mainEngine.parseInput();		
 						System.out.println("\n\n\n");
 						mainEngine.extractPhases(numberOfPhases);
-						try {
+						/*try {
 							mainEngine.extractReportAssessment1();
 						} catch (IOException e) {
 							e.printStackTrace();
@@ -468,7 +468,7 @@ public class Gui extends JFrame implements ActionListener{
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-						
+						*/
 						mainEngine.connectTransitionsWithPhases(globalDataKeeper);
 						globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
 						
@@ -534,7 +534,7 @@ public class Gui extends JFrame implements ActionListener{
 						mainEngine.parseInput();		
 						System.out.println("\n\n\n");
 						mainEngine.extractPhases(numberOfPhases);
-						try {
+						/*try {
 							mainEngine.extractReportAssessment1();
 						} catch (IOException e) {
 							e.printStackTrace();
@@ -543,7 +543,7 @@ public class Gui extends JFrame implements ActionListener{
 							mainEngine.extractReportAssessment2();
 						} catch (IOException e) {
 							e.printStackTrace();
-						}
+						}*/
 						
 						mainEngine.connectTransitionsWithPhases(globalDataKeeper);
 						globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
@@ -2542,7 +2542,7 @@ private void makeZoomAreaTableForCluster() {
 		mainEngine.parseInput();		
 		System.out.println("\n\n\n");
 		mainEngine.extractPhases(numberOfPhases);
-		try {
+		/*try {
 			mainEngine.extractReportAssessment1();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -2553,8 +2553,8 @@ private void makeZoomAreaTableForCluster() {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		//}
+		}*/
+		
 		
 		/*try {
 			mainEngine.extractWinnersReport();
