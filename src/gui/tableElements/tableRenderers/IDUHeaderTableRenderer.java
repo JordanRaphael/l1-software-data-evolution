@@ -11,7 +11,12 @@ import javax.swing.table.TableCellRenderer;
 
 public class IDUHeaderTableRenderer extends JLabel implements TableCellRenderer {
 	 
-    public IDUHeaderTableRenderer() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public IDUHeaderTableRenderer() {
         setFont(new Font("Consolas", Font.BOLD, 14));
         setOpaque(true);
         setForeground(Color.WHITE);
