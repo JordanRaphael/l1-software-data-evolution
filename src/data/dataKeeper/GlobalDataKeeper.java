@@ -2,11 +2,7 @@ package data.dataKeeper;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.SortedSet;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 import phaseAnalyzer.commons.PhaseCollector;
 import tableClustering.commons.ClusterCollector;

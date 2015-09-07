@@ -2,8 +2,6 @@ package gui.tableElements;
 
 
 import javax.swing.JTable;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 import data.dataKeeper.GlobalDataKeeper;

@@ -1,19 +1,12 @@
 package gui.treeElements;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import phaseAnalyzer.commons.Phase;
 import tableClustering.commons.Cluster;
 import data.dataKeeper.GlobalDataKeeper;
-import data.pplSqlSchema.PPLSchema;
-import data.pplSqlSchema.PPLTable;
-import data.pplTransition.PPLTransition;
-import data.pplTransition.TableChange;
 
 public class TreeConstructionPhasesWithClusters implements TreeConstruction {
 	

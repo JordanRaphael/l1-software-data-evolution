@@ -7,16 +7,12 @@ import java.util.TreeMap;
 import phaseAnalyzer.commons.Phase;
 import tableClustering.commons.Cluster;
 import data.dataKeeper.GlobalDataKeeper;
-import data.pplSqlSchema.PPLSchema;
-import data.pplSqlSchema.PPLTable;
 import data.pplTransition.AtomicChange;
 import data.pplTransition.PPLTransition;
 import data.pplTransition.TableChange;
 
 public class TableConstructionWithClusters implements Pld{
 	
-	private static TreeMap<String,PPLSchema> allPPLSchemas=new TreeMap<String,PPLSchema>();
-	private ArrayList<PPLTable>	tables=new ArrayList<PPLTable>();
 	//private TreeMap<Integer,PPLTransition> allPPLTransitions = new TreeMap<Integer,PPLTransition>();
 	private ArrayList<Phase> phases = new ArrayList<Phase>();
 	private ArrayList<Cluster> clusters = new ArrayList<Cluster>();
@@ -32,7 +28,7 @@ public class TableConstructionWithClusters implements Pld{
 	
 	public TableConstructionWithClusters(GlobalDataKeeper globalDataKeeper){
 		
-		allPPLSchemas=globalDataKeeper.getAllPPLSchemas();
+		globalDataKeeper.getAllPPLSchemas();
 		phases=globalDataKeeper.getPhaseCollectors().get(0).getPhases();
 		clusters=globalDataKeeper.getClusterCollectors().get(0).getClusters();
 		
@@ -83,7 +79,6 @@ public String[] constructColumns(){
 	public String[][] constructRows(){
 		
 		ArrayList<String[]> allRows=new ArrayList<String[]>();
-	    ArrayList<String>	allTables=new ArrayList<String>();
 			
 		for(int j=0; j<clusters.size(); j++){
 			
@@ -299,30 +294,6 @@ public String[] constructColumns(){
 		return segmentSize;
 	}
 	
-	private boolean getNumOfAttributesOfNextSchema(String schema,String table){
-		PPLSchema sc=allPPLSchemas.get(schema);
-		
-		/*for(int i=0; i<allPPLSchemas.size(); i++){
-			if(allPPLSchemas.get(i).getName().equals(schema)){
-				sc=allPPLSchemas.get(schema);
-				break;
-			}
-		}*/
-		
-		if(sc.getTables().containsKey(table)){
-			return true;
-		}
-		else {
-			return false;
-		}
-		/*
-		for(int i=0;i<sc.getTables().size();i++){
-			if(sc.getTableAt(i).getName().equals(table)){
-				num=sc.getTableAt(i).getAttrs().size();
-				return num;
-			}
-		}
-		return num;*/
-	}
+	
 
 }

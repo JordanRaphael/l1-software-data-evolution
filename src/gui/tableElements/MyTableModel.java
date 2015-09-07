@@ -1,7 +1,5 @@
 package gui.tableElements;
 
-import java.awt.Font;
-
 import javax.swing.table.AbstractTableModel;
 
 public class MyTableModel extends AbstractTableModel {

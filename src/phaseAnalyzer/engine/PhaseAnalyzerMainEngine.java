@@ -1,10 +1,6 @@
 package phaseAnalyzer.engine;
 
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -27,8 +23,8 @@ public class PhaseAnalyzerMainEngine {
 		preProcessingChange=tmpPreProcessingChange;
 		
 		this.inputCsv=inputCsv;
-		this.outputAssessment1=outputAssessment1;
-		this.outputAssessment2=outputAssessment2;
+		//this.outputAssessment1=outputAssessment1;
+		//this.outputAssessment2=outputAssessment2;
 		
 		parserFactory = new ParserFactory();
 		parser = parserFactory.createParser("SimpleTextParser");
@@ -83,7 +79,7 @@ public class PhaseAnalyzerMainEngine {
 		allPhaseCollectors.put(inputCsv, phaseCollectors);
 		//phaseCollector = phaseExtractor.extractAtMostKPhases(transitionHistory, numPhases);
 	}
-	
+	/*
 	public void extractReportAssessment1() throws IOException{
 		String report="";
 		System.out.println("!!:"+phaseCollectors.size());
@@ -194,7 +190,7 @@ public class PhaseAnalyzerMainEngine {
 
 		
 	}
-	/*
+	
 	public void extractWinnersReport() throws IOException{
 		String folder = new String("output/");
 
@@ -270,13 +266,12 @@ public class PhaseAnalyzerMainEngine {
 	private PhaseExtractorFactory phaseExtractorFactory;
 	private IPhaseExtractor phaseExtractor;
 	private TransitionHistory transitionHistory;
-	//private PhaseCollector phaseCollector;
-	//private String report;
+	
 	private ArrayList<PhaseCollector> phaseCollectors;
 	private HashMap<String,ArrayList<PhaseCollector>> allPhaseCollectors;
 	private String inputCsv;
-	private String outputAssessment1;
-	private String outputAssessment2;
+	//private String outputAssessment1;
+	//private String outputAssessment2;
 	private float timeWeight;
 	private float changeWeight;
 	private boolean preProcessingTime;

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.sun.org.apache.bcel.internal.classfile.PMGClass;
-
 import data.dataKeeper.GlobalDataKeeper;
 import data.pplSqlSchema.PPLSchema;
 import data.pplSqlSchema.PPLTable;
