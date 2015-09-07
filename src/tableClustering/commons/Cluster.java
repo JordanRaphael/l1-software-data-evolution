@@ -145,14 +145,14 @@ public class Cluster {
 	public String toString(){
 		
 
-		String toReturn="Cluster: ";
+		String toReturn="Cluster";
 		
 		
-		toReturn=toReturn+this.birth+"\t"+this.death+"\t"+this.totalChanges+"\n";
+		toReturn=toReturn+"\t"+this.birth+"\t"+this.death+"\t"+this.totalChanges+"\n";
 		
 		
 		for(Map.Entry<String, PPLTable> t: this.tables.entrySet()){
-			toReturn=toReturn+t.getKey()+"\t"+t.getValue().getBirth()+"\t"+t.getValue().getDeath()+"\t"+t.getValue().getTotalChanges()+"\n";
+			toReturn=toReturn+t.getKey()+"\t"+t.getValue().getBirthVersionID()+"\t"+t.getValue().getDeathVersionID()+"\t"+t.getValue().getTotalChanges()+"\n";
 		}
 		
 		

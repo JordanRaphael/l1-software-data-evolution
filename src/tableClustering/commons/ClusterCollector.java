@@ -52,7 +52,30 @@ public class ClusterCollector {
 		 
 		 
 	}
+	
+	public void sortClustersByBirthDeath(){
 		
+		 Collections.sort(clusters, new Comparator<Cluster>() {
+		        @Override
+		        public int compare(final Cluster object1, final Cluster object2) {
+		        	if (object1.getBirth()<object2.getBirth()) {
+						return -1;
+					}
+		        	else if(object1.getBirth()>object2.getBirth()){
+		        		return 1;
+		        	}
+		        	else{
+		        		
+				            return Integer.compare(object1.getDeath(),object2.getDeath());
+			        	
+		        	}
+		        }
+		       } );
+		 
+		 
+	}
+	
+	
 	public void sortClustersByBirthDeathChanges(){
 		
 		 Collections.sort(clusters, new Comparator<Cluster>() {
@@ -72,7 +95,7 @@ public class ClusterCollector {
 			        		return 1;
 			        	}
 			        	else{
-				            return Integer.compare(object1.getBirth(),object2.getBirth());
+				            return Integer.compare(object1.getTotalChanges(),object2.getTotalChanges());
 			        	}
 		        	}
 		        }
@@ -80,7 +103,6 @@ public class ClusterCollector {
 		 
 		 
 	}
-	
 	
 	public ArrayList<Cluster> getClusters(){
 		return clusters;

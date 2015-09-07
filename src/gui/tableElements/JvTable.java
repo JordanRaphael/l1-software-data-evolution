@@ -1,27 +1,27 @@
 package gui.tableElements;
 
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-
 import javax.swing.JTable;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 import data.dataKeeper.GlobalDataKeeper;
 
 public class JvTable extends JTable {
 
-    //private int originalRowHeight=1;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	//private int originalRowHeight=1;
    // private float zoomFactor = 1.0f;
-	private Dimension initialIntercellSpacing=new Dimension();
 
     public JvTable(TableModel dataModel)
     {
         super(dataModel);
-        initialIntercellSpacing=super.getIntercellSpacing();
     }
 
   
@@ -96,5 +96,6 @@ public class JvTable extends JTable {
 		}
         firePropertyChange("uniformly", 1500, 5000);
     }
+   
     
 }
