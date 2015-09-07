@@ -43,6 +43,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
@@ -87,7 +89,10 @@ import tableClustering.engine.TableClusteringMainEngine;
 import algorithms.Algorithm;
 import algorithms.FindCoChanges;
 import data.dataKeeper.GlobalDataKeeper;
+import data.pplSqlSchema.PPLTable;
 import data.pplTransition.AtomicChange;
+import data.sorters.PPLTableSortingClass;
+import data.sorters.PldRowSorter;
 
 
 public class Gui extends JFrame implements ActionListener{
@@ -255,7 +260,7 @@ public class Gui extends JFrame implements ActionListener{
 	public Gui() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		setResizable(false);
+		setResizable(true);
 		
 	
 		
@@ -2068,6 +2073,11 @@ public class Gui extends JFrame implements ActionListener{
 	}
 	
 private void makeGeneralTableIDU() {
+	
+		PldRowSorter sorter=new PldRowSorter(finalRowsZoomArea,globalDataKeeper);
+		
+		finalRowsZoomArea=sorter.sortRows();
+	    
 		showingPld=true;
 		//uniformlyDistributedButton.setVisible(false);
 		zoomInButton.setVisible(true);
@@ -2312,7 +2322,7 @@ private void makeGeneralTableIDU() {
 		        catch(Exception e){
 		        		
 
-		        	
+		        	System.out.println(row+" "+column);
 	        		if(tmpValue.equals("")){
 	        			c.setBackground(Color.GRAY);
 	        			return c; 
@@ -2880,7 +2890,7 @@ private void makeGeneralTablePhases() {
     
 	lifeTimePanel.setCursor(getCursor());
 	lifeTimePanel.add(tmpScrollPane);
-	
+    
 	
 	
 }

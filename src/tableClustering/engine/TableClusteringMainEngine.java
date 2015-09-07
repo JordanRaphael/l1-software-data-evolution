@@ -42,7 +42,7 @@ public class TableClusteringMainEngine {
 		System.out.println("extractClusters"+numClusters);
 		ClusterCollector clusterCollector = new ClusterCollector();
 		clusterCollector = clusterExtractor.extractAtMostKClusters(dataKeeper, numClusters, birthWeight, deathWeight, changeWeight);
-		clusterCollector.sortClustersByBirth();
+		clusterCollector.sortClustersByBirthDeath();
 		clusterCollectors.add(clusterCollector);
 		
 		allClusterCollectors.add(clusterCollector);

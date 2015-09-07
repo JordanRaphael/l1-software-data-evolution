@@ -2,31 +2,24 @@ package gui.dialogs;
 
 import gui.tableElements.JvTable;
 import gui.tableElements.MyTableModel;
-import gui.tableElements.tableRenderers.IDUHeaderTableRenderer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 
 public class EnlargeTable extends JDialog {
 
@@ -34,7 +27,7 @@ public class EnlargeTable extends JDialog {
 	private String[][] finalRowsZoomArea;
 	private String[] finalColumnsZoomArea;
 	private JvTable table;
-	private int rowHeight=1;
+	private int rowHeight=10;
 	private int columnWidth=1;
 	private Integer[] segmentSize=new Integer[3];
 	private JScrollPane tmpScrollPane;
@@ -49,6 +42,7 @@ public class EnlargeTable extends JDialog {
 		//setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPanel.setLayout(new BorderLayout());
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		
 		int numberOfColumns=finalRowsZoomArea[0].length;
@@ -88,7 +82,7 @@ public class EnlargeTable extends JDialog {
 		
 		for(int i=0; i<generalTable.getColumnCount(); i++){
 			if(i==0){
-				generalTable.getColumnModel().getColumn(0).setPreferredWidth(columnWidth);
+				generalTable.getColumnModel().getColumn(0).setPreferredWidth(60);
 				//generalTable.getColumnModel().getColumn(0).setMaxWidth(columnWidth);
 				//generalTable.getColumnModel().getColumn(0).setMinWidth(columnWidth);
 			}
@@ -191,7 +185,7 @@ public class EnlargeTable extends JDialog {
 	    
 	    
 	    
-	    
+	    /*
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
@@ -207,7 +201,10 @@ public class EnlargeTable extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 		}
-		
+		*/
+	    
+	    contentPanel.add(tmpScrollPane, BorderLayout.CENTER);
+
 		
 		JButton zoomInButton = new JButton("Zoom In");
 		zoomInButton.setBounds(1000, 0, 100, 25);
@@ -248,10 +245,14 @@ public class EnlargeTable extends JDialog {
 			}
 		});
 		
+		JPanel subPanel = new JPanel();
+
+		subPanel.add( zoomInButton);
+		subPanel.add( zoomOutButton);
+		//contentPanel.add(tmpScrollPane);
+		contentPanel.add(subPanel,BorderLayout.NORTH);
 		
-		contentPanel.add(tmpScrollPane);
-		contentPanel.add(zoomInButton);
-		contentPanel.add(zoomOutButton);
+		//contentPanel.add(zoomOutButton,BorderLayout.NORTH);
 
 		
 		

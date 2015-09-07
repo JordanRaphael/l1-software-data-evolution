@@ -28,7 +28,6 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 		ClusterCollector currentSolution = new ClusterCollector();
 		currentSolution = this.newClusterCollector(initSolution, birthWeight, deathWeight, changeWeight,dataKeeper.getAllPPLSchemas().size()-1);
 		while (currentSolution.getClusters().size() > numClusters){
-
 			currentSolution = this.newClusterCollector(currentSolution, birthWeight, deathWeight, changeWeight,dataKeeper.getAllPPLSchemas().size()-1);
 		}
 		return currentSolution;
@@ -40,6 +39,7 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 		ClusterCollector newCollector = new ClusterCollector();
 		ArrayList<Cluster> newClusters = new ArrayList<Cluster>();
 		ArrayList<Cluster> oldClusters = prevCollector.getClusters();
+
 		int oldSize = oldClusters.size();
 		if (oldSize == 0){
 			
@@ -49,46 +49,65 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 
 		//compute the distances for all the bloody phases
 		//TODO add it at phase collector to move on !$#@$#%$^$%&%&
-		double distances[] = new double[oldSize];
-		distances[0] = Double.MAX_VALUE;
-		int pI = 0;
+		double distances[][] = new double[oldSize][oldSize];
+		//distances[0] = Double.MAX_VALUE;
 		
-	    Iterator<Cluster> clusterIter = oldClusters.iterator();
-	    Cluster previousCluster = clusterIter.next();
-	    while (clusterIter.hasNext()){
-	      Cluster c = clusterIter.next();
-	      pI++;
-	      distances[pI] = c.distance(previousCluster,birthWeight,deathWeight,changeWeight,dbDuration);
-	      
-	      previousCluster = c;
-	    }
+	    for(int oldI=0; oldI<oldClusters.size(); oldI++){
+	    	Cluster currentCluster=oldClusters.get(oldI);
+		    for(int oldI1=0; oldI1<oldClusters.size(); oldI1++){
+	    		Cluster clusterToCompare=oldClusters.get(oldI1);
+	    		distances[oldI][oldI1] = currentCluster.distance(clusterToCompare,birthWeight,deathWeight,changeWeight,dbDuration);
+	    		//System.out.println(distances[oldI][oldI1]+" "+ oldI+" "+oldI1);
 
-
-		//find the two most similar phases in the old collection
-	    int posI=-1; double minDist = Double.MAX_VALUE;
-	    for(int i=1; i<oldSize; i++){
-	    	if(distances[i]<minDist){
-	    		posI = i;
-	    		minDist = distances[i];
+	    		//previousCluster = c;
 	    	}
 	    }
+	    
+	    for(int i=0; i<distances.length; i++){
+	    	for(int j=0; j<distances[0].length; j++){
+		    	//System.out.print(distances[i][j]+"\t");
+		    }
+	    	//System.out.println("\n");
+	    }
+	    
+		//find the two most similar phases in the old collection
+	    
+	    int posI=-1; 
+	    double minDist = Double.MAX_VALUE;
+	    int posJ=-1;
+	    for(int i=0; i<oldSize; i++){
+	    	 for(int j=0; j<oldSize; j++){
+	    		if(i!=j){
+			    	if(distances[i][j]<minDist){
+			    		posI = i;
+			    		posJ = j;
+			    		minDist = distances[i][j];
+	
+			    	}
+	    		}
+	    	 }
+	    }
+	    
+
 	    //merge them in a new phase. Merge posI with its PREVIOUS (ATTN!!)
-		Cluster toMerge = oldClusters.get(posI-1);
-		Cluster newCluster = toMerge.mergeWithNextCluster(oldClusters.get(posI));
+		Cluster toMerge = oldClusters.get(posI);
+		Cluster newCluster = toMerge.mergeWithNextCluster(oldClusters.get(posJ));
 		//System.out.println("HUE:"+newCluster.getBirth()+"\t"+newCluster.getDeath());
-		for(int i=0; i < posI-1; i++){
-			Cluster c = oldClusters.get(i);
-			newClusters.add(c);
+		for(int i=0; i < oldSize; i++){
+			if(i!=posI && i!=posJ){
+				Cluster c = oldClusters.get(i);
+				newClusters.add(c);
+			}
 		}
 		//add the new i_new = merge(i,i+1) to the new phases
 		newClusters.add(newCluster);
 		//add the i+1, .. last to the new phases
-		if(posI<oldSize-1){
-			for(int i=posI+1; i < oldSize; i++){
-				Cluster c = oldClusters.get(i);
-				newClusters.add(c);
-			}		
-		}
+//		if(posI<oldSize-1){
+//			for(int i=posI+1; i < oldSize; i++){
+//				Cluster c = oldClusters.get(i);
+//				newClusters.add(c);
+//			}		
+//		}
 		newCollector.setClusters(newClusters);
 
 		return newCollector;
