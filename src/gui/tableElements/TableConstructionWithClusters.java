@@ -5,11 +5,11 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import phaseAnalyzer.commons.Phase;
-import tableClustering.commons.Cluster;
+import tableClustering.clusterExtractor.commons.Cluster;
 import data.dataKeeper.GlobalDataKeeper;
-import data.pplTransition.AtomicChange;
-import data.pplTransition.PPLTransition;
-import data.pplTransition.TableChange;
+import data.dataPPL.pplTransition.AtomicChange;
+import data.dataPPL.pplTransition.PPLTransition;
+import data.dataPPL.pplTransition.TableChange;
 
 public class TableConstructionWithClusters implements Pld{
 	

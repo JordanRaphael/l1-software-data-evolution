@@ -93,11 +93,11 @@ public class ParametersJDialog extends JDialog {
 		JLabel lblGiveNumberOf = new JLabel("Give Number of Phases");
 		
 		textField = new JTextField();
-		textField.setText("10");
+		textField.setText("56");
 		textField.setColumns(10);
 		
 		giveClustersTxtFields = new JTextField();
-		giveClustersTxtFields.setText("10");
+		giveClustersTxtFields.setText("14");
 		giveClustersTxtFields.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Give Number of Clusters");

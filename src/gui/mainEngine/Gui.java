@@ -27,9 +27,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -64,9 +66,10 @@ import javax.swing.tree.TreePath;
 import org.antlr.v4.runtime.RecognitionException;
 
 import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
-import tableClustering.engine.TableClusteringMainEngine;
+import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
+import tableClustering.clusterValidator.engine.ClusterValidatorMainEngine;
 import data.dataKeeper.GlobalDataKeeper;
-import data.sorters.PldRowSorter;
+import data.dataSorters.PldRowSorter;
 
 
 public class Gui extends JFrame implements ActionListener{
@@ -565,6 +568,10 @@ public class Gui extends JFrame implements ActionListener{
 							tabbedPane.setSelectedIndex(0);
 							makeGeneralTablePhases();
 							fillClustersTree();
+							
+							ClusterValidatorMainEngine lala = new ClusterValidatorMainEngine(globalDataKeeper);
+							lala.run();
+							
 						}
 						else{
 							JOptionPane.showMessageDialog(null, "Extract Phases first");
@@ -896,7 +903,6 @@ public class Gui extends JFrame implements ActionListener{
 			end=globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(wholeCol-1).getEndPos();
 		}
 
-		System.out.println(start);
 
 		
 		if(wholeCol!=-1){
@@ -1058,7 +1064,6 @@ public class Gui extends JFrame implements ActionListener{
 		        catch(Exception e){
 		        		
 
-		        	System.out.println(row+" "+column);
 	        		if(tmpValue.equals("")){
 	        			c.setBackground(Color.GRAY);
 	        			return c; 
@@ -2508,8 +2513,6 @@ private void makeZoomAreaTableForCluster() {
 		final String[] columns=table.constructColumns();
 		final String[][] rows=table.constructRows();
 		segmentSize=table.getSegmentSize();
-		System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
-		System.out.println("C: "+columns.length+" R: "+rows.length);
 
 		finalColumnsZoomArea=columns;
 		finalRowsZoomArea=rows;
@@ -2565,7 +2568,6 @@ private void makeZoomAreaTableForCluster() {
 		
 		mainEngine.connectTransitionsWithPhases(globalDataKeeper);
 		globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
-		System.out.println("HOW MANY?"+globalDataKeeper.getPhaseCollectors().get(0).getSize());
 		TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,b,d,c);
 		mainEngine2.extractClusters(numberOfClusters);
 		globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
@@ -2576,15 +2578,67 @@ private void makeZoomAreaTableForCluster() {
 			final String[] columnsP=tableP.constructColumns();
 			final String[][] rowsP=tableP.constructRows();
 			segmentSize=tableP.getSegmentSize();
-			System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
-			System.out.println("CP: "+columnsP.length+" RP: "+rowsP.length);
-
 			finalColumns=columnsP;
 			finalRows=rowsP;
 			tabbedPane.setSelectedIndex(0);
 			makeGeneralTablePhases();
 			fillClustersTree();
 		}
+		System.out.println("Schemas:"+globalDataKeeper.getAllPPLSchemas().size());
+		System.out.println("Transitions:"+globalDataKeeper.getAllPPLTransitions().size());
+		System.out.println("Tables:"+globalDataKeeper.getAllPPLTables().size());
+
+		ClusterValidatorMainEngine lala = new ClusterValidatorMainEngine(globalDataKeeper);
+		lala.run();
+		optimize();
+
+	}
+	
+	public void optimize(){
+		
+		String lalaString="Birth Weight:"+"\tDeath Weight:"+"\tChange Weight:"+"\tTotal Cohesion:"+"\tTotal Separation:"+"\n";
+		int counter=0;
+		for(double wb=0.0; wb<=1.0; wb=wb+0.01){
+			
+			for(double wd=(1.0-wb); wd>=0.0; wd=wd-0.01){
+				
+					double wc=1.0-(wb+wd);
+					TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,wb,wd,wc);
+					mainEngine2.extractClusters(numberOfClusters);
+					globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
+					
+					ClusterValidatorMainEngine lala = new ClusterValidatorMainEngine(globalDataKeeper);
+					lala.run();
+					
+					lalaString=lalaString+wb+"\t"+wd+"\t"+wc
+							+"\t"+lala.getTotalCohesion()+"\t"+lala.getTotalSeparation()+"\t"+(wb+wd+wc)+"\n";
+			
+					counter++;
+					System.err.println(counter);
+				
+				
+			}
+			
+			
+			
+		}
+		
+		FileWriter fw;
+		try {
+			fw = new FileWriter("lala.csv");
+			
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(lalaString);
+			bw.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		System.out.println(lalaString);
+		
 		
 	}
 	
@@ -2767,13 +2821,7 @@ private void makeZoomAreaTableForCluster() {
 		 
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
+		
 	
 }

@@ -9,9 +9,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import phaseAnalyzer.commons.Phase;
 import data.dataKeeper.GlobalDataKeeper;
-import data.pplSqlSchema.PPLSchema;
-import data.pplTransition.PPLTransition;
-import data.pplTransition.TableChange;
+import data.dataPPL.pplSQLSchema.PPLSchema;
+import data.dataPPL.pplTransition.PPLTransition;
+import data.dataPPL.pplTransition.TableChange;
 
 public class TreeConstructionPhases implements TreeConstruction {
 	
