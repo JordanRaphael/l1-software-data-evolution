@@ -5,11 +5,11 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import data.dataKeeper.GlobalDataKeeper;
-import data.pplSqlSchema.PPLSchema;
-import data.pplSqlSchema.PPLTable;
-import data.pplTransition.AtomicChange;
-import data.pplTransition.PPLTransition;
-import data.pplTransition.TableChange;
+import data.dataPPL.pplSQLSchema.PPLSchema;
+import data.dataPPL.pplSQLSchema.PPLTable;
+import data.dataPPL.pplTransition.AtomicChange;
+import data.dataPPL.pplTransition.PPLTransition;
+import data.dataPPL.pplTransition.TableChange;
 
 public class TableConstructionAllSquaresIncluded implements Pld {
 	

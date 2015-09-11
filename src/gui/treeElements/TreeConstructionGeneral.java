@@ -7,8 +7,8 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import data.dataKeeper.GlobalDataKeeper;
-import data.pplSqlSchema.PPLSchema;
-import data.pplSqlSchema.PPLTable;
+import data.dataPPL.pplSQLSchema.PPLSchema;
+import data.dataPPL.pplSQLSchema.PPLTable;
 
 public class TreeConstructionGeneral {
 

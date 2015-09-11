@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import tableClustering.commons.Cluster;
+import tableClustering.clusterExtractor.commons.Cluster;
 import data.dataKeeper.GlobalDataKeeper;
 
 public class TreeConstructionPhasesWithClusters implements TreeConstruction {

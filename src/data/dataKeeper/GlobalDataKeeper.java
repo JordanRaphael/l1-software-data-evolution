@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 import phaseAnalyzer.commons.PhaseCollector;
-import tableClustering.commons.ClusterCollector;
-import data.pplSqlSchema.PPLSchema;
-import data.pplSqlSchema.PPLTable;
-import data.pplTransition.AtomicChange;
-import data.pplTransition.PPLTransition;
-import data.pplTransition.TableChange;
-import dataProccessing.DiffFromTwoSchemas;
-import dataProccessing.Worker;
+import tableClustering.clusterExtractor.commons.ClusterCollector;
+import data.dataPPL.pplSQLSchema.PPLSchema;
+import data.dataPPL.pplSQLSchema.PPLTable;
+import data.dataPPL.pplTransition.AtomicChange;
+import data.dataPPL.pplTransition.PPLTransition;
+import data.dataPPL.pplTransition.TableChange;
+import data.dataProccessing.DiffFromTwoSchemas;
+import data.dataProccessing.Worker;
 
 public class GlobalDataKeeper {
 
