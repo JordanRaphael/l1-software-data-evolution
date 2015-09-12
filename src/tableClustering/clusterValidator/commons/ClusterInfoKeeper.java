@@ -1,12 +1,17 @@
 package tableClustering.clusterValidator.commons;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
 import data.dataPPL.pplSQLSchema.PPLTable;
 import tableClustering.clusterExtractor.commons.Cluster;
-import tableClustering.clusterValidator.clusterValidityMetrics.clusterMetrics.ClusterCohesionMetric;
-import tableClustering.clusterValidator.clusterValidityMetrics.clusterMetrics.ClusterSeparationMetric;
+import tableClustering.clusterValidator.clusterValidityMetrics.externalEvaluation.externalClusterMetrics.ClusterEntropyMetric;
+import tableClustering.clusterValidator.clusterValidityMetrics.externalEvaluation.externalClusterMetrics.ExternalClusterMetric;
+import tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalClusterMetrics.ClusterCohesionMetric;
+import tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalClusterMetrics.ClusterSeparationMetric;
+import tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalClusterMetrics.InternalClusterMetrics;
+
 
 public class ClusterInfoKeeper {
 	
@@ -15,6 +20,8 @@ public class ClusterInfoKeeper {
 	private Centroid overallCentroid=null;
 	private Double clusterCohesion = null;
 	private Double clusterSeparation = null;
+	private Double clusterEntropy = null;
+
 
 	
 	public ClusterInfoKeeper(Cluster cluster,Centroid overallCentroid){
@@ -33,6 +40,7 @@ public class ClusterInfoKeeper {
 		initializeCentroid();
 		computeClusterCohesion();
 		computeClusterSeparation();
+		//computeClusterEntropy();
 		
 		
 	}
@@ -61,7 +69,7 @@ public class ClusterInfoKeeper {
 	
 	private void computeClusterCohesion(){
 		
-		ClusterCohesionMetric cohesionMetricCalculator = new ClusterCohesionMetric(this);
+		InternalClusterMetrics cohesionMetricCalculator = new ClusterCohesionMetric(this);
 		cohesionMetricCalculator.computeMetric();
 		clusterCohesion=cohesionMetricCalculator.getResult();
 		//System.out.println(clusterCohesion);
@@ -70,10 +78,19 @@ public class ClusterInfoKeeper {
 	
 	private void computeClusterSeparation(){
 		
-		ClusterSeparationMetric separationMetricCalculator = new ClusterSeparationMetric(clusterCentroid,overallCentroid);
+		InternalClusterMetrics separationMetricCalculator = new ClusterSeparationMetric(clusterCentroid,overallCentroid);
 		separationMetricCalculator.computeMetric();
 		clusterSeparation=(double)this.cluster.getTables().size()*separationMetricCalculator.getResult();
 		//System.out.println(clusterSeparation+"\n");
+		
+	}
+	
+	public void computeClusterEntropy(ArrayList<ClassOfObjects> classesOfObjects,ArrayList<Cluster> clusters,int classIndex){
+		
+		ExternalClusterMetric entropyMetricCalculator = new ClusterEntropyMetric(classesOfObjects,this.cluster,clusters,classIndex);
+		entropyMetricCalculator.compute();
+		clusterEntropy = entropyMetricCalculator.getResult();
+		//System.err.println("-------------->"+clusterEntropy);
 		
 	}
 	
@@ -91,6 +108,10 @@ public class ClusterInfoKeeper {
 	
 	public Double getClusterSeparation() {
 		return clusterSeparation;
+	}
+	
+	public Double getClusterEntropy() {
+		return clusterEntropy;
 	}
 
 }

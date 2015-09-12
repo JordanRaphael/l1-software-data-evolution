@@ -1,11 +1,11 @@
-package tableClustering.clusterValidator.clusterValidityMetrics.totalMetrics;
+package tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalTotalMetrics;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import tableClustering.clusterValidator.commons.ClusterInfoKeeper;
 
-public class TotalSeparationMetric implements TotalMetrics {
+public class TotalSeparationMetric implements InternalTotalMetrics {
 
 	private ArrayList<ClusterInfoKeeper> clusterInfoKeepers = new ArrayList<ClusterInfoKeeper>();
 	private Double totalSeparation=null;
@@ -29,7 +29,7 @@ public class TotalSeparationMetric implements TotalMetrics {
 			
 			totalSeparation= totalSeparation + currClusterInfoKeeper.getClusterSeparation();
 		}
-		System.err.println(totalSeparation);
+		//System.err.println(totalSeparation);
 
 	}
 	

@@ -1,4 +1,4 @@
-package tableClustering.clusterValidator.clusterValidityMetrics.totalMetrics;
+package tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalTotalMetrics;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,7 +10,7 @@ import tableClustering.clusterExtractor.commons.Cluster;
 import tableClustering.clusterValidator.commons.Centroid;
 import tableClustering.clusterValidator.commons.ClusterInfoKeeper;
 
-public class TotalCohesionMetric implements TotalMetrics {
+public class TotalCohesionMetric implements InternalTotalMetrics {
 
 	private ArrayList<ClusterInfoKeeper> clusterInfoKeepers = new ArrayList<ClusterInfoKeeper>();
 	private Double totalCohesion=null;
@@ -35,7 +35,7 @@ public class TotalCohesionMetric implements TotalMetrics {
 			totalCohesion= totalCohesion + currClusterInfoKeeper.getClusterCohesion();
 			
 		}
-		System.err.println(totalCohesion);
+		//System.err.println(totalCohesion);
 
 	}
 

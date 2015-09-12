@@ -1,4 +1,4 @@
-package tableClustering.clusterValidator.clusterValidityMetrics.clusterMetrics;
+package tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalClusterMetrics;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -8,7 +8,7 @@ import tableClustering.clusterValidator.commons.Centroid;
 import tableClustering.clusterValidator.commons.ClusterInfoKeeper;
 import data.dataPPL.pplSQLSchema.PPLTable;
 
-public class ClusterCohesionMetric implements ClusterMetrics {
+public class ClusterCohesionMetric implements InternalClusterMetrics {
 	
 	ClusterInfoKeeper clusterInfoKeeper = null;
 	private Double sumClusterCohesion = null;

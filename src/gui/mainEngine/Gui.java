@@ -569,8 +569,15 @@ public class Gui extends JFrame implements ActionListener{
 							makeGeneralTablePhases();
 							fillClustersTree();
 							
-							ClusterValidatorMainEngine lala = new ClusterValidatorMainEngine(globalDataKeeper);
-							lala.run();
+							ClusterValidatorMainEngine lala;
+							try {
+								lala = new ClusterValidatorMainEngine(globalDataKeeper);
+								lala.run();
+
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							
 						}
 						else{
@@ -2588,13 +2595,20 @@ private void makeZoomAreaTableForCluster() {
 		System.out.println("Transitions:"+globalDataKeeper.getAllPPLTransitions().size());
 		System.out.println("Tables:"+globalDataKeeper.getAllPPLTables().size());
 
-		ClusterValidatorMainEngine lala = new ClusterValidatorMainEngine(globalDataKeeper);
-		lala.run();
-		optimize();
+		ClusterValidatorMainEngine lala;
+		try {
+			lala = new ClusterValidatorMainEngine(globalDataKeeper);
+			lala.run();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//optimize();
 
 	}
 	
-	public void optimize(){
+	public void optimize() throws IOException{
 		
 		String lalaString="Birth Weight:"+"\tDeath Weight:"+"\tChange Weight:"+"\tTotal Cohesion:"+"\tTotal Separation:"+"\n";
 		int counter=0;
