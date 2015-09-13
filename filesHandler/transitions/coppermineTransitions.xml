@@ -606,17 +606,43 @@
                 <fKey/>
             </table>
             <attribute>
-                <name> (&#xD;
-  </name>
-                <type>SID` INT(11) NOT NULL AUTO_INCREMENT,&#xD;
-  `PID` VARCHAR(100) NOT NULL DEFAULT '',&#xD;
-  `IP` VARCHAR(20) NOT NULL DEFAULT '',&#xD;
-  `SEARCH_PHRASE` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
-  `SDATE` BIGINT(20) NOT NULL DEFAULT '0',&#xD;
-  `REFERER` TEXT NOT NULL,&#xD;
-  `BROWSER` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
-  `OS` VARCHAR(50) NOT NULL DEFAULT '',&#xD;
-  PRIMARY KEY  (`SID</type>
+                <name>browser</name>
+                <type>VARCHAR(255)</type>
+                <isKey>false</isKey>
+            </attribute>
+            <attribute>
+                <name>ip</name>
+                <type>VARCHAR(20)</type>
+                <isKey>false</isKey>
+            </attribute>
+            <attribute>
+                <name>os</name>
+                <type>VARCHAR(50)</type>
+                <isKey>false</isKey>
+            </attribute>
+            <attribute>
+                <name>pid</name>
+                <type>VARCHAR(100)</type>
+                <isKey>false</isKey>
+            </attribute>
+            <attribute>
+                <name>referer</name>
+                <type>TEXT</type>
+                <isKey>false</isKey>
+            </attribute>
+            <attribute>
+                <name>sdate</name>
+                <type>BIGINT(20)</type>
+                <isKey>false</isKey>
+            </attribute>
+            <attribute>
+                <name>search_phrase</name>
+                <type>VARCHAR(255)</type>
+                <isKey>false</isKey>
+            </attribute>
+            <attribute>
+                <name>sid</name>
+                <type>INT(11)</type>
                 <isKey>false</isKey>
             </attribute>
         </insersion>
@@ -671,362 +697,9 @@
         </insersion>
     </transition>
     <transition oldVersion="1096977771.sql" newVersion="1097150148.sql"/>
-    <transition oldVersion="1097150148.sql" newVersion="1097253895.sql">
-        <deletion type="UpdateTable">
-            <table>
-                <name>CPG_hit_stats</name>
-                <pKey>
-                    <mode>0</mode>
-                </pKey>
-                <fKey/>
-            </table>
-            <attribute>
-                <name> (&#xD;
-  </name>
-                <type>SID` INT(11) NOT NULL AUTO_INCREMENT,&#xD;
-  `PID` VARCHAR(100) NOT NULL DEFAULT '',&#xD;
-  `IP` VARCHAR(20) NOT NULL DEFAULT '',&#xD;
-  `SEARCH_PHRASE` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
-  `SDATE` BIGINT(20) NOT NULL DEFAULT '0',&#xD;
-  `REFERER` TEXT NOT NULL,&#xD;
-  `BROWSER` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
-  `OS` VARCHAR(50) NOT NULL DEFAULT '',&#xD;
-  PRIMARY KEY  (`SID</type>
-                <isKey>false</isKey>
-            </attribute>
-        </deletion>
-        <insersion type="UpdateTable">
-            <table>
-                <name>CPG_hit_stats</name>
-                <pKey>
-                    <mode>0</mode>
-                </pKey>
-                <fKey/>
-            </table>
-            <attribute>
-                <name>browser</name>
-                <type>VARCHAR(255)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>ip</name>
-                <type>VARCHAR(20)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>os</name>
-                <type>VARCHAR(50)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>pid</name>
-                <type>VARCHAR(100)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>referer</name>
-                <type>TEXT</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>sdate</name>
-                <type>BIGINT(20)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>search_phrase</name>
-                <type>VARCHAR(255)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>sid</name>
-                <type>INT(11)</type>
-                <isKey>false</isKey>
-            </attribute>
-        </insersion>
-    </transition>
-    <transition oldVersion="1097253895.sql" newVersion="1099322400.sql">
-        <insersion type="UpdateTable">
-            <table>
-                <name>CPG_bridge</name>
-                <pKey>
-                    <mode>0</mode>
-                </pKey>
-                <fKey/>
-            </table>
-            <attribute>
-                <name>(name)&#xD;
-) TYPE=MyISAM;&#xD;
-&#xD;
-#&#xD;
-# Table structure for table 'CPG_vote_stats&#xD;
-#&#xD;
-CREATE TABLE </name>
-                <type>CPG_VOTE_STATS` (&#xD;
-  `SID` INT(11) NOT NULL AUTO_INCREMENT,&#xD;
-  `PID` VARCHAR(100) NOT NULL DEFAULT '',&#xD;
-  `RATING` SMALLINT(6) NOT NULL DEFAULT '0',&#xD;
-  `IP` VARCHAR(20) NOT NULL DEFAULT '',&#xD;
-  `SDATE` BIGINT(20) NOT NULL DEFAULT '0',&#xD;
-  `REFERER` TEXT NOT NULL,&#xD;
-  `BROWSER` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
-  `OS` VARCHAR(50) NOT NULL DEFAULT '',&#xD;
-  PRIMARY KEY  (`SID`)&#xD;
-);&#xD;
-&#xD;
-CREATE TABLE `CPG_HIT_STATS` (&#xD;
-  `SID` INT(11) NOT NULL AUTO_INCREMENT,&#xD;
-  `PID` VARCHAR(100) NOT NULL DEFAULT '',&#xD;
-  `IP` VARCHAR(20) NOT NULL DEFAULT '',&#xD;
-  `SEARCH_PHRASE` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
-  `SDATE` BIGINT(20) NOT NULL DEFAULT '0',&#xD;
-  `REFERER` TEXT NOT NULL,&#xD;
-  `BROWSER` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
-  `OS` VARCHAR(50) NOT NULL DEFAULT '',&#xD;
-  PRIMARY KEY  (`SID</type>
-                <isKey>false</isKey>
-            </attribute>
-        </insersion>
-        <deletion type="DeleteTable">
-            <table>
-                <name>CPG_hit_stats</name>
-                <pKey>
-                    <mode>0</mode>
-                </pKey>
-                <fKey/>
-            </table>
-            <attribute>
-                <name>browser</name>
-                <type>VARCHAR(255)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>ip</name>
-                <type>VARCHAR(20)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>os</name>
-                <type>VARCHAR(50)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>pid</name>
-                <type>VARCHAR(100)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>referer</name>
-                <type>TEXT</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>sdate</name>
-                <type>BIGINT(20)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>search_phrase</name>
-                <type>VARCHAR(255)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>sid</name>
-                <type>INT(11)</type>
-                <isKey>false</isKey>
-            </attribute>
-        </deletion>
-        <deletion type="DeleteTable">
-            <table>
-                <name>CPG_vote_stats</name>
-                <pKey>
-                    <mode>0</mode>
-                </pKey>
-                <fKey/>
-            </table>
-            <attribute>
-                <name>browser</name>
-                <type>VARCHAR(255)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>ip</name>
-                <type>VARCHAR(20)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>os</name>
-                <type>VARCHAR(50)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>pid</name>
-                <type>VARCHAR(100)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>rating</name>
-                <type>SMALLINT(6)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>referer</name>
-                <type>TEXT</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>sdate</name>
-                <type>BIGINT(20)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>sid</name>
-                <type>INT(11)</type>
-                <isKey>false</isKey>
-            </attribute>
-        </deletion>
-    </transition>
-    <transition oldVersion="1099322400.sql" newVersion="1100284292.sql">
-        <deletion type="UpdateTable">
-            <table>
-                <name>CPG_bridge</name>
-                <pKey>
-                    <mode>0</mode>
-                </pKey>
-                <fKey/>
-            </table>
-            <attribute>
-                <name>(name)&#xD;
-) TYPE=MyISAM;&#xD;
-&#xD;
-#&#xD;
-# Table structure for table 'CPG_vote_stats&#xD;
-#&#xD;
-CREATE TABLE </name>
-                <type>CPG_VOTE_STATS` (&#xD;
-  `SID` INT(11) NOT NULL AUTO_INCREMENT,&#xD;
-  `PID` VARCHAR(100) NOT NULL DEFAULT '',&#xD;
-  `RATING` SMALLINT(6) NOT NULL DEFAULT '0',&#xD;
-  `IP` VARCHAR(20) NOT NULL DEFAULT '',&#xD;
-  `SDATE` BIGINT(20) NOT NULL DEFAULT '0',&#xD;
-  `REFERER` TEXT NOT NULL,&#xD;
-  `BROWSER` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
-  `OS` VARCHAR(50) NOT NULL DEFAULT '',&#xD;
-  PRIMARY KEY  (`SID`)&#xD;
-);&#xD;
-&#xD;
-CREATE TABLE `CPG_HIT_STATS` (&#xD;
-  `SID` INT(11) NOT NULL AUTO_INCREMENT,&#xD;
-  `PID` VARCHAR(100) NOT NULL DEFAULT '',&#xD;
-  `IP` VARCHAR(20) NOT NULL DEFAULT '',&#xD;
-  `SEARCH_PHRASE` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
-  `SDATE` BIGINT(20) NOT NULL DEFAULT '0',&#xD;
-  `REFERER` TEXT NOT NULL,&#xD;
-  `BROWSER` VARCHAR(255) NOT NULL DEFAULT '',&#xD;
-  `OS` VARCHAR(50) NOT NULL DEFAULT '',&#xD;
-  PRIMARY KEY  (`SID</type>
-                <isKey>false</isKey>
-            </attribute>
-        </deletion>
-        <insersion type="NewTable">
-            <table>
-                <name>CPG_hit_stats</name>
-                <pKey>
-                    <mode>0</mode>
-                </pKey>
-                <fKey/>
-            </table>
-            <attribute>
-                <name>browser</name>
-                <type>VARCHAR(255)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>ip</name>
-                <type>VARCHAR(20)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>os</name>
-                <type>VARCHAR(50)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>pid</name>
-                <type>VARCHAR(100)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>referer</name>
-                <type>TEXT</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>sdate</name>
-                <type>BIGINT(20)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>search_phrase</name>
-                <type>VARCHAR(255)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>sid</name>
-                <type>INT(11)</type>
-                <isKey>false</isKey>
-            </attribute>
-        </insersion>
-        <insersion type="NewTable">
-            <table>
-                <name>CPG_vote_stats</name>
-                <pKey>
-                    <mode>0</mode>
-                </pKey>
-                <fKey/>
-            </table>
-            <attribute>
-                <name>browser</name>
-                <type>VARCHAR(255)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>ip</name>
-                <type>VARCHAR(20)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>os</name>
-                <type>VARCHAR(50)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>pid</name>
-                <type>VARCHAR(100)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>rating</name>
-                <type>SMALLINT(6)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>referer</name>
-                <type>TEXT</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>sdate</name>
-                <type>BIGINT(20)</type>
-                <isKey>false</isKey>
-            </attribute>
-            <attribute>
-                <name>sid</name>
-                <type>INT(11)</type>
-                <isKey>false</isKey>
-            </attribute>
-        </insersion>
-    </transition>
+    <transition oldVersion="1097150148.sql" newVersion="1097253895.sql"/>
+    <transition oldVersion="1097253895.sql" newVersion="1099322400.sql"/>
+    <transition oldVersion="1099322400.sql" newVersion="1100284292.sql"/>
     <transition oldVersion="1100284292.sql" newVersion="1102847057.sql"/>
     <transition oldVersion="1102847057.sql" newVersion="1104391042.sql"/>
     <transition oldVersion="1104391042.sql" newVersion="1106708446.sql">

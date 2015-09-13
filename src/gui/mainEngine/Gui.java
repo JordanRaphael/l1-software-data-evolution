@@ -569,8 +569,15 @@ public class Gui extends JFrame implements ActionListener{
 							makeGeneralTablePhases();
 							fillClustersTree();
 							
-							ClusterValidatorMainEngine lala = new ClusterValidatorMainEngine(globalDataKeeper);
-							lala.run();
+							ClusterValidatorMainEngine lala;
+							try {
+								lala = new ClusterValidatorMainEngine(globalDataKeeper);
+								lala.run();
+
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							
 						}
 						else{
@@ -2588,13 +2595,30 @@ private void makeZoomAreaTableForCluster() {
 		System.out.println("Transitions:"+globalDataKeeper.getAllPPLTransitions().size());
 		System.out.println("Tables:"+globalDataKeeper.getAllPPLTables().size());
 
-		ClusterValidatorMainEngine lala = new ClusterValidatorMainEngine(globalDataKeeper);
-		lala.run();
-		optimize();
+		/*ClusterValidatorMainEngine lala;
+		try {
+			lala = new ClusterValidatorMainEngine(globalDataKeeper);
+			lala.run();
+			//lala.getExternalEvaluationReport();
+			getExternalValidityReport(lala.getExternalEvaluationReport());
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		//optimize();
+		/*
+		try {
+			getExternalValidityReport();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
 
 	}
 	
-	public void optimize(){
+	public void optimize() throws IOException{
 		
 		String lalaString="Birth Weight:"+"\tDeath Weight:"+"\tChange Weight:"+"\tTotal Cohesion:"+"\tTotal Separation:"+"\n";
 		int counter=0;
@@ -2641,6 +2665,66 @@ private void makeZoomAreaTableForCluster() {
 		
 		
 	}
+	
+	public void getExternalValidityReport() throws IOException{
+		
+		String lalaString="Birth Weight:"+"\tDeath Weight:"+"\tChange Weight:"+"\n";
+		int counter=0;
+		
+		TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,0.333,0.333,0.333);
+		mainEngine2.extractClusters(4);
+		globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
+		
+		ClusterValidatorMainEngine lala = new ClusterValidatorMainEngine(globalDataKeeper);
+		lala.run();
+		
+		lalaString=lalaString+"\n"+"0.333"+"\t"+"0.333"+"\t"+"0.333"
+				+"\n"+lala.getExternalEvaluationReport();
+		
+		for(double wb=0.0; wb<=1.0; wb=wb+0.5){
+			
+			for(double wd=(1.0-wb); wd>=0.0; wd=wd-0.5){
+				
+					double wc=1.0-(wb+wd);
+					mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,wb,wd,wc);
+					mainEngine2.extractClusters(4);
+					globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
+					
+					lala = new ClusterValidatorMainEngine(globalDataKeeper);
+					lala.run();
+					
+					lalaString=lalaString+"\n"+wb+"\t"+wd+"\t"+wc
+							+"\n"+lala.getExternalEvaluationReport();
+			
+					counter++;
+					System.err.println(counter);
+				
+				
+			}
+			
+			
+			
+		}
+		
+		FileWriter fw;
+		try {
+			fw = new FileWriter("lala.csv");
+			
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(lalaString);
+			bw.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		System.out.println(lalaString);
+		
+		
+	}
+	
 	
 	public void fillTree(){
 		
