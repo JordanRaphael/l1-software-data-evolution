@@ -7,6 +7,9 @@ import java.util.TreeMap;
 import data.dataPPL.pplSQLSchema.PPLTable;
 import tableClustering.clusterExtractor.commons.Cluster;
 import tableClustering.clusterValidator.clusterValidityMetrics.externalEvaluation.externalClusterMetrics.ClusterEntropyMetric;
+import tableClustering.clusterValidator.clusterValidityMetrics.externalEvaluation.externalClusterMetrics.ClusterFMeasureMetric;
+import tableClustering.clusterValidator.clusterValidityMetrics.externalEvaluation.externalClusterMetrics.ClusterPrecisionMetric;
+import tableClustering.clusterValidator.clusterValidityMetrics.externalEvaluation.externalClusterMetrics.ClusterRecallMetric;
 import tableClustering.clusterValidator.clusterValidityMetrics.externalEvaluation.externalClusterMetrics.ExternalClusterMetric;
 import tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalClusterMetrics.ClusterCohesionMetric;
 import tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalClusterMetrics.ClusterSeparationMetric;
@@ -21,6 +24,9 @@ public class ClusterInfoKeeper {
 	private Double clusterCohesion = null;
 	private Double clusterSeparation = null;
 	private Double clusterEntropy = null;
+	private ArrayList<Double> precisions = new ArrayList<Double>();
+	private ArrayList<Double> recalls = new ArrayList<Double>();
+	private ArrayList<Double> fMeasures = new ArrayList<Double>();
 
 
 	
@@ -30,11 +36,12 @@ public class ClusterInfoKeeper {
 		initialize();
 	}
 	
+	/*
 	public ClusterInfoKeeper(){
 		this.cluster=cluster;
 		initialize();
 	}
-	
+	*/
 	private void initialize(){
 		
 		initializeCentroid();
@@ -94,6 +101,39 @@ public class ClusterInfoKeeper {
 		
 	}
 	
+	public void computeClusterPrecision(ArrayList<ClassOfObjects> classesOfObjects){
+		
+		ExternalClusterMetric precisionMetricCalculator;
+		for(int i=0; i<classesOfObjects.size(); i++){
+			precisionMetricCalculator = new ClusterPrecisionMetric(this.cluster,classesOfObjects.get(i));
+			precisionMetricCalculator.compute();
+			precisions.add(precisionMetricCalculator.getResult());
+		}
+		
+	}
+	
+	public void computeClusterRecall(ArrayList<ClassOfObjects> classesOfObjects){
+		
+		ExternalClusterMetric recallMetricCalculator;
+		for(int i=0; i<classesOfObjects.size(); i++){
+			recallMetricCalculator = new ClusterRecallMetric(this.cluster,classesOfObjects.get(i));
+			recallMetricCalculator.compute();
+			recalls.add(recallMetricCalculator.getResult());
+		}
+				
+	}
+	
+	public void computeClusterFMeasure(){
+		
+		ExternalClusterMetric fMeasureMetricCalculator;
+		for(int i=0; i<precisions.size(); i++){
+			fMeasureMetricCalculator = new ClusterFMeasureMetric(precisions.get(i),recalls.get(i));
+			fMeasureMetricCalculator.compute();
+			fMeasures.add(fMeasureMetricCalculator.getResult());
+		}
+				
+	}
+	
 	public Cluster getCluster(){
 		return this.cluster;
 	}
@@ -114,4 +154,16 @@ public class ClusterInfoKeeper {
 		return clusterEntropy;
 	}
 
+	public ArrayList<Double> getPrecisions(){
+		return precisions;
+	}
+	
+	public ArrayList<Double> getRecalls(){
+		return recalls;
+	}
+	
+	public ArrayList<Double> getFmeasures(){
+		return fMeasures;
+	}
+	
 }

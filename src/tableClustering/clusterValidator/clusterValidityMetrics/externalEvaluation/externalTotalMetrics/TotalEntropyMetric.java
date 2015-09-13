@@ -26,7 +26,6 @@ public class TotalEntropyMetric implements ExternalTotalMetrics {
 			totalEntropy = totalEntropy+ valueToAdd;
 		}
 		
-		System.err.println(totalEntropy);
 		
 	}
 

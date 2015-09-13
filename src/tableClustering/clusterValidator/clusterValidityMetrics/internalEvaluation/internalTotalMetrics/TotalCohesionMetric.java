@@ -35,7 +35,7 @@ public class TotalCohesionMetric implements InternalTotalMetrics {
 			totalCohesion= totalCohesion + currClusterInfoKeeper.getClusterCohesion();
 			
 		}
-		//System.err.println(totalCohesion);
+		System.err.println("Total Cohesion:"+totalCohesion);
 
 	}
 

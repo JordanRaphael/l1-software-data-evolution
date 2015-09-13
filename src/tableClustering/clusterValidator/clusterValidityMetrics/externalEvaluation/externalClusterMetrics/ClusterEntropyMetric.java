@@ -62,20 +62,15 @@ public class ClusterEntropyMetric implements ExternalClusterMetric {
 			
 			pij=mij/mi;
 			
-			
-			//System.out.println("pij*"+pij * (Math.log(pij)/Math.log(2.0d)));
-			if(mij!=0){
-				//System.out.println("PIJ"+pij);
-				//System.out.println("log:"+(double)Math.log(pij)/Math.log(2));
+			if(mi!=0 && mij!=0){
+				
 				ei = ei + (pij * (Math.log(pij)/Math.log(2.0d)));
 
 			}
 			
-			
 		}
 		
 		clusterEntropy = -ei;
-		//System.out.println("clEn"+clusterEntropy);
 	}
 
 	@Override

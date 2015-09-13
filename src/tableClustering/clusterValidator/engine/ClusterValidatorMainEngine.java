@@ -75,6 +75,9 @@ public class ClusterValidatorMainEngine {
 			
 			ClusterInfoKeeper clusterInfoKeeper = new ClusterInfoKeeper(clusterIterator.next(),overallCentroid);
 			clusterInfoKeeper.computeClusterEntropy(classesOfObjects, clusters, classIndex);
+			clusterInfoKeeper.computeClusterPrecision(classesOfObjects);
+			clusterInfoKeeper.computeClusterRecall(classesOfObjects);
+			clusterInfoKeeper.computeClusterFMeasure();
 			clusterInfoKeepers.add(clusterInfoKeeper);
 			
 			classIndex++;
@@ -105,7 +108,7 @@ public class ClusterValidatorMainEngine {
 	
 	private void initializeClassesOfObjects() throws IOException{
 		
-		BufferedReader br = new BufferedReader(new FileReader("filesHandler/input/classesForValidity.csv"));
+		BufferedReader br = new BufferedReader(new FileReader("filesHandler/input/phpbbclassesForValidity.csv"));
 		//File f = new File("input/classesForValidity.csv");
 	
 		
@@ -137,9 +140,7 @@ public class ClusterValidatorMainEngine {
 
 		br.close();
 		
-		for(int i=0; i<classesOfObjects.size(); i++){
-			System.out.println(classesOfObjects.get(i).toString());
-		}
+		
 		
 	}
 	
@@ -155,6 +156,48 @@ public class ClusterValidatorMainEngine {
 		return totalEntropy;
 	}
 	
+	public String getExternalEvaluationReport(){
+		String toReturn="Total Entropy:\t"+totalEntropy+"\n\t";
+		
+		for(int j=0; j<classesOfObjects.size(); j++){
+			toReturn = toReturn + "Class "+ (j+1)+"\t";
+		}
+		toReturn = toReturn+"\n"+"Precision"+"\n";
+		for(int i=0; i<clusterInfoKeepers.size(); i++){
+			
+			toReturn=toReturn+"Cluster "+i+"\t";
+			ArrayList<Double> precisions = clusterInfoKeepers.get(i).getPrecisions();
+			for(int j=0; j<precisions.size(); j++){
+				toReturn = toReturn + precisions.get(j)+"\t";
+			}
+			toReturn = toReturn +"\n";
+		}
+		toReturn = toReturn+"Recall"+"\n";
+		for(int i=0; i<clusterInfoKeepers.size(); i++){
+			
+			toReturn=toReturn+"Cluster "+i+"\t";
+			ArrayList<Double> recalls = clusterInfoKeepers.get(i).getRecalls();
+			for(int j=0; j<recalls.size(); j++){
+				toReturn = toReturn + recalls.get(j)+"\t";
+			}
+			toReturn = toReturn +"\n";
+		}
+		toReturn = toReturn+"F-Measure"+"\n";
+		for(int i=0; i<clusterInfoKeepers.size(); i++){
+			
+			toReturn=toReturn+"Cluster "+i+"\t";
+			ArrayList<Double> fMeasures = clusterInfoKeepers.get(i).getFmeasures();
+			for(int j=0; j<fMeasures.size(); j++){
+				toReturn = toReturn + fMeasures.get(j)+"\t";
+			}
+			toReturn = toReturn +"\n";
+		}
+		
+			
+		
+		//System.out.println(toReturn);
+		return toReturn;
+	}
 	
 	
 }

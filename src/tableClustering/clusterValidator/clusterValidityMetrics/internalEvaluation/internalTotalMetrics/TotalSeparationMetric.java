@@ -29,7 +29,7 @@ public class TotalSeparationMetric implements InternalTotalMetrics {
 			
 			totalSeparation= totalSeparation + currClusterInfoKeeper.getClusterSeparation();
 		}
-		//System.err.println(totalSeparation);
+		System.err.println("Total Separation"+totalSeparation);
 
 	}
 	
