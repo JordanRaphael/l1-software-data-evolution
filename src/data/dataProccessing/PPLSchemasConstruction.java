@@ -57,7 +57,7 @@ public class PPLSchemasConstruction {
 				
 				for (Map.Entry<String, Attribute> a : tmpHecAttributes.entrySet()) {
 
-					PPLAttribute tmpPPLAttribute = new PPLAttribute(tmpPPLTable,a.getValue());
+					PPLAttribute tmpPPLAttribute = new PPLAttribute(a.getValue());
 					
 					tmpPPLTable.addAttribute(tmpPPLAttribute);
 					
