@@ -8,60 +8,60 @@
   </package>  
   <package id="2" language="java" name="data.dataProccessing" project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/data/dataProccessing" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="589" y="475"/>    
+    <position height="-1" width="-1" x="513" y="451"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <package id="3" language="java" name="data.dataPPL" project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/data/dataPPL" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="123" y="448"/>    
+    <position height="-1" width="-1" x="185" y="389"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <package id="4" language="java" name="data.dataSorters" project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/data/dataSorters" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="319" y="252"/>    
+    <position height="-1" width="-1" x="342" y="263"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <package id="5" language="java" name="data.dataPPL.pplTransition" project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/data/dataPPL/pplTransition" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="306" y="503"/>    
+    <position height="-1" width="-1" x="610" y="577"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <package id="6" language="java" name="data.dataPPL.pplSQLSchema" project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/data/dataPPL/pplSQLSchema" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="316" y="393"/>    
+    <position height="-1" width="-1" x="275" y="513"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <dependency id="7">    
     <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="2"/>  
+    <end type="TARGET" refId="5"/>  
   </dependency>  
   <dependency id="8">    
-    <end type="SOURCE" refId="4"/>    
+    <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="6"/>  
   </dependency>  
   <dependency id="9">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="5"/>  
-  </dependency>  
-  <dependency id="10">    
-    <end type="SOURCE" refId="1"/>    
+    <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="6"/>  
   </dependency>  
-  <dependency id="11">    
-    <end type="SOURCE" refId="6"/>    
+  <dependency id="10">    
+    <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="11">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
   </dependency>  
   <dependency id="12">    
     <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="1"/>  
   </dependency>  
   <dependency id="13">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="5"/>  
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="6"/>  
   </dependency>  
   <dependency id="14">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="6"/>  
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="5"/>  
   </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    

@@ -4,7 +4,7 @@
   <class id="1" language="java" name="phaseAnalyzer.analysis.BottomUpPhaseExtractor" project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/phaseAnalyzer/analysis/BottomUpPhaseExtractor.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="477" y="158"/>    
+    <position height="-1" width="-1" x="510" y="325"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -13,7 +13,7 @@
   </class>  
   <interface id="2" language="java" name="phaseAnalyzer.analysis.IPhaseExtractor" project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/phaseAnalyzer/analysis/IPhaseExtractor.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="80" width="499" x="498" y="312"/>    
+    <position height="-1" width="-1" x="509" y="104"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -23,24 +23,24 @@
   <class id="3" language="java" name="phaseAnalyzer.analysis.PhaseExtractorFactory" project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/phaseAnalyzer/analysis/PhaseExtractorFactory.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="98" width="272" x="725" y="-72"/>    
+    <position height="-1" width="-1" x="920" y="8"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <dependency id="4">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="1"/>  
-  </dependency>  
-  <realization id="5">    
+  <realization id="4">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="2"/>  
   </realization>  
-  <dependency id="6">    
+  <dependency id="5">    
     <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="6">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="1"/>  
   </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    

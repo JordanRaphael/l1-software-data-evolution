@@ -3,7 +3,7 @@
   associations="true" dependencies="true" nesting-relationships="true">  
   <interface id="1" language="java" name="phaseAnalyzer.parser.IParser" project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/phaseAnalyzer/parser/IParser.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="80" width="227" x="512" y="315"/>    
+    <position height="-1" width="-1" x="445" y="206"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,7 @@
   </interface>  
   <class id="2" language="java" name="phaseAnalyzer.parser.ParserFactory" project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/phaseAnalyzer/parser/ParserFactory.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="629" y="86"/>    
+    <position height="-1" width="-1" x="685" y="119"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,24 +21,24 @@
   </class>  
   <class id="3" language="java" name="phaseAnalyzer.parser.SimpleTextParser" project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/phaseAnalyzer/parser/SimpleTextParser.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="98" width="227" x="313" y="177"/>    
+    <position height="-1" width="-1" x="448" y="358"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <realization id="4">    
+  <dependency id="4">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <realization id="5">    
     <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="1"/>  
   </realization>  
-  <dependency id="5">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="1"/>  
-  </dependency>  
   <dependency id="6">    
     <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="3"/>  
+    <end type="TARGET" refId="1"/>  
   </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
