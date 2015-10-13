@@ -93,7 +93,6 @@ public class CreateProjectJDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				
 				JFileChooser fcDatasetTxt = new JFileChooser();
-				//fcOpen1.setCurrentDirectory(dir);
 				int returnValDatasetTxt = fcDatasetTxt.showDialog(CreateProjectJDialog.this, "Create");
 				
 				if (returnValDatasetTxt == JFileChooser.APPROVE_OPTION) {
@@ -102,12 +101,6 @@ public class CreateProjectJDialog extends JDialog {
 		            System.out.println(file.toString());
 		            textFieldDatasetTxt.setText(file.toString());
 
-		            //project=file.getName();
-		            //fileName=file.toString();
-		            //System.out.println("!!"+project);
-		          
-
-				
 				}
 				else{
 					return;
@@ -121,7 +114,6 @@ public class CreateProjectJDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				
 				JFileChooser fcInputCsv = new JFileChooser();
-				//fcOpen1.setCurrentDirectory(dir);
 				int returnValInputCsv = fcInputCsv.showDialog(CreateProjectJDialog.this, "Create");
 				
 				if (returnValInputCsv == JFileChooser.APPROVE_OPTION) {
@@ -130,12 +122,6 @@ public class CreateProjectJDialog extends JDialog {
 		            System.out.println(file.toString());
 		            textFieldInputCsv.setText(file.toString());
 
-		            //project=file.getName();
-		            //fileName=file.toString();
-		            //System.out.println("!!"+project);
-		          
-
-				
 				}
 				else{
 					return;
@@ -149,7 +135,6 @@ public class CreateProjectJDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				
 				JFileChooser fcAss1 = new JFileChooser();
-				//fcOpen1.setCurrentDirectory(dir);
 				int returnValAss1 = fcAss1.showDialog(CreateProjectJDialog.this, "Create");
 				
 				if (returnValAss1 == JFileChooser.APPROVE_OPTION) {
@@ -158,12 +143,6 @@ public class CreateProjectJDialog extends JDialog {
 		            System.out.println(file.toString());
 		            textFieldAss1.setText(file.toString());
 
-		            //project=file.getName();
-		            //fileName=file.toString();
-		            //System.out.println("!!"+project);
-		          
-
-				
 				}
 				else{
 					return;
@@ -177,7 +156,6 @@ public class CreateProjectJDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				
 				JFileChooser fcAss2 = new JFileChooser();
-				//fcOpen1.setCurrentDirectory(dir);
 				int returnValAss2 = fcAss2.showDialog(CreateProjectJDialog.this, "Create");
 				
 				if (returnValAss2 == JFileChooser.APPROVE_OPTION) {
@@ -186,12 +164,7 @@ public class CreateProjectJDialog extends JDialog {
 		            System.out.println(file.toString());
 		            textFieldAss2.setText(file.toString());
 
-		            //project=file.getName();
-		            //fileName=file.toString();
-		            //System.out.println("!!"+project);
-		          
-
-				
+		            
 				}
 				else{
 					return;
@@ -205,7 +178,6 @@ public class CreateProjectJDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				
 				JFileChooser fcTransXml = new JFileChooser();
-				//fcOpen1.setCurrentDirectory(dir);
 				int returnValTransXml = fcTransXml.showDialog(CreateProjectJDialog.this, "Create");
 				
 				if (returnValTransXml == JFileChooser.APPROVE_OPTION) {
@@ -213,13 +185,7 @@ public class CreateProjectJDialog extends JDialog {
 		            File file = fcTransXml.getSelectedFile();
 		            System.out.println(file.toString());
 		            textFieldTransXml.setText(file.toString());
-
-		            //project=file.getName();
-		            //fileName=file.toString();
-		            //System.out.println("!!"+project);
-		          
-
-				
+		            
 				}
 				else{
 					return;

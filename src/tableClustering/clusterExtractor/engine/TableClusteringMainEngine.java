@@ -18,8 +18,6 @@ public class TableClusteringMainEngine {
 	private ClusterExtractor clusterExtractor;
 	private ArrayList<ClusterCollector> allClusterCollectors;
 
-
-
 	public TableClusteringMainEngine(GlobalDataKeeper dataKeeper,Double birthWeight, Double deathWeight,
 			Double changeWeight){
 		
@@ -33,11 +31,10 @@ public class TableClusteringMainEngine {
 		
 		allClusterCollectors = new ArrayList<ClusterCollector>();
 
-		
 	}
 	
 	public void extractClusters(int numClusters){
-		//report=new String("");
+		
 		clusterCollectors = new ArrayList<ClusterCollector>();
 		ClusterCollector clusterCollector = new ClusterCollector();
 		clusterCollector = clusterExtractor.extractAtMostKClusters(dataKeeper, numClusters, birthWeight, deathWeight, changeWeight);

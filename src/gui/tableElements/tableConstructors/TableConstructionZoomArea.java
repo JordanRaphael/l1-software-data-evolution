@@ -1,4 +1,4 @@
-package gui.tableElements;
+package gui.tableElements.tableConstructors;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -11,7 +11,7 @@ import data.dataPPL.pplTransition.AtomicChange;
 import data.dataPPL.pplTransition.PPLTransition;
 import data.dataPPL.pplTransition.TableChange;
 
-public class TableConstructionZoomArea implements Pld {
+public class TableConstructionZoomArea implements PldConstruction {
 
 	private static TreeMap<String,PPLSchema> allPPLSchemas=new TreeMap<String,PPLSchema>();
 	private static TreeMap<String,PPLSchema> selectedPPLSchemas=new TreeMap<String,PPLSchema>();
@@ -27,10 +27,12 @@ public class TableConstructionZoomArea implements Pld {
 	private int maxDeletions=1;
 	private int maxInsersions=1;
 	private int maxUpdates=1;
-	private Integer segmentSize[]=new Integer[3];
+	private int maxTotalChangesForOneTr=1;
+
+	private Integer segmentSize[]=new Integer[4];
 	
 	public TableConstructionZoomArea(GlobalDataKeeper globalDataKeeper,ArrayList<String> sSelectedTables,int selectedColumn){
-		
+		System.err.println("Here?");
 		this.globalDataKeeper=globalDataKeeper;
 		allPPLSchemas=globalDataKeeper.getAllPPLSchemas();
 		this.sSelectedTables=sSelectedTables;
@@ -51,11 +53,7 @@ public class TableConstructionZoomArea implements Pld {
 			pplTransitions=globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(selectedColumn-1).getPhasePPLTransitions();
 
 		}
-		/*
-		for (Map.Entry<Integer,PPLTransition> pplTr : pplTransitions.entrySet()) {
-			System.out.println(pplTr.getKey());
-		}
-		*/
+		
 	}
 	
 	private void fillSelectedPPLSchemas(){
@@ -65,10 +63,6 @@ public class TableConstructionZoomArea implements Pld {
 			selectedPPLSchemas.put(pplTr.getValue().getOldVersionName(), allPPLSchemas.get(pplTr.getValue().getOldVersionName()));
 			
 		}
-		/*for (Map.Entry<String,PPLSchema> pplSc : selectedPPLSchemas.entrySet()) {
-			System.out.println(pplSc.getKey());
-		}*/
-		
 		
 	}
 	
@@ -77,10 +71,6 @@ public class TableConstructionZoomArea implements Pld {
 		for(int i=0; i<sSelectedTables.size(); i++){
 			selectedTables.put(sSelectedTables.get(i),this.globalDataKeeper.getAllPPLTables().get(sSelectedTables.get(i)) );
 		}
-		
-		/*for (Map.Entry<String,PPLTable> pplTab : selectedTables.entrySet()) {
-			System.out.println(pplTab.getKey());
-		}*/
 		
 	}
 	
@@ -100,9 +90,7 @@ public class TableConstructionZoomArea implements Pld {
 			}
 		}
 		
-		
 		columnsList.add("Table name");
-		
 		
 		for (Map.Entry<Integer,PPLTransition> pplTr : pplTransitions.entrySet()) {
 			
@@ -122,7 +110,6 @@ public class TableConstructionZoomArea implements Pld {
 		
 		return(tmpcolumns);
 		
-		
 	}
 	
 	public String[][] constructRows(){
@@ -130,25 +117,12 @@ public class TableConstructionZoomArea implements Pld {
 		ArrayList<String[]> allRows=new ArrayList<String[]>();
 	    ArrayList<String>	allTables=new ArrayList<String>();
 
-		
 		int found=0;
-		//int i=0;
 		
-		//for (Map.Entry<String,PPLSchema> pplSc : selectedPPLSchemas.entrySet()) {
-			
-			//PPLSchema oneSchema=pplSc.getValue();
-			
-			
-			//for(int j=0; j<oneSchema.getTables().size(); j++){
 			for(Map.Entry<String, PPLTable> oneTable:selectedTables.entrySet()){
 				
-					
-				
-					//PPLTable oneTable=oneSchema.getTableAt(j);
-					
 					String tmpTableName=oneTable.getKey();
 					for(int k=0; k<allTables.size(); k++){
-						
 						
 						if(!tmpTableName.equals(allTables.get(k))){
 							found=0;
@@ -168,7 +142,6 @@ public class TableConstructionZoomArea implements Pld {
 						tables.add(oneTable.getValue());
 						String[] tmpOneRow=constructOneRow(oneTable.getValue());
 						allRows.add(tmpOneRow);
-						//oneTable=new PPLTable();
 						tmpOneRow=new String[columnsNumber];
 					}
 					else{
@@ -177,9 +150,6 @@ public class TableConstructionZoomArea implements Pld {
 				
 				
 			}
-			
-			//i++;
-		//}
 		
 		String[][] tmpRows=new String[allRows.size()][columnsNumber];
 		
@@ -190,10 +160,12 @@ public class TableConstructionZoomArea implements Pld {
 				
 				tmpRows[z][j]=tmpOneRow[j];
 				
-				
 			}
 			
 		}
+		
+		System.err.println(maxInsersions+" "+maxUpdates+" "+maxDeletions+" lalaaala");
+
 		
 		float maxI=(float) maxInsersions/4;
 		segmentSize[0]=(int) Math.rint(maxI);
@@ -203,6 +175,9 @@ public class TableConstructionZoomArea implements Pld {
 		
 		float maxD=(float) maxDeletions/4;
 		segmentSize[2]=(int) Math.rint(maxD);
+		
+		float maxTot=(float) maxTotalChangesForOneTr/4;
+		segmentSize[3]=(int) Math.rint(maxTot);
 		
 		return tmpRows;
 		
@@ -274,12 +249,9 @@ public class TableConstructionZoomArea implements Pld {
 							deletedAllTable=0;
 							
 							ArrayList<AtomicChange> atChs = tableChange.getTableAtChForOneTransition();
-							//System.out.println(tableChange.getAffectedTableName()+" "+atChs.size());
-
+							
 							for(int k=0; k<atChs.size(); k++){
-								
-								
-								
+							
 								if (atChs.get(k).getType().contains("Addition")){
 									
 									insn++;
@@ -287,7 +259,6 @@ public class TableConstructionZoomArea implements Pld {
 									if(insn>maxInsersions){
 										maxInsersions=insn;
 									}
-									//totalChangesForOneTransition=totalChangesForOneTransition+insn;
 									
 								}
 								else if(atChs.get(k).getType().contains("Deletion")){
@@ -298,8 +269,6 @@ public class TableConstructionZoomArea implements Pld {
 											maxDeletions=deln;
 											
 									 }
-									 
-									//totalChangesForOneTransition=totalChangesForOneTransition+deln;
 									 
 									 int num=getNumOfAttributesOfNextSchema(sc, oneTable.getName());
 									 
@@ -316,16 +285,13 @@ public class TableConstructionZoomArea implements Pld {
 										maxUpdates=updn;
 									}
 									
-									//totalChangesForOneTransition=totalChangesForOneTransition+updn;
-									
 								}
 								
 							}
+						
 						}
-						 
-						 
+						 	 
 					}
-					
 					
 				}
 				if(pointerCell>=columnsNumber){
@@ -340,10 +306,6 @@ public class TableConstructionZoomArea implements Pld {
 					
 				}
 				
-				/*pointerCell++;
-				oneRow[pointerCell]=Integer.toString(updn);
-				pointerCell++;
-				oneRow[pointerCell]=Integer.toString(deln);*/
 				pointerCell++;
 				if(deletedAllTable==1){
 					if(pointerCell>=columnsNumber){
@@ -357,13 +319,14 @@ public class TableConstructionZoomArea implements Pld {
 					
 					
 				}
-				//oneRow[pointerCell]="------";
-				//pointerCell++;
+				
+				if (totalChangesForOneTransition>maxTotalChangesForOneTr) {
+					maxTotalChangesForOneTr=totalChangesForOneTransition;
+				}
 				
 				insn=0;
 				updn=0;
 				deln=0;
-				
 				
 			}
 		}
@@ -378,27 +341,20 @@ public class TableConstructionZoomArea implements Pld {
 		for (int i = 0; i < oneRow.length; i++) {
 			lala=lala+oneRow[i]+",";
 		}
-		//System.out.println(oneTable.getName()+" "+lala);
 	
 		return oneRow;
 		
 	}
 	
 	public Integer[] getSegmentSize(){
+		System.err.println(segmentSize[0]+" "+segmentSize[1]+" "+segmentSize[2]+" lalaaala");
+
 		return segmentSize;
 	}
 	
 	private int getNumOfAttributesOfNextSchema(String schema,String table){
 		int num = 0;
 		PPLSchema sc=allPPLSchemas.get(schema);
-		
-		/*for(int i=0; i<allPPLSchemas.size(); i++){
-			if(allPPLSchemas.get(i).getName().equals(schema)){
-				sc=allPPLSchemas.get(schema);
-				break;
-			}
-		}*/
-		
 		
 		for(int i=0;i<sc.getTables().size();i++){
 			if(sc.getTableAt(i).getName().equals(table)){

@@ -1,4 +1,4 @@
-package gui.tableElements;
+package gui.tableElements.tableConstructors;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -11,7 +11,7 @@ import data.dataPPL.pplTransition.AtomicChange;
 import data.dataPPL.pplTransition.PPLTransition;
 import data.dataPPL.pplTransition.TableChange;
 
-public class TableConstructionAllSquaresIncluded implements Pld {
+public class TableConstructionAllSquaresIncluded implements PldConstruction {
 	
 	
 	private static TreeMap<String,PPLSchema> allPPLSchemas=new TreeMap<String,PPLSchema>();
@@ -59,8 +59,6 @@ public class TableConstructionAllSquaresIncluded implements Pld {
 			if(i<allPPLSchemas.size()-1){
 				String label="v"+pplSc.getValue().getName().replaceAll(".sql", "");
 				columnsList.add(label);
-
-				//columnsList.add(pplSc.getValue().getName().replaceAll(".sql", ""));
 			
 				for(int j=0; j<3; j++){
 					
@@ -84,7 +82,6 @@ public class TableConstructionAllSquaresIncluded implements Pld {
 			}
 			else{
 				String label="v"+pplSc.getValue().getName().replaceAll(".sql", "");
-				//columnsList.add(pplSc.getValue().getName().replaceAll(".sql", ""));
 				columnsList.add(label);
 			}
 			
@@ -298,83 +295,8 @@ public class TableConstructionAllSquaresIncluded implements Pld {
 							
 						}
 					}
-					
-					
-					
-//					 if(tmpTR.get(j) instanceof Deletion){
-//						
-//						 Deletion d=(Deletion) tmpTR.get(j);
-//						 if(d.getAffTable().getName().equals(oneTable.getName())){
-//							 
-//							 
-//							 deln=d.getNumOfAffAttributes();
-//							 
-//							 if(deln>maxDeletions){
-//									maxDeletions=deln;
-//									
-//							 }
-//							 
-//							 
-//							 totalChanges=totalChanges+deln;
-//							 
-//							 int num=getNumOfAttributesOfNextSchema(sc, oneTable.getName());
-//							 
-//							 if(num==0){
-//								 
-//								 deletedAllTable=1;
-//							 }
-//							 
-//						 }
-//						 
-//					 }
-//					 
-//					 if(tmpTR.get(j) instanceof Insersion){
-//						
-//						 
-//						 
-//						 Insersion ins=(Insersion) tmpTR.get(j);
-//						 
-//						 if(ins.getAffTable().getName().equals(oneTable.getName())){
-//								
-// 
-//							 
-//							insn=ins.getNumOfAffAttributes(); 
-//							
-//							if(insn>maxInsersions){
-//								maxInsersions=insn;
-//							}
-//						
-//							totalChanges=totalChanges+insn;
-//							//****************
-//							//deletedAllTable=0;
-//						 }
-//						 
-//						 
-//					 }
-//					 
-//					 if(tmpTR.get(j) instanceof Update){
-//							
-//						 Update up=(Update) tmpTR.get(j);
-//						 
-//						 if(up.getAffTable().getName().equals(oneTable.getName())){
-//								
-// 
-//							 
-//							updn=up.getNumOfAffAttributes();
-//							
-//							if(updn>maxUpdates){
-//								maxUpdates=updn;
-//							}
-//							
-//							totalChanges=totalChanges+updn;
-//						 }
-//						 
-//						 
-//					 }
-					 
 					 
 				}
-				
 				
 			}
 			if(pointerCell>=columnsNumber){
@@ -418,15 +340,7 @@ public class TableConstructionAllSquaresIncluded implements Pld {
 	
 	private int getNumOfAttributesOfNextSchema(String schema,String table){
 		int num = 0;
-		PPLSchema sc=allPPLSchemas.get(schema);
-		
-		/*for(int i=0; i<allPPLSchemas.size(); i++){
-			if(allPPLSchemas.get(i).getName().equals(schema)){
-				sc=allPPLSchemas.get(schema);
-				break;
-			}
-		}*/
-		
+		PPLSchema sc=allPPLSchemas.get(schema);	
 		
 		for(int i=0;i<sc.getTables().size();i++){
 			if(sc.getTableAt(i).getName().equals(table)){

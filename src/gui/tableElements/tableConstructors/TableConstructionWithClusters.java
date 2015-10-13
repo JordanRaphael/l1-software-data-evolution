@@ -1,4 +1,4 @@
-package gui.tableElements;
+package gui.tableElements.tableConstructors;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -11,9 +11,8 @@ import data.dataPPL.pplTransition.AtomicChange;
 import data.dataPPL.pplTransition.PPLTransition;
 import data.dataPPL.pplTransition.TableChange;
 
-public class TableConstructionWithClusters implements Pld{
+public class TableConstructionWithClusters implements PldConstruction{
 	
-	//private TreeMap<Integer,PPLTransition> allPPLTransitions = new TreeMap<Integer,PPLTransition>();
 	private ArrayList<Phase> phases = new ArrayList<Phase>();
 	private ArrayList<Cluster> clusters = new ArrayList<Cluster>();
 
@@ -35,7 +34,7 @@ public class TableConstructionWithClusters implements Pld{
 		
 	}
 	
-public String[] constructColumns(){
+	public String[] constructColumns(){
 		
 		ArrayList<String> columnsList=new ArrayList<String>();
 		
@@ -51,10 +50,7 @@ public String[] constructColumns(){
 			}
 		}
 		
-		
-		
 		columnsList.add("Table name");
-		
 		
 		for(int i=0;i<phases.size(); i++){
 			String label="Phase "+i;
@@ -62,7 +58,6 @@ public String[] constructColumns(){
 		}
 		
 		columnsNumber=columnsList.size();
-		//System.out.println(columnsNumber);
 		String[] tmpcolumns=new String[columnsList.size()];
 		
 		for(int j=0; j<columnsList.size(); j++ ){
@@ -72,7 +67,6 @@ public String[] constructColumns(){
 		}
 		
 		return(tmpcolumns);
-		
 		
 	}
 	
@@ -97,7 +91,6 @@ public String[] constructColumns(){
 			for(int j=0; j<tmpOneRow.length; j++ ){
 				
 				tmpRows[z][j]=tmpOneRow[j];
-				
 				
 			}
 			
@@ -137,7 +130,6 @@ public String[] constructColumns(){
 				break;
 			}
 		}
-		//System.out.println(cl.getDeath());
 
 		for(int p=0; p<phases.size(); p++){
 			if(phases.get(p).getPhasePPLTransitions().containsKey(cl.getDeath()-1)){
@@ -145,10 +137,6 @@ public String[] constructColumns(){
 				break;
 			}
 		}
-		
-		
-		
-		//System.out.println(oneRow[0]+" "+pointerCell+" "+deadCell);
 		
 		int initialization=0;
 		if(pointerCell>0){
@@ -158,9 +146,7 @@ public String[] constructColumns(){
 		for(int p=initialization; p<phases.size(); p++){
 			if(p<deadCell){
 				TreeMap<Integer,PPLTransition> phasePPLTransitions=phases.get(p).getPhasePPLTransitions();
-	//			for(Map.Entry<Integer,PPLTransition> trleme:phasePPLTransitions.entrySet()){
-	//				System.out.println(p+" "+trleme.getKey());
-	//			}
+	
 				if (totalChangesForOnePhase>maxTotalChangesForOneTr) {
 					maxTotalChangesForOneTr=totalChangesForOnePhase;
 				}
@@ -176,17 +162,12 @@ public String[] constructColumns(){
 						for(int j=0; j<tmpTR.size(); j++){
 							
 							TableChange tableChange=tmpTR.get(j);
-							//System.out.println(tableChange.getAffectedTableName()+":"+oneTable.getName()+"!");
-							//System.out.println(tableChange.getAffectedTableName()+":"+tmpTL.getValue().getOldVersionName()+" "+tmpTL.getValue().getNewVersionName());
 							
 							if(cl.getTables().containsKey(tableChange.getAffectedTableName())){
 								
 								ArrayList<AtomicChange> atChs = tableChange.getTableAtChForOneTransition();
 								
-								//System.out.println("Phase "+p+" "+tableChange.getAffectedTableName()+" "+atChs.size());
-								
 								for(int k=0; k<atChs.size(); k++){
-									
 									
 									if (atChs.get(k).getType().contains("Addition")){
 										
@@ -195,7 +176,6 @@ public String[] constructColumns(){
 										if(insn>maxInsersions){
 											maxInsersions=insn;
 										}
-										//totalChangesForOnePhase=totalChangesForOnePhase+insn;
 										
 									}
 									else if(atChs.get(k).getType().contains("Deletion")){
@@ -206,15 +186,6 @@ public String[] constructColumns(){
 												maxDeletions=deln;
 												
 										 }
-										 
-										//totalChangesForOnePhase=totalChangesForOnePhase+deln;
-										 
-										 //boolean existsLater=getNumOfAttributesOfNextSchema(sc, oneTable.getName());
-										 
-										 //if(!existsLater){
-											 
-											// deletedAllTable=1;
-										 //}
 									}
 									else{
 										
@@ -224,28 +195,19 @@ public String[] constructColumns(){
 											maxUpdates=updn;
 										}
 										
-										//totalChangesForOnePhase=totalChangesForOnePhase+updn;
-										
 									}
 									
 								}
+								
 							}
-							 
 							 
 						}
 						
-						
 					}
-					
-					
-					
 					
 					if(deletedAllTable==1){
 						break;
 					}
-					
-					
-					
 					
 				}
 				
@@ -283,17 +245,12 @@ public String[] constructColumns(){
 		for (int i = 0; i < oneRow.length; i++) {
 			lala=lala+oneRow[i]+",";
 		}
-		//System.out.println(oneRow[0]+" "+lala);
 		return oneRow;
 
-		
-		
 	}
 	
 	public Integer[] getSegmentSize(){
 		return segmentSize;
 	}
 	
-	
-
 }

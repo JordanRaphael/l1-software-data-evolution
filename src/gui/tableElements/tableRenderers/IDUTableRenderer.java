@@ -1,8 +1,9 @@
 package gui.tableElements.tableRenderers;
 
+import gui.mainEngine.Gui;
+
 import java.awt.Color;
 import java.awt.Component;
-import java.util.ArrayList;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -13,38 +14,40 @@ public class IDUTableRenderer extends DefaultTableCellRenderer{
 	
 	private static final long serialVersionUID = 1L;
 	private String[][] finalRows;
-	private int wholeCol;
+	private int wholeCol=-1;
 	private GlobalDataKeeper globalDataKeeper = new GlobalDataKeeper();
 	private String description="";
 	private int selectedColumn;
-	private ArrayList<String> selectedFromTree = new ArrayList<String>();
+	//private ArrayList<String> selectedFromTree = new ArrayList<String>();
 	private Integer[] segmentSize=new Integer[3];
+	private Gui gui;
 
 	
-	public IDUTableRenderer(String[][] finalRows , int wholeCol, GlobalDataKeeper globalDataKeeper,int selectedColumn,ArrayList<String> selectedFromTree,Integer[] segmentSize){
+	public IDUTableRenderer(Gui gui,String[][] finalRows , GlobalDataKeeper globalDataKeeper,Integer[] segmentSize){
 		this.finalRows=finalRows;
-		this.wholeCol = wholeCol;
+		//this.wholeCol = wholeCol;
 		this.globalDataKeeper = globalDataKeeper;
-		this.selectedColumn=selectedColumn;
-		this.selectedFromTree = selectedFromTree;
+		//this.selectedColumn=selectedColumn;
+		//this.selectedFromTree = selectedFromTree;
 		this.segmentSize=segmentSize;
+		this.gui=gui;
 	}
 	
 	@Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
-    {
+	{
         final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         
         String tmpValue=finalRows[row][column];
         String columnName=table.getColumnName(column);
         Color fr=new Color(0,0,0);
         
-        c.setForeground(fr);
-        setOpaque(true);
+        this.setForeground(fr);
+        this.setOpaque(true);
       
         if(column==wholeCol){
         	
-        	description="Transition ID:"+table.getColumnName(column)+"\n";
+        	String description="Transition ID:"+table.getColumnName(column)+"\n";
         	description=description+"Old Version Name:"+globalDataKeeper.getAllPPLTransitions().
     				get(Integer.parseInt(table.getColumnName(column))).getOldVersionName()+"\n";
     		description=description+"New Version Name:"+globalDataKeeper.getAllPPLTransitions().
@@ -56,7 +59,7 @@ public class IDUTableRenderer extends DefaultTableCellRenderer{
 			description=description+"Updates:"+globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfUpdatesForOneTr()+"\n";
 
 			
-    		//descriptionText.setText(description);
+    		gui.setDescription(description);
         	
         	Color cl = new Color(255,69,0,100);
 
@@ -77,7 +80,7 @@ public class IDUTableRenderer extends DefaultTableCellRenderer{
         		description=description+"Total Changes:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).getTotalChanges()+"\n";
 
         		
-        		//descriptionText.setText(description);
+        		gui.setDescription(description);
         		
         		return c;
         		
@@ -86,7 +89,7 @@ public class IDUTableRenderer extends DefaultTableCellRenderer{
         }
         else{
 
-
+        	/*
         	if(selectedFromTree.contains(finalRows[row][0])){
 
 
@@ -97,7 +100,7 @@ public class IDUTableRenderer extends DefaultTableCellRenderer{
         		return c;
         	}
         	
-	      
+        	 */
         	
         	if (isSelected && hasFocus){
 
@@ -129,7 +132,7 @@ public class IDUTableRenderer extends DefaultTableCellRenderer{
 	        			
 	        		}
 	        		
-	        		//descriptionText.setText(description);
+	        		gui.setDescription(description);
         		}
         		Color cl = new Color(255,69,0,100);
         		
@@ -137,18 +140,11 @@ public class IDUTableRenderer extends DefaultTableCellRenderer{
         		
         		return c;
 	        }
-        	/*
-        	if(selectedColumn==column && selectedRow==row){
-        		
-        		Color cl = new Color(255,69,0,100);
-        		
-        		c.setBackground(cl);
-        		return c;
-        	}*/
+        	
         	
         	
         }
-
+        
         try{
         	int numericValue=Integer.parseInt(tmpValue);
         	Color insersionColor=null;
@@ -179,7 +175,6 @@ public class IDUTableRenderer extends DefaultTableCellRenderer{
         catch(Exception e){
         		
 
-        	
     		if(tmpValue.equals("")){
     			c.setBackground(Color.GRAY);
     			return c; 
@@ -200,8 +195,17 @@ public class IDUTableRenderer extends DefaultTableCellRenderer{
         }
     }
 	
+	
 	public String getText(){
 		return description;
+	}
+	
+	public void setWholeCol(int wholeCol){
+		this.wholeCol = wholeCol;
+	}
+	
+	public void setSelCol(int selectedColumn){
+		this.selectedColumn = selectedColumn;
 	}
 
 }

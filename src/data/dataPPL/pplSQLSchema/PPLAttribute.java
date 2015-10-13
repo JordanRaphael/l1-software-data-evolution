@@ -8,12 +8,10 @@ public class PPLAttribute {
 
 	private int totalAttributeChanges;
 	private Attribute hecAttribute;
-	private PPLTable table=null;
 	
 	
-	public PPLAttribute(PPLTable tmpTable,Attribute tmpHecAttribute){
+	public PPLAttribute(Attribute tmpHecAttribute){
 		
-		table = tmpTable;
 		hecAttribute=tmpHecAttribute;
 		
 	}
@@ -39,12 +37,6 @@ public class PPLAttribute {
 	public Attribute getHecAttribute(){
 		
 		return hecAttribute;
-		
-	}
-	
-	public PPLTable getTable(){
-		
-		return table;
 		
 	}
 	

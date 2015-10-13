@@ -1,9 +1,5 @@
 package data.dataProccessing;
 
-//import hecate.sqlSchema.Attribute;
-//import hecate.sqlSchema.Schema;
-//import hecate.sqlSchema.Table;
-
 import gr.uoi.cs.daintiness.hecate.sql.Attribute;
 import gr.uoi.cs.daintiness.hecate.sql.Schema;
 import gr.uoi.cs.daintiness.hecate.sql.Table;
@@ -57,7 +53,7 @@ public class PPLSchemasConstruction {
 				
 				for (Map.Entry<String, Attribute> a : tmpHecAttributes.entrySet()) {
 
-					PPLAttribute tmpPPLAttribute = new PPLAttribute(tmpPPLTable,a.getValue());
+					PPLAttribute tmpPPLAttribute = new PPLAttribute(a.getValue());
 					
 					tmpPPLTable.addAttribute(tmpPPLAttribute);
 					

@@ -1,13 +1,5 @@
 package data.dataProccessing;
 
-//import hecate.sqlSchema.Attribute;
-//import hecate.transitions.Deletion;
-//import hecate.transitions.Insersion;
-//import hecate.transitions.Transition;
-//import hecate.transitions.TransitionList;
-
-
-
 import gr.uoi.cs.daintiness.hecate.sql.Attribute;
 import gr.uoi.cs.daintiness.hecate.transitions.Deletion;
 import gr.uoi.cs.daintiness.hecate.transitions.Insersion;

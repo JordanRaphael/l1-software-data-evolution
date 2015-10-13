@@ -2,12 +2,7 @@ package tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluati
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
 
-import data.dataPPL.pplSQLSchema.PPLTable;
-import tableClustering.clusterExtractor.commons.Cluster;
-import tableClustering.clusterValidator.commons.Centroid;
 import tableClustering.clusterValidator.commons.ClusterInfoKeeper;
 
 public class TotalCohesionMetric implements InternalTotalMetrics {

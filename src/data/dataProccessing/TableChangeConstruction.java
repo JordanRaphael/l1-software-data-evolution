@@ -25,9 +25,6 @@ public class TableChangeConstruction {
 	
 	public void makeTableChanges(){
 		
-		//allTableChanges  = new TreeMap<String,TreeMap<String,ArrayList<AtomicChange>>>();
-
-		
 		for(int i=0; i<atomicChanges.size(); i++){
 			
 			
@@ -72,37 +69,11 @@ public class TableChangeConstruction {
 		
 		for (Map.Entry<String, TableChange> t : allTableChanges.entrySet()) {
 
-			//TableChange tmpTableChange = t.getValue();
 			allTables.get(t.getKey()).setTableChanges(t.getValue());
 			allTables.get(t.getKey()).setTotalChanges();
 
 		}
 		
-		/*
-		for (Map.Entry<String, PPLTable> t : allTables.entrySet()) {
-			
-			PPLTable tmpTableChange = t.getValue();
-			
-			TableChange lala=tmpTableChange.getTableChanges();
-			
-			TreeMap<String, ArrayList<AtomicChange>>lolo =lala.getTableAtomicChanges();
-			
-			
-			for (Map.Entry<String, ArrayList<AtomicChange>> l : lolo.entrySet()) {
-				
-				
-				ArrayList<AtomicChange> pf = l.getValue();
-				
-				for (int j = 0; j < pf.size(); j++) {
-					
-					System.out.println(lala.getAffectedTableName()+" "+pf.get(j).toString());
-					
-				}
-
-			}
-				
-		}
-		*/
 		
 	}
 	

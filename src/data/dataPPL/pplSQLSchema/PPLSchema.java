@@ -1,7 +1,5 @@
 package data.dataPPL.pplSQLSchema;
 
-//import hecate.sqlSchema.Schema;
-
 import gr.uoi.cs.daintiness.hecate.sql.Schema;
 
 import java.util.Map;
@@ -11,8 +9,6 @@ public class PPLSchema {
 
 	private String name;
 	private TreeMap<String, PPLTable> tables;
-	private Schema hecSchema;
-	
 
 	public PPLSchema(TreeMap<String, PPLTable> t) {
 		this.tables = t;
@@ -30,11 +26,8 @@ public class PPLSchema {
 	public PPLSchema(String tmpName,Schema tmpHecSchema){
 		
 		name=tmpName;
-		//hecSchema=tmpHecSchema;
 		this.tables = new TreeMap<String, PPLTable>();
 
-		
-		
 	}
 	
 	
@@ -45,12 +38,6 @@ public class PPLSchema {
 	
 	public TreeMap<String, PPLTable> getTables() {
 		return this.tables;
-	}
-
-	public Schema getHecTable(){
-		
-		return hecSchema;
-		
 	}
 	
 	public void addTable(PPLTable table) {
@@ -69,19 +56,6 @@ public class PPLSchema {
 		int[] res = {this.tables.size(), attr};
 		return res;
 	}
-	
-	/*
-	public String print() {
-		String buff = new String();
-		buff = "Shema: \n\n";
-		for (Map.Entry<String, PPLTable> entry : this.tables.entrySet()) {
-			
-			PPLTable a=entry.getValue();
-			buff += "  " + a.print() + "\n";
-		}
-		return buff;
-	}
-	*/
 
 	public void setTitle(String title) {
 		this.name = title;

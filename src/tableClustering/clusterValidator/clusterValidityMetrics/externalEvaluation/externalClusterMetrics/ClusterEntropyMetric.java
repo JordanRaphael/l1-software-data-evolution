@@ -8,15 +8,15 @@ import tableClustering.clusterValidator.commons.ClassOfObjects;
 public class ClusterEntropyMetric implements ExternalClusterMetric {
 
 	private ArrayList<ClassOfObjects> classesOfObjects = new ArrayList<ClassOfObjects>();
-	private Cluster currentCluster = new Cluster();
+	//private Cluster currentCluster = new Cluster();
 	private Double clusterEntropy = new Double(0);
 	private ArrayList<Cluster> clusters  = new ArrayList<Cluster>();
 	private int classIndexOfThisCluster;
 	
 	public ClusterEntropyMetric(ArrayList<ClassOfObjects> classesOfObjects, 
-								Cluster currentCluster,ArrayList<Cluster> clusters,int classIndexOfThisCluster) {
+								ArrayList<Cluster> clusters,int classIndexOfThisCluster) {
 		this.classesOfObjects = classesOfObjects;
-		this.currentCluster = currentCluster;
+		//this.currentCluster = currentCluster;
 		this.clusters = clusters;
 		this.classIndexOfThisCluster = classIndexOfThisCluster;
 	}

@@ -1,6 +1,5 @@
 package data.dataPPL.pplSQLSchema;
 
-//import hecate.sqlSchema.Table;
 
 import gr.uoi.cs.daintiness.hecate.sql.Table;
 

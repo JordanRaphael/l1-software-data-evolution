@@ -4,33 +4,16 @@ import gr.uoi.cs.daintiness.hecate.diff.Delta;
 import gr.uoi.cs.daintiness.hecate.diff.DiffResult;
 import gr.uoi.cs.daintiness.hecate.parser.HecateParser;
 import gr.uoi.cs.daintiness.hecate.sql.Schema;
-//import hecate.parser.Delta;
-//import hecate.parser.DiffResult;
-//import hecate.parser.HecateParser;
-//import hecate.sqlSchema.Schema;
-//import hecate.transitions.Deletion;
-//import hecate.transitions.Insersion;
-//import hecate.transitions.Transition;
-//import hecate.transitions.TransitionList;
-//import hecate.transitions.Transitions;
-//import hecate.transitions.Update;
-
 import gr.uoi.cs.daintiness.hecate.transitions.Deletion;
 import gr.uoi.cs.daintiness.hecate.transitions.Insersion;
-import gr.uoi.cs.daintiness.hecate.transitions.Transition;
 import gr.uoi.cs.daintiness.hecate.transitions.TransitionList;
 import gr.uoi.cs.daintiness.hecate.transitions.Transitions;
 import gr.uoi.cs.daintiness.hecate.transitions.Update;
-//import hecate.transitions.TransitionList;
-//import hecate.transitions.Transitions;
-
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -112,13 +95,6 @@ public class ImportSchemas {
 		}
 		br.close();
 		makeTransitions(trs);
-		//makePPLSchemas();
-		//makeReport();
-		//makeAllTables();
-		//makeAtomicChanges();
-		//makeTableChanges();
-		//makePPLTransitions();
-		//matchTableChangesPPLTables();
 		
 	}
 
@@ -163,120 +139,5 @@ public class ImportSchemas {
 		return allTransitions;
 
 	}
-	
-	
-	@SuppressWarnings("unused")
-	private static void makeReport() throws IOException{
-		
-		
-		for(int i=0; i<allTransitions.size(); i++){
-			
-			TransitionList currentTransitionList=allTransitions.get(i);
-			
-			String oldVersion = currentTransitionList.getOldVersion();
-			
-			String newVersion = currentTransitionList.getNewVersion();
-			
-			String content = "";
-			 
-			File file = new File(newVersion+"-"+oldVersion+"Report.txt");
-
-			// if file doesnt exists, then create it
-			if (!file.exists()) {
-				file.createNewFile();
-			}
-			
-			ArrayList<Transition> currentTransitions = currentTransitionList.getList();
-			
-			for(int j=0; j<currentTransitions.size(); j++){
-				
-				//Transition currentTransition = currentTransitions.get(i);
-				
-				
-				if(currentTransitions.get(j) instanceof Insersion){
-					
-
-					
-					if(currentTransitions.get(j).getType().equals("UpdateTable")){
-						
-						
-						//content=content+currentTransitions.get(j).affectedTable+",";
-
-						for(int k=0; k<currentTransitions.get(j).getNumOfAffAttributes(); k++){
-							
-							content=content+currentTransitions.get(j).getAffTable().getName()+","+"ADD_ATTRIBUTE"+"\n";
-						
-						}
-						
-					}
-					else{
-						
-						content=content+"/*"+currentTransitions.get(j).getAffTable().getName()+","+"ADD_SELF"+"*/"+"\n";
-
-						
-					}
-					
-				}
-				else if(currentTransitions.get(j) instanceof Deletion){
-					
-
-					if(currentTransitions.get(j).getType().equals("UpdateTable")){
-						
-						//content=content+currentTransitions.get(j).affectedTable+",";
-						
-						for(int k=0; k<currentTransitions.get(j).getNumOfAffAttributes(); k++){
-						
-							content=content+currentTransitions.get(j).getAffTable().getName()+","+"DELETE_ATTRIBUTE"+"\n";
-						
-						}
-						
-					}
-					else{
-						
-						content=content+"/*"+currentTransitions.get(j).getAffTable().getName()+","+"DELETE_SELF"+"*/"+"\n";
-
-						
-					}
-					
-				}
-				else{
-					
-					if(currentTransitions.get(j).getType().equals("TypeChange")){
-						
-						//content=content+currentTransitions.get(j).affectedTable+",";
-						
-						for(int k=0; k<currentTransitions.get(j).getNumOfAffAttributes(); k++){
-						
-							content=content+"/*"+currentTransitions.get(j).getAffTable().getName()+","+"UPDATE_ATTRIBUTE"+"*/"+"\n";
-						
-						}
-						
-					}
-					else{
-						
-						for(int k=0; k<currentTransitions.get(j).getNumOfAffAttributes(); k++){
-							
-							content=content+"/*"+currentTransitions.get(j).getAffTable().getName()+","+"UPDATE_SELF"+"*/"+"\n";
-						
-						}
-						
-						
-					}
-					
-				}
-				
-				//System.out.println(currentTransition.getType());
-				
-			}
-			
-			FileWriter fw = new FileWriter(file.getAbsoluteFile());
-			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write(content);
-			bw.close();		
-			
-		}
-		
-	}
-	
 
 }

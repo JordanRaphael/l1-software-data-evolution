@@ -1,4 +1,4 @@
-package gui.tableElements;
+package gui.tableElements.tableConstructors;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -12,12 +12,10 @@ import data.dataPPL.pplTransition.AtomicChange;
 import data.dataPPL.pplTransition.PPLTransition;
 import data.dataPPL.pplTransition.TableChange;
 
-public class TableConstructionPhases implements Pld {
-
+public class TableConstructionClusterTablesPhasesZoomA implements PldConstruction {
 	
 	private static TreeMap<String,PPLSchema> allPPLSchemas=new TreeMap<String,PPLSchema>();
 	private ArrayList<PPLTable>	tables=new ArrayList<PPLTable>();
-	//private TreeMap<Integer,PPLTransition> allPPLTransitions = new TreeMap<Integer,PPLTransition>();
 	private ArrayList<Phase> phases = new ArrayList<Phase>();
 
 
@@ -28,17 +26,17 @@ public class TableConstructionPhases implements Pld {
 	private int maxUpdates=1;
 	private int maxTotalChangesForOneTr=1;
 	private Integer[] segmentSize=new Integer[4];
+	private ArrayList<String> tablesOfCluster=new ArrayList<String>();
 	
-	public TableConstructionPhases(GlobalDataKeeper globalDataKeeper){
+	public TableConstructionClusterTablesPhasesZoomA(GlobalDataKeeper globalDataKeeper,ArrayList<String> tablesOfCluster){
 		
 		allPPLSchemas=globalDataKeeper.getAllPPLSchemas();
 		phases=globalDataKeeper.getPhaseCollectors().get(0).getPhases();
-		//allPPLTransitions=globalDataKeeper.getAllPPLTransitions();
-		
+		this.tablesOfCluster=tablesOfCluster;
 		
 	}
 	
-public String[] constructColumns(){
+	public String[] constructColumns(){
 		
 		ArrayList<String> columnsList=new ArrayList<String>();
 		
@@ -54,10 +52,7 @@ public String[] constructColumns(){
 			}
 		}
 		
-		
-		
 		columnsList.add("Table name");
-		
 		
 		for(int i=0;i<phases.size(); i++){
 			String label="Phase "+i;
@@ -65,7 +60,6 @@ public String[] constructColumns(){
 		}
 		
 		columnsNumber=columnsList.size();
-		//System.out.println(columnsNumber);
 		String[] tmpcolumns=new String[columnsList.size()];
 		
 		for(int j=0; j<columnsList.size(); j++ ){
@@ -76,7 +70,6 @@ public String[] constructColumns(){
 		
 		return(tmpcolumns);
 		
-		
 	}
 	
 	public String[][] constructRows(){
@@ -84,17 +77,12 @@ public String[] constructColumns(){
 		ArrayList<String[]> allRows=new ArrayList<String[]>();
 	    ArrayList<String>	allTables=new ArrayList<String>();
 
-		
 		int found=0;
 		int i=0;
-		
-		
-		
 		
 		for (Map.Entry<String,PPLSchema> pplSc : allPPLSchemas.entrySet()) {
 			
 			PPLSchema oneSchema=pplSc.getValue();
-			
 			
 			for(int j=0; j<oneSchema.getTables().size(); j++){
 				
@@ -116,7 +104,7 @@ public String[] constructColumns(){
 					
 				}
 				
-				if(found==0){
+				if(found==0 && tablesOfCluster.contains(tmpTableName) ){
 					
 					allTables.add(tmpTableName);
 					tables.add(oneTable);
@@ -128,7 +116,6 @@ public String[] constructColumns(){
 				else{
 					found=0;
 				}
-				
 				
 			}
 			
@@ -143,7 +130,6 @@ public String[] constructColumns(){
 			for(int j=0; j<tmpOneRow.length; j++ ){
 				
 				tmpRows[z][j]=tmpOneRow[j];
-				
 				
 			}
 			
@@ -180,7 +166,6 @@ public String[] constructColumns(){
 		if(schemaVersion==0){
 			pointerCell++;
 			
-			
 		}
 		else{
 			for(int p=0; p<phases.size(); p++){
@@ -188,7 +173,6 @@ public String[] constructColumns(){
 				TreeMap<Integer,PPLTransition> phasePPLTransitions=phases.get(p).getPhasePPLTransitions();
 				for(Map.Entry<Integer, PPLTransition> tr:phasePPLTransitions.entrySet()){
 					
-					//if(tr.getValue().getOldVersionName().equals(schemaName)|| tr.getValue().getNewVersionName().equals(schemaName)){
 					if(tr.getValue().getNewVersionName().equals(schemaName)){	
 						pointerCell=p+1;
 						break;
@@ -196,16 +180,6 @@ public String[] constructColumns(){
 				}
 				
 			}
-			
-			
-//			for(int i=0; i<schemaColumnId.length; i++){
-//				
-//				if(schemaVersion==schemaColumnId[i][0]){
-//					pointerCell=schemaColumnId[i][1];
-//					break;
-//				}
-//				
-//			}
 			
 		}
 		
@@ -216,30 +190,14 @@ public String[] constructColumns(){
 		
 		for(int p=initialization; p<phases.size(); p++){
 			TreeMap<Integer,PPLTransition> phasePPLTransitions=phases.get(p).getPhasePPLTransitions();
-//			for(Map.Entry<Integer,PPLTransition> trleme:phasePPLTransitions.entrySet()){
-//				System.out.println(p+" "+trleme.getKey());
-//			}
+
 			if (totalChangesForOnePhase>maxTotalChangesForOneTr) {
 				maxTotalChangesForOneTr=totalChangesForOnePhase;
 			}
 			totalChangesForOnePhase=0;
-			/*
-			Integer[] mapKeys = new Integer[phasePPLTransitions.size()];
-			int pos2 = 0;
-			for (Integer key : phasePPLTransitions.keySet()) {
-			    mapKeys[pos2++] = key;
-			}
-			
-			Integer pos3=null;
-			*/
-			//for(int i=0; i<phasePPLTransitions.size(); i++){
 			
 			for(Map.Entry<Integer, PPLTransition> tmpTL:phasePPLTransitions.entrySet()){
 
-				//pos3=mapKeys[i];
-				//System.out.println(p+" "+tmpTL.getKey()+" "+oneTable);
-
-				//PPLTransition  tmpTL=phasePPLTransitions.get(pos3);
 				String sc=tmpTL.getValue().getNewVersionName();
 				
 				ArrayList<TableChange> tmpTR=tmpTL.getValue().getTableChanges();
@@ -251,9 +209,6 @@ public String[] constructColumns(){
 					for(int j=0; j<tmpTR.size(); j++){
 						
 						TableChange tableChange=tmpTR.get(j);
-						//System.out.println(tableChange.getAffectedTableName()+":"+oneTable.getName()+"!");
-						//System.out.println(tableChange.getAffectedTableName()+":"+tmpTL.getValue().getOldVersionName()+" "+tmpTL.getValue().getNewVersionName());
-						
 						
 						if(tableChange.getAffectedTableName().equals(oneTable.getName())){
 							if(deletedAllTable==1){
@@ -261,13 +216,9 @@ public String[] constructColumns(){
 							}
 							deletedAllTable=0;
 							
-							
 							ArrayList<AtomicChange> atChs = tableChange.getTableAtChForOneTransition();
 							
-							
-							
 							for(int k=0; k<atChs.size(); k++){
-								
 								
 								if (atChs.get(k).getType().contains("Addition")){
 									deletedAllTable=0;
@@ -277,7 +228,6 @@ public String[] constructColumns(){
 									if(insn>maxInsersions){
 										maxInsersions=insn;
 									}
-									//totalChangesForOnePhase=totalChangesForOnePhase+insn;
 									
 								}
 								else if(atChs.get(k).getType().contains("Deletion")){
@@ -288,8 +238,6 @@ public String[] constructColumns(){
 											maxDeletions=deln;
 											
 									 }
-									 
-									//totalChangesForOnePhase=totalChangesForOnePhase+deln;
 									 
 									 boolean existsLater=getNumOfAttributesOfNextSchema(sc, oneTable.getName());
 									 
@@ -306,19 +254,15 @@ public String[] constructColumns(){
 										maxUpdates=updn;
 									}
 									
-									//totalChangesForOnePhase=totalChangesForOnePhase+updn;
-									
 								}
 								
 							}
+							
 						}
-						 
 						 
 					}
 					
-					
 				}
-				
 				
 			}
 			
@@ -333,10 +277,6 @@ public String[] constructColumns(){
 				
 			}
 			
-			/*pointerCell++;
-			oneRow[pointerCell]=Integer.toString(updn);
-			pointerCell++;
-			oneRow[pointerCell]=Integer.toString(deln);*/
 			pointerCell++;
 			if(deletedAllTable==1){
 				if(pointerCell>=columnsNumber){
@@ -348,14 +288,12 @@ public String[] constructColumns(){
 				}
 				reborn=false;
 				
-				
 			}
 			
 			insn=0;
 			updn=0;
 			deln=0;
 			
-
 		}
 		
 		for(int i=0; i<oneRow.length; i++){
@@ -368,11 +306,9 @@ public String[] constructColumns(){
 		for (int i = 0; i < oneRow.length; i++) {
 			lala=lala+oneRow[i]+",";
 		}
-		//System.out.println(oneTable.getName()+" "+lala);
+
 		return oneRow;
 
-		
-		
 	}
 	
 	public Integer[] getSegmentSize(){
@@ -382,27 +318,13 @@ public String[] constructColumns(){
 	private boolean getNumOfAttributesOfNextSchema(String schema,String table){
 		PPLSchema sc=allPPLSchemas.get(schema);
 		
-		/*for(int i=0; i<allPPLSchemas.size(); i++){
-			if(allPPLSchemas.get(i).getName().equals(schema)){
-				sc=allPPLSchemas.get(schema);
-				break;
-			}
-		}*/
-		
 		if(sc.getTables().containsKey(table)){
 			return true;
 		}
 		else {
 			return false;
 		}
-		/*
-		for(int i=0;i<sc.getTables().size();i++){
-			if(sc.getTableAt(i).getName().equals(table)){
-				num=sc.getTableAt(i).getAttrs().size();
-				return num;
-			}
-		}
-		return num;*/
+		
 	}
 
 }

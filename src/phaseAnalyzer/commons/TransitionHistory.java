@@ -5,11 +5,6 @@ package phaseAnalyzer.commons;
 
 import java.util.ArrayList;
 
-
-/**
- * @author pvassil
- *
- */
 public class TransitionHistory {
 
 	public TransitionHistory() {
