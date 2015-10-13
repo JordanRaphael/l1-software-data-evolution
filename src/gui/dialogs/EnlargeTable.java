@@ -1,7 +1,7 @@
 package gui.dialogs;
 
-import gui.tableElements.JvTable;
-import gui.tableElements.MyTableModel;
+import gui.tableElements.commons.JvTable;
+import gui.tableElements.commons.MyTableModel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,7 +30,7 @@ public class EnlargeTable extends JDialog {
 	private JvTable table;
 	private int rowHeight=10;
 	private int columnWidth=1;
-	private Integer[] segmentSize=new Integer[3];
+	private Integer[] segmentSize=new Integer[4];
 	private JScrollPane tmpScrollPane;
 
 	/**
@@ -40,7 +40,6 @@ public class EnlargeTable extends JDialog {
 		finalRowsZoomArea=frows;
 		finalColumnsZoomArea=columns;
 		segmentSize=seg;
-		//setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPanel.setLayout(new BorderLayout());
@@ -64,37 +63,24 @@ public class EnlargeTable extends JDialog {
 		
 		generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
-		//generalTable.setZoom(rowHeight,columnWidth);
-		
-		
-		
-		
 		for(int i=0; i<generalTable.getRowCount(); i++){
 				generalTable.setRowHeight(i, rowHeight);
 				
 		}
 
-		//generalTable.setGridColor(new Color(0,0,0,100));
-		
 		generalTable.setShowGrid(false);
 		generalTable.setIntercellSpacing(new Dimension(0, 0));
-		
-		
 		
 		for(int i=0; i<generalTable.getColumnCount(); i++){
 			if(i==0){
 				generalTable.getColumnModel().getColumn(0).setPreferredWidth(60);
-				//generalTable.getColumnModel().getColumn(0).setMaxWidth(columnWidth);
-				//generalTable.getColumnModel().getColumn(0).setMinWidth(columnWidth);
+				
 			}
 			else{
 				generalTable.getColumnModel().getColumn(i).setPreferredWidth(columnWidth);
-				//generalTable.getColumnModel().getColumn(i).setMaxWidth(columnWidth);
-				//generalTable.getColumnModel().getColumn(i).setMinWidth(columnWidth);
+			
 			}
 		}
-		
-		
 		
 		generalTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
 		{
@@ -105,10 +91,6 @@ public class EnlargeTable extends JDialog {
 		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
 		    {
 		        final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-		        
-		        
-		        
-		        
 		        
 		        String tmpValue=finalRowsZoomArea[row][column];
 		        String columnName=table.getColumnName(column);
@@ -128,14 +110,14 @@ public class EnlargeTable extends JDialog {
 	        		if(numericValue==0){
 	        			insersionColor=new Color(154,205,50,200);
 	        		}
-	        		else if(numericValue> 0&& numericValue<=segmentSize[1]){
+	        		else if(numericValue> 0&& numericValue<=segmentSize[3]){
 	        			
 	        			insersionColor=new Color(176,226,255);
 		        	}
-	        		else if(numericValue>segmentSize[1] && numericValue<=2*segmentSize[1]){
+	        		else if(numericValue>segmentSize[3] && numericValue<=2*segmentSize[3]){
 	        			insersionColor=new Color(92,172,238);
 	        		}
-	        		else if(numericValue>2*segmentSize[1] && numericValue<=3*segmentSize[1]){
+	        		else if(numericValue>2*segmentSize[3] && numericValue<=3*segmentSize[3]){
 	        			
 	        			insersionColor=new Color(28,134,238);
 	        		}
@@ -185,25 +167,6 @@ public class EnlargeTable extends JDialog {
 	    tmpScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 	    
 	    
-	    
-	    /*
-		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
-		gl_contentPanel.setHorizontalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				
-		);
-		gl_contentPanel.setVerticalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				
-		);
-		contentPanel.setLayout(gl_contentPanel);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-		}
-		*/
-	    
 	    contentPanel.add(tmpScrollPane, BorderLayout.CENTER);
 
 		
@@ -216,13 +179,6 @@ public class EnlargeTable extends JDialog {
 				rowHeight=rowHeight+1;
 				columnWidth=columnWidth+1;
 				table.setZoom(rowHeight,columnWidth);
-				//makeGeneralTableIDU();
-				//LifeTimeTable.revalidate();
-				//tmpScrollPane.revalidate();
-				//LifeTimeTable.repaint();
-				//tmpScrollPane.repaint();
-				//lifeTimePanel.repaint();
-
 				
 			}
 		});
@@ -250,12 +206,7 @@ public class EnlargeTable extends JDialog {
 
 		subPanel.add( zoomInButton);
 		subPanel.add( zoomOutButton);
-		//contentPanel.add(tmpScrollPane);
 		contentPanel.add(subPanel,BorderLayout.NORTH);
-		
-		//contentPanel.add(zoomOutButton,BorderLayout.NORTH);
-
-		
 		
 	}
 }

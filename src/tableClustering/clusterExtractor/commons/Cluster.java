@@ -136,9 +136,7 @@ public class Cluster {
 			
 		}
 		
-		//System.out.println(subPhases.size());
-		//TODO FIX FIX FIX FIX
-		//Add any other attributes necessary!!
+		
 		return newCluster;
 	}
 	

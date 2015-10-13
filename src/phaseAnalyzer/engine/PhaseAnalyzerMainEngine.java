@@ -23,8 +23,6 @@ public class PhaseAnalyzerMainEngine {
 		preProcessingChange=tmpPreProcessingChange;
 		
 		this.inputCsv=inputCsv;
-		//this.outputAssessment1=outputAssessment1;
-		//this.outputAssessment2=outputAssessment2;
 		
 		parserFactory = new ParserFactory();
 		parser = parserFactory.createParser("SimpleTextParser");
@@ -43,41 +41,13 @@ public class PhaseAnalyzerMainEngine {
 	}
 	
 	public void extractPhases(int numPhases){
-		//report=new String("");
 		phaseCollectors = new ArrayList<PhaseCollector>();
 		
 		PhaseCollector phaseCollector = new PhaseCollector();
 		phaseCollector = phaseExtractor.extractAtMostKPhases(transitionHistory, numPhases,timeWeight,changeWeight,preProcessingTime,preProcessingChange);
 		phaseCollectors.add(phaseCollector);
-		/*String preProcessingTime="";
-		String preProcessingChanges="";
-		if(PhaseExtractionParameters.PREPROCESSING_CHANGE_ON_AR.get(j)){
-			preProcessingChanges="PreProcessingChanges:ON";
-		}
-		else{
-			preProcessingChanges="PreProcessingChanges:OFF";
-		}
-		if(PhaseExtractionParameters.PREPROCESSING_TIME_ON_AR.get(j)){
-			preProcessingTime="PreProcessingTime:ON";
-		}
-		else{
-			preProcessingTime="PreProcessingTime:OFF";
-		}
-		
-		report=report+"WC: "+PhaseExtractionParameters.CHANGE_WEIGHT_AR.get(i)+"\t"+"WT: "+PhaseExtractionParameters.TIME_WEIGHT_AR.get(i)+"\n";
-		//System.out.println(PhaseExtractionParameters.CHANGE_WEIGHT_AR.get(i)+"\t"+PhaseExtractionParameters.TIME_WEIGHT_AR.get(i)+"\n");
-		report=report+preProcessingChanges+"\t"+preProcessingTime+"\n";
-		//System.out.println(preProcessingChanges+"\t"+preProcessingTime+"\n");
-		report=report+"Start"+"\t"+"End"+"\t"+"TotUpd"+"\t"+"mi"+"\t"+"ei"+"\t"+"abs"+"\t"+"pow"+"\t"+"sum"+"\n";
-		//System.out.println("Start"+"\t"+"End"+"\t"+"TotUpd"+"\t"+"mi"+"\t"+"ei"+"\t"+"abs"+"\t"+"pow"+"\t"+"sum");
-		report=report+phaseCollector.toStringShort();
-		report=report+"\n";
-		//System.out.println(phaseCollector.toStringShort());
-		
-		*/
 		
 		allPhaseCollectors.put(inputCsv, phaseCollectors);
-		//phaseCollector = phaseExtractor.extractAtMostKPhases(transitionHistory, numPhases);
 	}
 	/*
 	public void extractReportAssessment1() throws IOException{

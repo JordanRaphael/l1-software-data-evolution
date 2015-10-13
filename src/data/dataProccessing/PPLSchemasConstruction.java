@@ -1,9 +1,5 @@
 package data.dataProccessing;
 
-//import hecate.sqlSchema.Attribute;
-//import hecate.sqlSchema.Schema;
-//import hecate.sqlSchema.Table;
-
 import gr.uoi.cs.daintiness.hecate.sql.Attribute;
 import gr.uoi.cs.daintiness.hecate.sql.Schema;
 import gr.uoi.cs.daintiness.hecate.sql.Table;

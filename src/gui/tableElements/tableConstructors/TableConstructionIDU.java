@@ -1,4 +1,4 @@
-package gui.tableElements;
+package gui.tableElements.tableConstructors;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -11,7 +11,7 @@ import data.dataPPL.pplTransition.AtomicChange;
 import data.dataPPL.pplTransition.PPLTransition;
 import data.dataPPL.pplTransition.TableChange;
 
-public class TableConstructionIDU implements Pld {
+public class TableConstructionIDU implements PldConstruction {
 
 	private static TreeMap<String,PPLSchema> allPPLSchemas=new TreeMap<String,PPLSchema>();
 	private ArrayList<PPLTable>	tables=new ArrayList<PPLTable>();
@@ -23,7 +23,9 @@ public class TableConstructionIDU implements Pld {
 	private int maxDeletions=1;
 	private int maxInsersions=1;
 	private int maxUpdates=1;
-	private Integer segmentSize[]=new Integer[3];
+	private int maxTotalChangesForOneTr=1;
+
+	private Integer segmentSize[]=new Integer[4];
 	
 	public TableConstructionIDU(GlobalDataKeeper globalDataKeeper){
 		
@@ -150,6 +152,9 @@ public class TableConstructionIDU implements Pld {
 		float maxD=(float) maxDeletions/4;
 		segmentSize[2]=(int) Math.rint(maxD);
 		
+		float maxTot=(float) maxTotalChangesForOneTr/4;
+		segmentSize[3]=(int) Math.rint(maxTot);
+		
 		return tmpRows;
 		
 	}
@@ -237,7 +242,6 @@ public class TableConstructionIDU implements Pld {
 								if(insn>maxInsersions){
 									maxInsersions=insn;
 								}
-								//totalChangesForOneTransition=totalChangesForOneTransition+insn;
 								
 							}
 							else if(atChs.get(k).getType().contains("Deletion")){
@@ -248,9 +252,7 @@ public class TableConstructionIDU implements Pld {
 										maxDeletions=deln;
 										
 								 }
-								 
-								//totalChangesForOneTransition=totalChangesForOneTransition+deln;
-								 
+								 								 
 								 int num=getNumOfAttributesOfNextSchema(sc, oneTable.getName());
 								 if(num==0){
 									 
@@ -266,9 +268,7 @@ public class TableConstructionIDU implements Pld {
 								if(updn>maxUpdates){
 									maxUpdates=updn;
 								}
-								
-								//totalChangesForOneTransition=totalChangesForOneTransition+updn;
-								
+																
 							}
 							
 						}
@@ -290,10 +290,6 @@ public class TableConstructionIDU implements Pld {
 				
 			}
 			
-			/*pointerCell++;
-			oneRow[pointerCell]=Integer.toString(updn);
-			pointerCell++;
-			oneRow[pointerCell]=Integer.toString(deln);*/
 			pointerCell++;
 			if(deletedAllTable==1){
 				if(pointerCell>=columnsNumber){
@@ -307,8 +303,10 @@ public class TableConstructionIDU implements Pld {
 				
 				
 			}
-			//oneRow[pointerCell]="------";
-			//pointerCell++;
+			
+			if (totalChangesForOneTransition>maxTotalChangesForOneTr) {
+				maxTotalChangesForOneTr=totalChangesForOneTransition;
+			}
 			
 			insn=0;
 			updn=0;
@@ -325,9 +323,7 @@ public class TableConstructionIDU implements Pld {
 		String lala="";
 		for (int i = 0; i < oneRow.length; i++) {
 			lala=lala+oneRow[i]+",";
-		}
-		//System.out.println(oneTable.getName()+" "+lala);
-	
+		}	
 	
 		return oneRow;
 		
@@ -340,14 +336,6 @@ public class TableConstructionIDU implements Pld {
 	private int getNumOfAttributesOfNextSchema(String schema,String table){
 		int num = 0;
 		PPLSchema sc=allPPLSchemas.get(schema);
-		
-		/*for(int i=0; i<allPPLSchemas.size(); i++){
-			if(allPPLSchemas.get(i).getName().equals(schema)){
-				sc=allPPLSchemas.get(schema);
-				break;
-			}
-		}*/
-		
 		
 		for(int i=0;i<sc.getTables().size();i++){
 			if(sc.getTableAt(i).getName().equals(table)){

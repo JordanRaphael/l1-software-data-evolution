@@ -3,7 +3,6 @@
  */
 package phaseAnalyzer.parser;
 
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Iterator;
@@ -13,11 +12,6 @@ import java.util.StringTokenizer;
 import phaseAnalyzer.commons.TransitionHistory;
 import phaseAnalyzer.commons.TransitionStats;
 
-
-/**
- * @author pvassil
- *
- */
 public class SimpleTextParser implements IParser {
 
 	/* (non-Javadoc)
@@ -131,7 +125,6 @@ public class SimpleTextParser implements IParser {
 		    previousTransition = currentTransition;
 	    }
 	  
-		
 		
 		return transitionHistory;
 	}

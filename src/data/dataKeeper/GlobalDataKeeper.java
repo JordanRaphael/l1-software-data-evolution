@@ -11,7 +11,6 @@ import data.dataPPL.pplSQLSchema.PPLTable;
 import data.dataPPL.pplTransition.AtomicChange;
 import data.dataPPL.pplTransition.PPLTransition;
 import data.dataPPL.pplTransition.TableChange;
-import data.dataProccessing.DiffFromTwoSchemas;
 import data.dataProccessing.Worker;
 
 public class GlobalDataKeeper {
@@ -28,8 +27,6 @@ public class GlobalDataKeeper {
 	private String 	projectDataFolder=null;
 	private String filename=null;
 	private String transitionsFile="";
-	private String oldVersion=null;
-	private String newVersion=null;
 	
 
 	public GlobalDataKeeper(String fl,String transitionsFile){
@@ -45,28 +42,8 @@ public class GlobalDataKeeper {
 		this.transitionsFile=transitionsFile;
 	}
 	
-//	public GlobalDataKeeper(TreeMap<String,PPLSchema> tmpAllPPLSchemas,TreeMap<String,PPLTable> tmpAllTables,ArrayList<AtomicChange> tmpAtomicChanges,
-//														TreeMap<String,TableChange> tmpTableChanges,TreeMap<String,PPLTransition> tmpAllPPLTransitions,String tmpFilename){
-//		
-//		allPPLSchemas=tmpAllPPLSchemas;
-//		allTables=tmpAllTables;
-//		atomicChanges=tmpAtomicChanges;
-//		tableChanges=tmpTableChanges;
-//		allPPLTransitions=tmpAllPPLTransitions;
-//		projectDataFolder=tmpFilename;
-//		
-//	}
-	
 	public GlobalDataKeeper(){
 		
-		
-	}
-	
-	public GlobalDataKeeper(String tmpOldVersion, String tmpNewVersion,String tmpDataFolder){
-		
-		oldVersion=tmpOldVersion;
-		newVersion=tmpNewVersion;
-		projectDataFolder=tmpDataFolder;
 		
 	}
 	
@@ -99,21 +76,6 @@ public class GlobalDataKeeper {
 		this.clusterCollectors=clusterCollectors;
 	}
 	
-	public void setDataForTwoVersions(){
-		
-		DiffFromTwoSchemas diffForTwoSch= new DiffFromTwoSchemas(oldVersion, newVersion, projectDataFolder);
-		System.out.println(oldVersion+" "+newVersion);
-		try {
-			diffForTwoSch.findDifferenciesFromTwoSchemas();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		setTmpTableChanges(diffForTwoSch.getTableChangesForTwoSchemas());
-
-	}
-	
 	private void setAllPPLSchemas(TreeMap<String,PPLSchema> tmpAllPPLSchemas){
 		
 		allPPLSchemas=tmpAllPPLSchemas;
@@ -138,11 +100,6 @@ public class GlobalDataKeeper {
 		
 	}
 	
-	private void setTmpTableChanges(TreeMap<String,TableChange> tmpTableChanges){
-		
-		tableChangesForTwo=tmpTableChanges;
-		
-	}
 	
 	private void setAllPPLTransitions(TreeMap<Integer,PPLTransition> tmpAllPPLTransitions){
 		

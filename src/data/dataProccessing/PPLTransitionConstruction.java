@@ -24,14 +24,6 @@ public class PPLTransitionConstruction {
 	}
 	
 	public void makePPLTransitions(){
-		/*
-			Allaksa Delta.java
-			
-			Apo: res.setVersionNames(B.getName(), A.getName());
-	
-			Egine: res.setVersionNames(B.getName(), A.getName());
-		
-		*/
 		
 		allPPLTransitions  = new TreeMap<Integer,PPLTransition>();
 		

@@ -1,7 +1,5 @@
 package data.dataProccessing;
 
-//import hecate.sqlSchema.Schema;
-//import hecate.transitions.TransitionList;
 
 import gr.uoi.cs.daintiness.hecate.sql.Schema;
 import gr.uoi.cs.daintiness.hecate.transitions.TransitionList;
@@ -21,7 +19,6 @@ public class Worker {
 	private String filename=null;
 	private String transitionsFile=null;
 
-	//private GlobalDataKeeper dK;
 	private TreeMap<String,PPLSchema> allPPLSchemas = null;
 	private TreeMap<String,PPLTable> allTables = null;
 	private ArrayList<AtomicChange> atomicChanges = null;
@@ -73,15 +70,8 @@ public class Worker {
 		pplTransitionC.makePPLTransitions();
 		allPPLTransitions=pplTransitionC.getAllPPLTransitions();
 
-		//this.dK=new GlobalDataKeeper(allPPLSchemas, allTables, atomicChanges, tableChanges, allPPLTransitions,filename);
 		
 	}
-	
-//	public GlobalDataKeeper getDataKeeper(){
-//		
-//		return dK;
-//		
-//	}
 	
 	public TreeMap<String,PPLSchema> getAllPPLSchemas(){
 		

@@ -11,10 +11,6 @@ import phaseAnalyzer.commons.PhaseCollector;
 import phaseAnalyzer.commons.TransitionHistory;
 import phaseAnalyzer.commons.TransitionStats;
 
-/**
- * @author pvassil
- *
- */
 public class BottomUpPhaseExtractor implements IPhaseExtractor {
 
 	/* (non-Javadoc)
@@ -23,12 +19,9 @@ public class BottomUpPhaseExtractor implements IPhaseExtractor {
 	@Override
 	public PhaseCollector extractAtMostKPhases(	TransitionHistory transitionHistory, int numPhases,
 											float timeWeight,float changeWeight,boolean preProcessingTime,boolean preProcessingChange) {
+		
 		PhaseCollector initSolution = new PhaseCollector();
 		this.init(transitionHistory, initSolution);
-		//System.out.println("init "+initSolution.getPhases().size());
-		//this.preProcessingTime(transitionHistory, initSolution);
-		//System.out.println("timePreProcessing "+initSolution.getPhases().size());
-
 		
 		/* 
 		 * TIME preprocessing
@@ -65,7 +58,8 @@ public class BottomUpPhaseExtractor implements IPhaseExtractor {
 	 * @return
 	 */
 	private PhaseCollector performTimePreprocessing(
-			TransitionHistory transitionHistory, PhaseCollector initSolution) {
+				TransitionHistory transitionHistory, PhaseCollector initSolution) {
+		
 		PhaseCollector preProcessedSolutionTime = new PhaseCollector();
 		preProcessedSolutionTime = this.preProcessOverTime(transitionHistory, initSolution);
 		int oldSize=initSolution.getPhases().size();
@@ -84,13 +78,12 @@ public class BottomUpPhaseExtractor implements IPhaseExtractor {
 	 * @param preProcessedSolutionTime
 	 * @return
 	 */
-	private PhaseCollector performChangePreprocessing(
-			TransitionHistory transitionHistory,
-			PhaseCollector preProcessedSolutionTime) {
+	private PhaseCollector performChangePreprocessing(TransitionHistory transitionHistory,
+														PhaseCollector preProcessedSolutionTime) {
+		
 		int oldSize;
 		PhaseCollector preProcessedSolutionChanges = new PhaseCollector();
 		preProcessedSolutionChanges=this.preProcessOverChanges(transitionHistory, preProcessedSolutionTime);
-		//System.out.println("changesPreProcessing "+preProcessedSolution.getPhases().size());
 		oldSize=preProcessedSolutionTime.getPhases().size();
 
 		while(oldSize!=preProcessedSolutionChanges.getPhases().size()){
@@ -125,11 +118,10 @@ public class BottomUpPhaseExtractor implements IPhaseExtractor {
 	      Phase p = phaseIter.next();
 	      pI++;
 	      distances[pI] = p.distance(previousPhase,timeWeight,changeWeight);
-//System.out.println(pI +":\t" + distances[pI]);
+	      //System.out.println(pI +":\t" + distances[pI]);
 	      
 	      previousPhase = p;
 	    }
-
 
 		//find the two most similar phases in the old collection
 	    int posI=-1; double minDist = Double.MAX_VALUE;
@@ -142,7 +134,7 @@ public class BottomUpPhaseExtractor implements IPhaseExtractor {
 	    //merge them in a new phase. Merge posI with its PREVIOUS (ATTN!!)
 		Phase toMerge = oldPhases.get(posI-1);
 		Phase newPhase = toMerge.mergeWithNextPhase(oldPhases.get(posI));
-//System.out.println("\n\nMErging: " + (posI-1) + " , " + posI + " with distance "  + minDist);		
+		//System.out.println("\n\nMErging: " + (posI-1) + " , " + posI + " with distance "  + minDist);		
 		//assuming we merge i, i+1 add the 0..i-1 to the new phases
 		for(int i=0; i < posI-1; i++){
 			Phase p = oldPhases.get(i);
@@ -158,8 +150,7 @@ public class BottomUpPhaseExtractor implements IPhaseExtractor {
 			}		
 		}
 		newCollector.setPhases(newPhases);
-//System.out.println("Old collector with size: " + oldPhases.size());
-//System.out.println("New collector with size: " + newCollector.getPhases().size()+"-----------END-----------\n\n");
+
 		return newCollector;
 	}
 	

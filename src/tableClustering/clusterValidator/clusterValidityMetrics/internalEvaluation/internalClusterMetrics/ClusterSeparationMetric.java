@@ -1,7 +1,6 @@
 package tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalClusterMetrics;
 
 import tableClustering.clusterValidator.commons.Centroid;
-import tableClustering.clusterValidator.commons.ClusterInfoKeeper;
 
 public class ClusterSeparationMetric implements InternalClusterMetrics {
 

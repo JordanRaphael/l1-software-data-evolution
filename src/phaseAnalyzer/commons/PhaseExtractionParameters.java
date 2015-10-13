@@ -7,7 +7,7 @@ public class PhaseExtractionParameters {
 	//All the variables of the project collected here
 	//public static final [type] [NAME_IN_ALL_CAPS] = [value];
 	//In the code to be used as 
-	//   PhaseExtractionParameters.[NAME_IN_ALL_CAPS]
+	//PhaseExtractionParameters.[NAME_IN_ALL_CAPS]
 	//public static final String DATASET = "typo3"; //String dataSetNames[] ={"atlas", "biosql", "coppermine", "ensembl", "mwiki", "opencart", "phpBB", "typo3"};
 	public static final List<String> DATASET_AR= Arrays.asList("atlas", "biosql", "coppermine", "ensembl", "mwiki", "opencart", "phpBB", "typo3");
 	public static final int DEFAULT_NUM_PHASES = 10;	//10

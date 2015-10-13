@@ -11,7 +11,6 @@ import data.dataPPL.pplTransition.PPLTransition;
 public class Phase {
 	
 	public Phase(TransitionHistory transitionHistory) {
-		//super();
 		this.transitionHistory = transitionHistory;
 		subPhases=new ArrayList<Phase>();
 		
@@ -109,19 +108,14 @@ public class Phase {
 			s=s+"\n"+"\t"+"\t"+"\t"+"\t";
 		}
 
-		/*for(int i=0; i<this.subPhases.size(); i++){
-			s=s+"\n"+this.subPhases.get(i).getStartPos()+"-"+this.subPhases.get(i).getEndPos()+"\t"+this.subPhases.get(i).getTotalUpdates();
-		}*/
 		return s;
 	}
 
 	public double distance(Phase anotherPhase,float timeWeight, float changeWeight){
-		// totalUpdateActivity is the sum of totalAttrChange of all points
-		//double changeDistance = Math.abs(this.totalUpdates - anotherPhase.totalUpdates);
+	
 		int transitionHistoryTotalUpdates = transitionHistory.getTotalUpdates();
 		double changeDistance = Math.abs(this.totalUpdates - anotherPhase.totalUpdates)/((double)transitionHistoryTotalUpdates);
 	
-		// timeDistanceFrom Neighbor / 86400 normalizes the distance in days
 		double timeDistance = 0;
 		Phase subsequent, preceding; 
 		if(this.startPos > anotherPhase.endPos){
@@ -133,7 +127,6 @@ public class Phase {
 			subsequent = anotherPhase;
 		}
 
-		//timeDistance = (((transitionHistory.getValues().get(subsequent.startPos).getTime() - transitionHistory.getValues().get(preceding.endPos).getTime())/86400));
 		timeDistance = (((transitionHistory.getValues().get(subsequent.startPos).getTime() - transitionHistory.getValues().get(preceding.endPos).getTime())/86400))/(transitionHistory.getTotalTime());
 		double totalDistance = changeWeight * changeDistance + timeWeight * timeDistance;
 		return totalDistance;
@@ -162,9 +155,7 @@ public class Phase {
 		for(int i=0; i<nextPhase.subPhases.size(); i++){	
 			newPhase.subPhases.add(nextPhase.subPhases.get(i));
 		}
-		//System.out.println(subPhases.size());
-		//TODO FIX FIX FIX FIX
-		//Add any other attributes necessary!!
+		
 		return newPhase;
 	}
 	
@@ -211,11 +202,5 @@ public class Phase {
 	private double sum=0;
 	private TreeMap<Integer,PPLTransition> phasePPLTransitions = new TreeMap<Integer,PPLTransition>();
 
-
-
-	//TODO
-	// maybe AverageUpdateActivity (you need count of transitions = endPos-startPos + 1)
-	//DistanceFromPrevious (possibly normalized in days)
-	//DistanceFromNext (maybe) 
 
 }

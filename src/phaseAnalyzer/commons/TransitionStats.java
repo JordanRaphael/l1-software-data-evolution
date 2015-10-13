@@ -10,11 +10,7 @@ public class TransitionStats {
 			int numTablesDel, int numAttrIns, int numAttrDel,
 			int numAttrWithTypeAlt, int numAttrInKeyAlt,
 			int numAttrInsInNewTables, int numAttrDelWithDelTables,int totalUpdatesInTr) {
-
- //TODO: Check input validity!
-
 		
-		//super();
 		this.transitionId = transitionId;
 		this.time = time;
 		this.oldVersionFile = oldVersionFile;
@@ -140,11 +136,8 @@ public class TransitionStats {
 	private int totalAttrChange;
 	private int timeDistFromPrevious;
 	private int totalUpdatesInTr;
-/**	
- //TODO Extra computations can be done
- *	table and attribute growth
- *	some total amt of change
- */
+
+	
 
 }
 

@@ -1,23 +1,16 @@
-/**
- * One possible breakdown of a transition history into phases
- */
+
 package phaseAnalyzer.commons;
 
 import java.util.ArrayList;
 
 import data.dataKeeper.GlobalDataKeeper;
 
-/**
- * @author pvassil
- *
- */
 public class PhaseCollector {
 	public PhaseCollector(){
 		phases = new ArrayList<Phase>();
 	}
 
 	public PhaseCollector(ArrayList<Phase> phases) {
-	//	super();
 		this.phases = phases;
 	}
 	
@@ -47,11 +40,8 @@ public class PhaseCollector {
 	
 	
 	public String toStringShort() {
-		//String s = new String("Number of phases "+ phases.size() + "\n");
 		String s=new String("");
-/*		if (phases == null){
-			return "Empty phase collector ";
-		}*/
+
 		for(Phase p: phases){
 			s = s + p.toStringShort()+ "\n";
 			totalSum=totalSum+p.getSum();
@@ -62,15 +52,10 @@ public class PhaseCollector {
 	}
 
 	public String toStringShortAss2() {
-		//String s = new String("Number of phases "+ phases.size() + "\n");
 		String s=new String("");
-/*		if (phases == null){
-			return "Empty phase collector ";
-		}*/
 		
 		for(int i=0; i<phases.size()-1; i++){
 			
-			//s=s+phases.get(i).getEndPos()+"-"+phases.get(i+1).getStartPos()+"\t";
 			s=s+i+"@"+(i+1)+"\t";
 			float timeD = Math.abs((float)(phases.get(i).getTransitionHistory().getValues().get(phases.get(i).getEndPos()).getTime()-
 					phases.get(i+1).getTransitionHistory().getValues().get(phases.get(i+1).getStartPos()).getTime())/84600);

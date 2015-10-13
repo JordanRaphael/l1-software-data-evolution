@@ -1,7 +1,6 @@
 package tableClustering.clusterValidator.engine;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import tableClustering.clusterExtractor.commons.Cluster;
-import tableClustering.clusterValidator.clusterValidityMetrics.externalEvaluation.externalClusterMetrics.ExternalClusterMetric;
 import tableClustering.clusterValidator.clusterValidityMetrics.externalEvaluation.externalTotalMetrics.ExternalTotalMetrics;
 import tableClustering.clusterValidator.clusterValidityMetrics.externalEvaluation.externalTotalMetrics.TotalEntropyMetric;
 import tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalTotalMetrics.InternalTotalMetrics;
@@ -109,15 +107,12 @@ public class ClusterValidatorMainEngine {
 	private void initializeClassesOfObjects() throws IOException{
 		
 		BufferedReader br = new BufferedReader(new FileReader("filesHandler/input/phpbbclassesForValidity.csv"));
-		//File f = new File("input/classesForValidity.csv");
-	
 		
 		String line;
 		ClassOfObjects classToAdd=null;
 		ArrayList<String> objectsOfClass = new ArrayList<String>();
 		while((line = br.readLine()) != null) {
-			//line = br.readLine();
-			//String[] splitLine = line.split(";");
+			
 			if(line.contains("Class ")){
 				if (classToAdd!=null) {
 					classToAdd.setObjects(objectsOfClass);

@@ -1,4 +1,4 @@
-package gui.tableElements;
+package gui.tableElements.commons;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -48,6 +48,8 @@ public class MyTableModel extends AbstractTableModel {
     public Object getValueAt(int row, int col) {
         return rows[row][col];
     }
+    
+    
     
 
     /*

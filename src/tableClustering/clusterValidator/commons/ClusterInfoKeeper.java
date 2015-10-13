@@ -36,19 +36,12 @@ public class ClusterInfoKeeper {
 		initialize();
 	}
 	
-	/*
-	public ClusterInfoKeeper(){
-		this.cluster=cluster;
-		initialize();
-	}
-	*/
+	
 	private void initialize(){
 		
 		initializeCentroid();
 		computeClusterCohesion();
-		computeClusterSeparation();
-		//computeClusterEntropy();
-		
+		computeClusterSeparation();		
 		
 	}
 	
@@ -69,9 +62,7 @@ public class ClusterInfoKeeper {
 		z= z/tables.size();
 		
 		this.clusterCentroid=new Centroid(x, y, z);
-		
-		//System.out.println(this.clusterCentroid.getX()+" "+this.clusterCentroid.getY()+" "+this.clusterCentroid.getZ());
-		
+				
 	}
 	
 	private void computeClusterCohesion(){
@@ -94,7 +85,7 @@ public class ClusterInfoKeeper {
 	
 	public void computeClusterEntropy(ArrayList<ClassOfObjects> classesOfObjects,ArrayList<Cluster> clusters,int classIndex){
 		
-		ExternalClusterMetric entropyMetricCalculator = new ClusterEntropyMetric(classesOfObjects,this.cluster,clusters,classIndex);
+		ExternalClusterMetric entropyMetricCalculator = new ClusterEntropyMetric(classesOfObjects,clusters,classIndex);
 		entropyMetricCalculator.compute();
 		clusterEntropy = entropyMetricCalculator.getResult();
 		//System.err.println("-------------->"+clusterEntropy);

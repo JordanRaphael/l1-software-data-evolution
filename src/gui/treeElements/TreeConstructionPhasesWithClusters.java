@@ -36,20 +36,6 @@ public class TreeConstructionPhasesWithClusters implements TreeConstruction {
 			}
 			
 		}
-		/*for (Map.Entry<String,PPLSchema> pplSc : schemas.entrySet()) {
-			
-			top.c
-			
-			DefaultMutableTreeNode a=new DefaultMutableTreeNode(pplSc.getKey());
-		    top.add(a);
-		    TreeMap<String, PPLTable> tables=pplSc.getValue().getTables();
-		    
-			for (Map.Entry<String,PPLTable> pplT : tables.entrySet()) {
-				DefaultMutableTreeNode a1=new DefaultMutableTreeNode(pplT.getKey());
-				a.add(a1);
-			}
-		    
-		}*/
 		
 		JTree treeToConstruct = new JTree(top);
 		

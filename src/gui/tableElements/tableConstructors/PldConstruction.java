@@ -1,6 +1,6 @@
-package gui.tableElements;
+package gui.tableElements.tableConstructors;
 
-public interface Pld {
+public interface PldConstruction {
 
 	public String[] constructColumns();
 	public String[][] constructRows();
