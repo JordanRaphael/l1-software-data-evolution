@@ -32,7 +32,6 @@ public class TableConstructionZoomArea implements PldConstruction {
 	private Integer segmentSize[]=new Integer[4];
 	
 	public TableConstructionZoomArea(GlobalDataKeeper globalDataKeeper,ArrayList<String> sSelectedTables,int selectedColumn){
-		System.err.println("Here?");
 		this.globalDataKeeper=globalDataKeeper;
 		allPPLSchemas=globalDataKeeper.getAllPPLSchemas();
 		this.sSelectedTables=sSelectedTables;
@@ -164,8 +163,6 @@ public class TableConstructionZoomArea implements PldConstruction {
 			
 		}
 		
-		System.err.println(maxInsersions+" "+maxUpdates+" "+maxDeletions+" lalaaala");
-
 		
 		float maxI=(float) maxInsersions/4;
 		segmentSize[0]=(int) Math.rint(maxI);
@@ -347,7 +344,6 @@ public class TableConstructionZoomArea implements PldConstruction {
 	}
 	
 	public Integer[] getSegmentSize(){
-		System.err.println(segmentSize[0]+" "+segmentSize[1]+" "+segmentSize[2]+" lalaaala");
 
 		return segmentSize;
 	}
