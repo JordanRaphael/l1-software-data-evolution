@@ -1,6 +1,0 @@
-Atlas.csv
-WC: 0.0	WT: 0.0
-PreProcessingChanges:OFF	PreProcessingTime:OFF
-Phases	dTime	dChange	avgDChange
-
-

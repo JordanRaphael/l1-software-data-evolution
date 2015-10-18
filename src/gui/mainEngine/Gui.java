@@ -1629,7 +1629,6 @@ private void showSelectionToZoomArea(int selectedColumn){
 	final String[] columns=table.constructColumns();
 	final String[][] rows=table.constructRows();
 	segmentSizeZoomArea = table.getSegmentSize();
-	System.err.println(segmentSizeZoomArea[0]+" "+segmentSizeZoomArea[1]+" "+segmentSizeZoomArea[2]+" nanana");
 
 	System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
 	System.out.println("C: "+columns.length+" R: "+rows.length);
