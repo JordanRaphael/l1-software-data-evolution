@@ -1,4 +1,4 @@
-#Plutarch Parallel Lives
+# Plutarch Parallel Lives
 
 
 ## Description
@@ -6,7 +6,7 @@ The goal of Plutarch Parallel Lives is to visually demonstrate the story of the 
 The main modeling element is the Change Analysis per Relation and Transition matrix that has one row per table and one column per version of the schema history. Each cell reports on the state of the table at this particular version (non existent, idle, changed).
 This state is also visualized at the front end, via the main visual output of the tool, the Parallel Lives Diagram (PLD).
 As the detailed PLD becomes too long to observe with a single view, we provide clustering mechanisms to (a) reduce the number of rows, by clustering to groups of tables that have similar lives, and, (b) to reduce the number of columns, by producing phases of homogeneous internal activity, rater than individual versions, again by clustering versions.   
-Some stats are also visualized too.
+
 
 ## Credits and History
 
