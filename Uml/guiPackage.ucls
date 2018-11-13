@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.8" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
   associations="true" dependencies="true" nesting-relationships="true">  
-  <package id="1" language="java" name="gui.dialogs" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/gui/dialogs" binary="false" corner="BOTTOM_RIGHT">    
+  <package id="1" language="java" name="gui.dialogs" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/gui/dialogs" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="615" y="187"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <package id="2" language="java" name="gui.mainEngine" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/gui/mainEngine" binary="false" corner="BOTTOM_RIGHT">    
+  <package id="2" language="java" name="gui.mainEngine" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/gui/mainEngine" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="618" y="58"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <package id="3" language="java" name="gui.treeElements" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/gui/treeElements" binary="false" corner="BOTTOM_RIGHT">    
+  <package id="3" language="java" name="gui.treeElements" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/gui/treeElements" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="754" y="163"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <package id="4" language="java" name="gui.tableElements" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/gui/tableElements" binary="false" corner="BOTTOM_RIGHT">    
+  <package id="4" language="java" name="gui.tableElements" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/gui/tableElements" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="612" y="305"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  

@@ -2,8 +2,8 @@
 <class-diagram version="1.1.8" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
   associations="true" dependencies="true" nesting-relationships="true">  
   <class id="1" language="java" name="tableClustering.clusterExtractor.analysis.ClusterExtractorFactory" 
-    project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/analysis/ClusterExtractorFactory.java" 
+    project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/tableClustering/clusterExtractor/analysis/ClusterExtractorFactory.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="798" y="12"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -13,8 +13,8 @@
     </display>  
   </class>  
   <interface id="2" language="java" name="tableClustering.clusterExtractor.analysis.ClusterExtractor" 
-    project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/analysis/ClusterExtractor.java" binary="false" 
+    project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/tableClustering/clusterExtractor/analysis/ClusterExtractor.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="379" y="106"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -24,8 +24,8 @@
     </display>  
   </interface>  
   <class id="3" language="java" name="tableClustering.clusterExtractor.analysis.AgglomerativeClusterExtractor" 
-    project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/analysis/AgglomerativeClusterExtractor.java" 
+    project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/tableClustering/clusterExtractor/analysis/AgglomerativeClusterExtractor.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="379" y="303"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

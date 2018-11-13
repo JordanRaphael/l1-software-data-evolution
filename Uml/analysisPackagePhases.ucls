@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.8" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
   associations="true" dependencies="true" nesting-relationships="true">  
-  <class id="1" language="java" name="phaseAnalyzer.analysis.BottomUpPhaseExtractor" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/phaseAnalyzer/analysis/BottomUpPhaseExtractor.java" binary="false" 
+  <class id="1" language="java" name="phaseAnalyzer.analysis.BottomUpPhaseExtractor" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/phaseAnalyzer/analysis/BottomUpPhaseExtractor.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="510" y="325"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -11,8 +11,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="2" language="java" name="phaseAnalyzer.analysis.IPhaseExtractor" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/phaseAnalyzer/analysis/IPhaseExtractor.java" binary="false" corner="BOTTOM_RIGHT">    
+  <interface id="2" language="java" name="phaseAnalyzer.analysis.IPhaseExtractor" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/phaseAnalyzer/analysis/IPhaseExtractor.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="509" y="104"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -20,8 +20,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="3" language="java" name="phaseAnalyzer.analysis.PhaseExtractorFactory" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/phaseAnalyzer/analysis/PhaseExtractorFactory.java" binary="false" 
+  <class id="3" language="java" name="phaseAnalyzer.analysis.PhaseExtractorFactory" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/phaseAnalyzer/analysis/PhaseExtractorFactory.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="920" y="8"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

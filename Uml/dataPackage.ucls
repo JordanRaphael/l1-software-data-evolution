@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.8" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
   associations="true" dependencies="true" nesting-relationships="true">  
-  <package id="1" language="java" name="data.dataKeeper" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/data/dataKeeper" binary="false" corner="BOTTOM_RIGHT">    
+  <package id="1" language="java" name="data.dataKeeper" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/data/dataKeeper" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="592" y="305"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <package id="2" language="java" name="data.dataProccessing" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/data/dataProccessing" binary="false" corner="BOTTOM_RIGHT">    
+  <package id="2" language="java" name="data.dataProccessing" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/data/dataProccessing" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="513" y="451"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <package id="3" language="java" name="data.dataPPL" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/data/dataPPL" binary="false" corner="BOTTOM_RIGHT">    
+  <package id="3" language="java" name="data.dataPPL" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/data/dataPPL" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="185" y="389"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <package id="4" language="java" name="data.dataSorters" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/data/dataSorters" binary="false" corner="BOTTOM_RIGHT">    
+  <package id="4" language="java" name="data.dataSorters" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/data/dataSorters" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="342" y="263"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <package id="5" language="java" name="data.dataPPL.pplTransition" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/data/dataPPL/pplTransition" binary="false" corner="BOTTOM_RIGHT">    
+  <package id="5" language="java" name="data.dataPPL.pplTransition" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/data/dataPPL/pplTransition" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="610" y="577"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <package id="6" language="java" name="data.dataPPL.pplSQLSchema" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/data/dataPPL/pplSQLSchema" binary="false" corner="BOTTOM_RIGHT">    
+  <package id="6" language="java" name="data.dataPPL.pplSQLSchema" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/data/dataPPL/pplSQLSchema" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="275" y="513"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  

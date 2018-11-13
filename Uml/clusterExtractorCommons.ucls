@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.8" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
   associations="true" dependencies="true" nesting-relationships="true">  
-  <class id="1" language="java" name="tableClustering.clusterExtractor.commons.Cluster" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/commons/Cluster.java" binary="false" 
+  <class id="1" language="java" name="tableClustering.clusterExtractor.commons.Cluster" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/tableClustering/clusterExtractor/commons/Cluster.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="444" y="582"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -12,8 +12,8 @@
     </display>  
   </class>  
   <class id="2" language="java" name="tableClustering.clusterExtractor.commons.ClusterCollector" 
-    project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/commons/ClusterCollector.java" binary="false" 
+    project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/tableClustering/clusterExtractor/commons/ClusterCollector.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="443" y="218"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

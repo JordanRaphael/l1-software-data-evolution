@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.8" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
   associations="true" dependencies="true" nesting-relationships="true">  
-  <class id="1" language="java" name="data.dataProccessing.PPLSchemasConstruction" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/data/dataProccessing/PPLSchemasConstruction.java" binary="false" 
+  <class id="1" language="java" name="data.dataProccessing.PPLSchemasConstruction" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/data/dataProccessing/PPLSchemasConstruction.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="658" y="28"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -11,8 +11,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="data.dataProccessing.PPLTablesConstruction" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/data/dataProccessing/PPLTablesConstruction.java" binary="false" 
+  <class id="2" language="java" name="data.dataProccessing.PPLTablesConstruction" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/data/dataProccessing/PPLTablesConstruction.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="675" y="247"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -21,8 +21,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="data.dataProccessing.AtomicChangeConstruction" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/data/dataProccessing/AtomicChangeConstruction.java" binary="false" 
+  <class id="3" language="java" name="data.dataProccessing.AtomicChangeConstruction" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/data/dataProccessing/AtomicChangeConstruction.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1480" y="325"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -31,8 +31,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="data.dataProccessing.Worker" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/data/dataProccessing/Worker.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="data.dataProccessing.Worker" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/data/dataProccessing/Worker.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1083" y="200"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -40,8 +40,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="data.dataProccessing.TableChangeConstruction" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/data/dataProccessing/TableChangeConstruction.java" binary="false" 
+  <class id="5" language="java" name="data.dataProccessing.TableChangeConstruction" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/data/dataProccessing/TableChangeConstruction.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1081" y="-105"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -50,8 +50,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="data.dataProccessing.PPLTransitionConstruction" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/data/dataProccessing/PPLTransitionConstruction.java" binary="false" 
+  <class id="6" language="java" name="data.dataProccessing.PPLTransitionConstruction" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/data/dataProccessing/PPLTransitionConstruction.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1070" y="508"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -60,8 +60,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="data.dataProccessing.ImportSchemas" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/data/dataProccessing/ImportSchemas.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="7" language="java" name="data.dataProccessing.ImportSchemas" project="Plutarch_Parallel_Lives" 
+    file="/Plutarch_Parallel_Lives/src/data/dataProccessing/ImportSchemas.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1502" y="30"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
