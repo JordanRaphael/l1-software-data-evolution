@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.1.8" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
-  associations="true" dependencies="true" nesting-relationships="true">  
+<class-diagram version="1.2.4" icons="true" automaticImage="PNG" always-add-relationships="true" generalizations="true" 
+  realizations="true" associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
   <package id="1" language="java" name="phaseAnalyzer.engine" project="Plutarch_Parallel_Lives" 
     file="/Plutarch_Parallel_Lives/src/phaseAnalyzer/engine" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="587" y="120"/>    
+    <position height="-1" width="-1" x="586" y="74"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <package id="2" language="java" name="phaseAnalyzer.commons" project="Plutarch_Parallel_Lives" 
@@ -13,7 +13,7 @@
   </package>  
   <package id="3" language="java" name="phaseAnalyzer.analysis" project="Plutarch_Parallel_Lives" 
     file="/Plutarch_Parallel_Lives/src/phaseAnalyzer/analysis" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="219" y="209"/>    
+    <position height="-1" width="-1" x="658" y="212"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <package id="4" language="java" name="phaseAnalyzer.parser" project="Plutarch_Parallel_Lives" 
@@ -22,24 +22,24 @@
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <dependency id="5">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="2"/>  
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="4"/>  
   </dependency>  
   <dependency id="6">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="2"/>  
   </dependency>  
   <dependency id="7">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="2"/>  
-  </dependency>  
-  <dependency id="8">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="3"/>  
   </dependency>  
+  <dependency id="8">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
   <dependency id="9">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="4"/>  
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="2"/>  
   </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    

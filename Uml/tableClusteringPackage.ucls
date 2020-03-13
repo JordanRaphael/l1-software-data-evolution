@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.1.8" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
-  associations="true" dependencies="true" nesting-relationships="true">  
+<class-diagram version="1.2.4" icons="true" automaticImage="PNG" always-add-relationships="true" generalizations="true" 
+  realizations="true" associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
   <package id="1" language="java" name="tableClustering.clusterExtractor.commons" project="Plutarch_Parallel_Lives" 
     file="/Plutarch_Parallel_Lives/src/tableClustering/clusterExtractor/commons" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="624" y="335"/>    

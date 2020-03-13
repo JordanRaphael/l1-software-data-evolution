@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.2.2" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
-  associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
+<class-diagram version="1.2.4" icons="true" automaticImage="PNG" always-add-relationships="true" generalizations="true" 
+  realizations="true" associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="gui.mainEngine.Gui" project="Plutarch_Parallel_Lives" 
     file="/Plutarch_Parallel_Lives/src/gui/mainEngine/Gui.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="557" y="245"/>    
@@ -171,109 +171,92 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <association id="21">    
-    <end type="SOURCE" refId="1" navigable="false" variant="ASSOCIATION">      
-      <attribute id="22" name="LifeTimeTable"/>      
-      <multiplicity id="23" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="24">    
-    <bendpoint x="468" y="425"/>    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="17"/>  
-  </dependency>  
-  <dependency id="25">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="20"/>  
-  </dependency>  
-  <dependency id="26">    
-    <end type="SOURCE" refId="10"/>    
+  <dependency id="21">    
+    <bendpoint x="318" y="743"/>    
+    <bendpoint x="909" y="760"/>    
+    <end type="SOURCE" refId="9"/>    
     <end type="TARGET" refId="19"/>  
   </dependency>  
-  <dependency id="27">    
-    <bendpoint x="908" y="785"/>    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="18"/>  
-  </dependency>  
-  <dependency id="28">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="4"/>  
-  </dependency>  
-  <dependency id="29">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="1"/>  
-  </dependency>  
-  <dependency id="30">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="17"/>  
-  </dependency>  
-  <association id="31">    
-    <bendpoint x="704" y="569"/>    
-    <end type="SOURCE" refId="19" navigable="false" variant="ASSOCIATION">      
-      <attribute id="32" name="allPPLTransitions"/>      
-      <multiplicity id="33" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="17" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="34">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="6"/>  
-  </dependency>  
-  <dependency id="35">    
+  <dependency id="22">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="16"/>  
   </dependency>  
-  <dependency id="36">    
+  <association id="23">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="24" name="zoomAreaTable">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="25" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="26">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="27" name="detailedModel">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="28" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="29">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="18"/>  
+  </dependency>  
+  <dependency id="30">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="18"/>  
+  </dependency>  
+  <dependency id="31">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <dependency id="32">    
+    <bendpoint x="490" y="312"/>    
+    <bendpoint x="493" y="716"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="20"/>  
+  </dependency>  
+  <dependency id="33">    
+    <bendpoint x="188" y="617"/>    
+    <bendpoint x="189" y="934"/>    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="34">    
     <bendpoint x="1002" y="817"/>    
     <end type="SOURCE" refId="13"/>    
     <end type="TARGET" refId="12"/>  
   </dependency>  
-  <dependency id="37">    
-    <bendpoint x="1020" y="473"/>    
-    <end type="SOURCE" refId="15"/>    
+  <dependency id="35">    
+    <bendpoint x="1010" y="592"/>    
+    <end type="SOURCE" refId="13"/>    
     <end type="TARGET" refId="19"/>  
   </dependency>  
-  <association id="38">    
-    <end type="SOURCE" refId="1" navigable="false" variant="ASSOCIATION">      
-      <attribute id="39" name="generalModel"/>      
-      <multiplicity id="40" minimum="0" maximum="1"/>    
+  <dependency id="36">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="17"/>  
+  </dependency>  
+  <association id="37">    
+    <bendpoint x="1086" y="110"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="38" name="table">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="39" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="3" navigable="true" variant="ASSOCIATION"/>    
+    <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="41">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="8"/>  
-  </dependency>  
-  <dependency id="42">    
-    <bendpoint x="1089" y="856"/>    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="12"/>  
-  </dependency>  
-  <dependency id="43">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="18"/>  
-  </dependency>  
-  <association id="44">    
-    <end type="SOURCE" refId="1" navigable="false" variant="ASSOCIATION">      
-      <attribute id="45" name="globalDataKeeper"/>      
-      <multiplicity id="46" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="19" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="47">    
-    <end type="SOURCE" refId="4" navigable="false" variant="ASSOCIATION">      
-      <attribute id="48" name="globalDataKeeper"/>      
-      <multiplicity id="49" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="19" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="50">    
+  <dependency id="40">    
     <bendpoint x="618" y="866"/>    
     <bendpoint x="827" y="870"/>    
     <bendpoint x="1144" y="863"/>    
@@ -281,176 +264,253 @@
     <end type="SOURCE" refId="12"/>    
     <end type="TARGET" refId="19"/>  
   </dependency>  
-  <association id="51">    
-    <end type="SOURCE" refId="18" navigable="false" variant="ASSOCIATION">      
-      <attribute id="52" name="tableChanges"/>      
-      <multiplicity id="53" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="20" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="54">    
-    <bendpoint x="266" y="821"/>    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="12"/>  
-  </dependency>  
-  <dependency id="55">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="5"/>  
-  </dependency>  
-  <dependency id="56">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="14"/>  
-  </dependency>  
-  <dependency id="57">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="18"/>  
-  </dependency>  
-  <association id="58">    
-    <end type="SOURCE" refId="19" navigable="false" variant="ASSOCIATION">      
-      <attribute id="59" name="tableChangesForTwo"/>      
-      <multiplicity id="60" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="20" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="61">    
-    <bendpoint x="1020" y="478"/>    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="18"/>  
-  </dependency>  
-  <dependency id="62">    
-    <bendpoint x="381" y="731"/>    
-    <bendpoint x="648" y="737"/>    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="20"/>  
-  </dependency>  
-  <dependency id="63">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="3"/>  
-  </dependency>  
-  <association id="64">    
-    <bendpoint x="1086" y="110"/>    
-    <end type="SOURCE" refId="6" navigable="false" variant="ASSOCIATION">      
-      <attribute id="65" name="table"/>      
-      <multiplicity id="66" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="67">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="7"/>  
-  </dependency>  
-  <dependency id="68">    
+  <dependency id="41">    
     <bendpoint x="1245" y="661"/>    
     <end type="SOURCE" refId="15"/>    
     <end type="TARGET" refId="14"/>  
   </dependency>  
-  <association id="69">    
-    <end type="SOURCE" refId="1" navigable="false" variant="ASSOCIATION">      
-      <attribute id="70" name="zoomModel"/>      
-      <multiplicity id="71" minimum="0" maximum="1"/>    
+  <dependency id="42">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <dependency id="43">    
+    <bendpoint x="908" y="785"/>    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="18"/>  
+  </dependency>  
+  <association id="44">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="45" name="globalDataKeeper">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="46" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="3" navigable="true" variant="ASSOCIATION"/>    
+    <end type="TARGET" refId="19" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="72">    
-    <end type="SOURCE" refId="1" navigable="false" variant="ASSOCIATION">      
-      <attribute id="73" name="zoomAreaTable"/>      
-      <multiplicity id="74" minimum="0" maximum="1"/>    
+  <dependency id="47">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="18"/>  
+  </dependency>  
+  <association id="48">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="49" name="LifeTimeTable">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="50" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="2" navigable="true" variant="ASSOCIATION"/>    
+    <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="75">    
+  <dependency id="51">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="52">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="20"/>  
+  </dependency>  
+  <dependency id="53">    
+    <bendpoint x="1020" y="478"/>    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="18"/>  
+  </dependency>  
+  <association id="54">    
+    <bendpoint x="704" y="569"/>    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="55" name="allPPLTransitions">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="56" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="57">    
     <bendpoint x="896" y="720"/>    
     <bendpoint x="872" y="796"/>    
     <bendpoint x="661" y="802"/>    
     <end type="SOURCE" refId="11"/>    
     <end type="TARGET" refId="17"/>  
   </dependency>  
-  <dependency id="76">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="19"/>  
-  </dependency>  
-  <association id="77">    
-    <end type="SOURCE" refId="19" navigable="false" variant="ASSOCIATION">      
-      <attribute id="78" name="tableChanges"/>      
-      <multiplicity id="79" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="20" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="80">    
-    <bendpoint x="188" y="617"/>    
-    <bendpoint x="189" y="934"/>    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="14"/>  
-  </dependency>  
-  <association id="81">    
-    <end type="SOURCE" refId="1" navigable="false" variant="ASSOCIATION">      
-      <attribute id="82" name="detailedModel"/>      
-      <multiplicity id="83" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="84">    
+  <dependency id="58">    
     <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="19"/>  
   </dependency>  
-  <dependency id="85">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="18"/>  
-  </dependency>  
-  <dependency id="86">    
-    <bendpoint x="490" y="312"/>    
-    <bendpoint x="493" y="716"/>    
+  <dependency id="59">    
     <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="20"/>  
+    <end type="TARGET" refId="7"/>  
   </dependency>  
-  <dependency id="87">    
-    <bendpoint x="1010" y="592"/>    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="19"/>  
+  <dependency id="60">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="14"/>  
   </dependency>  
-  <dependency id="88">    
-    <end type="SOURCE" refId="12"/>    
+  <association id="61">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="62" name="globalDataKeeper">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="63" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="64">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="65" name="globalDataKeeper">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="66" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="67">    
+    <end type="SOURCE" refId="9"/>    
     <end type="TARGET" refId="17"/>  
   </dependency>  
-  <association id="89">    
-    <end type="SOURCE" refId="17" navigable="false" variant="ASSOCIATION">      
-      <attribute id="90" name="tableChanges"/>      
-      <multiplicity id="91" minimum="0" maximum="2147483647"/>    
+  <association id="68">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="69" name="allTables">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="70" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="20" navigable="true" variant="ASSOCIATION"/>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="71">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <dependency id="72">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <association id="73">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="74" name="tableChanges">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="75" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="76">    
+    <bendpoint x="266" y="821"/>    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <association id="77">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="78" name="zoomModel">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="79" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="80">    
+    <bendpoint x="381" y="731"/>    
+    <bendpoint x="648" y="737"/>    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="20"/>  
+  </dependency>  
+  <dependency id="81">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <association id="82">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="83" name="generalModel">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="84" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="85">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="86" name="tableChanges">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="87" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="88">    
+    <bendpoint x="1020" y="473"/>    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <association id="89">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="90" name="tableChanges">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="91" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <dependency id="92">    
-    <bendpoint x="318" y="743"/>    
-    <bendpoint x="909" y="760"/>    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="19"/>  
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="5"/>  
   </dependency>  
   <dependency id="93">    
+    <bendpoint x="1089" y="856"/>    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="94">    
+    <bendpoint x="468" y="425"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="17"/>  
+  </dependency>  
+  <dependency id="95">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="96">    
     <end type="SOURCE" refId="11"/>    
     <end type="TARGET" refId="18"/>  
   </dependency>  
-  <association id="94">    
-    <end type="SOURCE" refId="19" navigable="false" variant="ASSOCIATION">      
-      <attribute id="95" name="allTables"/>      
-      <multiplicity id="96" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="18" navigable="true" variant="ASSOCIATION"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
   <association id="97">    
-    <end type="SOURCE" refId="16" navigable="false" variant="ASSOCIATION">      
-      <attribute id="98" name="globalDataKeeper"/>      
-      <multiplicity id="99" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="98" name="tableChangesForTwo">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="99" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="19" navigable="true" variant="ASSOCIATION"/>    
+    <end type="TARGET" refId="20" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" 
