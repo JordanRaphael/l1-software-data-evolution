@@ -5,7 +5,7 @@
     project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/analysis/ClusterExtractorFactory.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="99" width="256" x="2080" y="166"/>    
+    <position height="-1" width="-1" x="2338" y="737"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -64,7 +64,7 @@
     project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/internalEvaluation/internalClusterMetrics/ClusterSeparationMetric.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="135" width="398" x="-532" y="876"/>    
+    <position height="-1" width="-1" x="31" y="739"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -75,7 +75,7 @@
     project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/analysis/AgglomerativeClusterExtractor.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="135" width="444" x="1892" y="359"/>    
+    <position height="-1" width="-1" x="2296" y="956"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -97,7 +97,7 @@
   <class id="9" language="java" name="tableClustering.clusterExtractor.commons.Cluster" project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/commons/Cluster.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="405" width="269" x="1789" y="1159"/>    
+    <position height="-1" width="-1" x="1933" y="629"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -108,7 +108,7 @@
     project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/commons/ClusterCollector.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="243" width="225" x="2107" y="876"/>    
+    <position height="-1" width="-1" x="2091" y="17"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -120,7 +120,7 @@
     project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/externalEvaluation/externalTotalMetrics/TotalEntropyMetric.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="153" width="394" x="915" y="166"/>    
+    <position height="-1" width="-1" x="1114" y="230"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -143,7 +143,7 @@
     project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterValidator/commons/Centroid.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="189" width="181" x="-113" y="1159"/>    
+    <position height="-1" width="-1" x="451" y="521"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -154,7 +154,7 @@
     project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterValidator/commons/ClusterInfoKeeper.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="477" width="414" x="38" y="359"/>    
+    <position height="-1" width="-1" x="985" y="577"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -189,7 +189,7 @@
     project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/externalEvaluation/externalClusterMetrics/ClusterRecallMetric.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="135" width="404" x="1322" y="876"/>    
+    <position height="-1" width="-1" x="1566" y="943"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -200,7 +200,7 @@
     project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/engine/TableClusteringMainEngine.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="225" width="364" x="2357" y="-189"/>    
+    <position height="-1" width="-1" x="2351" y="485"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -208,275 +208,350 @@
     </display>  
   </class>  
   <association id="19">    
-    <bendpoint x="-563" y="166"/>    
-    <bendpoint x="-563" y="359"/>    
-    <bendpoint x="-563" y="876"/>    
+    <bendpoint x="1330" y="156"/>    
+    <bendpoint x="1332" y="1036"/>    
     <end type="SOURCE" refId="16" navigable="false">      
-      <attribute id="20" name="overallCentroid"/>      
-      <multiplicity id="21" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="22">    
-    <bendpoint x="2366" y="166"/>    
-    <bendpoint x="2366" y="359"/>    
-    <end type="SOURCE" refId="18" navigable="false">      
-      <attribute id="23" name="allClusterCollectors"/>      
-      <multiplicity id="24" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="25">    
-    <bendpoint x="1756" y="359"/>    
-    <bendpoint x="1798" y="876"/>    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="9"/>  
-  </dependency>  
-  <association id="26">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="27" name="classOfObjects"/>      
-      <multiplicity id="28" minimum="0" maximum="1"/>    
+      <attribute id="20" name="classesOfObjects">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="21" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="29">    
+  <dependency id="22">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <association id="23">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="24" name="clusterInfoKeepers">        
+        <position height="0" width="0" x="740" y="-20"/>      
+      </attribute>      
+      <multiplicity id="25" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="740" y="-20"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="26">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="27" name="clusterInfoKeeper">        
+        <position height="0" width="0" x="740" y="-20"/>      
+      </attribute>      
+      <multiplicity id="28" minimum="0" maximum="1">        
+        <position height="0" width="0" x="740" y="-20"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="29">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="30">    
+    <bendpoint x="2166" y="768"/>    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <dependency id="31">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <association id="32">    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="30" name="clusters"/>      
-      <multiplicity id="31" minimum="0" maximum="2147483647"/>    
+      <attribute id="33" name="clusters">        
+        <position height="0" width="0" x="10" y="-732"/>      
+      </attribute>      
+      <multiplicity id="34" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="10" y="-732"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="9" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="32">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="12"/>  
-  </dependency>  
-  <dependency id="33">    
-    <bendpoint x="1840" y="166"/>    
-    <bendpoint x="1840" y="359"/>    
-    <bendpoint x="1840" y="876"/>    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="9"/>  
-  </dependency>  
-  <association id="34">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="35" name="clusterInfoKeepers"/>      
-      <multiplicity id="36" minimum="0" maximum="2147483647"/>    
+  <association id="35">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="36" name="currentCluster">        
+        <position height="0" width="0" x="10" y="-732"/>      
+      </attribute>      
+      <multiplicity id="37" minimum="0" maximum="1">        
+        <position height="0" width="0" x="10" y="-732"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
+    <end type="TARGET" refId="9" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="37">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="38" name="overallCentroid"/>      
-      <multiplicity id="39" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="40">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="41" name="clusterInfoKeepers"/>      
-      <multiplicity id="42" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="43">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="15"/>  
-  </dependency>  
-  <association id="44">    
-    <bendpoint x="-104" y="876"/>    
-    <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="45" name="clusterCentroid"/>      
-      <multiplicity id="46" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="47">    
-    <bendpoint x="1777" y="166"/>    
-    <bendpoint x="1777" y="359"/>    
-    <bendpoint x="1777" y="876"/>    
+  <association id="38">    
+    <bendpoint x="-14" y="132"/>    
+    <bendpoint x="-10" y="350"/>    
     <end type="SOURCE" refId="16" navigable="false">      
-      <attribute id="48" name="classesOfObjects"/>      
-      <multiplicity id="49" minimum="0" maximum="2147483647"/>    
+      <attribute id="39" name="overallCentroid">        
+        <position height="0" width="0" x="474" y="-732"/>      
+      </attribute>      
+      <multiplicity id="40" minimum="0" maximum="1">        
+        <position height="0" width="0" x="474" y="-732"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="41">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="42" name="overallCentroid">        
+        <position height="0" width="0" x="474" y="-732"/>      
+      </attribute>      
+      <multiplicity id="43" minimum="0" maximum="1">        
+        <position height="0" width="0" x="474" y="-732"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="44">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="45" name="classesOfObjects">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="46" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="50">    
-    <bendpoint x="1861" y="166"/>    
-    <bendpoint x="1861" y="359"/>    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="10"/>  
-  </dependency>  
-  <dependency id="51">    
-    <bendpoint x="482" y="359"/>    
-    <bendpoint x="382" y="876"/>    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="13"/>  
-  </dependency>  
-  <dependency id="52">    
-    <bendpoint x="1819" y="359"/>    
-    <bendpoint x="1819" y="876"/>    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="9"/>  
-  </dependency>  
-  <dependency id="53">    
-    <bendpoint x="1861" y="876"/>    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="9"/>  
-  </dependency>  
-  <association id="54">    
+  <association id="47">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="48" name="cluster">        
+        <position height="0" width="0" x="10" y="-732"/>      
+      </attribute>      
+      <multiplicity id="49" minimum="0" maximum="1">        
+        <position height="0" width="0" x="10" y="-732"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="50">    
     <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="55" name="clusterCentroid"/>      
-      <multiplicity id="56" minimum="0" maximum="1"/>    
+      <attribute id="51" name="clusterCentroid">        
+        <position height="0" width="0" x="474" y="-732"/>      
+      </attribute>      
+      <multiplicity id="52" minimum="0" maximum="1">        
+        <position height="0" width="0" x="474" y="-732"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="13" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="57">    
-    <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="58" name="clusterInfoKeepers"/>      
-      <multiplicity id="59" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="60">    
+  <association id="53">    
     <end type="SOURCE" refId="18" navigable="false">      
-      <attribute id="61" name="clusterExtractorFactory"/>      
-      <multiplicity id="62" minimum="0" maximum="1"/>    
+      <attribute id="54" name="clusterExtractorFactory">        
+        <position height="0" width="0" x="130" y="522"/>      
+      </attribute>      
+      <multiplicity id="55" minimum="0" maximum="1">        
+        <position height="0" width="0" x="130" y="522"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="63">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="7"/>  
-  </dependency>  
-  <dependency id="64">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="8"/>  
-  </dependency>  
-  <association id="65">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="66" name="classesOfObjects"/>      
-      <multiplicity id="67" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="68">    
-    <end type="SOURCE" refId="15" navigable="false">      
-      <attribute id="69" name="currentCluster"/>      
-      <multiplicity id="70" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="71">    
-    <bendpoint x="2387" y="166"/>    
-    <bendpoint x="2387" y="359"/>    
-    <end type="SOURCE" refId="18" navigable="false">      
-      <attribute id="72" name="clusterCollectors"/>      
-      <multiplicity id="73" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="74">    
-    <end type="SOURCE" refId="15" navigable="false">      
-      <attribute id="75" name="classOfObjects"/>      
-      <multiplicity id="76" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="77">    
+  <association id="56">    
     <bendpoint x="884" y="166"/>    
     <end type="SOURCE" refId="16" navigable="false">      
-      <attribute id="78" name="clusterInfoKeepers"/>      
-      <multiplicity id="79" minimum="0" maximum="2147483647"/>    
+      <attribute id="57" name="clusterInfoKeepers">        
+        <position height="0" width="0" x="740" y="-20"/>      
+      </attribute>      
+      <multiplicity id="58" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="740" y="-20"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="14" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="80">    
-    <bendpoint x="1756" y="876"/>    
+  <dependency id="59">    
+    <bendpoint x="1840" y="178"/>    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <association id="60">    
     <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="81" name="cluster"/>      
-      <multiplicity id="82" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="83">    
-    <bendpoint x="403" y="876"/>    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="4"/>  
-  </dependency>  
-  <association id="84">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="85" name="clusterInfoKeeper"/>      
-      <multiplicity id="86" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="87">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="88" name="clusters"/>      
-      <multiplicity id="89" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="90">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="17"/>  
-  </dependency>  
-  <association id="91">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="92" name="currentCluster"/>      
-      <multiplicity id="93" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="94">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="11"/>  
-  </dependency>  
-  <dependency id="95">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="5"/>  
-  </dependency>  
-  <dependency id="96">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="2"/>  
-  </dependency>  
-  <dependency id="97">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="6"/>  
-  </dependency>  
-  <association id="98">    
-    <bendpoint x="-83" y="876"/>    
-    <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="99" name="overallCentroid"/>      
-      <multiplicity id="100" minimum="0" maximum="1"/>    
+      <attribute id="61" name="clusterCentroid">        
+        <position height="0" width="0" x="474" y="-732"/>      
+      </attribute>      
+      <multiplicity id="62" minimum="0" maximum="1">        
+        <position height="0" width="0" x="474" y="-732"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="13" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="101">    
-    <end type="SOURCE" refId="7"/>    
+  <association id="63">    
+    <bendpoint x="670" y="578"/>    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="64" name="overallCentroid">        
+        <position height="0" width="0" x="474" y="-732"/>      
+      </attribute>      
+      <multiplicity id="65" minimum="0" maximum="1">        
+        <position height="0" width="0" x="474" y="-732"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="66">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <association id="67">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="68" name="classOfObjects">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="69" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="70">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <dependency id="71">    
+    <bendpoint x="1324" y="328"/>    
+    <bendpoint x="518" y="328"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <association id="72">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="73" name="classOfObjects">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="74" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="75">    
+    <bendpoint x="876" y="856"/>    
+    <bendpoint x="1322" y="834"/>    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="76" name="currentCluster">        
+        <position height="0" width="0" x="10" y="-732"/>      
+      </attribute>      
+      <multiplicity id="77" minimum="0" maximum="1">        
+        <position height="0" width="0" x="10" y="-732"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="78">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="79" name="clusterInfoKeepers">        
+        <position height="0" width="0" x="740" y="-20"/>      
+      </attribute>      
+      <multiplicity id="80" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="740" y="-20"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="81">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="82" name="allClusterCollectors">        
+        <position height="0" width="0" x="-128" y="-980"/>      
+      </attribute>      
+      <multiplicity id="83" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-128" y="-980"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="84">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <dependency id="85">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <association id="86">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="87" name="clusterInfoKeepers">        
+        <position height="0" width="0" x="740" y="-20"/>      
+      </attribute>      
+      <multiplicity id="88" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="740" y="-20"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="89">    
+    <bendpoint x="2284" y="266"/>    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="90" name="clusterCollectors">        
+        <position height="0" width="0" x="-128" y="-980"/>      
+      </attribute>      
+      <multiplicity id="91" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-128" y="-980"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="92">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="93">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <association id="94">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="95" name="clusters">        
+        <position height="0" width="0" x="10" y="-732"/>      
+      </attribute>      
+      <multiplicity id="96" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="10" y="-732"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="97">    
+    <bendpoint x="840" y="948"/>    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="98">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="99">    
+    <end type="SOURCE" refId="16"/>    
     <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <dependency id="100">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="17"/>  
+  </dependency>  
+  <dependency id="101">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="9"/>  
   </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    

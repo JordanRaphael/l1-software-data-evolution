@@ -6,7 +6,7 @@
     project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/externalEvaluation/externalClusterMetrics/ExternalClusterMetric.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="99" width="404" x="578" y="502"/>    
+    <position height="-1" width="-1" x="780" y="655"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -16,7 +16,7 @@
   <class id="2" language="java" name="tableClustering.clusterValidator.commons.Centroid" project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterValidator/commons/Centroid.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="189" width="181" x="357" y="502"/>    
+    <position height="-1" width="-1" x="815" y="428"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -38,7 +38,7 @@
     project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterValidator/commons/ClassOfObjects.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="189" width="194" x="1460" y="502"/>    
+    <position height="-1" width="-1" x="741" y="-310"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -50,7 +50,7 @@
     project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/internalEvaluation/internalTotalMetrics/InternalTotalMetrics.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="99" width="388" x="139" y="-15"/>    
+    <position height="-1" width="-1" x="645" y="178"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -61,7 +61,7 @@
     project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/analysis/ClusterExtractor.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="81" width="444" x="1277" y="-370"/>    
+    <position height="-1" width="-1" x="2129" y="-130"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -73,7 +73,7 @@
     project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/internalEvaluation/internalClusterMetrics/InternalClusterMetrics.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="99" width="398" x="1022" y="502"/>    
+    <position height="-1" width="-1" x="1303" y="651"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -85,7 +85,7 @@
     project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/externalEvaluation/externalTotalMetrics/ExternalTotalMetrics.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="99" width="394" x="567" y="-15"/>    
+    <position height="-1" width="-1" x="544" y="-16"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -106,7 +106,7 @@
   <class id="10" language="java" name="tableClustering.clusterExtractor.commons.Cluster" project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/commons/Cluster.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="405" width="269" x="1694" y="502"/>    
+    <position height="-1" width="-1" x="1702" y="408"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -117,7 +117,7 @@
     project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/commons/ClusterCollector.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="243" width="225" x="1742" y="-15"/>    
+    <position height="-1" width="-1" x="1678" y="-24"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -128,7 +128,7 @@
     project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/engine/TableClusteringMainEngine.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="225" width="364" x="1742" y="-635"/>    
+    <position height="-1" width="-1" x="1556" y="-377"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -172,7 +172,6 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="25">    
-    <bendpoint x="1772" y="-370"/>    
     <end type="SOURCE" refId="12" navigable="false">      
       <attribute id="26" name="clusterCollectors"/>      
       <multiplicity id="27" minimum="0" maximum="2147483647"/>    
@@ -235,7 +234,7 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="45">    
-    <bendpoint x="1751" y="-370"/>    
+    <bendpoint x="1664" y="-220"/>    
     <end type="SOURCE" refId="12" navigable="false">      
       <attribute id="46" name="allClusterCollectors"/>      
       <multiplicity id="47" minimum="0" maximum="2147483647"/>    
@@ -244,7 +243,6 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="48">    
-    <bendpoint x="1466" y="-15"/>    
     <end type="SOURCE" refId="9" navigable="false">      
       <attribute id="49" name="classesOfObjects"/>      
       <multiplicity id="50" minimum="0" maximum="2147483647"/>    
