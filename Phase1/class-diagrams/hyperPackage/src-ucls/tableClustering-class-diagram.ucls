@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="tableClustering.clusterExtractor.analysis.ClusterExtractorFactory" 
+    project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/analysis/ClusterExtractorFactory.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="256" x="2080" y="166"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" 
+    name="tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalTotalMetrics.TotalCohesionMetric" 
+    project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/internalEvaluation/internalTotalMetrics/TotalCohesionMetric.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="388" x="38" y="166"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" 
+    name="tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalClusterMetrics.ClusterCohesionMetric" 
+    project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/internalEvaluation/internalClusterMetrics/ClusterCohesionMetric.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="398" x="1349" y="166"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="tableClustering.clusterValidator.commons.ClassOfObjects" 
+    project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/commons/ClassOfObjects.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="189" width="194" x="878" y="1159"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" 
+    name="tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalTotalMetrics.TotalSeparationMetric" 
+    project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/internalEvaluation/internalTotalMetrics/TotalSeparationMetric.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="388" x="466" y="166"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" 
+    name="tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalClusterMetrics.ClusterSeparationMetric" 
+    project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/internalEvaluation/internalClusterMetrics/ClusterSeparationMetric.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="398" x="-532" y="876"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="tableClustering.clusterExtractor.analysis.AgglomerativeClusterExtractor" 
+    project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/analysis/AgglomerativeClusterExtractor.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="444" x="1892" y="359"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" 
+    name="tableClustering.clusterValidator.clusterValidityMetrics.externalEvaluation.externalClusterMetrics.ClusterFMeasureMetric" 
+    project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/externalEvaluation/externalClusterMetrics/ClusterFMeasureMetric.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="404" x="-52" y="876"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="tableClustering.clusterExtractor.commons.Cluster" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/commons/Cluster.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="405" width="269" x="1789" y="1159"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="tableClustering.clusterExtractor.commons.ClusterCollector" 
+    project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/commons/ClusterCollector.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="243" width="225" x="2107" y="876"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" 
+    name="tableClustering.clusterValidator.clusterValidityMetrics.externalEvaluation.externalTotalMetrics.TotalEntropyMetric" 
+    project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/externalEvaluation/externalTotalMetrics/TotalEntropyMetric.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="394" x="915" y="166"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" 
+    name="tableClustering.clusterValidator.clusterValidityMetrics.externalEvaluation.externalClusterMetrics.ClusterEntropyMetric" 
+    project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/externalEvaluation/externalClusterMetrics/ClusterEntropyMetric.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="404" x="878" y="876"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="tableClustering.clusterValidator.commons.Centroid" 
+    project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/commons/Centroid.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="189" width="181" x="-113" y="1159"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="tableClustering.clusterValidator.commons.ClusterInfoKeeper" 
+    project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/commons/ClusterInfoKeeper.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="477" width="414" x="38" y="359"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" 
+    name="tableClustering.clusterValidator.clusterValidityMetrics.externalEvaluation.externalClusterMetrics.ClusterPrecisionMetric" 
+    project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/externalEvaluation/externalClusterMetrics/ClusterPrecisionMetric.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="404" x="434" y="876"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="tableClustering.clusterValidator.engine.ClusterValidatorMainEngine" 
+    project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/engine/ClusterValidatorMainEngine.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="315" width="255" x="915" y="-189"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" 
+    name="tableClustering.clusterValidator.clusterValidityMetrics.externalEvaluation.externalClusterMetrics.ClusterRecallMetric" 
+    project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/externalEvaluation/externalClusterMetrics/ClusterRecallMetric.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="404" x="1322" y="876"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="tableClustering.clusterExtractor.engine.TableClusteringMainEngine" 
+    project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/engine/TableClusteringMainEngine.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="364" x="2357" y="-189"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="19">    
+    <bendpoint x="-563" y="166"/>    
+    <bendpoint x="-563" y="359"/>    
+    <bendpoint x="-563" y="876"/>    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="20" name="overallCentroid"/>      
+      <multiplicity id="21" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="22">    
+    <bendpoint x="2366" y="166"/>    
+    <bendpoint x="2366" y="359"/>    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="23" name="allClusterCollectors"/>      
+      <multiplicity id="24" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="25">    
+    <bendpoint x="1756" y="359"/>    
+    <bendpoint x="1798" y="876"/>    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <association id="26">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="27" name="classOfObjects"/>      
+      <multiplicity id="28" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="29">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="30" name="clusters"/>      
+      <multiplicity id="31" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="32">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="33">    
+    <bendpoint x="1840" y="166"/>    
+    <bendpoint x="1840" y="359"/>    
+    <bendpoint x="1840" y="876"/>    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <association id="34">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="35" name="clusterInfoKeepers"/>      
+      <multiplicity id="36" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="37">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="38" name="overallCentroid"/>      
+      <multiplicity id="39" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="40">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="41" name="clusterInfoKeepers"/>      
+      <multiplicity id="42" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="43">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <association id="44">    
+    <bendpoint x="-104" y="876"/>    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="45" name="clusterCentroid"/>      
+      <multiplicity id="46" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="47">    
+    <bendpoint x="1777" y="166"/>    
+    <bendpoint x="1777" y="359"/>    
+    <bendpoint x="1777" y="876"/>    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="48" name="classesOfObjects"/>      
+      <multiplicity id="49" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="50">    
+    <bendpoint x="1861" y="166"/>    
+    <bendpoint x="1861" y="359"/>    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <dependency id="51">    
+    <bendpoint x="482" y="359"/>    
+    <bendpoint x="382" y="876"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <dependency id="52">    
+    <bendpoint x="1819" y="359"/>    
+    <bendpoint x="1819" y="876"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="53">    
+    <bendpoint x="1861" y="876"/>    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <association id="54">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="55" name="clusterCentroid"/>      
+      <multiplicity id="56" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="57">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="58" name="clusterInfoKeepers"/>      
+      <multiplicity id="59" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="60">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="61" name="clusterExtractorFactory"/>      
+      <multiplicity id="62" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="63">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="64">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <association id="65">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="66" name="classesOfObjects"/>      
+      <multiplicity id="67" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="68">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="69" name="currentCluster"/>      
+      <multiplicity id="70" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="71">    
+    <bendpoint x="2387" y="166"/>    
+    <bendpoint x="2387" y="359"/>    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="72" name="clusterCollectors"/>      
+      <multiplicity id="73" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="74">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="75" name="classOfObjects"/>      
+      <multiplicity id="76" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="77">    
+    <bendpoint x="884" y="166"/>    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="78" name="clusterInfoKeepers"/>      
+      <multiplicity id="79" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="80">    
+    <bendpoint x="1756" y="876"/>    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="81" name="cluster"/>      
+      <multiplicity id="82" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="83">    
+    <bendpoint x="403" y="876"/>    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <association id="84">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="85" name="clusterInfoKeeper"/>      
+      <multiplicity id="86" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="87">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="88" name="clusters"/>      
+      <multiplicity id="89" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="90">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="17"/>  
+  </dependency>  
+  <association id="91">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="92" name="currentCluster"/>      
+      <multiplicity id="93" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="94">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <dependency id="95">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="96">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="97">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <association id="98">    
+    <bendpoint x="-83" y="876"/>    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="99" name="overallCentroid"/>      
+      <multiplicity id="100" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="101">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
