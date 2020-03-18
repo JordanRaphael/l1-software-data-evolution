@@ -1,2 +1,2 @@
 Responsibilities:
-
+This interafce defines the constructColumns, constructRows and getSegmentSize methods for the table constructors.

@@ -1,2 +1,2 @@
 Responsibilities:
-
+This class creates a table with the selected zoom area.
