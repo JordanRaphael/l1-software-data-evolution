@@ -1,2 +1,2 @@
 Responsibilities:
-
+This interface defines the cluster extractor method.

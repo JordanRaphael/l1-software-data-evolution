@@ -1,2 +1,2 @@
 Responsibilities:
-
+This class computes the f-measure metric.

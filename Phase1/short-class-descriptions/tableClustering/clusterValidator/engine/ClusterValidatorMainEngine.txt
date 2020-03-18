@@ -1,2 +1,2 @@
 Responsibilities:
-
+This class calls all the classes that calculate metrics to evaluate the clustering.

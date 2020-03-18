@@ -1,2 +1,2 @@
 Responsibilities:
-
+This class holds the data of all clusters.

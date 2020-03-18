@@ -1,2 +1,2 @@
 Responsibilities:
-
+This interface defines the compute and get result methods for the cluster metrics.
