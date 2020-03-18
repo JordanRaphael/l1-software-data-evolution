@@ -1,2 +1,2 @@
 Responsibilities:
-
+This class sorts all tables by birth death.

@@ -1,2 +1,2 @@
 Responsibilities:
-
+This class constructs all atomic changes needed to be done in order to complete all transitions in a table.

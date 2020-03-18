@@ -1,2 +1,2 @@
 Responsibilities:
-
+This class uses all contruction classes to import all schemas, tables, atomic changes, table changes and transitions. It holds all these data.
