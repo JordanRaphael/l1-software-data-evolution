@@ -1,0 +1,2 @@
+Responsibilities:
+It gathers and distributes the application's data to all the classes.
