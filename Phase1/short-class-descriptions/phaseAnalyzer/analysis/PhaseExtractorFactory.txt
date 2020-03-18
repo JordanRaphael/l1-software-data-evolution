@@ -1,2 +1,2 @@
 Responsibilities:
-
+This is a factory class that creates a phase extractor.

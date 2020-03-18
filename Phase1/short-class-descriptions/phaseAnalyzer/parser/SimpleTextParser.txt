@@ -1,2 +1,2 @@
 Responsibilities:
-
+This class parses a file and creates the transition history.

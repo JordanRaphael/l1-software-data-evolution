@@ -1,2 +1,2 @@
 Responsibilities:
-
+This class holds the stats of all transitions.

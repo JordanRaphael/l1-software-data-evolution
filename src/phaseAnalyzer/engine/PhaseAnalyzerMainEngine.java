@@ -14,6 +14,22 @@ import data.dataKeeper.GlobalDataKeeper;
 
 public class PhaseAnalyzerMainEngine {
 	
+	private ParserFactory parserFactory;
+	private IParser parser;
+	private PhaseExtractorFactory phaseExtractorFactory;
+	private IPhaseExtractor phaseExtractor;
+	private TransitionHistory transitionHistory;
+	
+	private ArrayList<PhaseCollector> phaseCollectors;
+	private HashMap<String,ArrayList<PhaseCollector>> allPhaseCollectors;
+	private String inputCsv;
+	//private String outputAssessment1;
+	//private String outputAssessment2;
+	private float timeWeight;
+	private float changeWeight;
+	private boolean preProcessingTime;
+	private boolean preProcessingChange;
+	
 	public PhaseAnalyzerMainEngine(String inputCsv,String outputAssessment1,String outputAssessment2,Float tmpTimeWeight, Float tmpChangeWeight,
 														Boolean tmpPreProcessingTime,Boolean tmpPreProcessingChange){
 		
@@ -231,21 +247,6 @@ public class PhaseAnalyzerMainEngine {
 		this.transitionHistory.consoleVerticalReport();
 	}
 	
-	private ParserFactory parserFactory;
-	private IParser parser;
-	private PhaseExtractorFactory phaseExtractorFactory;
-	private IPhaseExtractor phaseExtractor;
-	private TransitionHistory transitionHistory;
-	
-	private ArrayList<PhaseCollector> phaseCollectors;
-	private HashMap<String,ArrayList<PhaseCollector>> allPhaseCollectors;
-	private String inputCsv;
-	//private String outputAssessment1;
-	//private String outputAssessment2;
-	private float timeWeight;
-	private float changeWeight;
-	private boolean preProcessingTime;
-	private boolean preProcessingChange;
 	
 	
 }

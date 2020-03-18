@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import data.dataKeeper.GlobalDataKeeper;
 
 public class PhaseCollector {
+	
+	private double totalSum=0;
+	private ArrayList<Phase> phases;
+	
 	public PhaseCollector(){
 		phases = new ArrayList<Phase>();
 	}
@@ -79,8 +83,6 @@ public class PhaseCollector {
 		}
 		
 	}
-	
-	private double totalSum=0;
-	private ArrayList<Phase> phases;
+
 
 }

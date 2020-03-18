@@ -1,2 +1,2 @@
 Responsibilities:
-
+This is an interface that defines the phase extraction method.
