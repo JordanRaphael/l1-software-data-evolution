@@ -1,0 +1,2 @@
+Responsibilities:
+This class creates a tree of phases.

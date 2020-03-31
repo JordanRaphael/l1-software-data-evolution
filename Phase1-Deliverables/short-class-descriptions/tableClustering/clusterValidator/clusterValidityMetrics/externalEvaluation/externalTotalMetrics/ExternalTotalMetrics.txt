@@ -1,0 +1,2 @@
+Responsibilities:
+This interface defines the compute and getResult methods of the total metrics.

@@ -1,0 +1,2 @@
+Responsibilities:
+This class extracts clusters with the agglomerative method.

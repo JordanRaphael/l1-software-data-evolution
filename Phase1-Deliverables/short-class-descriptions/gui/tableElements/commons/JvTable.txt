@@ -1,0 +1,2 @@
+Responsibilities:
+This class creates the a table given a model tables and handles the zoom.
