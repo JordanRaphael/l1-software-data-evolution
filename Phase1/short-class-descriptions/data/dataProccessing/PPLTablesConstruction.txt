@@ -1,2 +1,0 @@
-Responsibilities:
-This class constructs and holds all the tables AND all the schemas.

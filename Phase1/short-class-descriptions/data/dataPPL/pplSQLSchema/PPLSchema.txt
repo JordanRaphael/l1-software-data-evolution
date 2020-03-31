@@ -1,2 +1,0 @@
-Responsibilities:
-This class stores PPL's schema, which contains the tables and a name for each table.

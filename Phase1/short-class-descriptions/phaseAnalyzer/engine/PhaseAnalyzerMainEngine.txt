@@ -1,2 +1,0 @@
-Responsibilities:
-This class calls the builder to start the phase extraction and the transition history.

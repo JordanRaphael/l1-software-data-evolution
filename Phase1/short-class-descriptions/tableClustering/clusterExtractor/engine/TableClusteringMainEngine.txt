@@ -1,2 +1,0 @@
-Responsibilities:
-This class holds the parameters of the clustering and calls the extractor.

@@ -1,2 +1,0 @@
-Responsibilities:
-This class hodls the parameters for the phase extraction.

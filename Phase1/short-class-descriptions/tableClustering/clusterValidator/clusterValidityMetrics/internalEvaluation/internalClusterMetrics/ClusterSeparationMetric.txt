@@ -1,2 +1,0 @@
-Responsibilities:
-This class computes the separation metrics of centroids.

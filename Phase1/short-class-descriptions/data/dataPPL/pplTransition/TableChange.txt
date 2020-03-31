@@ -1,2 +1,0 @@
-Responsibilities:
-This class holds the information of a complete table change, i.e. all the atomic changes that happen on a table on an update.

@@ -1,2 +1,0 @@
-Responsibilities:
-This class costructs all table changes and holds all atomic changes AND table changes AND all tables.

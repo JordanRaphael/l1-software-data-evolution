@@ -1,2 +1,0 @@
-Responsibilities:
-This interface defines the constructTree method for the tree constructors.

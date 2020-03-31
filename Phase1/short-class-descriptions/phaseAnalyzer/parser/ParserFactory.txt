@@ -1,2 +1,0 @@
-Responsibilities:
-This is factory class that creates a simple text parser.

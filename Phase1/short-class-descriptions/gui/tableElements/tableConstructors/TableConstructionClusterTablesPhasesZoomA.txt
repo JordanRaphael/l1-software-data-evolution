@@ -1,2 +1,0 @@
-Responsibilities:
-This class creates a table of cluster table phases with zoom A.
