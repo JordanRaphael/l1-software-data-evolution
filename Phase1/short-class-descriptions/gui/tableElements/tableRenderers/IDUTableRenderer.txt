@@ -1,0 +1,2 @@
+Responsibilities:
+This class creates the renderer for the IDU table.
