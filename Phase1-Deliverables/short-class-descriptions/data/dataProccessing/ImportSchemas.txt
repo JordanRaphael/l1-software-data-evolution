@@ -1,0 +1,2 @@
+Responsibilities:
+This class imports schemas from transition files.

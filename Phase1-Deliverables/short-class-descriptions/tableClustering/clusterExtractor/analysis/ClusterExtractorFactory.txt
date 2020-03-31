@@ -1,0 +1,2 @@
+Responsibilities:
+This is a factory class that creates an agglomerative cluster extractor.

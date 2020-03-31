@@ -1,0 +1,2 @@
+Responsibilities:
+This class collects and holds all phases.

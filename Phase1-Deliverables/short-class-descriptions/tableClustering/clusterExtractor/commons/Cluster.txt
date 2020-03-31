@@ -1,0 +1,2 @@
+Responsibilities:
+This class holds the data of a cluster.

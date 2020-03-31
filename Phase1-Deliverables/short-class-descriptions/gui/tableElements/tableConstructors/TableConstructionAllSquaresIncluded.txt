@@ -1,0 +1,2 @@
+Responsibilities:
+This class constructs a table with all the squares.

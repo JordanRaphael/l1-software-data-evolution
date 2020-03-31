@@ -1,0 +1,2 @@
+Responsibilities:
+It's an object that stores a PPL's attribute and it's changes.
