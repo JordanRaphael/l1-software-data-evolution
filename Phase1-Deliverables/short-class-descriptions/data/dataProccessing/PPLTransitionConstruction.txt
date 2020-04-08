@@ -1,0 +1,2 @@
+Responsibilities:
+This class does all transitions and holds all the transitions AND schemas AND table changes.

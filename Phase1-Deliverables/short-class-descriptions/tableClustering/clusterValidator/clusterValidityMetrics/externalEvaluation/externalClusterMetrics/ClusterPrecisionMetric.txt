@@ -1,0 +1,2 @@
+Responsibilities:
+This class computes the precision metric of a cluster.

@@ -1,0 +1,2 @@
+Responsibilities:
+This class computes the entropy of the clustering.

@@ -1,0 +1,2 @@
+Responsibilities:
+This class holds information about a single(atomic) change on a tables as well as every affected component from this change.

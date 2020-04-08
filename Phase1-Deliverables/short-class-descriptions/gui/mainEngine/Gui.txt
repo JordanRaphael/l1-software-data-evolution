@@ -1,0 +1,2 @@
+Responsibilities:
+This class creates the application's main window and hanles all the logic that is happening on it.

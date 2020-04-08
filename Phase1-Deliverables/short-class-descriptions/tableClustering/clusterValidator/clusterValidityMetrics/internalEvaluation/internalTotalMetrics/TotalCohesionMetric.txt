@@ -1,0 +1,2 @@
+Responsibilities:
+This class computes the total cohesion metric of clusters.
