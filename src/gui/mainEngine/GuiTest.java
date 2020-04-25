@@ -1,19 +1,19 @@
 package gui.mainEngine;
 
-import org.junit.Assert.*;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
-
-import javax.swing.JMenuItem;
+import java.util.Scanner;
 
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Test;
 
-import java.io.File;  // Import the File class
+import gui.dialogs.CreateProjectJDialog;
+
 
 public class GuiTest {
 
@@ -69,7 +69,25 @@ public class GuiTest {
 	
 	@Test
 	public void testCreateProject() {
+		CreateProjectJDialog createProjectDialog = new CreateProjectJDialog("TestProjectName", "TestDatasetTxt", "TestInputCsv", "TestAss1", "TestAss2", "TestTransXml");
+		createProjectDialog.getOkButton().doClick();
+		File file = createProjectDialog.getFile();
+		Scanner scanner;
+		try {
+			scanner = new Scanner(file);
+			while (scanner.hasNextLine()) {
+				String data = scanner.nextLine();
+				System.out.println(data);
+			}
+			
+			scanner.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		
+		
+		
+		//"TestProjectName", "TestDatasetTxt", "TestInputCsv", "TestAss1", "TestAss2", "TestTransXml"
 	}
 	
 	@Test
