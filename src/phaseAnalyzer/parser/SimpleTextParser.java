@@ -50,7 +50,6 @@ public class SimpleTextParser implements IParser {
 		count++;
 
 		//process the actual rows one by one
-		//TODO add a method parseRows (including header row) and a method getNextRow
 		while (inputStream.hasNextLine()) {
 			line = inputStream.nextLine();
 			count++;
@@ -108,13 +107,11 @@ public class SimpleTextParser implements IParser {
 		/*
 		 * Now, we complete the distance from previous, for all the transitions
 		 */
-		//TODO add a dedicated method for the task
 	    Iterator<TransitionStats> transitionsIter = transitionHistory.getValues().iterator();
 	    if (transitionHistory.getValues().size() == 0)
 	    	return transitionHistory;
 	    
 	    TransitionStats previousTransition, currentTransition;
-	    //Do the first
 	    currentTransition = transitionsIter.next();
 	    currentTransition.setTimeDistFromPrevious(0);
 	    previousTransition = currentTransition;

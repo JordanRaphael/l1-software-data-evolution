@@ -2,7 +2,6 @@ package data.dataPPL.pplSQLSchema;
 
 import gr.uoi.cs.daintiness.hecate.sql.Attribute;
 
-//import hecate.sqlSchema.Attribute;
 
 public class PPLAttribute {
 

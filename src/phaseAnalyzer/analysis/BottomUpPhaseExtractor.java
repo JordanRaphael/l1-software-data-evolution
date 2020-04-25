@@ -106,8 +106,7 @@ public class BottomUpPhaseExtractor implements IPhaseExtractor {
 			System.exit(-10);
 		}
 
-		//compute the distances for all the bloody phases
-		//TODO add it at phase collector to move on !$#@$#%$^$%&%&
+		//compute the distances for all the phases
 		double distances[] = new double[oldSize];
 		distances[0] = Double.MAX_VALUE;
 		int pI = 0;
@@ -118,7 +117,6 @@ public class BottomUpPhaseExtractor implements IPhaseExtractor {
 	      Phase p = phaseIter.next();
 	      pI++;
 	      distances[pI] = p.distance(previousPhase,timeWeight,changeWeight);
-	      //System.out.println(pI +":\t" + distances[pI]);
 	      
 	      previousPhase = p;
 	    }
@@ -134,15 +132,11 @@ public class BottomUpPhaseExtractor implements IPhaseExtractor {
 	    //merge them in a new phase. Merge posI with its PREVIOUS (ATTN!!)
 		Phase toMerge = oldPhases.get(posI-1);
 		Phase newPhase = toMerge.mergeWithNextPhase(oldPhases.get(posI));
-		//System.out.println("\n\nMErging: " + (posI-1) + " , " + posI + " with distance "  + minDist);		
-		//assuming we merge i, i+1 add the 0..i-1 to the new phases
 		for(int i=0; i < posI-1; i++){
 			Phase p = oldPhases.get(i);
 			newPhases.add(p);
 		}
-		//add the new i_new = merge(i,i+1) to the new phases
 		newPhases.add(newPhase);
-		//add the i+1, .. last to the new phases
 		if(posI<oldSize-1){
 			for(int i=posI+1; i < oldSize; i++){
 				Phase p = oldPhases.get(i);
@@ -164,7 +158,6 @@ public class BottomUpPhaseExtractor implements IPhaseExtractor {
 
 		Iterator<Phase> phaseIter = oldPhases.iterator();
 	    Phase previousPhase = phaseIter.next();
-	    //System.out.println(oldSize);
 
 	   
 	    while (phaseIter.hasNext()){
@@ -173,15 +166,12 @@ public class BottomUpPhaseExtractor implements IPhaseExtractor {
 	    	if(((transitionHistory.getValues().get(p.getStartPos()).getTime()-transitionHistory.getValues().get(previousPhase.getEndPos()).getTime())/84600)<3){
 	    		Phase toMerge = previousPhase;
 	    		Phase newPhase = toMerge.mergeWithNextPhase(p);
-	    		//System.out.println("Merging "+(toMerge.getStartPos())+" with "+(p.getEndPos())+" pos "+pos);
 	    		
 	    		for(int i=0; i < pos-1; i++){
 	    			Phase p1 = oldPhases.get(i);
 	    			newPhases.add(p1);
 	    		}
-	    		//add the new i_new = merge(i,i+1) to the new phases
 	    		newPhases.add(newPhase);
-	    		//add the i+1, .. last to the new phases
 	    		if(pos<oldSize-1){
 
 	    			for(int i=pos+1; i < oldSize; i++){
@@ -215,25 +205,20 @@ public class BottomUpPhaseExtractor implements IPhaseExtractor {
 
 		Iterator<Phase> phaseIter = oldPhases.iterator();
 	    Phase previousPhase = phaseIter.next();
-	    //System.out.println(newPhases.size()+" "+oldSize);
 
 	   
 	    while (phaseIter.hasNext()){
 	    	pos++;
 	    	Phase p = phaseIter.next();
-	    	//System.out.println(("****** "+(transitionHistory.getValues().get(p.getStartPos()).getTotalAttrChange()-transitionHistory.getValues().get(previousPhase.getEndPos()).getTotalAttrChange())));
 	    	if(((transitionHistory.getValues().get(p.getStartPos()).getTotalAttrChange()-transitionHistory.getValues().get(previousPhase.getEndPos()).getTotalAttrChange()==0))){
 	    		Phase toMerge = previousPhase;
 	    		Phase newPhase = toMerge.mergeWithNextPhase(p);
-	    		//System.out.println("Merging "+(toMerge.getStartPos())+" with "+(p.getEndPos()));
 	    		
 	    		for(int i=0; i < pos-1; i++){
 	    			Phase p1 = oldPhases.get(i);
 	    			newPhases.add(p1);
 	    		}
-	    		//add the new i_new = merge(i,i+1) to the new phases
 	    		newPhases.add(newPhase);
-	    		//add the i+1, .. last to the new phases
 	    		if(pos<oldSize-1){
 	    			for(int i=pos+1; i < oldSize; i++){
 	    				Phase p1 = oldPhases.get(i);
