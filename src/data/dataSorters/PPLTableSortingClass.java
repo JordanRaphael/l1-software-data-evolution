@@ -10,7 +10,6 @@ import data.dataPPL.pplSQLSchema.PPLTable;
 public class PPLTableSortingClass {
 	
 	
-	//static <K,V extends Comparable<? super V>>
 	public SortedSet<Map.Entry<String,PPLTable>> entriesSortedByBirthDeath(Map<String,PPLTable> map) {
 	    SortedSet<Map.Entry<String,PPLTable>> sortedEntries = new TreeSet<Map.Entry<String,PPLTable>>(
 	        new Comparator<Map.Entry<String,PPLTable>>() {
