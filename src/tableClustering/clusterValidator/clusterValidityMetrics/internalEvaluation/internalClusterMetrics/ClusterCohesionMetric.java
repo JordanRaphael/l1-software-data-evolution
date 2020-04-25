@@ -27,11 +27,9 @@ public class ClusterCohesionMetric implements InternalClusterMetrics {
 		
 		sumClusterCohesion = new Double(0);
 		
-		//cohesion(Ci)= Sum(distance(x,ci)) xECi, ci is centroid of cluster Ci
 		for(Map.Entry<String,PPLTable> pplTab:currClusterTables.entrySet()){
 			sumClusterCohesion = sumClusterCohesion+computeDistanceFromDataPointToCentroid(pplTab.getValue(),clusterCentroid);
 		}
-		
 	}
 	
 	private Double computeDistanceFromDataPointToCentroid(PPLTable tableToComputeDistance, Centroid centroidOfCluster){
@@ -42,13 +40,8 @@ public class ClusterCohesionMetric implements InternalClusterMetrics {
 		Double distanceY = null;
 		Double distanceZ = null;
 
-		//(x-xi)^2
 		distanceX=Math.pow((double)(tableToComputeDistance.getBirthVersionID()-centroidOfCluster.getX()),2.0);
-		
-		//(y-yi)^2
 		distanceY=Math.pow((double)(tableToComputeDistance.getDeathVersionID()-centroidOfCluster.getY()),2.0);
-		
-		//(z-zi)^2
 		distanceZ=Math.pow((double)(tableToComputeDistance.getTotalChanges()-centroidOfCluster.getZ()),2.0);
 
 		//Euclidean Distance

@@ -146,8 +146,6 @@ public class TableConstructionZoomArea implements PldConstruction {
 					else{
 						found=0;
 					}
-				
-				
 			}
 		
 		String[][] tmpRows=new String[allRows.size()][columnsNumber];
@@ -360,6 +358,5 @@ public class TableConstructionZoomArea implements PldConstruction {
 		}
 		return num;
 	}
-
 
 }

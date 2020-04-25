@@ -25,8 +25,7 @@ public class TotalEntropyMetric implements ExternalTotalMetrics {
 			Double valueToAdd = currClusterWeight*clusterInfoKeepers.get(i).getClusterEntropy();
 			totalEntropy = totalEntropy+ valueToAdd;
 		}
-		
-		
+			
 	}
 
 	@Override

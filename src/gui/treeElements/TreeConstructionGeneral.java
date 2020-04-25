@@ -42,5 +42,4 @@ public class TreeConstructionGeneral {
 		return treeToConstruct;
 		
 	}
-	
 }

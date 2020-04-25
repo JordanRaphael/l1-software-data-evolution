@@ -22,7 +22,6 @@ public class TotalSeparationMetric implements InternalTotalMetrics {
 		Iterator<ClusterInfoKeeper> iteratorClusterInfoKeeper = clusterInfoKeepers.iterator();
 		totalSeparation = new Double(0);
 
-		// totalSeparation = Sum1-K(mi*validity(Ci)) , mi= datapoints that are represented by cluster centroid
  		while(iteratorClusterInfoKeeper.hasNext()){
 			
 			ClusterInfoKeeper currClusterInfoKeeper = iteratorClusterInfoKeeper.next();
@@ -32,13 +31,11 @@ public class TotalSeparationMetric implements InternalTotalMetrics {
 		System.err.println("Total Separation"+totalSeparation);
 
 	}
-	
-	
+		
 	@Override
 	public Double getResult() {
-		// TODO Auto-generated method stub
+
 		return totalSeparation;
 	}
 
-	
 }

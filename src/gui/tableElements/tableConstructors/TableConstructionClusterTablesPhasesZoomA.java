@@ -18,7 +18,6 @@ public class TableConstructionClusterTablesPhasesZoomA implements PldConstructio
 	private ArrayList<PPLTable>	tables=new ArrayList<PPLTable>();
 	private ArrayList<Phase> phases = new ArrayList<Phase>();
 
-
 	private int columnsNumber=0;
 	private Integer[][] schemaColumnId=null;
 	private int maxDeletions=1;
@@ -101,7 +100,6 @@ public class TableConstructionClusterTablesPhasesZoomA implements PldConstructio
 						break;
 						
 					}
-					
 				}
 				
 				if(found==0 && tablesOfCluster.contains(tmpTableName) ){
@@ -132,7 +130,6 @@ public class TableConstructionClusterTablesPhasesZoomA implements PldConstructio
 				tmpRows[z][j]=tmpOneRow[j];
 				
 			}
-			
 		}
 		
 		float maxI=(float) maxInsersions/4;
@@ -201,8 +198,6 @@ public class TableConstructionClusterTablesPhasesZoomA implements PldConstructio
 				String sc=tmpTL.getValue().getNewVersionName();
 				
 				ArrayList<TableChange> tmpTR=tmpTL.getValue().getTableChanges();
-				
-				
 				
 				if(tmpTR!=null){
 					
@@ -324,7 +319,6 @@ public class TableConstructionClusterTablesPhasesZoomA implements PldConstructio
 		else {
 			return false;
 		}
-		
+	
 	}
-
 }

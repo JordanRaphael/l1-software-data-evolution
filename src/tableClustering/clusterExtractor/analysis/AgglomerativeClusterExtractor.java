@@ -12,8 +12,6 @@ import data.dataPPL.pplSQLSchema.PPLTable;
 
 public class AgglomerativeClusterExtractor implements ClusterExtractor{
 
-	
-
 	@Override
 	public ClusterCollector extractAtMostKClusters(GlobalDataKeeper dataKeeper,
 			int numClusters, Double birthWeight, Double deathWeight, Double changeWeight) {
@@ -42,8 +40,6 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 			System.exit(-10);
 		}
 
-		//compute the distances for all the bloody clusters
-		//TODO add it at cluster collector to move on !$#@$#%$^$%&%&
 		double distances[][] = new double[oldSize][oldSize];
 		
 	    for(int oldI=0; oldI<oldClusters.size(); oldI++){

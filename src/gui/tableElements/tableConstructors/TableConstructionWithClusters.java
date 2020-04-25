@@ -93,7 +93,6 @@ public class TableConstructionWithClusters implements PldConstruction{
 				tmpRows[z][j]=tmpOneRow[j];
 				
 			}
-			
 		}
 		
 		float maxI=(float) maxInsersions/4;

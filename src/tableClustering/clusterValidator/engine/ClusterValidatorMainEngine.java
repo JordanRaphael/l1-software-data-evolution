@@ -119,7 +119,6 @@ public class ClusterValidatorMainEngine {
 					classesOfObjects.add(classToAdd);
 				}
 				
-				
 				classToAdd = new ClassOfObjects(line);
 				objectsOfClass = new ArrayList<String>();
 				
@@ -127,15 +126,12 @@ public class ClusterValidatorMainEngine {
 			else{
 				objectsOfClass.add(line);
 			}
-
 		}
 		
 		classToAdd.setObjects(objectsOfClass);
 		classesOfObjects.add(classToAdd);
 
 		br.close();
-		
-		
 		
 	}
 	
@@ -188,11 +184,8 @@ public class ClusterValidatorMainEngine {
 			toReturn = toReturn +"\n";
 		}
 		
-			
-		
-		//System.out.println(toReturn);
 		return toReturn;
+		
 	}
-	
 	
 }

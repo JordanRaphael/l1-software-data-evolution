@@ -1,7 +1,5 @@
 package tableClustering.clusterExtractor.analysis;
 
-
-
 public class ClusterExtractorFactory {
 	
 	public ClusterExtractor createClusterExtractor(String concreteClassName){

@@ -16,7 +16,6 @@ public class ClusterSeparationMetric implements InternalClusterMetrics {
 		
 	}
 	
-	
 	@Override
 	public void computeMetric() {
 				
@@ -26,26 +25,20 @@ public class ClusterSeparationMetric implements InternalClusterMetrics {
 		Double distanceY = null;
 		Double distanceZ = null;
 
-		//(x-xi)^2
 		distanceX= new Double(Math.pow((double)(clusterCentroid.getX()-overallCentroid.getX()),2.0));
 		
-		//(y-yi)^2
 		distanceY=new Double(Math.pow((double)(clusterCentroid.getY()-overallCentroid.getY()),2.0));
 		
-		//(z-zi)^2
 		distanceZ=new Double(Math.pow((double)(clusterCentroid.getZ()-overallCentroid.getZ()),2.0));
 
 		//Euclidean Distance
 		clusterSeparation=Math.sqrt(distanceX+distanceY+distanceZ);
-		
-		
+				
 	}
 	
 	@Override
 	public Double getResult() {
 		return clusterSeparation;
 	}
-
-	
 
 }

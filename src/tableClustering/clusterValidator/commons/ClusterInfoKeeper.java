@@ -15,7 +15,6 @@ import tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluatio
 import tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalClusterMetrics.ClusterSeparationMetric;
 import tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalClusterMetrics.InternalClusterMetrics;
 
-
 public class ClusterInfoKeeper {
 	
 	private Cluster cluster = new Cluster();
@@ -28,14 +27,11 @@ public class ClusterInfoKeeper {
 	private ArrayList<Double> recalls = new ArrayList<Double>();
 	private ArrayList<Double> fMeasures = new ArrayList<Double>();
 
-
-	
 	public ClusterInfoKeeper(Cluster cluster,Centroid overallCentroid){
 		this.cluster=cluster;
 		this.overallCentroid=overallCentroid;
 		initialize();
-	}
-	
+	}	
 	
 	private void initialize(){
 		
@@ -70,7 +66,6 @@ public class ClusterInfoKeeper {
 		InternalClusterMetrics cohesionMetricCalculator = new ClusterCohesionMetric(this);
 		cohesionMetricCalculator.computeMetric();
 		clusterCohesion=cohesionMetricCalculator.getResult();
-		//System.out.println(clusterCohesion);
 		
 	}
 	
@@ -79,7 +74,6 @@ public class ClusterInfoKeeper {
 		InternalClusterMetrics separationMetricCalculator = new ClusterSeparationMetric(clusterCentroid,overallCentroid);
 		separationMetricCalculator.computeMetric();
 		clusterSeparation=(double)this.cluster.getTables().size()*separationMetricCalculator.getResult();
-		//System.out.println(clusterSeparation+"\n");
 		
 	}
 	
@@ -88,7 +82,6 @@ public class ClusterInfoKeeper {
 		ExternalClusterMetric entropyMetricCalculator = new ClusterEntropyMetric(classesOfObjects,clusters,classIndex);
 		entropyMetricCalculator.compute();
 		clusterEntropy = entropyMetricCalculator.getResult();
-		//System.err.println("-------------->"+clusterEntropy);
 		
 	}
 	

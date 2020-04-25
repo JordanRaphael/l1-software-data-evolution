@@ -18,17 +18,13 @@ public class IDUTableRenderer extends DefaultTableCellRenderer{
 	private GlobalDataKeeper globalDataKeeper = new GlobalDataKeeper();
 	private String description="";
 	private int selectedColumn;
-	//private ArrayList<String> selectedFromTree = new ArrayList<String>();
 	private Integer[] segmentSize=new Integer[3];
 	private Gui gui;
 
 	
 	public IDUTableRenderer(Gui gui,String[][] finalRows , GlobalDataKeeper globalDataKeeper,Integer[] segmentSize){
 		this.finalRows=finalRows;
-		//this.wholeCol = wholeCol;
 		this.globalDataKeeper = globalDataKeeper;
-		//this.selectedColumn=selectedColumn;
-		//this.selectedFromTree = selectedFromTree;
 		this.segmentSize=segmentSize;
 		this.gui=gui;
 	}
@@ -88,19 +84,6 @@ public class IDUTableRenderer extends DefaultTableCellRenderer{
         	}
         }
         else{
-
-        	/*
-        	if(selectedFromTree.contains(finalRows[row][0])){
-
-
-        		Color cl = new Color(255,69,0,100);
-        		
-        		c.setBackground(cl);
-        		
-        		return c;
-        	}
-        	
-        	 */
         	
         	if (isSelected && hasFocus){
 
@@ -140,8 +123,6 @@ public class IDUTableRenderer extends DefaultTableCellRenderer{
         		
         		return c;
 	        }
-        	
-        	
         	
         }
         
@@ -190,7 +171,6 @@ public class IDUTableRenderer extends DefaultTableCellRenderer{
     			}
         		return c; 
     		}
-        		
         		
         }
     }

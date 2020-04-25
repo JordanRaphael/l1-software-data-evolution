@@ -31,6 +31,4 @@ public class IDUHeaderTableRenderer extends JLabel implements TableCellRenderer 
         return this;
     }
 
-	
- 
 }

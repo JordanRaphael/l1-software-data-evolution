@@ -1,6 +1,5 @@
 package gui.tableElements.commons;
 
-
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
@@ -74,5 +73,4 @@ public class JvTable extends JTable {
         firePropertyChange("uniformly", 1500, 5000);
     }
    
-    
 }

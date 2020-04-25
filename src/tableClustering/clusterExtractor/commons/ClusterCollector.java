@@ -12,7 +12,6 @@ public class ClusterCollector {
 		clusters=new ArrayList<Cluster>();
 	}
 
-	
 	public void addCluster(Cluster c){
 		this.clusters.add(c);
 	}
@@ -24,9 +23,8 @@ public class ClusterCollector {
 		        public int compare(final Cluster object1, final Cluster object2) {
 		            return Integer.compare(object1.getBirth(),object2.getBirth());
 		        }
-		       } );
-		 
-		 
+		 } );
+		 		 
 	}
 	
 	public void sortClustersByDeath(){
@@ -36,8 +34,7 @@ public class ClusterCollector {
 		        public int compare(final Cluster object1, final Cluster object2) {
 		            return Integer.compare(object1.getDeath(),object2.getDeath());
 		        }
-		       } );
-		 
+		 } );
 		 
 	}
 	
@@ -48,8 +45,7 @@ public class ClusterCollector {
 		        public int compare(final Cluster object1, final Cluster object2) {
 		            return Integer.compare(object1.getTotalChanges(),object2.getTotalChanges());
 		        }
-		       } );
-		 
+		 } );
 		 
 	}
 	
@@ -70,8 +66,7 @@ public class ClusterCollector {
 			        	
 		        	}
 		        }
-		       } );
-		 
+		  } );
 		 
 	}
 	
@@ -99,8 +94,7 @@ public class ClusterCollector {
 			        	}
 		        	}
 		        }
-		       } );
-		 
+		  } );
 		 
 	}
 	
@@ -122,5 +116,5 @@ public class ClusterCollector {
 		
 		return toReturn;
 	}
-	
+
 }

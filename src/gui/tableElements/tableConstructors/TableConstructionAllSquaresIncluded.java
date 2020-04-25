@@ -13,7 +13,6 @@ import data.dataPPL.pplTransition.TableChange;
 
 public class TableConstructionAllSquaresIncluded implements PldConstruction {
 	
-	
 	private static TreeMap<String,PPLSchema> allPPLSchemas=new TreeMap<String,PPLSchema>();
 	private ArrayList<PPLTable>	tables=new ArrayList<PPLTable>();
 	private TreeMap<Integer,PPLTransition> allPPLTransitions = new TreeMap<Integer,PPLTransition>();
@@ -30,8 +29,7 @@ public class TableConstructionAllSquaresIncluded implements PldConstruction {
 		
 		allPPLSchemas=globalDataKeeper.getAllPPLSchemas();
 		allPPLTransitions=globalDataKeeper.getAllPPLTransitions();
-		
-		
+			
 	}
 	
 	public String[] constructColumns(){
@@ -76,7 +74,6 @@ public class TableConstructionAllSquaresIncluded implements PldConstruction {
 						default:break;
 					}
 					
-					
 				}
 			
 			}
@@ -100,14 +97,12 @@ public class TableConstructionAllSquaresIncluded implements PldConstruction {
 		
 		return(tmpcolumns);
 		
-		
 	}
 	
 	public String[][] constructRows(){
 		
 		ArrayList<String[]> allRows=new ArrayList<String[]>();
 	    ArrayList<String>	allTables=new ArrayList<String>();
-
 		
 		int found=0;
 		int i=0;
@@ -116,14 +111,12 @@ public class TableConstructionAllSquaresIncluded implements PldConstruction {
 			
 			PPLSchema oneSchema=pplSc.getValue();
 			
-			
 			for(int j=0; j<oneSchema.getTables().size(); j++){
 				
 				PPLTable oneTable=oneSchema.getTableAt(j);
 				
 				String tmpTableName=oneTable.getName();
 				for(int k=0; k<allTables.size(); k++){
-					
 					
 					if(!tmpTableName.equals(allTables.get(k))){
 						found=0;
@@ -133,8 +126,7 @@ public class TableConstructionAllSquaresIncluded implements PldConstruction {
 						found=1;
 						break;
 						
-					}
-					
+					}	
 				}
 				
 				if(found==0){
@@ -150,7 +142,6 @@ public class TableConstructionAllSquaresIncluded implements PldConstruction {
 					found=0;
 				}
 				
-				
 			}
 			
 			i++;
@@ -164,7 +155,6 @@ public class TableConstructionAllSquaresIncluded implements PldConstruction {
 			for(int j=0; j<tmpOneRow.length; j++ ){
 				
 				tmpRows[z][j]=tmpOneRow[j];
-				
 				
 			}
 			
@@ -247,8 +237,6 @@ public class TableConstructionAllSquaresIncluded implements PldConstruction {
 					
 					if(tableChange.getAffectedTableName().equals(oneTable.getName())){
 						
-						
-						
 						ArrayList<AtomicChange> atChs = tableChange.getTableAtChForOneTransition();
 						
 						for(int k=0; k<atChs.size(); k++){
@@ -262,7 +250,6 @@ public class TableConstructionAllSquaresIncluded implements PldConstruction {
 									maxInsersions=insn;
 								}
 							
-								
 							}
 							else if(atChs.get(k).getType().contains("Deletion")){
 								
@@ -272,7 +259,6 @@ public class TableConstructionAllSquaresIncluded implements PldConstruction {
 										maxDeletions=deln;
 										
 								 }
-								 
 								 
 								 
 								 int num=getNumOfAttributesOfNextSchema(sc, oneTable.getName());
@@ -289,7 +275,6 @@ public class TableConstructionAllSquaresIncluded implements PldConstruction {
 								if(updn>maxUpdates){
 									maxUpdates=updn;
 								}
-								
 								
 							}
 							
@@ -321,7 +306,6 @@ public class TableConstructionAllSquaresIncluded implements PldConstruction {
 			updn=0;
 			deln=0;
 			
-			
 		}
 		
 		for(int i=0; i<oneRow.length; i++){
@@ -351,6 +335,4 @@ public class TableConstructionAllSquaresIncluded implements PldConstruction {
 		return num;
 	}
 	
-	
-
 }

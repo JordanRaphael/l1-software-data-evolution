@@ -22,7 +22,6 @@ public class TotalCohesionMetric implements InternalTotalMetrics {
 		Iterator<ClusterInfoKeeper> iteratorClusterInfoKeeper = clusterInfoKeepers.iterator();
 		totalCohesion = new Double(0);
 
-		// totalCohesion = Sum1-K(wi*validity(Ci))
  		while(iteratorClusterInfoKeeper.hasNext()){
 			
 			ClusterInfoKeeper currClusterInfoKeeper = iteratorClusterInfoKeeper.next();
@@ -33,8 +32,6 @@ public class TotalCohesionMetric implements InternalTotalMetrics {
 		System.err.println("Total Cohesion:"+totalCohesion);
 
 	}
-
-	
 	
 	@Override
 	public Double getResult() {

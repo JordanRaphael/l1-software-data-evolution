@@ -32,7 +32,6 @@ public class TableConstructionIDU implements PldConstruction {
 		allPPLSchemas=globalDataKeeper.getAllPPLSchemas();
 		allPPLTransitions=globalDataKeeper.getAllPPLTransitions();
 		
-		
 	}
 	
 	public String[] constructColumns(){
@@ -50,7 +49,6 @@ public class TableConstructionIDU implements PldConstruction {
 				schemaColumnId[i][1]=schemaColumnId[i-1][1]+1;
 			}
 		}
-		
 		
 		columnsList.add("Table name");
 		
@@ -73,7 +71,6 @@ public class TableConstructionIDU implements PldConstruction {
 		
 		return(tmpcolumns);
 		
-		
 	}
 	
 	public String[][] constructRows(){
@@ -81,7 +78,6 @@ public class TableConstructionIDU implements PldConstruction {
 		ArrayList<String[]> allRows=new ArrayList<String[]>();
 	    ArrayList<String>	allTables=new ArrayList<String>();
 
-		
 		int found=0;
 		int i=0;
 		
@@ -89,14 +85,12 @@ public class TableConstructionIDU implements PldConstruction {
 			
 			PPLSchema oneSchema=pplSc.getValue();
 			
-			
 			for(int j=0; j<oneSchema.getTables().size(); j++){
 				
 				PPLTable oneTable=oneSchema.getTableAt(j);
 				
 				String tmpTableName=oneTable.getName();
-				for(int k=0; k<allTables.size(); k++){
-					
+				for(int k=0; k<allTables.size(); k++){	
 					
 					if(!tmpTableName.equals(allTables.get(k))){
 						found=0;
@@ -123,7 +117,6 @@ public class TableConstructionIDU implements PldConstruction {
 					found=0;
 				}
 				
-				
 			}
 			
 			i++;
@@ -137,8 +130,7 @@ public class TableConstructionIDU implements PldConstruction {
 			for(int j=0; j<tmpOneRow.length; j++ ){
 				
 				tmpRows[z][j]=tmpOneRow[j];
-				
-				
+					
 			}
 			
 		}
@@ -173,8 +165,7 @@ public class TableConstructionIDU implements PldConstruction {
 		
 		if(schemaVersion==-1){
 			pointerCell++;
-			
-			
+				
 		}
 		else{
 			
@@ -210,7 +201,6 @@ public class TableConstructionIDU implements PldConstruction {
 			PPLTransition  tmpTL=allPPLTransitions.get(pos3);
 			
 			String sc=tmpTL.getNewVersionName();
-			
 			
 			ArrayList<TableChange> tmpTR=tmpTL.getTableChanges();
 			
@@ -277,7 +267,6 @@ public class TableConstructionIDU implements PldConstruction {
 					 
 				}
 				
-				
 			}
 			if(pointerCell>=columnsNumber){
 				
@@ -301,7 +290,6 @@ public class TableConstructionIDU implements PldConstruction {
 				}
 				reborn=false;
 				
-				
 			}
 			
 			if (totalChangesForOneTransition>maxTotalChangesForOneTr) {
@@ -311,8 +299,7 @@ public class TableConstructionIDU implements PldConstruction {
 			insn=0;
 			updn=0;
 			deln=0;
-			
-			
+				
 		}
 		
 		for(int i=0; i<oneRow.length; i++){

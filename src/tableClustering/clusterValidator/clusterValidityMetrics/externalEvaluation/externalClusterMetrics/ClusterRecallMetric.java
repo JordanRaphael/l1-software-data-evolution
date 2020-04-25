@@ -10,7 +10,6 @@ public class ClusterRecallMetric implements ExternalClusterMetric {
 	private Cluster currentCluster = new Cluster();
 	private ClassOfObjects classOfObjects=null;
 	private Double recall = new Double(0);
-
 	
 	public ClusterRecallMetric(Cluster currentCluster,ClassOfObjects classOfObjects) {
 		this.currentCluster = currentCluster;
@@ -20,8 +19,6 @@ public class ClusterRecallMetric implements ExternalClusterMetric {
 	
 	@Override
 	public void compute() {
-		
-		//recall(i,j) = pij = mij/mj
 		
 		Double mj = new Double(0);
 		Double mij = new Double(0);
@@ -38,15 +35,14 @@ public class ClusterRecallMetric implements ExternalClusterMetric {
 				mij++;
 			}
 		}
-		
-		
+				
 		recall=mij/mj;
 		
 	}
 
 	@Override
 	public Double getResult() {
-		// TODO Auto-generated method stub
+
 		return recall;
 	}
 

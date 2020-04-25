@@ -4,9 +4,6 @@ import javax.swing.table.AbstractTableModel;
 
 public class MyTableModel extends AbstractTableModel {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private boolean DEBUG=false;
 	
@@ -20,7 +17,6 @@ public class MyTableModel extends AbstractTableModel {
 		
 		columns=tmpColumns;
 		rows=tmpRows;
-		
 	}
 	
 	
@@ -47,10 +43,7 @@ public class MyTableModel extends AbstractTableModel {
     
     public Object getValueAt(int row, int col) {
         return rows[row][col];
-    }
-    
-    
-    
+    }   
 
     /*
      * JTable uses this method to determine the default renderer/
@@ -105,6 +98,4 @@ public class MyTableModel extends AbstractTableModel {
         System.out.println("--------------------------");
     }
 	
-	
-
 }
