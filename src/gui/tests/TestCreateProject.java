@@ -1,5 +1,8 @@
 package gui.tests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -7,32 +10,29 @@ import java.util.Scanner;
 import org.junit.Test;
 
 import gui.dialogs.CreateProjectJDialog;
-import gui.mainEngine.BusinessLogic;
-import gui.mainEngine.Gui;
 
 public class TestCreateProject {
 	
-	private BusinessLogic buisnessLogic;
-	private Gui frame;
-	
-	public TestCreateProject() {
-		
-		frame = new Gui();
-		buisnessLogic = new BusinessLogic(frame);
-		
-	}
-
+	@SuppressWarnings("resource")
 	@Test
 	public void testCreateProject() {
 		CreateProjectJDialog createProjectDialog = new CreateProjectJDialog("TestProjectName", "TestDatasetTxt", "TestInputCsv", "TestAss1", "TestAss2", "TestTransXml");
+		String[] projectData = {"Project-name:TestProjectName","Dataset-txt:TestDatasetTxt","Input-csv:TestInputCsv","Assessement1-output:TestAss1","Assessement2-output:TestAss2","Transition-xml:TestTransXml"};
 		createProjectDialog.getOkButton().doClick();
 		File file = createProjectDialog.getFile();
 		Scanner scanner;
 		try {
 			scanner = new Scanner(file);
+			int lineCounter = 0;
+			
 			while (scanner.hasNextLine()) {
+				if (lineCounter >= projectData.length) {
+					fail("File sizes are different.");
+					return;
+				}
 				String data = scanner.nextLine();
-				System.out.println(data);
+				assertEquals(data,projectData[lineCounter]);
+				lineCounter ++;
 			}
 			
 			scanner.close();
@@ -40,9 +40,6 @@ public class TestCreateProject {
 			e.printStackTrace();
 		}
 		
-		
-		
-		//"TestProjectName", "TestDatasetTxt", "TestInputCsv", "TestAss1", "TestAss2", "TestTransXml"
 	}
 	
 }
