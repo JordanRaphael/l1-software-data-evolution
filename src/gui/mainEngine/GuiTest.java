@@ -8,21 +8,23 @@ import org.junit.Test;
 
 public class GuiTest {
 
-	private BuisnessLogic buisnessLogic;
+	private BusinessLogic buisnessLogic;
 	private Gui frame;
 	
 	public GuiTest() {
 		
-		buisnessLogic = new BuisnessLogic();
 		frame = new Gui();
+		buisnessLogic = new BusinessLogic(frame);
+		
 	}
 	
 	@Test
 	public void testGui() {
-		//Gui gui = new Gui();
+
 		fail("Not yet implemented");
 	}
 	
+	@Test
 	public void testLoadProject() {
 		
 		
@@ -30,18 +32,22 @@ public class GuiTest {
 		
 	}
 	
+	@Test
 	public void testCreateProject() {
 		
 	}
 	
+	@Test
 	public void testEditProject() {
 		//button.doClick();
 	}
 	
+	@Test
 	public void testZoomIn() {
 		
 	}
 	
+	@Test
 	public void testZoomOut() {
 		
 	}
