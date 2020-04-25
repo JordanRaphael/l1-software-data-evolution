@@ -24,7 +24,7 @@ import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
 
 public class BusinessLogic {
 	
-	protected Gui gui;
+	public Gui gui;
 	
 	public BusinessLogic(Gui gui) {
 		this.gui = gui;
