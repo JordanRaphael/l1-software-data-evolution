@@ -1959,7 +1959,6 @@ private void makeZoomAreaTableForCluster() {
 			        		return c; 
 		        		}
 		        		
-		        		
 		        }
 		    }
 		});
@@ -1969,10 +1968,8 @@ private void makeZoomAreaTableForCluster() {
 		tmpLifeTimeTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 	    tmpLifeTimeTable.getSelectionModel().addListSelectionListener(new RowListener());
 	    tmpLifeTimeTable.getColumnModel().getSelectionModel().addListSelectionListener(new ColumnListener());
-	    
-	    
-	    
-	    JScrollPane detailedScrollPane = jItemsCreator.createJScrollPane(0, 0, 1280, 650`)
+	     
+	    JScrollPane detailedScrollPane = jItemsCreator.createJScrollPane(0, 0, 1280, 650);
 	    detailedScrollPane.setViewportView(tmpLifeTimeTable);
 	    detailedScrollPane.setAlignmentX(0);
 	    detailedScrollPane.setAlignmentY(0);
