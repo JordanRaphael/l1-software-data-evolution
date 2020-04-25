@@ -35,6 +35,7 @@ public class CreateProjectJDialog extends JDialog {
 	private JTextField textFieldAss1;
 	private JTextField textFieldAss2;
 	private JTextField textFieldTransXml;
+	private JButton okButton;
 	private File fileToCreate=null;
 	private boolean confirm=false;
 
@@ -266,7 +267,7 @@ public class CreateProjectJDialog extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
+				okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						
@@ -367,6 +368,10 @@ public class CreateProjectJDialog extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+	
+	public JButton getOkButton() {
+		return okButton;
 	}
 	
 	public File getFile(){
