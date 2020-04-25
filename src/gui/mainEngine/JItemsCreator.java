@@ -51,6 +51,14 @@ public class JItemsCreator {
 		
 	}
 	
+	public JDialog createJDialog(int x, int y, int width, int height) {
+		
+		JDialog dialog = new JDialog();
+		dialog.setBounds(x, y, width, height);
+		
+		return dialog;
+	}
+	
 	
 	private GroupLayout createGroupLayout(JPanel panel) {
 		

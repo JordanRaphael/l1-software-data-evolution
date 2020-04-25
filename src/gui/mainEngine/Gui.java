@@ -71,6 +71,8 @@ public class Gui extends JFrame{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private JItemsCreator jItemsCreator= new JItemsCreator();
+	
 	private JPanel contentPane;
 	private JPanel lifeTimePanel = new JPanel();
 	protected JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -133,7 +135,7 @@ public class Gui extends JFrame{
 	private ArrayList<String> selectedFromTree=new ArrayList<String>();
 	
 	private JTree tablesTree=new JTree();
-	private JPanel sideMenu=new JPanel();
+	private JPanel sideMenu = jItemsCreator.createJPanel();
 	private JPanel tablesTreePanel=new JPanel();
 	private JPanel descriptionPanel=new JPanel();
 	private JLabel treeLabel;
@@ -212,8 +214,6 @@ public class Gui extends JFrame{
 		
 		JMenuItem mntmLoadProject = new JMenuItem("Load Project");
 		
-		
-		
 		mntmLoadProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e1) {
 				businessLogic.loadProjectAction(e1);								
@@ -267,22 +267,6 @@ public class Gui extends JFrame{
 		
 		mnTable.add(mntmShowLifetimeTable);
 		
-
-		sideMenu.setBounds(0, 0, 280, 600);
-		sideMenu.setBackground(Color.DARK_GRAY);
-		
-		
-		
-		GroupLayout gl_sideMenu = new GroupLayout(sideMenu);
-		gl_sideMenu.setHorizontalGroup(
-				gl_sideMenu.createParallelGroup(Alignment.LEADING)
-		);
-		gl_sideMenu.setVerticalGroup(
-				gl_sideMenu.createParallelGroup(Alignment.LEADING)
-		);
-		
-		sideMenu.setLayout(gl_sideMenu);
-		
 		tablesTreePanel.setBounds(10, 400, 260, 180);
 		tablesTreePanel.setBackground(Color.LIGHT_GRAY);
 		
@@ -296,10 +280,7 @@ public class Gui extends JFrame{
 		
 		tablesTreePanel.setLayout(gl_tablesTreePanel);
 		
-		treeLabel=new JLabel();
-		treeLabel.setBounds(10, 370, 260, 40);
-		treeLabel.setForeground(Color.WHITE);
-		treeLabel.setText("Tree");
+		treeLabel = jItemsCreator.createJLabel("", "Tree", 10, 370, 260, 40, Color.WHITE);
 		
 		descriptionPanel.setBounds(10, 190, 260, 180);
 		descriptionPanel.setBackground(Color.LIGHT_GRAY);
@@ -322,11 +303,7 @@ public class Gui extends JFrame{
 		
 		descriptionPanel.add(descriptionText);
 		
-		
-		descriptionLabel=new JLabel();
-		descriptionLabel.setBounds(10, 160, 260, 40);
-		descriptionLabel.setForeground(Color.WHITE);
-		descriptionLabel.setText("Description");
+		descriptionLabel = jItemsCreator.createJLabel("", "Description", 10, 160, 260, 40, Color.WHITE);
 		
 		sideMenu.add(treeLabel);
 		sideMenu.add(tablesTreePanel);
@@ -336,7 +313,7 @@ public class Gui extends JFrame{
 
 		lifeTimePanel.add(sideMenu);
 		
-		JButton buttonHelp=new JButton("Help");
+		JButton buttonHelp = jItemsCreator.createJButton("Help", 900,900 , 80, 40);
 		buttonHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String message ="To open a project, you must select a .txt file that contains the names ONLY of " +
@@ -358,16 +335,12 @@ public class Gui extends JFrame{
 			}
 		});
 		mnProject.add(mntmInfo);
-		buttonHelp.setBounds(900,900 , 80, 40);
 		menuBar.add(buttonHelp);
-		
-		
 		
 		contentPane = new JPanel();
 		
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -394,19 +367,11 @@ public class Gui extends JFrame{
 		lifeTimePanel.setLayout(gl_lifeTimePanel);
 		
 		
-		generalTableLabel=new JLabel("Parallel Lives Diagram");
-		generalTableLabel.setBounds(300, 0, 150, 30);
-		generalTableLabel.setForeground(Color.BLACK);
+		generalTableLabel = jItemsCreator.createJLabel("Parallel Lives Diagram", "", 300, 0, 150, 30, Color.BLACK);
 		
-		zoomAreaLabel=new JLabel();
-		zoomAreaLabel.setText("<HTML>Z<br>o<br>o<br>m<br><br>A<br>r<br>e<br>a</HTML>");
-		zoomAreaLabel.setBounds(1255, 325, 15, 300);
-		zoomAreaLabel.setForeground(Color.BLACK);
+		zoomAreaLabel = jItemsCreator.createJLabel("", "<HTML>Z<br>o<br>o<br>m<br><br>A<br>r<br>e<br>a</HTML>", 1255, 325, 15, 300, Color.BLACK);
 		
-		zoomInButton = new JButton("Zoom In");
-		zoomInButton.setBounds(1000, 560, 100, 30);
-		
-		
+		zoomInButton = jItemsCreator.createJButton("Zoom In", 1000, 560, 100, 30);		
 		
 		zoomInButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -418,8 +383,7 @@ public class Gui extends JFrame{
 			}
 		});
 		
-		zoomOutButton = new JButton("Zoom Out");
-		zoomOutButton.setBounds(1110, 560, 100, 30);
+		zoomOutButton = jItemsCreator.createJButton("Zoom Out", 1110, 560, 100, 30);
 		
 		zoomOutButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -452,16 +416,13 @@ public class Gui extends JFrame{
 				showEnlargmentPopup.setBounds(100, 100, 1300, 700);
 				
 				showEnlargmentPopup.setVisible(true);
-				
-				
+								
 			}
 		});
 		
 		showThisToPopup.setVisible(false);
 		
-		
-		undoButton = new JButton("Undo");
-		undoButton.setBounds(680, 560, 100, 30);
+		undoButton = jItemsCreator.createJButton("Undo", 680, 560, 100, 30);
 		
 		undoButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -476,10 +437,8 @@ public class Gui extends JFrame{
 		});
 		
 		undoButton.setVisible(false);
-		
-		
-		uniformlyDistributedButton = new JButton("Same Width"); 
-		uniformlyDistributedButton.setBounds(980, 0, 120, 30);
+				
+		uniformlyDistributedButton = jItemsCreator.createJButton("Same Width", 980, 0, 120, 30); 
 		
 		uniformlyDistributedButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -491,8 +450,7 @@ public class Gui extends JFrame{
 		
 		uniformlyDistributedButton.setVisible(false);
 		
-		notUniformlyDistributedButton = new JButton("Over Time"); 
-		notUniformlyDistributedButton.setBounds(1100, 0, 120, 30);
+		notUniformlyDistributedButton = jItemsCreator.createJButton("Over Time", 1100, 0, 120, 30); 
 		
 		notUniformlyDistributedButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -520,9 +478,8 @@ public class Gui extends JFrame{
 		pack();
 		setBounds(30, 30, 1300, 700);
 
-		
 	}
-	
+
 	
 	protected void makeGeneralTableIDU() {
 	
@@ -567,11 +524,8 @@ public class Gui extends JFrame{
 				
 		}
 
-		
 		generalTable.setShowGrid(false);
 		generalTable.setIntercellSpacing(new Dimension(0, 0));
-		
-		
 		
 		for(int i=0; i<generalTable.getColumnCount(); i++){
 			if(i==0){
@@ -592,7 +546,6 @@ public class Gui extends JFrame{
 		}
 
 
-		
 		if(wholeCol!=-1){
 			for(int i=0; i<generalTable.getColumnCount(); i++){
 				if(!(generalTable.getColumnName(i).equals("Table name"))){
@@ -652,13 +605,12 @@ public class Gui extends JFrame{
 		        		c.setBackground(cl);
 		        		
 		        		String description="Table:"+finalRowsZoomArea[row][0]+"\n";
-		        		description=description+"Birth Version Name:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).getBirth()+"\n";
-		        		description=description+"Birth Version ID:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).getBirthVersionID()+"\n";
-		        		description=description+"Death Version Name:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).getDeath()+"\n";
-		        		description=description+"Death Version ID:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).getDeathVersionID()+"\n";
-		        		description=description+"Total Changes:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).getTotalChanges()+"\n";
+		        		description = description+"Birth Version Name:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).getBirth()+"\n";
+		        		description = description+"Birth Version ID:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).getBirthVersionID()+"\n";
+		        		description = description+"Death Version Name:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).getDeath()+"\n";
+		        		description = description+"Death Version ID:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).getDeathVersionID()+"\n";
+		        		description = description+"Total Changes:"+globalDataKeeper.getAllPPLTables().get(finalRowsZoomArea[row][0]).getTotalChanges()+"\n";
 
-		        		
 		        		descriptionText.setText(description);
 		        		
 		        		return c;
@@ -666,7 +618,6 @@ public class Gui extends JFrame{
 		        	}
 		        }
 		        else{
-
 
 		        	if(selectedFromTree.contains(finalRowsZoomArea[row][0])){
 
@@ -676,8 +627,7 @@ public class Gui extends JFrame{
 		        		
 		        		return c;
 		        	}
-		        	
-			      		        	
+		        				      		        	
 		        	if (isSelected && hasFocus){
 
 		        		String description="";
@@ -2022,18 +1972,14 @@ private void makeZoomAreaTableForCluster() {
 	    
 	    
 	    
-	    JScrollPane detailedScrollPane=new JScrollPane();
+	    JScrollPane detailedScrollPane = jItemsCreator.createJScrollPane(0, 0, 1280, 650`)
 	    detailedScrollPane.setViewportView(tmpLifeTimeTable);
 	    detailedScrollPane.setAlignmentX(0);
 	    detailedScrollPane.setAlignmentY(0);
-	    detailedScrollPane.setBounds(0,0,1280,650);
-	    detailedScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-	    detailedScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
        
 	    detailedScrollPane.setCursor(getCursor());
 	    
-	    JDialog detailedDialog=new JDialog();
-	    detailedDialog.setBounds(100, 100, 1300, 700);
+	    JDialog detailedDialog = jItemsCreator.createJDialog(100, 100, 1300, 700);
 	    
 	    JPanel panelToAdd=new JPanel();
 	    
@@ -2111,7 +2057,6 @@ private void makeZoomAreaTableForCluster() {
 				transitionsFile=transitionXmlTable[1];
 			}
 			
-			
 		};	
 		
 		br.close();
@@ -2124,7 +2069,7 @@ private void makeZoomAreaTableForCluster() {
 		System.out.println("Output Assessment2:"+outputAssessment2);
 		System.out.println("Transitions File:"+transitionsFile);
 
-		globalDataKeeper=new GlobalDataKeeper(datasetTxt,transitionsFile);
+		globalDataKeeper = new GlobalDataKeeper(datasetTxt,transitionsFile);
 		globalDataKeeper.setData();
 		System.out.println(globalDataKeeper.getAllPPLTables().size());
 		
@@ -2164,9 +2109,9 @@ private void makeZoomAreaTableForCluster() {
         
 		PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(inputCsv,outputAssessment1,outputAssessment2,timeWeight,changeWeight,preProcessingTime,preProcessingChange);
 
-		Double b=new Double(0.3);
-		Double d=new Double(0.3);
-		Double c=new Double(0.3);
+		Double b = new Double(0.3);
+		Double d = new Double(0.3);
+		Double c = new Double(0.3);
 			
 		mainEngine.parseInput();		
 		System.out.println("\n\n\n");
@@ -2380,7 +2325,6 @@ private void makeZoomAreaTableForCluster() {
 					        popupMenu.add(showDetailsItem);
 					        popupMenu.show(tablesTree, e.getX(),e.getY());
 							        							        
-							
 						}
 					
 				   }
@@ -2451,8 +2395,7 @@ private void makeZoomAreaTableForCluster() {
 
 		 sideMenu.revalidate();
 		 sideMenu.repaint();
-		 
-		
+		 		
 	}
 	
 	public void setDescription(String descr){
