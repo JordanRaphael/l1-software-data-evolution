@@ -1,25 +1,5 @@
 package gui.mainEngine;
 
-//try to extract relationship beetween gui and pplSchema and pplTransition
-import gui.dialogs.CreateProjectJDialog;
-import gui.dialogs.EnlargeTable;
-import gui.dialogs.ParametersJDialog;
-import gui.dialogs.ProjectInfoDialog;
-import gui.tableElements.commons.JvTable;
-import gui.tableElements.commons.MyTableModel;
-import gui.tableElements.tableConstructors.PldConstruction;
-import gui.tableElements.tableConstructors.TableConstructionAllSquaresIncluded;
-import gui.tableElements.tableConstructors.TableConstructionClusterTablesPhasesZoomA;
-import gui.tableElements.tableConstructors.TableConstructionIDU;
-import gui.tableElements.tableConstructors.TableConstructionPhases;
-import gui.tableElements.tableConstructors.TableConstructionWithClusters;
-import gui.tableElements.tableConstructors.TableConstructionZoomArea;
-import gui.tableElements.tableRenderers.IDUHeaderTableRenderer;
-import gui.tableElements.tableRenderers.IDUTableRenderer;
-import gui.treeElements.TreeConstructionGeneral;
-import gui.treeElements.TreeConstructionPhases;
-import gui.treeElements.TreeConstructionPhasesWithClusters;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -30,8 +10,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -41,7 +19,6 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -67,14 +44,27 @@ import javax.swing.tree.TreePath;
 
 import org.antlr.v4.runtime.RecognitionException;
 
+import data.dataKeeper.GlobalDataKeeper;
+import data.dataSorters.PldRowSorter;
+import gui.dialogs.EnlargeTable;
+import gui.tableElements.commons.JvTable;
+import gui.tableElements.commons.MyTableModel;
+import gui.tableElements.tableConstructors.PldConstruction;
+import gui.tableElements.tableConstructors.TableConstructionClusterTablesPhasesZoomA;
+import gui.tableElements.tableConstructors.TableConstructionIDU;
+import gui.tableElements.tableConstructors.TableConstructionWithClusters;
+import gui.tableElements.tableConstructors.TableConstructionZoomArea;
+import gui.tableElements.tableRenderers.IDUHeaderTableRenderer;
+import gui.tableElements.tableRenderers.IDUTableRenderer;
+import gui.treeElements.TreeConstructionGeneral;
+import gui.treeElements.TreeConstructionPhases;
+import gui.treeElements.TreeConstructionPhasesWithClusters;
 import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
 import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
 import tableClustering.clusterValidator.engine.ClusterValidatorMainEngine;
-import data.dataKeeper.GlobalDataKeeper;
-import data.dataSorters.PldRowSorter;
 
 
-public class Gui extends JFrame implements ActionListener{
+public class Gui extends JFrame{
 
 	/**
 	 * 
@@ -83,7 +73,7 @@ public class Gui extends JFrame implements ActionListener{
 	
 	private JPanel contentPane;
 	private JPanel lifeTimePanel = new JPanel();
-	private JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+	protected JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	
 	private MyTableModel detailedModel = null;
 	private MyTableModel generalModel = null;
@@ -101,45 +91,45 @@ public class Gui extends JFrame implements ActionListener{
 	
 	
 	private ArrayList<Integer> selectedRows=new ArrayList<Integer>();
-	private GlobalDataKeeper globalDataKeeper=null;
+	protected GlobalDataKeeper globalDataKeeper=null;
 
 	
 	
-	private String[] finalColumns=null;
-	private String[][] finalRows=null;
+	protected String[] finalColumns=null;
+	protected String[][] finalRows=null;
 	
-	private String[] finalColumnsZoomArea=null;
-	private String[][] finalRowsZoomArea=null;
+	protected String[] finalColumnsZoomArea=null;
+	protected String[][] finalRowsZoomArea=null;
 	private String[] firstLevelUndoColumnsZoomArea=null;
 	private String[][] firstLevelUndoRowsZoomArea=null;
-	private String currentProject=null;
-	private String project=null;
+	protected String currentProject=null;
+	protected String project=null;
 	
 	
 	
-	private Integer[] segmentSize=new Integer[4];
-	private Integer[] segmentSizeZoomArea=new Integer[4];
-	private Integer[] segmentSizeDetailedTable=new Integer[3];
+	protected Integer[] segmentSize=new Integer[4];
+	protected Integer[] segmentSizeZoomArea=new Integer[4];
+	protected Integer[] segmentSizeDetailedTable=new Integer[3];
 
 
 	
-	private Float timeWeight=null;
-	private Float changeWeight=null;
-	private Double birthWeight=null;
-	private Double deathWeight=null;
-	private Double changeWeightCl=null;
+	protected Float timeWeight=null;
+	protected Float changeWeight=null;
+	protected Double birthWeight=null;
+	protected Double deathWeight=null;
+	protected Double changeWeightCl=null;
 
-	private Integer numberOfPhases=null;
-	private Integer numberOfClusters=null;
-	private Boolean preProcessingTime=null;
-	private Boolean preProcessingChange=null;
+	protected Integer numberOfPhases=null;
+	protected Integer numberOfClusters=null;
+	protected Boolean preProcessingTime=null;
+	protected Boolean preProcessingChange=null;
 	
-	private String projectName="";
-	private String datasetTxt="";
-	private String inputCsv="";
-	private String outputAssessment1="";
-	private String outputAssessment2="";
-	private String transitionsFile="";
+	protected String projectName="";
+	protected String datasetTxt="";
+	protected String inputCsv="";
+	protected String outputAssessment1="";
+	protected String outputAssessment2="";
+	protected String transitionsFile="";
 	private ArrayList<String> selectedFromTree=new ArrayList<String>();
 	
 	private JTree tablesTree=new JTree();
@@ -151,8 +141,8 @@ public class Gui extends JFrame implements ActionListener{
 	private JLabel zoomAreaLabel;
 	private JLabel descriptionLabel;
 	private JTextArea descriptionText;
-	private JButton zoomInButton;
-	private JButton zoomOutButton;
+	protected JButton zoomInButton;
+	protected JButton zoomOutButton;
 	private JButton uniformlyDistributedButton;
 	private JButton notUniformlyDistributedButton;
 	private JButton showThisToPopup;
@@ -161,7 +151,7 @@ public class Gui extends JFrame implements ActionListener{
 	private int[] selectedRowsFromMouse;
 	private int selectedColumn=-1;
 	private int selectedColumnZoomArea=-1;
-	private int wholeCol=-1;
+	protected int wholeCol=-1;
 	private int wholeColZoomArea=-1;
 	
 	private int rowHeight=1;
@@ -174,12 +164,15 @@ public class Gui extends JFrame implements ActionListener{
 	private JButton undoButton;
 	private JMenu mnProject;
 	private JMenuItem mntmInfo;
+	
+	private BusinessLogic businessLogic = new BusinessLogic(Gui.this);
 
 	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -202,7 +195,6 @@ public class Gui extends JFrame implements ActionListener{
 		
 		setResizable(false);
 		
-	
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -213,78 +205,18 @@ public class Gui extends JFrame implements ActionListener{
 		JMenuItem mntmCreateProject = new JMenuItem("Create Project");
 		mntmCreateProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				CreateProjectJDialog createProjectDialog=new CreateProjectJDialog("","","","","","");
-
-				createProjectDialog.setModal(true);
-				
-				
-				createProjectDialog.setVisible(true);
-				
-				if(createProjectDialog.getConfirmation()){
-					
-					createProjectDialog.setVisible(false);
-					
-					File file = createProjectDialog.getFile();
-		            System.out.println(file.toString());
-		            project=file.getName();
-		            String fileName=file.toString();
-		            System.out.println("!!"+project);
-		          
-					try {
-						importData(fileName);
-					} catch (IOException e) {
-						JOptionPane.showMessageDialog(null, "Something seems wrong with this file");
-						return;
-					} catch (RecognitionException e) {
-						
-						JOptionPane.showMessageDialog(null, "Something seems wrong with this file");
-						return;
-					}
-					
-					
-				}
-				
-		            
-				
+				businessLogic.createProjectAction(arg0);
 			}
 		});
 		mnFile.add(mntmCreateProject);
 		
 		JMenuItem mntmLoadProject = new JMenuItem("Load Project");
+		
+		
+		
 		mntmLoadProject.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				String fileName=null;
-				File dir=new File("filesHandler/inis");
-				JFileChooser fcOpen1 = new JFileChooser();
-				fcOpen1.setCurrentDirectory(dir);
-				int returnVal = fcOpen1.showDialog(Gui.this, "Open");
-				
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					
-		            File file = fcOpen1.getSelectedFile();
-		            System.out.println(file.toString());
-		            project=file.getName();
-		            fileName=file.toString();
-		            System.out.println("!!"+project);
-		          
-
-				}
-				else{
-					return;
-				}
-				try {
-					importData(fileName);
-				} catch (IOException e) {
-					JOptionPane.showMessageDialog(null, "Something seems wrong with this file");
-					return;
-				} catch (RecognitionException e) {
-					
-					JOptionPane.showMessageDialog(null, "Something seems wrong with this file");
-					return;
-				}
-				
+			public void actionPerformed(ActionEvent e1) {
+				businessLogic.loadProjectAction(e1);								
 			}
 		});
 		mnFile.add(mntmLoadProject);
@@ -292,102 +224,7 @@ public class Gui extends JFrame implements ActionListener{
 		JMenuItem mntmEditProject = new JMenuItem("Edit Project");
 		mntmEditProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				String fileName=null;
-				File dir=new File("filesHandler/inis");
-				JFileChooser fcOpen1 = new JFileChooser();
-				fcOpen1.setCurrentDirectory(dir);
-				int returnVal = fcOpen1.showDialog(Gui.this, "Open");
-				
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					
-		            File file = fcOpen1.getSelectedFile();
-		            System.out.println(file.toString());
-		            project=file.getName();
-		            fileName=file.toString();
-		            System.out.println("!!"+project);
-		          
-		            BufferedReader br;
-					try {
-						br = new BufferedReader(new FileReader(fileName));
-						String line;
-						
-						while(true) {
-							line = br.readLine();
-							if (line == null) 
-								break;
-							if(line.contains("Project-name")){
-								String[] projectNameTable=line.split(":");
-								projectName=projectNameTable[1];
-							}
-							else if(line.contains("Dataset-txt")){
-								String[] datasetTxtTable=line.split(":");
-								datasetTxt=datasetTxtTable[1];
-							}
-							else if(line.contains("Input-csv")){
-								String[] inputCsvTable=line.split(":");
-								inputCsv=inputCsvTable[1];
-							}
-							else if(line.contains("Assessement1-output")){
-								String[] outputAss1=line.split(":");
-								outputAssessment1=outputAss1[1];
-							}
-							else if(line.contains("Assessement2-output")){
-								String[] outputAss2=line.split(":");
-								outputAssessment2=outputAss2[1];
-							}
-							else if(line.contains("Transition-xml")){
-								String[] transitionXmlTable=line.split(":");
-								transitionsFile=transitionXmlTable[1];
-							}
-							
-							
-						};	
-						
-						br.close();
-					} catch (FileNotFoundException e1) {
-						e1.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					
-					}
-					
-					System.out.println(projectName);
-					
-					CreateProjectJDialog createProjectDialog=new CreateProjectJDialog(projectName,datasetTxt,inputCsv,outputAssessment1,outputAssessment2,transitionsFile);
-				
-					createProjectDialog.setModal(true);
-					
-					createProjectDialog.setVisible(true);
-					
-					if(createProjectDialog.getConfirmation()){
-						
-						createProjectDialog.setVisible(false);
-						
-						file = createProjectDialog.getFile();
-			            System.out.println(file.toString());
-			            project=file.getName();
-			            fileName=file.toString();
-			            System.out.println("!!"+project);
-					
-						try {
-							importData(fileName);
-						} catch (IOException e) {
-							JOptionPane.showMessageDialog(null, "Something seems wrong with this file");
-							return;
-						} catch (RecognitionException e) {
-							
-							JOptionPane.showMessageDialog(null, "Something seems wrong with this file");
-							return;
-						}
-						
-					}
-					
-				}
-				else{
-					return;
-				}
-				
+				businessLogic.editProjectAction(arg0);
 			}
 		});
 		mnFile.add(mntmEditProject);
@@ -399,45 +236,14 @@ public class Gui extends JFrame implements ActionListener{
 		JMenuItem mntmShowLifetimeTable = new JMenuItem("Show Full Detailed LifeTime Table");
 		mntmShowLifetimeTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(!(currentProject==null)){
-					TableConstructionAllSquaresIncluded table=new TableConstructionAllSquaresIncluded(globalDataKeeper);
-					final String[] columns=table.constructColumns();
-					final String[][] rows=table.constructRows();
-					segmentSizeDetailedTable=table.getSegmentSize();
-					tabbedPane.setSelectedIndex(0);
-					makeDetailedTable(columns,rows,true);
-				}
-				else{
-					JOptionPane.showMessageDialog(null, "Select a Project first");
-					return;
-				}
+				businessLogic.showLifetimeTableAction(e);
 			}
 		});
 		
 		JMenuItem mntmShowGeneralLifetimeIDU = new JMenuItem("Show PLD");
 		mntmShowGeneralLifetimeIDU.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				 if(!(currentProject==null)){
-					zoomInButton.setVisible(true);
-					zoomOutButton.setVisible(true);
-					TableConstructionIDU table=new TableConstructionIDU(globalDataKeeper);
-					final String[] columns=table.constructColumns();
-					final String[][] rows=table.constructRows();
-					segmentSizeZoomArea = table.getSegmentSize();
-					System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
-					System.out.println("C: "+columns.length+" R: "+rows.length);
-
-					finalColumnsZoomArea=columns;
-					finalRowsZoomArea=rows;
-					tabbedPane.setSelectedIndex(0);
-					makeGeneralTableIDU();
-					fillTree();
-					
-				}
-				else{
-					JOptionPane.showMessageDialog(null, "Select a Project first");
-					return;
-				}
+				 businessLogic.showGeneralLifetimeIDUAction(arg0);
 			}
 		});
 		mnTable.add(mntmShowGeneralLifetimeIDU);
@@ -445,62 +251,7 @@ public class Gui extends JFrame implements ActionListener{
 		JMenuItem mntmShowGeneralLifetimePhasesPLD = new JMenuItem("Show Phases PLD");
 		mntmShowGeneralLifetimePhasesPLD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				if(!(project==null)){
-					wholeCol=-1;
-					ParametersJDialog jD=new ParametersJDialog(false);
-					
-					jD.setModal(true);
-					
-					
-					jD.setVisible(true);
-					
-					if(jD.getConfirmation()){
-					
-			            timeWeight = jD.getTimeWeight();
-			            changeWeight = jD.getChangeWeight();
-			            preProcessingTime = jD.getPreProcessingTime();
-			            preProcessingChange = jD.getPreProcessingChange();
-					    numberOfPhases = jD.getNumberOfPhases();
-			            
-			            System.out.println(timeWeight+" "+changeWeight);
-			            
-						PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(inputCsv,outputAssessment1,outputAssessment2,timeWeight,changeWeight,preProcessingTime,preProcessingChange);
-	
-						mainEngine.parseInput();		
-						System.out.println("\n\n\n");
-						mainEngine.extractPhases(numberOfPhases);
-						
-						mainEngine.connectTransitionsWithPhases(globalDataKeeper);
-						globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
-						
-						
-						if(globalDataKeeper.getPhaseCollectors().size()!=0){
-							TableConstructionPhases table=new TableConstructionPhases(globalDataKeeper);
-							final String[] columns=table.constructColumns();
-							final String[][] rows=table.constructRows();
-							segmentSize=table.getSegmentSize();
-							System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
-							System.out.println("C: "+columns.length+" R: "+rows.length);
-		
-							finalColumns=columns;
-							finalRows=rows;
-							tabbedPane.setSelectedIndex(0);
-							makeGeneralTablePhases();
-							fillPhasesTree();
-						}
-						else{
-							JOptionPane.showMessageDialog(null, "Extract Phases first");
-						}
-					}
-				}
-				else{
-					
-					JOptionPane.showMessageDialog(null, "Please select a project first!");
-					
-				}
-				
-				
+				businessLogic.showGeneralLifetimePhasesPLDAction(arg0);
 			}
 		});
 		mnTable.add(mntmShowGeneralLifetimePhasesPLD);
@@ -508,67 +259,7 @@ public class Gui extends JFrame implements ActionListener{
 		JMenuItem mntmShowGeneralLifetimePhasesWithClustersPLD = new JMenuItem("Show Phases With Clusters PLD");
 		mntmShowGeneralLifetimePhasesWithClustersPLD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				wholeCol=-1;
-				if(!(project==null)){
-					
-					ParametersJDialog jD=new ParametersJDialog(true);
-					
-					jD.setModal(true);
-					
-					jD.setVisible(true);
-					
-					if(jD.getConfirmation()){
-					
-			            timeWeight = jD.getTimeWeight();
-			            changeWeight = jD.getChangeWeight();
-			            preProcessingTime = jD.getPreProcessingTime();
-			            preProcessingChange = jD.getPreProcessingChange();
-					    numberOfPhases = jD.getNumberOfPhases();
-					    numberOfClusters = jD.getNumberOfClusters();
-					    birthWeight=jD.geBirthWeight();
-					    deathWeight=jD.getDeathWeight();
-					    changeWeightCl=jD.getChangeWeightCluster();
-			            
-			            System.out.println(timeWeight+" "+changeWeight);
-			            
-						PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(inputCsv,outputAssessment1,outputAssessment2,timeWeight,changeWeight,preProcessingTime,preProcessingChange);
-						
-						mainEngine.parseInput();		
-						System.out.println("\n\n\n");
-						mainEngine.extractPhases(numberOfPhases);
-						
-						mainEngine.connectTransitionsWithPhases(globalDataKeeper);
-						globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
-						TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,birthWeight,deathWeight,changeWeightCl);
-						mainEngine2.extractClusters(numberOfClusters);
-						globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
-						mainEngine2.print();
-						
-						if(globalDataKeeper.getPhaseCollectors().size()!=0){
-							TableConstructionWithClusters table=new TableConstructionWithClusters(globalDataKeeper);
-							final String[] columns=table.constructColumns();
-							final String[][] rows=table.constructRows();
-							segmentSize=table.getSegmentSize();
-							System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
-							System.out.println("C: "+columns.length+" R: "+rows.length);
-		
-							finalColumns=columns;
-							finalRows=rows;
-							tabbedPane.setSelectedIndex(0);
-							makeGeneralTablePhases();
-							fillClustersTree();
-							
-						}
-						else{
-							JOptionPane.showMessageDialog(null, "Extract Phases first");
-						}
-					}
-				}
-				else{
-					
-					JOptionPane.showMessageDialog(null, "Please select a project first!");
-					
-				}
+				businessLogic.showGeneralLifetimePhasesWithClustersPLDAction(arg0);
 			}
 		});
 		mnTable.add(mntmShowGeneralLifetimePhasesWithClustersPLD);
@@ -663,32 +354,7 @@ public class Gui extends JFrame implements ActionListener{
 		mntmInfo = new JMenuItem("Info");
 		mntmInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				if(!(currentProject==null)){
-					
-					System.out.println("Project Name:"+projectName);
-					System.out.println("Dataset txt:"+datasetTxt);
-					System.out.println("Input Csv:"+inputCsv);
-					System.out.println("Output Assessment1:"+outputAssessment1);
-					System.out.println("Output Assessment2:"+outputAssessment2);
-					System.out.println("Transitions File:"+transitionsFile);
-					
-					System.out.println("Schemas:"+globalDataKeeper.getAllPPLSchemas().size());
-					System.out.println("Transitions:"+globalDataKeeper.getAllPPLTransitions().size());
-					System.out.println("Tables:"+globalDataKeeper.getAllPPLTables().size());
-					
-					
-					ProjectInfoDialog infoDialog = new ProjectInfoDialog(projectName,datasetTxt,inputCsv,transitionsFile,globalDataKeeper.getAllPPLSchemas().size(),
-							globalDataKeeper.getAllPPLTransitions().size(), globalDataKeeper.getAllPPLTables().size());
-					
-					infoDialog.setVisible(true);
-				}
-				else{
-					JOptionPane.showMessageDialog(null, "Select a Project first");
-					return;
-				}
-				
+				businessLogic.infoAction(e);
 			}
 		});
 		mnProject.add(mntmInfo);
@@ -858,7 +524,7 @@ public class Gui extends JFrame implements ActionListener{
 	}
 	
 	
-	private void makeGeneralTableIDU() {
+	protected void makeGeneralTableIDU() {
 	
 		PldRowSorter sorter=new PldRowSorter(finalRowsZoomArea,globalDataKeeper);
 		
@@ -1202,7 +868,7 @@ public class Gui extends JFrame implements ActionListener{
 		
 	}
 
-private void makeGeneralTablePhases() {
+protected void makeGeneralTablePhases() {
 	uniformlyDistributedButton.setVisible(true);
 	
 	notUniformlyDistributedButton.setVisible(true);
@@ -2171,7 +1837,7 @@ private void makeZoomAreaTableForCluster() {
 	
 }
 
-	private void makeDetailedTable(String[] columns , String[][] rows, final boolean levelized){
+	protected void makeDetailedTable(String[] columns , String[][] rows, final boolean levelized){
 		
 		detailedModel=new MyTableModel(columns,rows);
 		
@@ -2410,7 +2076,7 @@ private void makeZoomAreaTableForCluster() {
     }
 
 	
-	private void importData(String fileName) throws IOException, RecognitionException {
+	protected void importData(String fileName) throws IOException, RecognitionException {
 		
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		
