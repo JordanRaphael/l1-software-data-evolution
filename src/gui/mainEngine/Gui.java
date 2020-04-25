@@ -83,7 +83,7 @@ public class Gui extends JFrame{
 	private MyTableModel zoomModel = null;
 
 	private JvTable LifeTimeTable=null;
-	private JvTable zoomAreaTable=null;
+	protected JvTable zoomAreaTable=null;
 	
 	
 	
@@ -157,8 +157,8 @@ public class Gui extends JFrame{
 	protected int wholeCol=-1;
 	private int wholeColZoomArea=-1;
 	
-	private int rowHeight=1;
-	private int columnWidth=1;
+	protected int rowHeight=1;
+	protected int columnWidth=1;
 
 	private ArrayList<String> tablesSelected = new ArrayList<String>();
 
@@ -377,12 +377,10 @@ public class Gui extends JFrame{
 		zoomInButton.addMouseListener(new MouseAdapter() {
 			@Override
 			   public void mouseClicked(MouseEvent e) {
-				rowHeight=rowHeight+2;
-				columnWidth=columnWidth+1;
-				zoomAreaTable.setZoom(rowHeight,columnWidth);
-				
-			}
+					businessLogic.zoomInAction(e);
+			   }
 		});
+		
 		
 		zoomOutButton = jItemsCreator.createJButton("Zoom Out", 1110, 560, 100, 30);
 		

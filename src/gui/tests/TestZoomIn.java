@@ -1,5 +1,7 @@
 package gui.tests;
 
+import org.junit.Test;
+
 import gui.mainEngine.BusinessLogic;
 import gui.mainEngine.Gui;
 
@@ -14,5 +16,12 @@ public class TestZoomIn {
 		buisnessLogic = new BusinessLogic(frame);
 		
 	}
+	
+	@Test
+	public void testZoomIn() {
+		//buisnessLogic.gui.zoom
+	}
+	
+	
 
 }
