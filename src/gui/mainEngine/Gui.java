@@ -146,7 +146,7 @@ public class Gui extends JFrame{
 	public int rowHeight=1;
 	public int columnWidth=1;
 
-	private ArrayList<String> tablesSelected = new ArrayList<String>();
+	protected ArrayList<String> tablesSelected = new ArrayList<String>();
 
 	protected boolean showingPld=false;
 	
@@ -815,22 +815,7 @@ protected void makeGeneralTablePhases() {
 }
 
 //TODO Move to BusinessLogic
-private void showSelectionToZoomArea(int selectedColumn){
-	
-	TableConstructionZoomArea table=new TableConstructionZoomArea(globalDataKeeper,tablesSelected,selectedColumn);
-	final String[] columns=table.constructColumns();
-	final String[][] rows=table.constructRows();
-	segmentSizeZoomArea = table.getSegmentSize();
 
-	System.out.println("Schemas: "+globalDataKeeper.getAllPPLSchemas().size());
-	System.out.println("C: "+columns.length+" R: "+rows.length);
-
-	finalColumnsZoomArea=columns;
-	finalRowsZoomArea=rows;
-	tabbedPane.setSelectedIndex(0);
-	makeZoomAreaTable();	
-	
-}
 
 //TODO Move to BusinessLogic
 private void showClusterSelectionToZoomArea(int selectedColumn,String selectedCluster){
@@ -868,7 +853,7 @@ private void showClusterSelectionToZoomArea(int selectedColumn,String selectedCl
 	
 }
 
-private void makeZoomAreaTable() {
+protected void makeZoomAreaTable() {
 	showingPld=false;
 	int numberOfColumns=finalRowsZoomArea[0].length;
 	int numberOfRows=finalRowsZoomArea.length;

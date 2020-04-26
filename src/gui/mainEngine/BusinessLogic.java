@@ -43,6 +43,7 @@ import gui.tableElements.tableConstructors.TableConstructionAllSquaresIncluded;
 import gui.tableElements.tableConstructors.TableConstructionIDU;
 import gui.tableElements.tableConstructors.TableConstructionPhases;
 import gui.tableElements.tableConstructors.TableConstructionWithClusters;
+import gui.tableElements.tableConstructors.TableConstructionZoomArea;
 import gui.tableElements.tableRenderers.IDUHeaderTableRenderer;
 import gui.tableElements.tableRenderers.IDUTableRenderer;
 import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
@@ -1027,6 +1028,23 @@ public class BusinessLogic {
         
 		gui.lifeTimePanel.setCursor(gui.getCursor());
 		gui.lifeTimePanel.add(gui.tmpScrollPaneZoomArea);
+		
+	}
+	
+	private void showSelectionToZoomArea(int selectedColumn){
+		
+		TableConstructionZoomArea table=new TableConstructionZoomArea(gui.globalDataKeeper, gui.tablesSelected, selectedColumn);
+		final String[] columns=table.constructColumns();
+		final String[][] rows=table.constructRows();
+		gui.segmentSizeZoomArea = table.getSegmentSize();
+
+		System.out.println("Schemas: " + gui.globalDataKeeper.getAllPPLSchemas().size());
+		System.out.println("C: "+columns.length+" R: "+rows.length);
+
+		gui.finalColumnsZoomArea = columns;
+		gui.finalRowsZoomArea=rows;
+		gui.tabbedPane.setSelectedIndex(0);
+		gui.makeZoomAreaTable();	
 		
 	}
 
