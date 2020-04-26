@@ -1,10 +1,12 @@
 package gui.mainEngine;
 
+import java.awt.SystemTray;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -248,6 +250,16 @@ public class BusinessLogic {
 	}
 	
 	protected void editProjectAction() {
+		
+		PrintStream stream = null;
+		try {
+			stream = new PrintStream(new File("Test-Files/edit-atlas-project.txt"));
+			System.setOut(stream);
+		} catch (FileNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
 		String fileName=null;
 		File dir=new File("filesHandler/inis");
 		JFileChooser fcOpen1 = new JFileChooser();
@@ -327,6 +339,7 @@ public class BusinessLogic {
 			
 				try {
 					this.gui.importData(fileName);
+					stream.close();
 				} catch (IOException e) {
 					JOptionPane.showMessageDialog(null, "Something seems wrong with this file");
 					return;
