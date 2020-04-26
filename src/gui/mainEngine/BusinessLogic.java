@@ -625,7 +625,7 @@ public class BusinessLogic {
 		this.gui.zoomAreaTable.setZoom(this.gui.rowHeight, this.gui.columnWidth);
 	}
 
-	// TODO Move to BusinessLogic
+	
 	public void importData(String fileName) throws IOException, RecognitionException {
 
 		BufferedReader br = new BufferedReader(new FileReader(fileName));

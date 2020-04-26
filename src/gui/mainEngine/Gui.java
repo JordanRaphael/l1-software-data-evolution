@@ -416,6 +416,7 @@ public class Gui extends JFrame{
 				
 		uniformlyDistributedButton = jItemsCreator.createJButton("Same Width", 980, 0, 120, 30); 
 		
+		//TODO Move to BusinessLogic
 		uniformlyDistributedButton.addMouseListener(new MouseAdapter() {
 			@Override
 			   public void mouseClicked(MouseEvent e) {
@@ -456,7 +457,7 @@ public class Gui extends JFrame{
 
 	}
 
-	
+	//TODO Move to BusinessLogic
 	protected void makeGeneralTableIDU() {
 	
 		PldRowSorter sorter=new PldRowSorter(finalRowsZoomArea,globalDataKeeper);
@@ -1147,7 +1148,7 @@ protected void makeGeneralTablePhases() {
     
 }
 
-
+//TODO Move to BusinessLogic
 private void showSelectionToZoomArea(int selectedColumn){
 	
 	TableConstructionZoomArea table=new TableConstructionZoomArea(globalDataKeeper,tablesSelected,selectedColumn);
@@ -1165,6 +1166,7 @@ private void showSelectionToZoomArea(int selectedColumn){
 	
 }
 
+//TODO Move to BusinessLogic
 private void showClusterSelectionToZoomArea(int selectedColumn,String selectedCluster){
 
 	
