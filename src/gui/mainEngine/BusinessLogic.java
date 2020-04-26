@@ -327,10 +327,10 @@ public class BusinessLogic {
 						@Override
 						public void actionPerformed(ActionEvent le) {
 							if (sSelectedRow.contains("Cluster ")) {
-								gui.businessLogic.showClusterSelectionToZoomArea(gui.selectedColumn, sSelectedRow);
+								showClusterSelectionToZoomArea(gui.selectedColumn, sSelectedRow);
 
 							} else {
-								gui.businessLogic.showSelectionToZoomArea(gui.selectedColumn);
+								showSelectionToZoomArea(gui.selectedColumn);
 							}
 						}
 					});
@@ -360,7 +360,7 @@ public class BusinessLogic {
 				System.out.println("Column index selected " + gui.wholeCol + " " + name);
 				generalTable.repaint();
 				if (gui.showingPld) {
-					gui.businessLogic.makeGeneralTableIDU();
+					makeGeneralTableIDU();
 				}
 			}
 		});
@@ -380,7 +380,7 @@ public class BusinessLogic {
 							gui.wholeCol = -1;
 							generalTable.repaint();
 							if (gui.showingPld) {
-								gui.businessLogic.makeGeneralTableIDU();
+								makeGeneralTableIDU();
 							}
 						}
 					});
@@ -398,9 +398,9 @@ public class BusinessLogic {
 
 							if (!sSelectedRow.contains("Cluster ")) {
 
-								gui.businessLogic.showSelectionToZoomArea(gui.wholeCol);
+								showSelectionToZoomArea(gui.wholeCol);
 							} else {
-								gui.businessLogic.showClusterSelectionToZoomArea(gui.wholeCol, "");
+								showClusterSelectionToZoomArea(gui.wholeCol, "");
 							}
 
 						}
