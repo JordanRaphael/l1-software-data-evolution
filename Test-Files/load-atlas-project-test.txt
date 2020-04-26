@@ -5,7 +5,7 @@ Output Assessment1:filesHandler/output/atlas_Assessment1.txt
 Output Assessment2:filesHandler/output/atlas_Assessment2.txt
 Transitions File:filesHandler/transitions/atlasTransitions.xml
 88
-/home/vagosdim/Desktop/Semester2/Software-Reengineering/filesHandler/inis/Atlas.ini
+filesHandler/inis/Atlas.ini
 0.5 0.5
 csv:filesHandler/input/atlas.csv
 85 lines parsed
