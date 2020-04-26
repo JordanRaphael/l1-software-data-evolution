@@ -126,12 +126,12 @@ public class Gui extends JFrame{
 	protected Boolean preProcessingTime=null;
 	protected Boolean preProcessingChange=null;
 	
-	protected String projectName="";
-	protected String datasetTxt="";
-	protected String inputCsv="";
-	protected String outputAssessment1="";
-	protected String outputAssessment2="";
-	protected String transitionsFile="";
+	public String projectName="";
+	public String datasetTxt="";
+	public String inputCsv="";
+	public String outputAssessment1="";
+	public String outputAssessment2="";
+	public String transitionsFile="";
 	private ArrayList<String> selectedFromTree=new ArrayList<String>();
 	
 	private JTree tablesTree=new JTree();
@@ -2386,6 +2386,16 @@ private void makeZoomAreaTableForCluster() {
 	
 	public void setDescription(String descr){
 		descriptionText.setText(descr);
+	}
+	
+	public String getProject() {
+		
+		return project;
+	}
+	
+	public void setProject( String project) {
+		
+		this.project = project;
 	}
 
 }

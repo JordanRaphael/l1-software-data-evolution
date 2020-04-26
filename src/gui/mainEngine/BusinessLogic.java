@@ -251,14 +251,7 @@ public class BusinessLogic {
 	
 	protected void editProjectAction() {
 		
-		PrintStream stream = null;
-		try {
-			stream = new PrintStream(new File("Test-Files/edit-atlas-project.txt"));
-			System.setOut(stream);
-		} catch (FileNotFoundException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
+		
 		
 		String fileName=null;
 		File dir=new File("filesHandler/inis");
@@ -308,7 +301,6 @@ public class BusinessLogic {
 						this.gui.transitionsFile=transitionXmlTable[1];
 					}
 					
-					
 				};	
 				
 				br.close();
@@ -336,10 +328,9 @@ public class BusinessLogic {
 	            this.gui.project=file.getName();
 	            fileName=file.toString();
 	            System.out.println("!!"+this.gui.project);
-			
+	            
 				try {
 					this.gui.importData(fileName);
-					stream.close();
 				} catch (IOException e) {
 					JOptionPane.showMessageDialog(null, "Something seems wrong with this file");
 					return;
