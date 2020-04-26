@@ -30,7 +30,7 @@ public class TestZoomIn {
 		System.out.println(height);
 		System.out.println(width);
 		try {
-			frame.importData("/home/jordan/git-reps/l1-software-data-evolution/filesHandler/inis/phpBB.ini");
+			frame.importData("filesHandler/inis/phpBB.ini");
 		} catch (RecognitionException | IOException e) {
 			e.printStackTrace();
 		}

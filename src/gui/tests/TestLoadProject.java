@@ -29,7 +29,7 @@ public class TestLoadProject {
 	@Test
 	public void testLoadProject() {
 		
-		String filename = "/home/vagosdim/Desktop/Semester2/Software-Reengineering/filesHandler/inis/Atlas.ini";
+		String filename = "filesHandler/inis/Atlas.ini";
 		
 		try {
 			
