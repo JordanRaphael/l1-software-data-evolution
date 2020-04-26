@@ -99,7 +99,7 @@ public class Gui extends JFrame {
 	protected JPanel tablesTreePanel = new JPanel();
 	private JPanel descriptionPanel = new JPanel();
 	protected JLabel treeLabel;
-	private JLabel generalTableLabel;
+	protected JLabel generalTableLabel;
 	private JLabel zoomAreaLabel;
 	private JLabel descriptionLabel;
 	protected JTextArea descriptionText;
@@ -125,10 +125,12 @@ public class Gui extends JFrame {
 	protected JButton undoButton;
 	private JMenu mnProject;
 	private JMenuItem mntmInfo;
-
+	
+	protected  JvTable generalTable;
 
 	private BusinessLogic businessLogic = new BusinessLogic(Gui.this);
-	private EventListenerHandler eventListenerHandler = new EventListenerHandler(businessLogic, Gui.this);
+	private EventListenerHandler eventListenerHandler = businessLogic.getEventListenerHandler();
+	
 
 	/**
 	 * Launch the application.

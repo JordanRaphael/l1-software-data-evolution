@@ -55,9 +55,21 @@ public class BusinessLogic {
 
 	public Gui gui;
 	private GlobalDataKeeper globalDataKeeper;
+	private EventListenerHandler eventListenerHandler;
 
 	public BusinessLogic(Gui gui) {
 		this.gui = gui;
+		eventListenerHandler = new EventListenerHandler(this, gui);
+	}
+	
+	public GlobalDataKeeper getGlobalDataKeeper() {
+		
+		return globalDataKeeper;
+	}
+	
+	public EventListenerHandler getEventListenerHandler() {
+		
+		return this.eventListenerHandler;
 	}
 	
 	protected void notUniformlyDistributedButtonMouseListener() {
@@ -287,132 +299,13 @@ public class BusinessLogic {
 			}
 		});
 
-		generalTable.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		generalTable.addMouseListener(eventListenerHandler.createOneClickAdapter());
 
-				if (e.getClickCount() == 1) {
-					JTable target = (JTable) e.getSource();
+		generalTable.addMouseListener(eventListenerHandler.createReleaseMouseAdapter());
 
-					gui.selectedRowsFromMouse = target.getSelectedRows();
-					gui.selectedColumn = target.getSelectedColumn();
-					gui.LifeTimeTable.repaint();
-				}
+		generalTable.getTableHeader().addMouseListener(eventListenerHandler.createColumnClickEvent());
 
-			}
-		});
-
-		generalTable.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				if (e.getButton() == MouseEvent.BUTTON3) {
-					System.out.println("Right Click");
-
-					JTable target1 = (JTable) e.getSource();
-					gui.selectedColumn = target1.getSelectedColumn();
-					gui.selectedRowsFromMouse = new int[target1.getSelectedRows().length];
-					gui.selectedRowsFromMouse = target1.getSelectedRows();
-
-					final String sSelectedRow = (String) generalTable.getValueAt(target1.getSelectedRow(), 0);
-					gui.tablesSelected = new ArrayList<String>();
-
-					for (int rowsSelected = 0; rowsSelected < gui.selectedRowsFromMouse.length; rowsSelected++) {
-						gui.tablesSelected.add((String) generalTable.getValueAt(gui.selectedRowsFromMouse[rowsSelected], 0));
-					}
-
-					JPopupMenu popupMenu = new JPopupMenu();
-					JMenuItem showDetailsItem = new JMenuItem("Show Details for the selection");
-					showDetailsItem.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent le) {
-							if (sSelectedRow.contains("Cluster ")) {
-								showClusterSelectionToZoomArea(gui.selectedColumn, sSelectedRow);
-
-							} else {
-								showSelectionToZoomArea(gui.selectedColumn);
-							}
-						}
-					});
-					popupMenu.add(showDetailsItem);
-					JMenuItem clearSelectionItem = new JMenuItem("Clear Selection");
-					clearSelectionItem.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent le) {
-
-							gui.selectedFromTree = new ArrayList<String>();
-							gui.LifeTimeTable.repaint();
-						}
-					});
-					popupMenu.add(clearSelectionItem);
-					popupMenu.show(generalTable, e.getX(), e.getY());
-
-				}
-			}
-		});
-
-		generalTable.getTableHeader().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				gui.wholeCol = generalTable.columnAtPoint(e.getPoint());
-				String name = generalTable.getColumnName(gui.wholeCol);
-				System.out.println("Column index selected " + gui.wholeCol + " " + name);
-				generalTable.repaint();
-				if (gui.showingPld) {
-					makeGeneralTableIDU();
-				}
-			}
-		});
-
-		generalTable.getTableHeader().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				if (SwingUtilities.isRightMouseButton(e)) {
-					System.out.println("Right Click");
-
-					final JPopupMenu popupMenu = new JPopupMenu();
-					JMenuItem clearColumnSelectionItem = new JMenuItem("Clear Column Selection");
-					clearColumnSelectionItem.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							gui.wholeCol = -1;
-							generalTable.repaint();
-							if (gui.showingPld) {
-								makeGeneralTableIDU();
-							}
-						}
-					});
-					popupMenu.add(clearColumnSelectionItem);
-					JMenuItem showDetailsItem = new JMenuItem("Show Details for this Phase");
-					showDetailsItem.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							String sSelectedRow = gui.finalRows[0][0];
-							System.out.println("?" + sSelectedRow);
-							gui.tablesSelected = new ArrayList<String>();
-							for (int i = 0; i < gui.finalRows.length; i++)
-								gui.tablesSelected.add((String) generalTable.getValueAt(i, 0));
-
-							if (!sSelectedRow.contains("Cluster ")) {
-
-								showSelectionToZoomArea(gui.wholeCol);
-							} else {
-								showClusterSelectionToZoomArea(gui.wholeCol, "");
-							}
-
-						}
-					});
-					popupMenu.add(showDetailsItem);
-					popupMenu.show(generalTable, e.getX(), e.getY());
-
-				}
-
-			}
-
-		});
+		generalTable.getTableHeader().addMouseListener(eventListenerHandler.createRightClickAdapter());
 
 		gui.LifeTimeTable = generalTable;
 
@@ -1413,6 +1306,7 @@ public class BusinessLogic {
 		gui.zoomModel = new MyTableModel(gui.finalColumnsZoomArea, rows);
 
 		final JvTable generalTable = new JvTable(gui.zoomModel);
+		gui.generalTable = generalTable;
 
 		generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
