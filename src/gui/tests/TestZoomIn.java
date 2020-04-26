@@ -25,15 +25,15 @@ public class TestZoomIn {
 	
 	@Test
 	public void testZoomIn() {
-		int height = frame.rowHeight;
-		int width = frame.columnWidth;
-		System.out.println(height);
-		System.out.println(width);
 		try {
 			frame.importData("filesHandler/inis/phpBB.ini");
 		} catch (RecognitionException | IOException e) {
 			e.printStackTrace();
 		}
+		frame.rowHeight = 1;
+		frame.columnWidth = 1;
+		int height = frame.rowHeight;
+		int width = frame.columnWidth;
 		buisnessLogic.zoomInAction();
 		assertTrue(frame.rowHeight == height+2);
 		assertTrue(frame.columnWidth == width+1);

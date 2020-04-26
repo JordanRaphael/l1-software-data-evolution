@@ -385,5 +385,17 @@ public class BusinessLogic {
 		gui.columnWidth = gui.columnWidth+1;
 		gui.zoomAreaTable.setZoom(gui.rowHeight, gui.columnWidth);
 	}
+	
+	public void zoomOutAction() {
+		this.gui.rowHeight=this.gui.rowHeight-2;
+		this.gui.columnWidth=this.gui.columnWidth-1;
+		if(this.gui.rowHeight<1){
+			this.gui.rowHeight=1;
+		}
+		if (this.gui.columnWidth<1) {
+			this.gui.columnWidth=1;
+		}
+		this.gui.zoomAreaTable.setZoom(this.gui.rowHeight,this.gui.columnWidth);
+	}
 
 }

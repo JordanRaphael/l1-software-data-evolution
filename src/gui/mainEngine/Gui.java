@@ -386,17 +386,8 @@ public class Gui extends JFrame{
 		zoomOutButton.addMouseListener(new MouseAdapter() {
 			@Override
 			   public void mouseClicked(MouseEvent e) {
-				rowHeight=rowHeight-2;
-				columnWidth=columnWidth-1;
-				if(rowHeight<1){
-					rowHeight=1;
-				}
-				if (columnWidth<1) {
-					columnWidth=1;
-				}
-				zoomAreaTable.setZoom(rowHeight,columnWidth);
-				
-			}
+					businessLogic.zoomOutAction();
+				}	
 		});
 		
 		zoomInButton.setVisible(false);
