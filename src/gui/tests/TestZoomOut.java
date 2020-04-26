@@ -12,20 +12,20 @@ import gui.mainEngine.Gui;
 
 public class TestZoomOut {
 
-	private BusinessLogic buisnessLogic;
+	private BusinessLogic businessLogic;
 	private Gui frame;
 	
 	public TestZoomOut() {
 		
 		frame = new Gui();
-		buisnessLogic = new BusinessLogic(frame);
+		businessLogic = new BusinessLogic(frame);
 		
 	}
 	
 	@Test
 	public void testZoomOut() {
 		try {
-			frame.importData("filesHandler/inis/phpBB.ini");
+			businessLogic.importData("filesHandler/inis/phpBB.ini");
 		} catch (RecognitionException | IOException e) {
 			e.printStackTrace();
 		}
@@ -33,7 +33,7 @@ public class TestZoomOut {
 		frame.columnWidth = 10;
 		int height = frame.rowHeight;
 		int width = frame.columnWidth;
-		buisnessLogic.zoomOutAction();
+		businessLogic.zoomOutAction();
 		assertTrue(frame.rowHeight == height-2);
 		assertTrue(frame.columnWidth == width-1);
 		
@@ -41,7 +41,7 @@ public class TestZoomOut {
 		frame.columnWidth = 1;
 		height = frame.rowHeight;
 		width = frame.columnWidth;
-		buisnessLogic.zoomOutAction();
+		businessLogic.zoomOutAction();
 		assertTrue(frame.rowHeight == 1);
 		assertTrue(frame.columnWidth == 1);
 		

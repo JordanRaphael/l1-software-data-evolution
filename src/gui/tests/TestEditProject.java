@@ -106,7 +106,7 @@ public class TestEditProject {
 		}
         
 		try {
-			frame.importData("filesHandler/inis/Atlas.ini");
+			businessLogic.importData("filesHandler/inis/Atlas.ini");
 			stream.close();
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, "Something seems wrong with this file");

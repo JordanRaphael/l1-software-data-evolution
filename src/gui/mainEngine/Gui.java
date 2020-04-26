@@ -1994,66 +1994,7 @@ private void makeZoomAreaTableForCluster() {
         }
     }
 
-	//TODO Move to BusinessLogic
-	public void importData(String fileName) throws IOException, RecognitionException {
-		
-		BufferedReader br = new BufferedReader(new FileReader(fileName));
-		
-		String line;
-		
-		while(true) {
-			line = br.readLine();
-			if (line == null) 
-				break;
-			if(line.contains("Project-name")){
-				String[] projectNameTable=line.split(":");
-				projectName=projectNameTable[1];
-			}
-			else if(line.contains("Dataset-txt")){
-				String[] datasetTxtTable=line.split(":");
-				datasetTxt=datasetTxtTable[1];
-			}
-			else if(line.contains("Input-csv")){
-				String[] inputCsvTable=line.split(":");
-				inputCsv=inputCsvTable[1];
-			}
-			else if(line.contains("Assessement1-output")){
-				String[] outputAss1=line.split(":");
-				outputAssessment1=outputAss1[1];
-			}
-			else if(line.contains("Assessement2-output")){
-				String[] outputAss2=line.split(":");
-				outputAssessment2=outputAss2[1];
-			}
-			else if(line.contains("Transition-xml")){
-				String[] transitionXmlTable=line.split(":");
-				transitionsFile=transitionXmlTable[1];
-			}
-			
-		};	
-		
-		br.close();
-		
-		
-		System.out.println("Project Name:"+projectName);
-		System.out.println("Dataset txt:"+datasetTxt);
-		System.out.println("Input Csv:"+inputCsv);
-		System.out.println("Output Assessment1:"+outputAssessment1);
-		System.out.println("Output Assessment2:"+outputAssessment2);
-		System.out.println("Transitions File:"+transitionsFile);
-
-		globalDataKeeper = new GlobalDataKeeper(datasetTxt,transitionsFile);
-		globalDataKeeper.setData();
-		System.out.println(globalDataKeeper.getAllPPLTables().size());
-		
-        System.out.println(fileName);
-
-        businessLogic.fillTable();
-        businessLogic.fillTree();
-
-		currentProject=fileName;
-		
-	}
+	
 	
 	
 	public void setDescription(String descr){

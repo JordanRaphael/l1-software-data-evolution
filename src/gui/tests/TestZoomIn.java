@@ -13,20 +13,20 @@ import gui.mainEngine.Gui;
 
 public class TestZoomIn {
 	
-	private BusinessLogic buisnessLogic;
+	private BusinessLogic businessLogic;
 	private Gui frame;
 	
 	public TestZoomIn() {
 		
 		frame = new Gui();
-		buisnessLogic = new BusinessLogic(frame);
+		businessLogic = new BusinessLogic(frame);
 		
 	}
 	
 	@Test
 	public void testZoomIn() {
 		try {
-			frame.importData("filesHandler/inis/phpBB.ini");
+			businessLogic.importData("filesHandler/inis/phpBB.ini");
 		} catch (RecognitionException | IOException e) {
 			e.printStackTrace();
 		}
@@ -34,7 +34,7 @@ public class TestZoomIn {
 		frame.columnWidth = 1;
 		int height = frame.rowHeight;
 		int width = frame.columnWidth;
-		buisnessLogic.zoomInAction();
+		businessLogic.zoomInAction();
 		assertTrue(frame.rowHeight == height+2);
 		assertTrue(frame.columnWidth == width+1);
 	}
