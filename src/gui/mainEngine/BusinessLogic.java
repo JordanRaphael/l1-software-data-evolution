@@ -1031,7 +1031,7 @@ public class BusinessLogic {
 		
 	}
 	
-	private void showSelectionToZoomArea(int selectedColumn){
+	protected void showSelectionToZoomArea(int selectedColumn){
 		
 		TableConstructionZoomArea table=new TableConstructionZoomArea(gui.globalDataKeeper, gui.tablesSelected, selectedColumn);
 		final String[] columns=table.constructColumns();

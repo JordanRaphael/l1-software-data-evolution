@@ -714,7 +714,7 @@ protected void makeGeneralTablePhases() {
 
 			            	}
 			            	else{
-			            		showSelectionToZoomArea(selectedColumn);
+			            		businessLogic.showSelectionToZoomArea(selectedColumn);
 			            	}
 			            }
 			        });
@@ -782,7 +782,7 @@ protected void makeGeneralTablePhases() {
 
 				            	if(!sSelectedRow.contains("Cluster ")){
 				            		
-				            		showSelectionToZoomArea(wholeCol);	
+				            		businessLogic.showSelectionToZoomArea(wholeCol);	
 				            	}
 				            	else{
 				            		showClusterSelectionToZoomArea(wholeCol, "");
@@ -1353,7 +1353,7 @@ private void makeZoomAreaTableForCluster() {
 					            public void actionPerformed(ActionEvent e) {
 				            		firstLevelUndoColumnsZoomArea=finalColumnsZoomArea;
 					            	firstLevelUndoRowsZoomArea=finalRowsZoomArea;
-				            		showSelectionToZoomArea(selectedColumnZoomArea);
+					            	businessLogic.showSelectionToZoomArea(selectedColumnZoomArea);
 									
 					            }
 					        });
