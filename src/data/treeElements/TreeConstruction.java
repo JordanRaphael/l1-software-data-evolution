@@ -1,4 +1,4 @@
-package gui.treeElements;
+package data.treeElements;
 
 import javax.swing.JTree;
 

@@ -1,4 +1,4 @@
-package gui.treeElements;
+package data.treeElements;
 
 import java.util.Map;
 import java.util.TreeMap;

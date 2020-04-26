@@ -37,7 +37,7 @@ public class TestEditProject {
 	@Test
 	public void testEditProject() {
 		
-		String fileName = "/home/vagosdim/Desktop/Semester2/Software-Reengineering/filesHandler/inis/Atlas.ini";
+		String fileName = "filesHandler/inis/Atlas.ini";
 			
         File file =  new File(fileName);   
         System.out.println(file.toString());
