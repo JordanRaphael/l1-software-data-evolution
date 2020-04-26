@@ -59,6 +59,374 @@ public class BusinessLogic {
 	public BusinessLogic(Gui gui) {
 		this.gui = gui;
 	}
+	
+	protected void notUniformlyDistributedButtonMouseListener() {
+		gui.LifeTimeTable.notUniformlyDistributed(globalDataKeeper);
+	}
+	
+	protected void makeGeneralTablePhases() {
+		gui.uniformlyDistributedButton.setVisible(true);
+
+		gui.notUniformlyDistributedButton.setVisible(true);
+
+		int numberOfColumns = gui.finalRows[0].length;
+		int numberOfRows = gui.finalRows.length;
+
+		gui.selectedRows = new ArrayList<Integer>();
+
+		String[][] rows = new String[numberOfRows][numberOfColumns];
+
+		for (int i = 0; i < numberOfRows; i++) {
+
+			rows[i][0] = gui.finalRows[i][0];
+
+		}
+
+		gui.generalModel = new MyTableModel(gui.finalColumns, rows);
+
+		final JvTable generalTable = new JvTable(gui.generalModel);
+
+		generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+		generalTable.setShowGrid(false);
+		generalTable.setIntercellSpacing(new Dimension(0, 0));
+
+		for (int i = 0; i < generalTable.getColumnCount(); i++) {
+			if (i == 0) {
+				generalTable.getColumnModel().getColumn(0).setPreferredWidth(86);
+			} else {
+				generalTable.getColumnModel().getColumn(i).setPreferredWidth(1);
+			}
+		}
+
+		generalTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
+				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
+						column);
+
+				String tmpValue = gui.finalRows[row][column];
+				String columnName = table.getColumnName(column);
+				Color fr = new Color(0, 0, 0);
+				c.setForeground(fr);
+
+				if (column == gui.wholeCol && gui.wholeCol != 0) {
+
+					String description = table.getColumnName(column) + "\n";
+					
+					description = description + "First Transition ID:"
+							+ globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(column - 1).getStartPos()
+							+ "\n";
+					description = description + "Last Transition ID:"
+							+ globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(column - 1).getEndPos()
+							+ "\n";
+					description = description + "Total Changes For This Phase:"
+							+ globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(column - 1).getTotalUpdates()
+							+ "\n";
+					description = description + "Additions For This Phase:" + globalDataKeeper.getPhaseCollectors()
+							.get(0).getPhases().get(column - 1).getTotalAdditionsOfPhase() + "\n";
+					description = description + "Deletions For This Phase:" + globalDataKeeper.getPhaseCollectors()
+							.get(0).getPhases().get(column - 1).getTotalDeletionsOfPhase() + "\n";
+					description = description + "Updates For This Phase:" + globalDataKeeper.getPhaseCollectors().get(0)
+							.getPhases().get(column - 1).getTotalUpdatesOfPhase() + "\n";
+
+					gui.descriptionText.setText(description);
+
+					Color cl = new Color(255, 69, 0, 100);
+
+					c.setBackground(cl);
+					return c;
+				} else if (gui.selectedColumn == 0) {
+					if (isSelected) {
+
+						if (gui.finalRows[row][0].contains("Cluster")) {
+							String description = "Cluster:" + gui.finalRows[row][0] + "\n";
+
+							description = description + "Birth Version Name:" + globalDataKeeper.getClusterCollectors()
+									.get(0).getClusters().get(row).getBirthSqlFile() + "\n";
+							description = description + "Birth Version ID:"
+									+ globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getBirth()
+									+ "\n";
+							description = description + "Death Version Name:" + globalDataKeeper.getClusterCollectors()
+									.get(0).getClusters().get(row).getDeathSqlFile() + "\n";
+							description = description + "Death Version ID:"
+									+ globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getDeath()
+									+ "\n";
+							description = description + "Tables:" + globalDataKeeper.getClusterCollectors().get(0)
+									.getClusters().get(row).getNamesOfTables().size() + "\n";
+							description = description + "Total Changes:" + globalDataKeeper.getClusterCollectors()
+									.get(0).getClusters().get(row).getTotalChanges() + "\n";
+
+							gui.descriptionText.setText(description);
+						} else {
+							String description = "Table:" + gui.finalRows[row][0] + "\n";
+
+							description = description + "Birth Version Name:"
+									+ globalDataKeeper.getAllPPLTables().get(gui.finalRows[row][0]).getBirth() + "\n";
+							description = description + "Birth Version ID:"
+									+ globalDataKeeper.getAllPPLTables().get(gui.finalRows[row][0]).getBirthVersionID()
+									+ "\n";
+							description = description + "Death Version Name:"
+									+ globalDataKeeper.getAllPPLTables().get(gui.finalRows[row][0]).getDeath() + "\n";
+							description = description + "Death Version ID:"
+									+ globalDataKeeper.getAllPPLTables().get(gui.finalRows[row][0]).getDeathVersionID()
+									+ "\n";
+							description = description + "Total Changes:"
+									+ globalDataKeeper.getAllPPLTables().get(gui.finalRows[row][0]).getTotalChanges()
+									+ "\n";
+							gui.descriptionText.setText(description);
+
+						}
+
+						Color cl = new Color(255, 69, 0, 100);
+
+						c.setBackground(cl);
+						return c;
+					}
+				} else {
+
+					if (gui.selectedFromTree.contains(gui.finalRows[row][0])) {
+
+						Color cl = new Color(255, 69, 0, 100);
+						c.setBackground(cl);
+
+						return c;
+					}
+
+					if (isSelected && hasFocus) {
+
+						String description = "";
+						if (!table.getColumnName(column).contains("Table name")) {
+
+							if (gui.finalRows[row][0].contains("Cluster")) {
+
+								description = gui.finalRows[row][0] + "\n";
+								description = description + "Tables:" + globalDataKeeper.getClusterCollectors().get(0)
+										.getClusters().get(row).getNamesOfTables().size() + "\n\n";
+
+								description = description + table.getColumnName(column) + "\n";
+								description = description + "First Transition ID:" + globalDataKeeper
+										.getPhaseCollectors().get(0).getPhases().get(column - 1).getStartPos() + "\n";
+								description = description + "Last Transition ID:" + globalDataKeeper
+										.getPhaseCollectors().get(0).getPhases().get(column - 1).getEndPos() + "\n\n";
+								description = description + "Total Changes For This Phase:" + tmpValue + "\n";
+
+							} else {
+								description = table.getColumnName(column) + "\n";
+								description = description + "First Transition ID:" + globalDataKeeper
+										.getPhaseCollectors().get(0).getPhases().get(column - 1).getStartPos() + "\n";
+								description = description + "Last Transition ID:" + globalDataKeeper
+										.getPhaseCollectors().get(0).getPhases().get(column - 1).getEndPos() + "\n\n";
+								description = description + "Table:" + gui.finalRows[row][0] + "\n";
+								description = description + "Birth Version Name:"
+										+ globalDataKeeper.getAllPPLTables().get(gui.finalRows[row][0]).getBirth() + "\n";
+								description = description + "Birth Version ID:"
+										+ globalDataKeeper.getAllPPLTables().get(gui.finalRows[row][0]).getBirthVersionID()
+										+ "\n";
+								description = description + "Death Version Name:"
+										+ globalDataKeeper.getAllPPLTables().get(gui.finalRows[row][0]).getDeath() + "\n";
+								description = description + "Death Version ID:"
+										+ globalDataKeeper.getAllPPLTables().get(gui.finalRows[row][0]).getDeathVersionID()
+										+ "\n";
+								description = description + "Total Changes For This Phase:" + tmpValue + "\n";
+
+							}
+
+							gui.descriptionText.setText(description);
+
+						}
+
+						Color cl = new Color(255, 69, 0, 100);
+						c.setBackground(cl);
+
+						return c;
+					}
+				}
+
+				try {
+					int numericValue = Integer.parseInt(tmpValue);
+					Color insersionColor = null;
+					setToolTipText(Integer.toString(numericValue));
+
+					if (numericValue == 0) {
+						insersionColor = new Color(154, 205, 50, 200);
+					} else if (numericValue > 0 && numericValue <= gui.segmentSize[3]) {
+
+						insersionColor = new Color(176, 226, 255);
+					} else if (numericValue > gui.segmentSize[3] && numericValue <= 2 * gui.segmentSize[3]) {
+						insersionColor = new Color(92, 172, 238);
+					} else if (numericValue > 2 * gui.segmentSize[3] && numericValue <= 3 * gui.segmentSize[3]) {
+
+						insersionColor = new Color(28, 134, 238);
+					} else {
+						insersionColor = new Color(16, 78, 139);
+					}
+					c.setBackground(insersionColor);
+
+					return c;
+				} catch (Exception e) {
+
+					if (tmpValue.equals("")) {
+						c.setBackground(Color.gray);
+						return c;
+					} else {
+						if (columnName.contains("v")) {
+							c.setBackground(Color.lightGray);
+							setToolTipText(columnName);
+						} else {
+							Color tableNameColor = new Color(205, 175, 149);
+							c.setBackground(tableNameColor);
+						}
+						return c;
+					}
+				}
+			}
+		});
+
+		generalTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				if (e.getClickCount() == 1) {
+					JTable target = (JTable) e.getSource();
+
+					gui.selectedRowsFromMouse = target.getSelectedRows();
+					gui.selectedColumn = target.getSelectedColumn();
+					gui.LifeTimeTable.repaint();
+				}
+
+			}
+		});
+
+		generalTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if (e.getButton() == MouseEvent.BUTTON3) {
+					System.out.println("Right Click");
+
+					JTable target1 = (JTable) e.getSource();
+					gui.selectedColumn = target1.getSelectedColumn();
+					gui.selectedRowsFromMouse = new int[target1.getSelectedRows().length];
+					gui.selectedRowsFromMouse = target1.getSelectedRows();
+
+					final String sSelectedRow = (String) generalTable.getValueAt(target1.getSelectedRow(), 0);
+					gui.tablesSelected = new ArrayList<String>();
+
+					for (int rowsSelected = 0; rowsSelected < gui.selectedRowsFromMouse.length; rowsSelected++) {
+						gui.tablesSelected.add((String) generalTable.getValueAt(gui.selectedRowsFromMouse[rowsSelected], 0));
+					}
+
+					JPopupMenu popupMenu = new JPopupMenu();
+					JMenuItem showDetailsItem = new JMenuItem("Show Details for the selection");
+					showDetailsItem.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent le) {
+							if (sSelectedRow.contains("Cluster ")) {
+								gui.businessLogic.showClusterSelectionToZoomArea(gui.selectedColumn, sSelectedRow);
+
+							} else {
+								gui.businessLogic.showSelectionToZoomArea(gui.selectedColumn);
+							}
+						}
+					});
+					popupMenu.add(showDetailsItem);
+					JMenuItem clearSelectionItem = new JMenuItem("Clear Selection");
+					clearSelectionItem.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent le) {
+
+							gui.selectedFromTree = new ArrayList<String>();
+							gui.LifeTimeTable.repaint();
+						}
+					});
+					popupMenu.add(clearSelectionItem);
+					popupMenu.show(generalTable, e.getX(), e.getY());
+
+				}
+			}
+		});
+
+		generalTable.getTableHeader().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				gui.wholeCol = generalTable.columnAtPoint(e.getPoint());
+				String name = generalTable.getColumnName(gui.wholeCol);
+				System.out.println("Column index selected " + gui.wholeCol + " " + name);
+				generalTable.repaint();
+				if (gui.showingPld) {
+					gui.businessLogic.makeGeneralTableIDU();
+				}
+			}
+		});
+
+		generalTable.getTableHeader().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if (SwingUtilities.isRightMouseButton(e)) {
+					System.out.println("Right Click");
+
+					final JPopupMenu popupMenu = new JPopupMenu();
+					JMenuItem clearColumnSelectionItem = new JMenuItem("Clear Column Selection");
+					clearColumnSelectionItem.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							gui.wholeCol = -1;
+							generalTable.repaint();
+							if (gui.showingPld) {
+								gui.businessLogic.makeGeneralTableIDU();
+							}
+						}
+					});
+					popupMenu.add(clearColumnSelectionItem);
+					JMenuItem showDetailsItem = new JMenuItem("Show Details for this Phase");
+					showDetailsItem.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							String sSelectedRow = gui.finalRows[0][0];
+							System.out.println("?" + sSelectedRow);
+							gui.tablesSelected = new ArrayList<String>();
+							for (int i = 0; i < gui.finalRows.length; i++)
+								gui.tablesSelected.add((String) generalTable.getValueAt(i, 0));
+
+							if (!sSelectedRow.contains("Cluster ")) {
+
+								gui.businessLogic.showSelectionToZoomArea(gui.wholeCol);
+							} else {
+								gui.businessLogic.showClusterSelectionToZoomArea(gui.wholeCol, "");
+							}
+
+						}
+					});
+					popupMenu.add(showDetailsItem);
+					popupMenu.show(generalTable, e.getX(), e.getY());
+
+				}
+
+			}
+
+		});
+
+		gui.LifeTimeTable = generalTable;
+
+		gui.tmpScrollPane.setViewportView(gui.LifeTimeTable);
+		gui.tmpScrollPane.setAlignmentX(0);
+		gui.tmpScrollPane.setAlignmentY(0);
+		gui.tmpScrollPane.setBounds(300, 30, 950, 265);
+		gui.tmpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		gui.tmpScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+		gui.lifeTimePanel.setCursor(gui.getCursor());
+		gui.lifeTimePanel.add(gui.tmpScrollPane);
+
+	}
 
 	protected void fillTree() {
 
@@ -222,7 +590,7 @@ public class BusinessLogic {
 					this.gui.finalColumns = columns;
 					this.gui.finalRows = rows;
 					this.gui.tabbedPane.setSelectedIndex(0);
-					this.gui.makeGeneralTablePhases();
+					makeGeneralTablePhases();
 					fillClustersTree();
 				} else {
 					JOptionPane.showMessageDialog(null, "Extract Phases first");
@@ -598,7 +966,7 @@ public class BusinessLogic {
 					this.gui.finalColumns = columns;
 					this.gui.finalRows = rows;
 					this.gui.tabbedPane.setSelectedIndex(0);
-					this.gui.makeGeneralTablePhases();
+					makeGeneralTablePhases();
 					fillPhasesTree();
 				} else {
 					JOptionPane.showMessageDialog(null, "Extract Phases first");
@@ -792,7 +1160,7 @@ public class BusinessLogic {
 			this.gui.finalColumns = columnsP;
 			this.gui.finalRows = rowsP;
 			this.gui.tabbedPane.setSelectedIndex(0);
-			this.gui.makeGeneralTablePhases();
+			makeGeneralTablePhases();
 			fillClustersTree();
 		}
 		System.out.println("Schemas:" + globalDataKeeper.getAllPPLSchemas().size());
@@ -1019,7 +1387,7 @@ public class BusinessLogic {
 
 	protected void makeGeneralTableIDU() {
 
-		PldRowSorter sorter = new PldRowSorter(gui.finalRowsZoomArea, gui.globalDataKeeper);
+		PldRowSorter sorter = new PldRowSorter(gui.finalRowsZoomArea, globalDataKeeper);
 
 		gui.finalRowsZoomArea = sorter.sortRows();
 
@@ -1069,15 +1437,14 @@ public class BusinessLogic {
 
 			} else {
 				generalTable.getColumnModel().getColumn(i).setPreferredWidth(gui.columnWidth);
-
 			}
 		}
 
 		int start = -1;
 		int end = -1;
-		if (gui.globalDataKeeper.getPhaseCollectors() != null && gui.wholeCol != -1 && gui.wholeCol != 0) {
-			start = gui.globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(gui.wholeCol - 1).getStartPos();
-			end = gui.globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(gui.wholeCol - 1).getEndPos();
+		if (globalDataKeeper.getPhaseCollectors() != null && gui.wholeCol != -1 && gui.wholeCol != 0) {
+			start = globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(gui.wholeCol - 1).getStartPos();
+			end = globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(gui.wholeCol - 1).getEndPos();
 		}
 
 		if (gui.wholeCol != -1) {
@@ -1093,7 +1460,7 @@ public class BusinessLogic {
 			}
 		}
 
-		final IDUTableRenderer renderer = new IDUTableRenderer(gui, gui.finalRowsZoomArea, gui.globalDataKeeper,
+		final IDUTableRenderer renderer = new IDUTableRenderer(gui, gui.finalRowsZoomArea, globalDataKeeper,
 				gui.segmentSize);
 
 		generalTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
@@ -1116,25 +1483,25 @@ public class BusinessLogic {
 				if (column == gui.wholeColZoomArea && gui.wholeColZoomArea != 0) {
 
 					String description = "Transition ID:" + table.getColumnName(column) + "\n";
-					description = description + "Old Version Name:" + gui.globalDataKeeper.getAllPPLTransitions()
+					description = description + "Old Version Name:" + globalDataKeeper.getAllPPLTransitions()
 							.get(Integer.parseInt(table.getColumnName(column))).getOldVersionName() + "\n";
-					description = description + "New Version Name:" + gui.globalDataKeeper.getAllPPLTransitions()
+					description = description + "New Version Name:" + globalDataKeeper.getAllPPLTransitions()
 							.get(Integer.parseInt(table.getColumnName(column))).getNewVersionName() + "\n";
 
 					description = description + "Transition Changes:"
-							+ gui.globalDataKeeper.getAllPPLTransitions()
+							+ globalDataKeeper.getAllPPLTransitions()
 									.get(Integer.parseInt(table.getColumnName(column))).getNumberOfChangesForOneTr()
 							+ "\n";
 					description = description + "Additions:"
-							+ gui.globalDataKeeper.getAllPPLTransitions()
+							+ globalDataKeeper.getAllPPLTransitions()
 									.get(Integer.parseInt(table.getColumnName(column))).getNumberOfAdditionsForOneTr()
 							+ "\n";
 					description = description + "Deletions:"
-							+ gui.globalDataKeeper.getAllPPLTransitions()
+							+ globalDataKeeper.getAllPPLTransitions()
 									.get(Integer.parseInt(table.getColumnName(column))).getNumberOfDeletionsForOneTr()
 							+ "\n";
 					description = description + "Updates:"
-							+ gui.globalDataKeeper.getAllPPLTransitions()
+							+ globalDataKeeper.getAllPPLTransitions()
 									.get(Integer.parseInt(table.getColumnName(column))).getNumberOfUpdatesForOneTr()
 							+ "\n";
 
@@ -1152,16 +1519,16 @@ public class BusinessLogic {
 
 						String description = "Table:" + gui.finalRowsZoomArea[row][0] + "\n";
 						description = description + "Birth Version Name:"
-								+ gui.globalDataKeeper.getAllPPLTables().get(gui.finalRowsZoomArea[row][0]).getBirth()
+								+ globalDataKeeper.getAllPPLTables().get(gui.finalRowsZoomArea[row][0]).getBirth()
 								+ "\n";
-						description = description + "Birth Version ID:" + gui.globalDataKeeper.getAllPPLTables()
+						description = description + "Birth Version ID:" + globalDataKeeper.getAllPPLTables()
 								.get(gui.finalRowsZoomArea[row][0]).getBirthVersionID() + "\n";
 						description = description + "Death Version Name:"
-								+ gui.globalDataKeeper.getAllPPLTables().get(gui.finalRowsZoomArea[row][0]).getDeath()
+								+ globalDataKeeper.getAllPPLTables().get(gui.finalRowsZoomArea[row][0]).getDeath()
 								+ "\n";
-						description = description + "Death Version ID:" + gui.globalDataKeeper.getAllPPLTables()
+						description = description + "Death Version ID:" + globalDataKeeper.getAllPPLTables()
 								.get(gui.finalRowsZoomArea[row][0]).getDeathVersionID() + "\n";
-						description = description + "Total Changes:" + gui.globalDataKeeper.getAllPPLTables()
+						description = description + "Total Changes:" + globalDataKeeper.getAllPPLTables()
 								.get(gui.finalRowsZoomArea[row][0]).getTotalChanges() + "\n";
 
 						gui.descriptionText.setText(description);
@@ -1187,32 +1554,32 @@ public class BusinessLogic {
 							description = "Table:" + gui.finalRowsZoomArea[row][0] + "\n";
 
 							description = description + "Old Version Name:"
-									+ gui.globalDataKeeper.getAllPPLTransitions()
+									+ globalDataKeeper.getAllPPLTransitions()
 											.get(Integer.parseInt(table.getColumnName(column))).getOldVersionName()
 									+ "\n";
 							description = description + "New Version Name:"
-									+ gui.globalDataKeeper.getAllPPLTransitions()
+									+ globalDataKeeper.getAllPPLTransitions()
 											.get(Integer.parseInt(table.getColumnName(column))).getNewVersionName()
 									+ "\n";
-							if (gui.globalDataKeeper.getAllPPLTables().get(gui.finalRowsZoomArea[row][0])
+							if (globalDataKeeper.getAllPPLTables().get(gui.finalRowsZoomArea[row][0])
 									.getTableChanges().getTableAtChForOneTransition(
 											Integer.parseInt(table.getColumnName(column))) != null) {
-								description = description + "Transition Changes:" + gui.globalDataKeeper
+								description = description + "Transition Changes:" + globalDataKeeper
 										.getAllPPLTables().get(gui.finalRowsZoomArea[row][0]).getTableChanges()
 										.getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(column)))
 										.size() + "\n";
 								description = description + "Additions:"
-										+ gui.globalDataKeeper.getAllPPLTables().get(gui.finalRowsZoomArea[row][0])
+										+ globalDataKeeper.getAllPPLTables().get(gui.finalRowsZoomArea[row][0])
 												.getNumberOfAdditionsForOneTr(
 														Integer.parseInt(table.getColumnName(column)))
 										+ "\n";
 								description = description + "Deletions:"
-										+ gui.globalDataKeeper.getAllPPLTables().get(gui.finalRowsZoomArea[row][0])
+										+ globalDataKeeper.getAllPPLTables().get(gui.finalRowsZoomArea[row][0])
 												.getNumberOfDeletionsForOneTr(
 														Integer.parseInt(table.getColumnName(column)))
 										+ "\n";
 								description = description + "Updates:"
-										+ gui.globalDataKeeper.getAllPPLTables().get(gui.finalRowsZoomArea[row][0])
+										+ globalDataKeeper.getAllPPLTables().get(gui.finalRowsZoomArea[row][0])
 												.getNumberOfUpdatesForOneTr(
 														Integer.parseInt(table.getColumnName(column)))
 										+ "\n";
@@ -1378,13 +1745,13 @@ public class BusinessLogic {
 
 	protected void showSelectionToZoomArea(int selectedColumn) {
 
-		TableConstructionZoomArea table = new TableConstructionZoomArea(gui.globalDataKeeper, gui.tablesSelected,
+		TableConstructionZoomArea table = new TableConstructionZoomArea(globalDataKeeper, gui.tablesSelected,
 				selectedColumn);
 		final String[] columns = table.constructColumns();
 		final String[][] rows = table.constructRows();
 		gui.segmentSizeZoomArea = table.getSegmentSize();
 
-		System.out.println("Schemas: " + gui.globalDataKeeper.getAllPPLSchemas().size());
+		System.out.println("Schemas: " + globalDataKeeper.getAllPPLSchemas().size());
 		System.out.println("C: " + columns.length + " R: " + rows.length);
 
 		gui.finalColumnsZoomArea = columns;
