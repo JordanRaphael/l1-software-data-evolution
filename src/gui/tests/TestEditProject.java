@@ -1,5 +1,7 @@
 package gui.tests;
 
+import org.junit.Test;
+
 import gui.mainEngine.BusinessLogic;
 import gui.mainEngine.Gui;
 
@@ -12,6 +14,12 @@ public class TestEditProject {
 		
 		frame = new Gui();
 		buisnessLogic = new BusinessLogic(frame);
+		
+	}
+	
+	@Test
+	public void testEditProject() {
+		//ActionEvent actionEvent = new ActionEvent("test", 0, "TestProjectName");
 		
 	}
 	

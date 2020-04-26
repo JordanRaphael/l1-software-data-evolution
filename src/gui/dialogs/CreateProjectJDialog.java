@@ -123,8 +123,7 @@ public class CreateProjectJDialog extends JDialog {
 		            System.out.println(file.toString());
 		            textFieldInputCsv.setText(file.toString());
 
-				}
-				else{
+				} else {
 					return;
 				}
 				

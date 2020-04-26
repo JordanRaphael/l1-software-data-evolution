@@ -1,8 +1,5 @@
 package gui.mainEngine;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,7 +7,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import org.antlr.v4.runtime.RecognitionException;
@@ -33,7 +29,7 @@ public class BusinessLogic {
 		this.gui = gui;
 	}
 	
-	protected void createProjectAction(ActionEvent e1) {
+	protected void createProjectAction() {
 		CreateProjectJDialog createProjectDialog=new CreateProjectJDialog("","","","","","");
 
 		createProjectDialog.setModal(true);
@@ -67,7 +63,7 @@ public class BusinessLogic {
 
 	}
 	
-	protected void infoAction(ActionEvent e1) {
+	protected void infoAction() {
 		if(!(this.gui.currentProject==null)){
 			
 			
@@ -94,7 +90,7 @@ public class BusinessLogic {
 		}
 	}
 	
-	protected void showGeneralLifetimePhasesWithClustersPLDAction(ActionEvent e1) {
+	protected void showGeneralLifetimePhasesWithClustersPLDAction() {
 		this.gui.wholeCol=-1;
 		if(!(this.gui.project==null)){
 			
@@ -157,7 +153,7 @@ public class BusinessLogic {
 	
 	}
 	
-	protected void showGeneralLifetimePhasesPLDAction(ActionEvent e1) {
+	protected void showGeneralLifetimePhasesPLDAction() {
 		if(!(this.gui.project==null)){
 			this.gui.wholeCol=-1;
 			ParametersJDialog jD=new ParametersJDialog(false);
@@ -212,7 +208,7 @@ public class BusinessLogic {
 		}
 	}
 	
-	protected void showGeneralLifetimeIDUAction(ActionEvent e1) {
+	protected void showGeneralLifetimeIDUAction() {
 		if(!(this.gui.currentProject==null)){
 			this.gui.zoomInButton.setVisible(true);
 			this.gui.zoomOutButton.setVisible(true);
@@ -236,7 +232,7 @@ public class BusinessLogic {
 		}
 	}
 	
-	protected void showLifetimeTableAction(ActionEvent e2) {
+	protected void showLifetimeTableAction() {
 		if(!(this.gui.currentProject==null)){
 			TableConstructionAllSquaresIncluded table=new TableConstructionAllSquaresIncluded(this.gui.globalDataKeeper);
 			final String[] columns=table.constructColumns();
@@ -251,7 +247,7 @@ public class BusinessLogic {
 		}
 	}
 	
-	protected void editProjectAction(ActionEvent e2) {
+	protected void editProjectAction() {
 		String fileName=null;
 		File dir=new File("filesHandler/inis");
 		JFileChooser fcOpen1 = new JFileChooser();
@@ -349,7 +345,7 @@ public class BusinessLogic {
 		
 	}
 
-	protected void loadProjectAction(ActionEvent e1) {
+	protected void loadProjectAction() {
 		
 		String fileName=null;
 		File dir=new File("filesHandler/inis");
@@ -384,7 +380,7 @@ public class BusinessLogic {
 		
 	}
 	
-	protected void zoomInAction(MouseEvent e) {
+	public void zoomInAction() {
 		gui.rowHeight = gui.rowHeight+2;
 		gui.columnWidth = gui.columnWidth+1;
 		gui.zoomAreaTable.setZoom(gui.rowHeight, gui.columnWidth);

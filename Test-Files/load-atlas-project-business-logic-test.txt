@@ -1,4 +1,5 @@
-Project Name:Atlas
+initializationError(gui.tests.TestEditProject): No runnable methods
+testLoadProject(gui.tests.TestLoadProject): expected:<[]> but was:<[Project Name:Atlas
 Dataset txt:filesHandler/datasets/Atlas.txt
 Input Csv:filesHandler/input/atlas.csv
 Output Assessment1:filesHandler/output/atlas_Assessment1.txt
@@ -260,3 +261,7 @@ hlt_prescale_set_coll	83	84	4
 Schemas:85
 Transitions:84
 Tables:88
+]>
+initializationError(gui.tests.TestZoomOut): No runnable methods
+
+Test Suite execution was succesful: false

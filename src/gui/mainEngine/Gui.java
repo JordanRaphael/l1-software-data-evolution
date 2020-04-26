@@ -13,7 +13,6 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
@@ -144,7 +143,7 @@ public class Gui extends JFrame{
 	private JLabel zoomAreaLabel;
 	private JLabel descriptionLabel;
 	private JTextArea descriptionText;
-	protected JButton zoomInButton;
+	public JButton zoomInButton;
 	protected JButton zoomOutButton;
 	private JButton uniformlyDistributedButton;
 	private JButton notUniformlyDistributedButton;
@@ -157,8 +156,8 @@ public class Gui extends JFrame{
 	protected int wholeCol=-1;
 	private int wholeColZoomArea=-1;
 	
-	protected int rowHeight=1;
-	protected int columnWidth=1;
+	public int rowHeight=1;
+	public int columnWidth=1;
 
 	private ArrayList<String> tablesSelected = new ArrayList<String>();
 
@@ -208,7 +207,7 @@ public class Gui extends JFrame{
 		JMenuItem mntmCreateProject = new JMenuItem("Create Project");
 		mntmCreateProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				businessLogic.createProjectAction(arg0);
+				businessLogic.createProjectAction();
 			}
 		});
 		mnFile.add(mntmCreateProject);
@@ -217,7 +216,7 @@ public class Gui extends JFrame{
 		
 		mntmLoadProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e1) {
-				businessLogic.loadProjectAction(e1);								
+				businessLogic.loadProjectAction();								
 			}
 		});
 		mnFile.add(mntmLoadProject);
@@ -225,7 +224,7 @@ public class Gui extends JFrame{
 		JMenuItem mntmEditProject = new JMenuItem("Edit Project");
 		mntmEditProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				businessLogic.editProjectAction(arg0);
+				businessLogic.editProjectAction();
 			}
 		});
 		mnFile.add(mntmEditProject);
@@ -237,14 +236,14 @@ public class Gui extends JFrame{
 		JMenuItem mntmShowLifetimeTable = new JMenuItem("Show Full Detailed LifeTime Table");
 		mntmShowLifetimeTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				businessLogic.showLifetimeTableAction(e);
+				businessLogic.showLifetimeTableAction();
 			}
 		});
 		
 		JMenuItem mntmShowGeneralLifetimeIDU = new JMenuItem("Show PLD");
 		mntmShowGeneralLifetimeIDU.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				 businessLogic.showGeneralLifetimeIDUAction(arg0);
+				 businessLogic.showGeneralLifetimeIDUAction();
 			}
 		});
 		mnTable.add(mntmShowGeneralLifetimeIDU);
@@ -252,7 +251,7 @@ public class Gui extends JFrame{
 		JMenuItem mntmShowGeneralLifetimePhasesPLD = new JMenuItem("Show Phases PLD");
 		mntmShowGeneralLifetimePhasesPLD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				businessLogic.showGeneralLifetimePhasesPLDAction(arg0);
+				businessLogic.showGeneralLifetimePhasesPLDAction();
 			}
 		});
 		mnTable.add(mntmShowGeneralLifetimePhasesPLD);
@@ -260,7 +259,7 @@ public class Gui extends JFrame{
 		JMenuItem mntmShowGeneralLifetimePhasesWithClustersPLD = new JMenuItem("Show Phases With Clusters PLD");
 		mntmShowGeneralLifetimePhasesWithClustersPLD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				businessLogic.showGeneralLifetimePhasesWithClustersPLDAction(arg0);
+				businessLogic.showGeneralLifetimePhasesWithClustersPLDAction();
 			}
 		});
 		mnTable.add(mntmShowGeneralLifetimePhasesWithClustersPLD);
@@ -332,7 +331,7 @@ public class Gui extends JFrame{
 		mntmInfo = new JMenuItem("Info");
 		mntmInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				businessLogic.infoAction(e);
+				businessLogic.infoAction();
 			}
 		});
 		mnProject.add(mntmInfo);
@@ -377,7 +376,7 @@ public class Gui extends JFrame{
 		zoomInButton.addMouseListener(new MouseAdapter() {
 			@Override
 			   public void mouseClicked(MouseEvent e) {
-					businessLogic.zoomInAction(e);
+					businessLogic.zoomInAction();
 			   }
 		});
 		
