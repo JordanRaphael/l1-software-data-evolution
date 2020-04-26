@@ -2007,7 +2007,7 @@ private void makeZoomAreaTableForCluster() {
         }
     }
 
-	
+	//TODO Move to BusinessLogic
 	public void importData(String fileName) throws IOException, RecognitionException {
 		
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
@@ -2068,6 +2068,7 @@ private void makeZoomAreaTableForCluster() {
 		
 	}
 	
+	//TODO Move to DataKeeper
 	public void fillTable() {
 		TableConstructionIDU table=new TableConstructionIDU(globalDataKeeper);
 		final String[] columns=table.constructColumns();
@@ -2127,106 +2128,11 @@ private void makeZoomAreaTableForCluster() {
 
 	}
 	
-	public void optimize() throws IOException{
-		
-		String lalaString="Birth Weight:"+"\tDeath Weight:"+"\tChange Weight:"+"\tTotal Cohesion:"+"\tTotal Separation:"+"\n";
-		int counter=0;
-		for(double wb=0.0; wb<=1.0; wb=wb+0.01){
-			
-			for(double wd=(1.0-wb); wd>=0.0; wd=wd-0.01){
-				
-					double wc=1.0-(wb+wd);
-					TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,wb,wd,wc);
-					mainEngine2.extractClusters(numberOfClusters);
-					globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
-					
-					ClusterValidatorMainEngine lala = new ClusterValidatorMainEngine(globalDataKeeper);
-					lala.run();
-					
-					lalaString=lalaString+wb+"\t"+wd+"\t"+wc
-							+"\t"+lala.getTotalCohesion()+"\t"+lala.getTotalSeparation()+"\t"+(wb+wd+wc)+"\n";
-			
-					counter++;
-					System.err.println(counter);
-				
-			}	
-		}
-		
-		FileWriter fw;
-		try {
-			fw = new FileWriter("lala.csv");
-			
-			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write(lalaString);
-			bw.close();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		System.out.println(lalaString);
-		
-	}
-	
-	public void getExternalValidityReport() throws IOException{
-		
-		String lalaString="Birth Weight:"+"\tDeath Weight:"+"\tChange Weight:"+"\n";
-		int counter=0;
-		
-		TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,0.333,0.333,0.333);
-		mainEngine2.extractClusters(4);
-		globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
-		
-		ClusterValidatorMainEngine lala = new ClusterValidatorMainEngine(globalDataKeeper);
-		lala.run();
-		
-		lalaString = lalaString+"\n"+"0.333"+"\t"+"0.333"+"\t"+"0.333"
-				+"\n"+lala.getExternalEvaluationReport();
-		
-		for(double wb=0.0; wb<=1.0; wb=wb+0.5){
-			
-			for(double wd=(1.0-wb); wd>=0.0; wd=wd-0.5){
-				
-					double wc=1.0-(wb+wd);
-					mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,wb,wd,wc);
-					mainEngine2.extractClusters(4);
-					globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
-					
-					lala = new ClusterValidatorMainEngine(globalDataKeeper);
-					lala.run();
-					
-					lalaString=lalaString+"\n"+wb+"\t"+wd+"\t"+wc
-							+"\n"+lala.getExternalEvaluationReport();
-			
-					counter++;
-					System.err.println(counter);
-					
-			}
-			
-		}
-		
-		FileWriter fw;
-		try {
-			fw = new FileWriter("lala.csv");
-			
-			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write(lalaString);
-			bw.close();
-			
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		}
-		
-		System.out.println(lalaString);
-		
-	}
-	
 	public void fillTree(){
 		
 		 TreeConstructionGeneral tc=new TreeConstructionGeneral(globalDataKeeper);
-		 tablesTree=new JTree();
-		 tablesTree=tc.constructTree();
+		 tablesTree = new JTree();
+		 tablesTree = tc.constructTree();
 		 tablesTree.addTreeSelectionListener(new TreeSelectionListener () {
 			    public void valueChanged(TreeSelectionEvent ae) { 
 			    	TreePath selection = ae.getPath();

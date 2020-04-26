@@ -35,7 +35,8 @@ public class TableConstructionPhases implements PldConstruction {
 		
 	}
 	
-public String[] constructColumns(){
+	//TODO Move to Data Keeper
+	public String[] constructColumns(){
 		
 		ArrayList<String> columnsList=new ArrayList<String>();
 		
@@ -71,6 +72,7 @@ public String[] constructColumns(){
 		
 	}
 	
+	//TODO Move to Data Keeper
 	public String[][] constructRows(){
 		
 		ArrayList<String[]> allRows=new ArrayList<String[]>();
@@ -153,6 +155,7 @@ public String[] constructColumns(){
 		
 	}
 	
+	//TODO Move to Data Keeper??
 	private String[] constructOneRow(PPLTable oneTable,int schemaVersion,String schemaName){
 		
 		String[] oneRow=new String[columnsNumber];
