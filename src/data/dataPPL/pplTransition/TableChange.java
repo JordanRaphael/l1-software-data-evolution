@@ -120,7 +120,7 @@ public class TableChange {
 		String message = "Table Change \n";
 		
 		for(int i=0; i<atomicChanges.size(); i++){
-			
+			if (atomicChanges.get(i) == null) continue;
 			message=message+atomicChanges.get(i).toString();
 			
 			message=message+"\n";

@@ -798,6 +798,8 @@ public class BusinessLogic {
 		fillTree();
 
 		gui.currentProject = fileName;
+		
+		
 
 	}
 
