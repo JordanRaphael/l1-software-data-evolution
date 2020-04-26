@@ -3,6 +3,9 @@ package gui.tests;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+
+import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Test;
 
 import gui.mainEngine.BusinessLogic;
@@ -26,10 +29,12 @@ public class TestZoomIn {
 		int width = frame.columnWidth;
 		System.out.println(height);
 		System.out.println(width);
+		try {
+			frame.importData("/home/jordan/git-reps/l1-software-data-evolution/filesHandler/inis/phpBB.ini");
+		} catch (RecognitionException | IOException e) {
+			e.printStackTrace();
+		}
 		buisnessLogic.zoomInAction();
-		//frame.zoomInButton.doClick();
-		System.out.println(frame.rowHeight);
-		System.out.println(frame.columnWidth);
 		assertTrue(frame.rowHeight == height+2);
 		assertTrue(frame.columnWidth == width+1);
 	}
