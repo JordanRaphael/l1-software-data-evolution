@@ -126,7 +126,9 @@ public class Gui extends JFrame {
 	private JMenu mnProject;
 	private JMenuItem mntmInfo;
 
-	BusinessLogic businessLogic = new BusinessLogic(Gui.this);
+
+	private BusinessLogic businessLogic = new BusinessLogic(Gui.this);
+	private EventListenerHandler eventListenerHandler = new EventListenerHandler(businessLogic, Gui.this);
 
 	/**
 	 * Launch the application.
@@ -162,6 +164,7 @@ public class Gui extends JFrame {
 		menuBar.add(mnFile);
 
 		JMenuItem mntmCreateProject = new JMenuItem("Create Project");
+		mntmCreateProject.addActionListener(eventListenerHandler.createProject());
 		mntmCreateProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				businessLogic.createProjectAction();
@@ -242,11 +245,7 @@ public class Gui extends JFrame {
 
 		descriptionPanel.setLayout(gl_descriptionPanel);
 
-		descriptionText = new JTextArea();
-		descriptionText.setBounds(5, 5, 250, 170);
-		descriptionText.setForeground(Color.BLACK);
-		descriptionText.setText("");
-		descriptionText.setBackground(Color.LIGHT_GRAY);
+		descriptionText = jItemsCreator.createTextArea(" ", 5, 5, 250, 170, Color.BLACK, Color.LIGHT_GRAY);
 
 		descriptionPanel.add(descriptionText);
 

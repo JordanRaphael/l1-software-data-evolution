@@ -59,6 +59,19 @@ public class JItemsCreator {
 		return dialog;
 	}
 	
+	public JTextArea createTextArea(String text, int x, int y, int width, int height, Color foregrColor, Color bgColor) {
+		
+		JTextArea descriptionText = new JTextArea();
+		
+		descriptionText.setBounds(x, y, width, height);
+		descriptionText.setForeground(foregrColor);
+		descriptionText.setText(text);
+		descriptionText.setBackground(bgColor);
+		
+		return descriptionText;
+		
+	}
+	
 	
 	private GroupLayout createGroupLayout(JPanel panel) {
 		
