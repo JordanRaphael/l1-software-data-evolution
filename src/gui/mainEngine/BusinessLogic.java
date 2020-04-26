@@ -1,18 +1,31 @@
 package gui.mainEngine;
 
-import java.awt.SystemTray;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintStream;
 
 import javax.swing.JFileChooser;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.SwingUtilities;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.TreePath;
 
 import org.antlr.v4.runtime.RecognitionException;
 
+import data.treeElements.TreeConstructionGeneral;
+import data.treeElements.TreeConstructionPhases;
+import data.treeElements.TreeConstructionPhasesWithClusters;
 import gui.dialogs.CreateProjectJDialog;
 import gui.dialogs.ParametersJDialog;
 import gui.dialogs.ProjectInfoDialog;
@@ -29,6 +42,60 @@ public class BusinessLogic {
 	
 	public BusinessLogic(Gui gui) {
 		this.gui = gui;
+	}
+	
+	protected void fillTree(){
+		
+		 TreeConstructionGeneral tc=new TreeConstructionGeneral(this.gui.globalDataKeeper);
+		 this.gui.tablesTree = new JTree();
+		 this.gui.tablesTree = tc.constructTree();
+		 this.gui.tablesTree.addTreeSelectionListener(new TreeSelectionListener () {
+			    public void valueChanged(TreeSelectionEvent ae) { 
+			    	TreePath selection = ae.getPath();
+			    	gui.selectedFromTree.add(selection.getLastPathComponent().toString());
+			    	System.out.println(selection.getLastPathComponent().toString()+" is selected");
+			    	
+			    }
+		 });
+		 
+		 this.gui.tablesTree.addMouseListener(new MouseAdapter() {
+				@Override
+				   public void mouseReleased(MouseEvent e) {
+					
+						if(SwingUtilities.isRightMouseButton(e)){
+							System.out.println("Right Click Tree");
+								
+									final JPopupMenu popupMenu = new JPopupMenu();
+							        JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
+							        showDetailsItem.addActionListener(new ActionListener() {
+		
+							            @Override
+							            public void actionPerformed(ActionEvent e) {
+							          
+							            	gui.LifeTimeTable.repaint();
+							            	
+							            }
+							        });
+							        popupMenu.add(showDetailsItem);
+							        popupMenu.show(gui.tablesTree, e.getX(),e.getY());
+							        							        
+						}
+					
+				   }
+			});
+		 
+		 this.gui.treeScrollPane.setViewportView(this.gui.tablesTree);
+		 
+		 this.gui.treeScrollPane.setBounds(5, 5, 250, 170);
+		 this.gui.treeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		 this.gui.treeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		 this.gui.tablesTreePanel.add(this.gui.treeScrollPane);
+		 
+		 this.gui.treeLabel.setText("General Tree");
+
+		 this.gui.sideMenu.revalidate();
+		 this.gui.sideMenu.repaint();		
+		
 	}
 	
 	protected void createProjectAction() {
@@ -140,7 +207,7 @@ public class BusinessLogic {
 					this.gui.finalRows=rows;
 					this.gui.tabbedPane.setSelectedIndex(0);
 					this.gui.makeGeneralTablePhases();
-					this.gui.fillClustersTree();
+					fillClustersTree();
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "Extract Phases first");
@@ -196,7 +263,7 @@ public class BusinessLogic {
 					this.gui.finalRows=rows;
 					this.gui.tabbedPane.setSelectedIndex(0);
 					this.gui.makeGeneralTablePhases();
-					this.gui.fillPhasesTree();
+					fillPhasesTree();
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "Extract Phases first");
@@ -208,6 +275,61 @@ public class BusinessLogic {
 			JOptionPane.showMessageDialog(null, "Please select a project first!");
 			
 		}
+	}
+	
+	protected void fillClustersTree(){
+		
+		 TreeConstructionPhasesWithClusters tc=new TreeConstructionPhasesWithClusters(this.gui.globalDataKeeper);
+		 this.gui.tablesTree=tc.constructTree();
+		 
+		 this.gui.tablesTree.addTreeSelectionListener(new TreeSelectionListener () {
+			    public void valueChanged(TreeSelectionEvent ae) { 
+			    	TreePath selection = ae.getPath();
+			    	gui.selectedFromTree.add(selection.getLastPathComponent().toString());
+			    	System.out.println(selection.getLastPathComponent().toString()+" is selected");
+			    	
+			    }
+		 });
+		 
+		 this.gui.tablesTree.addMouseListener(new MouseAdapter() {
+				@Override
+				   public void mouseReleased(MouseEvent e) {
+					
+						if(SwingUtilities.isRightMouseButton(e)){
+							System.out.println("Right Click Tree");
+							
+							final JPopupMenu popupMenu = new JPopupMenu();
+					        JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
+					        showDetailsItem.addActionListener(new ActionListener() {
+
+					            @Override
+					            public void actionPerformed(ActionEvent e) {
+					          
+					                gui.LifeTimeTable.repaint();
+					            	
+					            }
+					        });
+					        popupMenu.add(showDetailsItem);
+					        popupMenu.show(gui.tablesTree, e.getX(),e.getY());
+							        	
+						}
+					
+				   }
+			});
+		 
+		 this.gui.treeScrollPane.setViewportView(this.gui.tablesTree);
+		 
+		 
+		 this.gui.treeScrollPane.setBounds(5, 5, 250, 170);
+		 this.gui.treeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		 this.gui.treeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		 this.gui.tablesTreePanel.add(this.gui.treeScrollPane);
+
+		 this.gui.treeLabel.setText("Clusters Tree");
+
+		 this.gui.sideMenu.revalidate();
+		 this.gui.sideMenu.repaint();
+		 		
 	}
 	
 	protected void showGeneralLifetimeIDUAction() {
@@ -225,13 +347,125 @@ public class BusinessLogic {
 			this.gui.finalRowsZoomArea=rows;
 			this.gui.tabbedPane.setSelectedIndex(0);
 			this.gui.makeGeneralTableIDU();
-			this.gui.fillTree();
+			fillTree();
 			
 		}
 		else{
 			JOptionPane.showMessageDialog(null, "Select a Project first");
 			return;
 		}
+	}
+	
+	public void fillPhasesTree(){
+		
+		 TreeConstructionPhases tc=new TreeConstructionPhases(this.gui.globalDataKeeper);
+		 this.gui.tablesTree=tc.constructTree();
+		 
+		 this.gui.tablesTree.addTreeSelectionListener(new TreeSelectionListener () {
+			    public void valueChanged(TreeSelectionEvent ae) { 
+			    	TreePath selection = ae.getPath();
+			    	gui.selectedFromTree.add(selection.getLastPathComponent().toString());
+			    	System.out.println(selection.getLastPathComponent().toString()+" is selected");
+			    	
+			    }
+		 });
+		 
+		 this.gui.tablesTree.addMouseListener(new MouseAdapter() {
+				@Override
+				   public void mouseReleased(MouseEvent e) {
+					
+						if(SwingUtilities.isRightMouseButton(e)){
+							System.out.println("Right Click Tree");
+							
+							final JPopupMenu popupMenu = new JPopupMenu();
+					        JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
+					        showDetailsItem.addActionListener(new ActionListener() {
+
+					            @Override
+					            public void actionPerformed(ActionEvent e) {
+					          
+					                gui.LifeTimeTable.repaint();
+					            	
+					            }
+					        });
+					        popupMenu.add(showDetailsItem);
+					        popupMenu.show(gui.tablesTree, e.getX(),e.getY());
+							        							        
+						}
+					
+				   }
+			});
+		 
+		 this.gui.treeScrollPane.setViewportView(this.gui.tablesTree);
+		 this.gui.treeScrollPane.setBounds(5, 5, 250, 170);
+		 this.gui.treeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		 this.gui.treeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		 this.gui.tablesTreePanel.add(this.gui.treeScrollPane);
+		 
+		 this.gui.treeLabel.setText("Phases Tree");
+
+		 this.gui.sideMenu.revalidate();
+		 this.gui.sideMenu.repaint();
+		
+	}
+	
+	protected void fillTable() {
+		TableConstructionIDU table=new TableConstructionIDU(this.gui.globalDataKeeper);
+		final String[] columns=table.constructColumns();
+		final String[][] rows=table.constructRows();
+		this.gui.segmentSizeZoomArea = table.getSegmentSize();
+
+		this.gui.finalColumnsZoomArea=columns;
+		this.gui.finalRowsZoomArea=rows;
+		this.gui.tabbedPane.setSelectedIndex(0);
+		this.gui.makeGeneralTableIDU();
+		
+		this.gui.timeWeight = (float)0.5;
+		this.gui.changeWeight = (float)0.5;
+		this.gui.preProcessingTime = false;
+		this.gui.preProcessingChange = false;
+        if(this.gui.globalDataKeeper.getAllPPLTransitions().size()<56){
+        	this.gui.numberOfPhases=40;
+        }
+        else{
+        	this.gui.numberOfPhases = 56;
+        }
+        this.gui.numberOfClusters =14;
+        
+        System.out.println(this.gui.timeWeight+" "+this.gui.changeWeight);
+        
+		PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(this.gui.inputCsv,this.gui.outputAssessment1,this.gui.outputAssessment2,this.gui.timeWeight,this.gui.changeWeight,this.gui.preProcessingTime,this.gui.preProcessingChange);
+
+		Double b = new Double(0.3);
+		Double d = new Double(0.3);
+		Double c = new Double(0.3);
+			
+		mainEngine.parseInput();		
+		System.out.println("\n\n\n");
+		mainEngine.extractPhases(this.gui.numberOfPhases);
+		
+		mainEngine.connectTransitionsWithPhases(this.gui.globalDataKeeper);
+		this.gui.globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
+		TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(this.gui.globalDataKeeper,b,d,c);
+		mainEngine2.extractClusters(this.gui.numberOfClusters);
+		this.gui.globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
+		mainEngine2.print();
+		
+		if(this.gui.globalDataKeeper.getPhaseCollectors().size()!=0){
+			TableConstructionWithClusters tableP=new TableConstructionWithClusters(this.gui.globalDataKeeper);
+			final String[] columnsP=tableP.constructColumns();
+			final String[][] rowsP=tableP.constructRows();
+			this.gui.segmentSize=tableP.getSegmentSize();
+			this.gui.finalColumns=columnsP;
+			this.gui.finalRows=rowsP;
+			this.gui.tabbedPane.setSelectedIndex(0);
+			this.gui.makeGeneralTablePhases();
+			fillClustersTree();
+		}
+		System.out.println("Schemas:"+this.gui.globalDataKeeper.getAllPPLSchemas().size());
+		System.out.println("Transitions:"+this.gui.globalDataKeeper.getAllPPLTransitions().size());
+		System.out.println("Tables:"+this.gui.globalDataKeeper.getAllPPLTables().size());
+
 	}
 	
 	protected void showLifetimeTableAction() {

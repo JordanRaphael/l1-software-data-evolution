@@ -9,9 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -37,31 +35,20 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.tree.TreePath;
 
 import org.antlr.v4.runtime.RecognitionException;
 
 import data.dataKeeper.GlobalDataKeeper;
 import data.dataSorters.PldRowSorter;
-import data.treeElements.TreeConstructionGeneral;
-import data.treeElements.TreeConstructionPhases;
-import data.treeElements.TreeConstructionPhasesWithClusters;
 import gui.dialogs.EnlargeTable;
 import gui.tableElements.commons.JvTable;
 import gui.tableElements.commons.MyTableModel;
 import gui.tableElements.tableConstructors.PldConstruction;
 import gui.tableElements.tableConstructors.TableConstructionClusterTablesPhasesZoomA;
-import gui.tableElements.tableConstructors.TableConstructionIDU;
-import gui.tableElements.tableConstructors.TableConstructionWithClusters;
 import gui.tableElements.tableConstructors.TableConstructionZoomArea;
 import gui.tableElements.tableRenderers.IDUHeaderTableRenderer;
 import gui.tableElements.tableRenderers.IDUTableRenderer;
-import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
-import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
-import tableClustering.clusterValidator.engine.ClusterValidatorMainEngine;
 
 
 public class Gui extends JFrame{
@@ -81,13 +68,13 @@ public class Gui extends JFrame{
 	private MyTableModel generalModel = null;
 	private MyTableModel zoomModel = null;
 
-	private JvTable LifeTimeTable=null;
+	protected JvTable LifeTimeTable=null;
 	protected JvTable zoomAreaTable=null;
 	
 	
 	
 	private JScrollPane tmpScrollPane =new JScrollPane();
-	private JScrollPane treeScrollPane= new JScrollPane();
+	protected JScrollPane treeScrollPane= new JScrollPane();
 	private JScrollPane tmpScrollPaneZoomArea =new JScrollPane();
 	
 	
@@ -132,13 +119,13 @@ public class Gui extends JFrame{
 	public String outputAssessment1="";
 	public String outputAssessment2="";
 	public String transitionsFile="";
-	private ArrayList<String> selectedFromTree=new ArrayList<String>();
+	protected ArrayList<String> selectedFromTree=new ArrayList<String>();
 	
-	private JTree tablesTree=new JTree();
-	private JPanel sideMenu = jItemsCreator.createJPanel();
-	private JPanel tablesTreePanel=new JPanel();
+	protected JTree tablesTree=new JTree();
+	protected JPanel sideMenu = jItemsCreator.createJPanel();
+	protected JPanel tablesTreePanel=new JPanel();
 	private JPanel descriptionPanel=new JPanel();
-	private JLabel treeLabel;
+	protected JLabel treeLabel;
 	private JLabel generalTableLabel;
 	private JLabel zoomAreaLabel;
 	private JLabel descriptionLabel;
@@ -2061,234 +2048,13 @@ private void makeZoomAreaTableForCluster() {
 		
         System.out.println(fileName);
 
-        fillTable();
-        fillTree();
+        businessLogic.fillTable();
+        businessLogic.fillTree();
 
 		currentProject=fileName;
 		
 	}
 	
-	//TODO Move to DataKeeper
-	public void fillTable() {
-		TableConstructionIDU table=new TableConstructionIDU(globalDataKeeper);
-		final String[] columns=table.constructColumns();
-		final String[][] rows=table.constructRows();
-		segmentSizeZoomArea = table.getSegmentSize();
-
-		finalColumnsZoomArea=columns;
-		finalRowsZoomArea=rows;
-		tabbedPane.setSelectedIndex(0);
-		makeGeneralTableIDU();
-		
-		timeWeight = (float)0.5;
-        changeWeight = (float)0.5;
-        preProcessingTime = false;
-        preProcessingChange = false;
-        if(globalDataKeeper.getAllPPLTransitions().size()<56){
-        	numberOfPhases=40;
-        }
-        else{
-        	numberOfPhases = 56;
-        }
-	    numberOfClusters =14;
-        
-        System.out.println(timeWeight+" "+changeWeight);
-        
-		PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(inputCsv,outputAssessment1,outputAssessment2,timeWeight,changeWeight,preProcessingTime,preProcessingChange);
-
-		Double b = new Double(0.3);
-		Double d = new Double(0.3);
-		Double c = new Double(0.3);
-			
-		mainEngine.parseInput();		
-		System.out.println("\n\n\n");
-		mainEngine.extractPhases(numberOfPhases);
-		
-		mainEngine.connectTransitionsWithPhases(globalDataKeeper);
-		globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
-		TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,b,d,c);
-		mainEngine2.extractClusters(numberOfClusters);
-		globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
-		mainEngine2.print();
-		
-		if(globalDataKeeper.getPhaseCollectors().size()!=0){
-			TableConstructionWithClusters tableP=new TableConstructionWithClusters(globalDataKeeper);
-			final String[] columnsP=tableP.constructColumns();
-			final String[][] rowsP=tableP.constructRows();
-			segmentSize=tableP.getSegmentSize();
-			finalColumns=columnsP;
-			finalRows=rowsP;
-			tabbedPane.setSelectedIndex(0);
-			makeGeneralTablePhases();
-			fillClustersTree();
-		}
-		System.out.println("Schemas:"+globalDataKeeper.getAllPPLSchemas().size());
-		System.out.println("Transitions:"+globalDataKeeper.getAllPPLTransitions().size());
-		System.out.println("Tables:"+globalDataKeeper.getAllPPLTables().size());
-
-	}
-	
-	public void fillTree(){
-		
-		 TreeConstructionGeneral tc=new TreeConstructionGeneral(globalDataKeeper);
-		 tablesTree = new JTree();
-		 tablesTree = tc.constructTree();
-		 tablesTree.addTreeSelectionListener(new TreeSelectionListener () {
-			    public void valueChanged(TreeSelectionEvent ae) { 
-			    	TreePath selection = ae.getPath();
-			    	selectedFromTree.add(selection.getLastPathComponent().toString());
-			    	System.out.println(selection.getLastPathComponent().toString()+" is selected");
-			    	
-			    }
-		 });
-		 
-		 tablesTree.addMouseListener(new MouseAdapter() {
-				@Override
-				   public void mouseReleased(MouseEvent e) {
-					
-						if(SwingUtilities.isRightMouseButton(e)){
-							System.out.println("Right Click Tree");
-								
-									final JPopupMenu popupMenu = new JPopupMenu();
-							        JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
-							        showDetailsItem.addActionListener(new ActionListener() {
-		
-							            @Override
-							            public void actionPerformed(ActionEvent e) {
-							          
-							                LifeTimeTable.repaint();
-							            	
-							            }
-							        });
-							        popupMenu.add(showDetailsItem);
-							        popupMenu.show(tablesTree, e.getX(),e.getY());
-							        							        
-						}
-					
-				   }
-			});
-		 
-		 treeScrollPane.setViewportView(tablesTree);
-		 
-		 treeScrollPane.setBounds(5, 5, 250, 170);
-		 treeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		 treeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		 tablesTreePanel.add(treeScrollPane);
-		 
-		 treeLabel.setText("General Tree");
-
-		 sideMenu.revalidate();
-		 sideMenu.repaint();		
-		
-	}
-	
-	public void fillPhasesTree(){
-		
-		 TreeConstructionPhases tc=new TreeConstructionPhases(globalDataKeeper);
-		 tablesTree=tc.constructTree();
-		 
-		 tablesTree.addTreeSelectionListener(new TreeSelectionListener () {
-			    public void valueChanged(TreeSelectionEvent ae) { 
-			    	TreePath selection = ae.getPath();
-			    	selectedFromTree.add(selection.getLastPathComponent().toString());
-			    	System.out.println(selection.getLastPathComponent().toString()+" is selected");
-			    	
-			    }
-		 });
-		 
-		 tablesTree.addMouseListener(new MouseAdapter() {
-				@Override
-				   public void mouseReleased(MouseEvent e) {
-					
-						if(SwingUtilities.isRightMouseButton(e)){
-							System.out.println("Right Click Tree");
-							
-							final JPopupMenu popupMenu = new JPopupMenu();
-					        JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
-					        showDetailsItem.addActionListener(new ActionListener() {
-
-					            @Override
-					            public void actionPerformed(ActionEvent e) {
-					          
-					                LifeTimeTable.repaint();
-					            	
-					            }
-					        });
-					        popupMenu.add(showDetailsItem);
-					        popupMenu.show(tablesTree, e.getX(),e.getY());
-							        							        
-						}
-					
-				   }
-			});
-		 
-		 treeScrollPane.setViewportView(tablesTree);
-		 treeScrollPane.setBounds(5, 5, 250, 170);
-		 treeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		 treeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		 tablesTreePanel.add(treeScrollPane);
-		 
-		 treeLabel.setText("Phases Tree");
-
-		 sideMenu.revalidate();
-		 sideMenu.repaint();
-		
-	}
-	
-	public void fillClustersTree(){
-		
-		 TreeConstructionPhasesWithClusters tc=new TreeConstructionPhasesWithClusters(globalDataKeeper);
-		 tablesTree=tc.constructTree();
-		 
-		 tablesTree.addTreeSelectionListener(new TreeSelectionListener () {
-			    public void valueChanged(TreeSelectionEvent ae) { 
-			    	TreePath selection = ae.getPath();
-			    	selectedFromTree.add(selection.getLastPathComponent().toString());
-			    	System.out.println(selection.getLastPathComponent().toString()+" is selected");
-			    	
-			    }
-		 });
-		 
-		 tablesTree.addMouseListener(new MouseAdapter() {
-				@Override
-				   public void mouseReleased(MouseEvent e) {
-					
-						if(SwingUtilities.isRightMouseButton(e)){
-							System.out.println("Right Click Tree");
-							
-							final JPopupMenu popupMenu = new JPopupMenu();
-					        JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
-					        showDetailsItem.addActionListener(new ActionListener() {
-
-					            @Override
-					            public void actionPerformed(ActionEvent e) {
-					          
-					                LifeTimeTable.repaint();
-					            	
-					            }
-					        });
-					        popupMenu.add(showDetailsItem);
-					        popupMenu.show(tablesTree, e.getX(),e.getY());
-							        	
-						}
-					
-				   }
-			});
-		 
-		 treeScrollPane.setViewportView(tablesTree);
-		 
-		 
-		 treeScrollPane.setBounds(5, 5, 250, 170);
-		 treeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		 treeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		 tablesTreePanel.add(treeScrollPane);
-
-		 treeLabel.setText("Clusters Tree");
-
-		 sideMenu.revalidate();
-		 sideMenu.repaint();
-		 		
-	}
 	
 	public void setDescription(String descr){
 		descriptionText.setText(descr);
