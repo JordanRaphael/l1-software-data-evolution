@@ -19,6 +19,8 @@ public class TestEditProject {
 	
 	@Test
 	public void testEditProject() {
+		
+		
 		//ActionEvent actionEvent = new ActionEvent("test", 0, "TestProjectName");
 		
 	}
