@@ -1,12 +1,6 @@
 package gui.mainEngine;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,17 +9,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTree;
-import javax.swing.SwingUtilities;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.tree.TreePath;
+
 
 import org.antlr.v4.runtime.RecognitionException;
 
@@ -56,10 +44,12 @@ public class BusinessLogic {
 	public Gui gui;
 	private GlobalDataKeeper globalDataKeeper;
 	private EventListenerHandler eventListenerHandler;
+	private TablesListenerFactory tablesListenerFactory;
 
 	public BusinessLogic(Gui gui) {
 		this.gui = gui;
 		eventListenerHandler = new EventListenerHandler(this, gui);
+		tablesListenerFactory = new TablesListenerFactory();
 	}
 	
 	public GlobalDataKeeper getGlobalDataKeeper() {
@@ -111,15 +101,22 @@ public class BusinessLogic {
 			}
 		}
 
-		generalTable.setDefaultRenderer(Object.class, eventListenerHandler.createGeneralTableDefaultTableCellRenderer());
+		//generalTable.setDefaultRenderer(Object.class, eventListenerHandler.createGeneralTableDefaultTableCellRenderer());
+		
+		ITablesListenerHandler iTablesListenerHandler = tablesListenerFactory.getTableType("General Table");
+		generalTable.setDefaultRenderer(Object.class, iTablesListenerHandler.createDefaultTableCellRenderer(this));
+		
+		//generalTable.addMouseListener(eventListenerHandler.createOneClickAdapter(gui.LifeTimeTable));
+		generalTable.addMouseListener(iTablesListenerHandler.createOneClickMouseAdapter(this));
 
-		generalTable.addMouseListener(eventListenerHandler.createOneClickAdapter(gui.LifeTimeTable));
+		//generalTable.addMouseListener(eventListenerHandler.createReleaseMouseAdapter());
+		generalTable.addMouseListener(iTablesListenerHandler.createReleaseMouseAdapter(this));
+		
+		//generalTable.getTableHeader().addMouseListener(eventListenerHandler.createColumnClickEvent());
+		generalTable.getTableHeader().addMouseListener(iTablesListenerHandler.createColumnClickEvent(this));
 
-		generalTable.addMouseListener(eventListenerHandler.createReleaseMouseAdapter());
-
-		generalTable.getTableHeader().addMouseListener(eventListenerHandler.createColumnClickEvent());
-
-		generalTable.getTableHeader().addMouseListener(eventListenerHandler.createRightClickAdapter());
+		//generalTable.getTableHeader().addMouseListener(eventListenerHandler.createRightClickAdapter());
+		generalTable.getTableHeader().addMouseListener(iTablesListenerHandler.createRightClickAdapter(this));
 
 		gui.LifeTimeTable = generalTable;
 

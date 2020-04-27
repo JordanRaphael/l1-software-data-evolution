@@ -4,15 +4,17 @@ import java.awt.event.MouseAdapter;
 
 import javax.swing.table.DefaultTableCellRenderer;
 
+import gui.tableElements.commons.JvTable;
+
 public interface ITablesListenerHandler {
 
-DefaultTableCellRenderer createDefaultTableCellRenderer();
+	DefaultTableCellRenderer createDefaultTableCellRenderer(BusinessLogic businessLogic);
 	
-	MouseAdapter createOneClickMouseAdapter();
+	MouseAdapter createOneClickMouseAdapter(BusinessLogic businessLogic);
 	
-	MouseAdapter createReleaseMouseAdapter();
+	MouseAdapter createReleaseMouseAdapter(BusinessLogic businessLogic);
 	
-	MouseAdapter createColumnClickEvent();
+	MouseAdapter createColumnClickEvent(BusinessLogic businessLogic);
 	
-	MouseAdapter createRightClickAdapter();
+	MouseAdapter createRightClickAdapter(BusinessLogic businessLogic);
 }
