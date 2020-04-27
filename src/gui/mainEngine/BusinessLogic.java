@@ -353,7 +353,6 @@ public class BusinessLogic {
 
 		zoomTable.addMouseListener(eventListenerHandler.createZoomTableRightClickAdapter(zoomTable));
 
-		// listener
 		zoomTable.getTableHeader().addMouseListener(eventListenerHandler.createZoomTableMouseClickedAdapter(zoomTable));
 
 		zoomTable.getTableHeader().addMouseListener(eventListenerHandler.createZoomTableRightClickAdapter2(zoomTable));
@@ -477,40 +476,8 @@ public class BusinessLogic {
 		TreeConstructionPhases tc = new TreeConstructionPhases(globalDataKeeper);
 		this.gui.tablesTree = tc.constructTree();
 
-		this.gui.tablesTree.addTreeSelectionListener(new TreeSelectionListener() {
-			public void valueChanged(TreeSelectionEvent ae) {
-				TreePath selection = ae.getPath();
-				gui.selectedFromTree.add(selection.getLastPathComponent().toString());
-				System.out.println(selection.getLastPathComponent().toString() + " is selected");
-
-			}
-		});
-
-		this.gui.tablesTree.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-
-				if (SwingUtilities.isRightMouseButton(e)) {
-					System.out.println("Right Click Tree");
-
-					final JPopupMenu popupMenu = new JPopupMenu();
-					JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
-					showDetailsItem.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent e) {
-
-							gui.LifeTimeTable.repaint();
-
-						}
-					});
-					popupMenu.add(showDetailsItem);
-					popupMenu.show(gui.tablesTree, e.getX(), e.getY());
-
-				}
-
-			}
-		});
+		this.gui.tablesTree.addTreeSelectionListener(eventListenerHandler.createTablesTreeValueChanged());
+		this.gui.tablesTree.addMouseListener(eventListenerHandler.createTablesRightClickTreeEvent());
 
 		this.gui.treeScrollPane.setViewportView(this.gui.tablesTree);
 		this.gui.treeScrollPane.setBounds(5, 5, 250, 170);
@@ -799,8 +766,6 @@ public class BusinessLogic {
 
 		gui.currentProject = fileName;
 		
-		
-
 	}
 
 	protected void makeGeneralTableIDU() {
@@ -882,272 +847,16 @@ public class BusinessLogic {
 		final IDUTableRenderer renderer = new IDUTableRenderer(gui, gui.finalRowsZoomArea, globalDataKeeper,
 				gui.segmentSize);
 
-		generalTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+		generalTable.setDefaultRenderer(Object.class, eventListenerHandler.createGeneralTableDefaultTableCellRenderer2()); 
+				
+		generalTable.addMouseListener(eventListenerHandler.createGeneralTableOneClickAdapter(renderer));
 
-			private static final long serialVersionUID = 1L;
+		generalTable.addMouseListener(eventListenerHandler.createGeneralTableRightClickAdapter(generalTable));
 
-			@Override
-			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-					boolean hasFocus, int row, int column) {
-				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
-						column);
-
-				String tmpValue = gui.finalRowsZoomArea[row][column];
-				String columnName = table.getColumnName(column);
-				Color fr = new Color(0, 0, 0);
-
-				c.setForeground(fr);
-				setOpaque(true);
-
-				if (column == gui.wholeColZoomArea && gui.wholeColZoomArea != 0) {
-
-					String description = "Transition ID:" + table.getColumnName(column) + "\n";
-					description = description + "Old Version Name:" + globalDataKeeper.getAllPPLTransitions()
-							.get(Integer.parseInt(table.getColumnName(column))).getOldVersionName() + "\n";
-					description = description + "New Version Name:" + globalDataKeeper.getAllPPLTransitions()
-							.get(Integer.parseInt(table.getColumnName(column))).getNewVersionName() + "\n";
-
-					description = description + "Transition Changes:"
-							+ globalDataKeeper.getAllPPLTransitions()
-									.get(Integer.parseInt(table.getColumnName(column))).getNumberOfChangesForOneTr()
-							+ "\n";
-					description = description + "Additions:"
-							+ globalDataKeeper.getAllPPLTransitions()
-									.get(Integer.parseInt(table.getColumnName(column))).getNumberOfAdditionsForOneTr()
-							+ "\n";
-					description = description + "Deletions:"
-							+ globalDataKeeper.getAllPPLTransitions()
-									.get(Integer.parseInt(table.getColumnName(column))).getNumberOfDeletionsForOneTr()
-							+ "\n";
-					description = description + "Updates:"
-							+ globalDataKeeper.getAllPPLTransitions()
-									.get(Integer.parseInt(table.getColumnName(column))).getNumberOfUpdatesForOneTr()
-							+ "\n";
-
-					gui.descriptionText.setText(description);
-
-					Color cl = new Color(255, 69, 0, 100);
-
-					c.setBackground(cl);
-					return c;
-				} else if (gui.selectedColumnZoomArea == 0) {
-
-					if (isSelected) {
-						Color cl = new Color(255, 69, 0, 100);
-						c.setBackground(cl);
-
-						String description = "Table:" + gui.finalRowsZoomArea[row][0] + "\n";
-						description = description + "Birth Version Name:"
-								+ globalDataKeeper.getAllPPLTables().get(gui.finalRowsZoomArea[row][0]).getBirth()
-								+ "\n";
-						description = description + "Birth Version ID:" + globalDataKeeper.getAllPPLTables()
-								.get(gui.finalRowsZoomArea[row][0]).getBirthVersionID() + "\n";
-						description = description + "Death Version Name:"
-								+ globalDataKeeper.getAllPPLTables().get(gui.finalRowsZoomArea[row][0]).getDeath()
-								+ "\n";
-						description = description + "Death Version ID:" + globalDataKeeper.getAllPPLTables()
-								.get(gui.finalRowsZoomArea[row][0]).getDeathVersionID() + "\n";
-						description = description + "Total Changes:" + globalDataKeeper.getAllPPLTables()
-								.get(gui.finalRowsZoomArea[row][0]).getTotalChanges() + "\n";
-
-						gui.descriptionText.setText(description);
-
-						return c;
-
-					}
-				} else {
-
-					if (gui.selectedFromTree.contains(gui.finalRowsZoomArea[row][0])) {
-
-						Color cl = new Color(255, 69, 0, 100);
-
-						c.setBackground(cl);
-
-						return c;
-					}
-
-					if (isSelected && hasFocus) {
-
-						String description = "";
-						if (!table.getColumnName(column).contains("Table name")) {
-							description = "Table:" + gui.finalRowsZoomArea[row][0] + "\n";
-
-							description = description + "Old Version Name:"
-									+ globalDataKeeper.getAllPPLTransitions()
-											.get(Integer.parseInt(table.getColumnName(column))).getOldVersionName()
-									+ "\n";
-							description = description + "New Version Name:"
-									+ globalDataKeeper.getAllPPLTransitions()
-											.get(Integer.parseInt(table.getColumnName(column))).getNewVersionName()
-									+ "\n";
-							if (globalDataKeeper.getAllPPLTables().get(gui.finalRowsZoomArea[row][0])
-									.getTableChanges().getTableAtChForOneTransition(
-											Integer.parseInt(table.getColumnName(column))) != null) {
-								description = description + "Transition Changes:" + globalDataKeeper
-										.getAllPPLTables().get(gui.finalRowsZoomArea[row][0]).getTableChanges()
-										.getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(column)))
-										.size() + "\n";
-								description = description + "Additions:"
-										+ globalDataKeeper.getAllPPLTables().get(gui.finalRowsZoomArea[row][0])
-												.getNumberOfAdditionsForOneTr(
-														Integer.parseInt(table.getColumnName(column)))
-										+ "\n";
-								description = description + "Deletions:"
-										+ globalDataKeeper.getAllPPLTables().get(gui.finalRowsZoomArea[row][0])
-												.getNumberOfDeletionsForOneTr(
-														Integer.parseInt(table.getColumnName(column)))
-										+ "\n";
-								description = description + "Updates:"
-										+ globalDataKeeper.getAllPPLTables().get(gui.finalRowsZoomArea[row][0])
-												.getNumberOfUpdatesForOneTr(
-														Integer.parseInt(table.getColumnName(column)))
-										+ "\n";
-
-							} else {
-								description = description + "Transition Changes:0" + "\n";
-								description = description + "Additions:0" + "\n";
-								description = description + "Deletions:0" + "\n";
-								description = description + "Updates:0" + "\n";
-
-							}
-
-							gui.descriptionText.setText(description);
-						}
-						Color cl = new Color(255, 69, 0, 100);
-
-						c.setBackground(cl);
-
-						return c;
-					}
-				}
-
-				try {
-					int numericValue = Integer.parseInt(tmpValue);
-					Color insersionColor = null;
-					setToolTipText(Integer.toString(numericValue));
-
-					if (numericValue == 0) {
-						insersionColor = new Color(154, 205, 50, 200);
-					} else if (numericValue > 0 && numericValue <= gui.segmentSizeZoomArea[3]) {
-
-						insersionColor = new Color(176, 226, 255);
-					} else if (numericValue > gui.segmentSizeZoomArea[3]
-							&& numericValue <= 2 * gui.segmentSizeZoomArea[3]) {
-						insersionColor = new Color(92, 172, 238);
-					} else if (numericValue > 2 * gui.segmentSizeZoomArea[3]
-							&& numericValue <= 3 * gui.segmentSizeZoomArea[3]) {
-
-						insersionColor = new Color(28, 134, 238);
-					} else {
-						insersionColor = new Color(16, 78, 139);
-					}
-					c.setBackground(insersionColor);
-
-					return c;
-				} catch (Exception e) {
-
-					if (tmpValue.equals("")) {
-						c.setBackground(Color.GRAY);
-						return c;
-					} else {
-						if (columnName.contains("v")) {
-							c.setBackground(Color.lightGray);
-							setToolTipText(columnName);
-						} else {
-							Color tableNameColor = new Color(205, 175, 149);
-							c.setBackground(tableNameColor);
-						}
-						return c;
-					}
-				}
-			}
-		});
-
-		generalTable.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-				if (e.getClickCount() == 1) {
-					JTable target = (JTable) e.getSource();
-
-					gui.selectedRowsFromMouse = target.getSelectedRows();
-					gui.selectedColumnZoomArea = target.getSelectedColumn();
-					renderer.setSelCol(gui.selectedColumnZoomArea);
-					target.getSelectedColumns();
-
-					gui.zoomAreaTable.repaint();
-				}
-
-			}
-		});
-
-		generalTable.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-
-				if (SwingUtilities.isRightMouseButton(e)) {
-					System.out.println("Right Click");
-
-					JTable target1 = (JTable) e.getSource();
-					target1.getSelectedColumns();
-					gui.selectedRowsFromMouse = target1.getSelectedRows();
-					System.out.println(target1.getSelectedColumns().length);
-					System.out.println(target1.getSelectedRow());
-					for (int rowsSelected = 0; rowsSelected < gui.selectedRowsFromMouse.length; rowsSelected++) {
-						System.out.println(generalTable.getValueAt(gui.selectedRowsFromMouse[rowsSelected], 0));
-					}
-					final JPopupMenu popupMenu = new JPopupMenu();
-					JMenuItem showDetailsItem = new JMenuItem("Clear Selection");
-					showDetailsItem.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							gui.selectedFromTree = new ArrayList<String>();
-							gui.zoomAreaTable.repaint();
-						}
-					});
-					popupMenu.add(showDetailsItem);
-					popupMenu.show(generalTable, e.getX(), e.getY());
-
-				}
-
-			}
-		});
-
-		generalTable.getTableHeader().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				gui.wholeColZoomArea = generalTable.columnAtPoint(e.getPoint());
-				renderer.setWholeCol(generalTable.columnAtPoint(e.getPoint()));
-				generalTable.repaint();
-			}
-		});
-
-		generalTable.getTableHeader().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				if (SwingUtilities.isRightMouseButton(e)) {
-					System.out.println("Right Click");
-
-					final JPopupMenu popupMenu = new JPopupMenu();
-					JMenuItem showDetailsItem = new JMenuItem("Clear Column Selection");
-					showDetailsItem.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							gui.wholeColZoomArea = -1;
-							renderer.setWholeCol(gui.wholeColZoomArea);
-
-							generalTable.repaint();
-						}
-					});
-					popupMenu.add(showDetailsItem);
-					popupMenu.show(generalTable, e.getX(), e.getY());
-
-				}
-			}
-
-		});
+		generalTable.getTableHeader().addMouseListener(eventListenerHandler.createGeneralTableMouseClickedAdapter(generalTable, renderer));
+		
+		generalTable.getTableHeader().addMouseListener(eventListenerHandler.createGeneralTableRightMouseClickedAdapter(generalTable, renderer));
+		
 
 		gui.zoomAreaTable = generalTable;
 		gui.tmpScrollPaneZoomArea.setViewportView(gui.zoomAreaTable);
@@ -1217,96 +926,13 @@ public class BusinessLogic {
 
 		zoomTable.setDefaultRenderer(Object.class, eventListenerHandler.createZoomTableCellRenderer2());
 		
+		zoomTable.addMouseListener(eventListenerHandler.createZoomTableMouseClickedAdapter2());
 
-		zoomTable.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		zoomTable.addMouseListener(eventListenerHandler.createZoomTableMouseClickedAdapter3(zoomTable));
+		
+		zoomTable.getTableHeader().addMouseListener(eventListenerHandler.createZoomTableMouseClickedAdapter4(zoomTable));
 
-				if (e.getClickCount() == 1) {
-					JTable target = (JTable) e.getSource();
-
-					gui.selectedRowsFromMouse = target.getSelectedRows();
-					gui.selectedColumnZoomArea = target.getSelectedColumn();
-					gui.zoomAreaTable.repaint();
-				}
-
-			}
-		});
-
-		zoomTable.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-
-				if (SwingUtilities.isRightMouseButton(e)) {
-					System.out.println("Right Click");
-
-					JTable target1 = (JTable) e.getSource();
-					gui.selectedColumnZoomArea = target1.getSelectedColumn();
-					gui.selectedRowsFromMouse = target1.getSelectedRows();
-					System.out.println(target1.getSelectedColumn());
-					System.out.println(target1.getSelectedRow());
-
-					gui.tablesSelected = new ArrayList<String>();
-
-					for (int rowsSelected = 0; rowsSelected < gui.selectedRowsFromMouse.length; rowsSelected++) {
-						gui.tablesSelected.add((String) zoomTable.getValueAt(gui.selectedRowsFromMouse[rowsSelected], 0));
-						System.out.println(gui.tablesSelected.get(rowsSelected));
-					}
-					if (zoomTable.getColumnName(gui.selectedColumnZoomArea).contains("Phase")) {
-
-						final JPopupMenu popupMenu = new JPopupMenu();
-						JMenuItem showDetailsItem = new JMenuItem("Show Details");
-						showDetailsItem.addActionListener(new ActionListener() {
-
-							@Override
-							public void actionPerformed(ActionEvent e) {
-								gui.firstLevelUndoColumnsZoomArea = gui.finalColumnsZoomArea;
-								gui.firstLevelUndoRowsZoomArea = gui.finalRowsZoomArea;
-								showSelectionToZoomArea(gui.selectedColumnZoomArea);
-
-							}
-						});
-						popupMenu.add(showDetailsItem);
-						popupMenu.show(zoomTable, e.getX(), e.getY());
-					}
-				}
-			}
-		});
-
-		// listener
-		zoomTable.getTableHeader().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				gui.wholeColZoomArea = zoomTable.columnAtPoint(e.getPoint());
-				String name = zoomTable.getColumnName(gui.wholeColZoomArea);
-				System.out.println("Column index selected " + gui.wholeCol + " " + name);
-				zoomTable.repaint();
-			}
-		});
-
-		zoomTable.getTableHeader().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				if (SwingUtilities.isRightMouseButton(e)) {
-					System.out.println("Right Click");
-
-					final JPopupMenu popupMenu = new JPopupMenu();
-					JMenuItem showDetailsItem = new JMenuItem("Clear Column Selection");
-					showDetailsItem.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							gui.wholeColZoomArea = -1;
-							zoomTable.repaint();
-						}
-					});
-					popupMenu.add(showDetailsItem);
-					popupMenu.show(zoomTable, e.getX(), e.getY());
-
-				}
-			}
-
-		});
+		zoomTable.getTableHeader().addMouseListener(eventListenerHandler.createZoomTableMouseClickedAdapter5(zoomTable));
 
 		gui.zoomAreaTable = zoomTable;
 
