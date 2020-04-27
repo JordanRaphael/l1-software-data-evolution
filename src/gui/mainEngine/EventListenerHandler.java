@@ -36,7 +36,7 @@ public class EventListenerHandler {
 		
 	}
 	
-public DefaultTableCellRenderer createGeneralTableDefaultTableCellRenderer() {
+	public DefaultTableCellRenderer createGeneralTableDefaultTableCellRenderer() {
 		
 		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
 
