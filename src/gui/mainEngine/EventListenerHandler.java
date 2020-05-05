@@ -910,7 +910,7 @@ public class EventListenerHandler {
 		return listener;
 	}
 
-	public MouseListener createGeneralTableOneClickAdapter(IDUTableRenderer renderer) {
+	public MouseListener createGeneralTableOneClickAdapter(final IDUTableRenderer renderer) {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
@@ -971,7 +971,7 @@ public class EventListenerHandler {
 		return adapter;
 	}
 
-	public MouseAdapter createGeneralTableMouseClickedAdapter(final JvTable generalTable, IDUTableRenderer renderer) {
+	public MouseAdapter createGeneralTableMouseClickedAdapter(final JvTable generalTable, final IDUTableRenderer renderer) {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
@@ -985,7 +985,7 @@ public class EventListenerHandler {
 		return adapter;
 	}
 
-	public MouseAdapter createGeneralTableRightMouseClickedAdapter(final JvTable generalTable, IDUTableRenderer renderer) {
+	public MouseAdapter createGeneralTableRightMouseClickedAdapter(final JvTable generalTable, final IDUTableRenderer renderer) {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override

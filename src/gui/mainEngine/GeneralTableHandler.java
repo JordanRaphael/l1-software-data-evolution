@@ -19,7 +19,7 @@ import data.dataKeeper.GlobalDataKeeper;
 public class GeneralTableHandler implements ITablesListenerHandler {
 
 	@Override
-	public DefaultTableCellRenderer createDefaultTableCellRenderer(BusinessLogic businessLogic) {
+	public DefaultTableCellRenderer createDefaultTableCellRenderer(final BusinessLogic businessLogic) {
 		
 		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
 
@@ -218,7 +218,7 @@ public class GeneralTableHandler implements ITablesListenerHandler {
 	}
 
 	@Override
-	public MouseAdapter createOneClickMouseAdapter(BusinessLogic businessLogic) {
+	public MouseAdapter createOneClickMouseAdapter(final BusinessLogic businessLogic) {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
@@ -239,7 +239,7 @@ public class GeneralTableHandler implements ITablesListenerHandler {
 	}
 
 	@Override
-	public MouseAdapter createReleaseMouseAdapter(BusinessLogic businessLogic) {
+	public MouseAdapter createReleaseMouseAdapter(final BusinessLogic businessLogic) {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
@@ -296,7 +296,7 @@ public class GeneralTableHandler implements ITablesListenerHandler {
 	}
 
 	@Override
-	public MouseAdapter createColumnClickEvent(BusinessLogic businessLogic) {
+	public MouseAdapter createColumnClickEvent(final BusinessLogic businessLogic) {
 			
 			MouseAdapter adapter = new MouseAdapter() {
 				@Override
@@ -316,7 +316,7 @@ public class GeneralTableHandler implements ITablesListenerHandler {
 	}
 
 	@Override
-	public MouseAdapter createRightClickAdapter(BusinessLogic businessLogic) {
+	public MouseAdapter createRightClickAdapter(final BusinessLogic businessLogic) {
 
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
