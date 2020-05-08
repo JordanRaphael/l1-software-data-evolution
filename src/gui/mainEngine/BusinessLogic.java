@@ -45,6 +45,8 @@ public class BusinessLogic {
 	private GlobalDataKeeper globalDataKeeper;
 	private EventListenerHandler eventListenerHandler;
 	private TablesListenerFactory tablesListenerFactory;
+	protected String[][] rowsZoom = null;
+	protected JvTable zoomTable = null;
 
 	public BusinessLogic(Gui gui) {
 		this.gui = gui;
@@ -101,21 +103,15 @@ public class BusinessLogic {
 			}
 		}
 
-		//generalTable.setDefaultRenderer(Object.class, eventListenerHandler.createGeneralTableDefaultTableCellRenderer());
-		
 		ITablesListenerHandler iTablesListenerHandler = tablesListenerFactory.getTableType("General Table");
 		generalTable.setDefaultRenderer(Object.class, iTablesListenerHandler.createDefaultTableCellRenderer(this));
-		
-		//generalTable.addMouseListener(eventListenerHandler.createOneClickAdapter(gui.LifeTimeTable));
+
 		generalTable.addMouseListener(iTablesListenerHandler.createOneClickMouseAdapter(this));
 
-		//generalTable.addMouseListener(eventListenerHandler.createReleaseMouseAdapter());
 		generalTable.addMouseListener(iTablesListenerHandler.createReleaseMouseAdapter(this));
 		
-		//generalTable.getTableHeader().addMouseListener(eventListenerHandler.createColumnClickEvent());
 		generalTable.getTableHeader().addMouseListener(iTablesListenerHandler.createColumnClickEvent(this));
 
-		//generalTable.getTableHeader().addMouseListener(eventListenerHandler.createRightClickAdapter());
 		generalTable.getTableHeader().addMouseListener(iTablesListenerHandler.createRightClickAdapter(this));
 
 		gui.LifeTimeTable = generalTable;
@@ -316,7 +312,7 @@ public class BusinessLogic {
 		int numberOfColumns = this.gui.finalRowsZoomArea[0].length;
 		int numberOfRows = this.gui.finalRowsZoomArea.length;
 
-		final String[][] rowsZoom = new String[numberOfRows][numberOfColumns];
+		rowsZoom = new String[numberOfRows][numberOfColumns];
 
 		for (int i = 0; i < numberOfRows; i++) {
 
@@ -325,7 +321,7 @@ public class BusinessLogic {
 
 		this.gui.zoomModel = new MyTableModel(this.gui.finalColumnsZoomArea, rowsZoom);
 
-		final JvTable zoomTable = new JvTable(this.gui.zoomModel);
+		zoomTable = new JvTable(this.gui.zoomModel);
 
 		zoomTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -344,17 +340,17 @@ public class BusinessLogic {
 			}
 		}
 
-		zoomTable.setDefaultRenderer(Object.class, eventListenerHandler.createZoomTableCellRenderer(rowsZoom));
-
-		zoomTable.addMouseListener(eventListenerHandler.createOneClickAdapter(gui.zoomAreaTable));
-
-		zoomTable.addMouseListener(eventListenerHandler.createZoomTableRightClickAdapter(zoomTable));
-
+		ITablesListenerHandler iTablesListenerHandler = tablesListenerFactory.getTableType("Zoom Table");
+		zoomTable.setDefaultRenderer(Object.class, iTablesListenerHandler.createDefaultTableCellRenderer(this));
+		
+		zoomTable.addMouseListener(iTablesListenerHandler.createOneClickMouseAdapter(this));
+		
+		zoomTable.addMouseListener(iTablesListenerHandler.createRightClickAdapter(this));
+		
 		zoomTable.getTableHeader().addMouseListener(eventListenerHandler.createZoomTableMouseClickedAdapter(zoomTable));
-
+		
 		zoomTable.getTableHeader().addMouseListener(eventListenerHandler.createZoomTableRightClickAdapter2(zoomTable));
 		
-
 		gui.zoomAreaTable = zoomTable;
 
 		gui.tmpScrollPaneZoomArea.setViewportView(gui.zoomAreaTable);
@@ -445,7 +441,7 @@ public class BusinessLogic {
 
 	}
 
-	protected void showGeneralLifetimeIDUAction() {
+	public void showGeneralLifetimeIDUAction() {
 		if (!(this.gui.currentProject == null)) {
 			this.gui.zoomInButton.setVisible(true);
 			this.gui.zoomOutButton.setVisible(true);
@@ -902,7 +898,7 @@ public class BusinessLogic {
 
 		gui.zoomModel = new MyTableModel(gui.finalColumnsZoomArea, rowsZoom);
 
-		final JvTable zoomTable = new JvTable(gui.zoomModel);
+		zoomTable = new JvTable(gui.zoomModel);
 
 		zoomTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 

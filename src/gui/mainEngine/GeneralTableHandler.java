@@ -64,7 +64,7 @@ public class GeneralTableHandler implements ITablesListenerHandler {
 
 					c.setBackground(cl);
 					return c;
-				} else if (businessLogic.gui.selectedColumn == 0) {
+				} else if (businessLogic.gui.selectedColumn == 0){
 					if (isSelected) {
 
 						if (businessLogic.gui.finalRows[row][0].contains("Cluster")) {
@@ -120,7 +120,6 @@ public class GeneralTableHandler implements ITablesListenerHandler {
 
 						return c;
 					}
-
 					if (isSelected && hasFocus) {
 
 						String description = "";
