@@ -46,7 +46,7 @@ public class Gui extends JFrame {
 
 	private JPanel contentPane;
 	protected JPanel lifeTimePanel = new JPanel();
-	protected JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+	public JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 
 	private MyTableModel detailedModel = null;
 	protected MyTableModel generalModel = null;
@@ -61,8 +61,8 @@ public class Gui extends JFrame {
 
 	protected ArrayList<Integer> selectedRows = new ArrayList<Integer>();
 
-	protected String[] finalColumns = null;
-	protected String[][] finalRows = null;
+	public String[] finalColumns = null;
+	public String[][] finalRows = null;
 
 	protected String[] finalColumnsZoomArea = null;
 	protected String[][] finalRowsZoomArea = null;
@@ -71,20 +71,20 @@ public class Gui extends JFrame {
 	protected String currentProject = null;
 	protected String project = null;
 
-	protected Integer[] segmentSize = new Integer[4];
+	public Integer[] segmentSize = new Integer[4];
 	protected Integer[] segmentSizeZoomArea = new Integer[4];
 	protected Integer[] segmentSizeDetailedTable = new Integer[3];
 
-	protected Float timeWeight = null;
-	protected Float changeWeight = null;
+	public Float timeWeight = null;
+	public Float changeWeight = null;
 	protected Double birthWeight = null;
 	protected Double deathWeight = null;
 	protected Double changeWeightCl = null;
 
-	protected Integer numberOfPhases = null;
+	public Integer numberOfPhases = null;
 	protected Integer numberOfClusters = null;
-	protected Boolean preProcessingTime = null;
-	protected Boolean preProcessingChange = null;
+	public Boolean preProcessingTime = null;
+	public Boolean preProcessingChange = null;
 
 	public String projectName = "";
 	public String datasetTxt = "";

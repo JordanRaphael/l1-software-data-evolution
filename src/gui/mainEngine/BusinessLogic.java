@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
@@ -68,7 +69,7 @@ public class BusinessLogic {
 		gui.LifeTimeTable.notUniformlyDistributed(globalDataKeeper);
 	}
 	
-	protected void makeGeneralTablePhases() {
+	public void makeGeneralTablePhases() {
 		gui.uniformlyDistributedButton.setVisible(true);
 
 		gui.notUniformlyDistributedButton.setVisible(true);
@@ -102,7 +103,7 @@ public class BusinessLogic {
 				generalTable.getColumnModel().getColumn(i).setPreferredWidth(1);
 			}
 		}
-
+		
 		ITablesListenerHandler iTablesListenerHandler = tablesListenerFactory.getTableType("General Table");
 		generalTable.setDefaultRenderer(Object.class, iTablesListenerHandler.createDefaultTableCellRenderer(this));
 
@@ -221,7 +222,19 @@ public class BusinessLogic {
 			jD.setVisible(true);
 
 			if (jD.getConfirmation()) {
-
+				
+				/*Code for testing*/
+				PrintStream fileStream = null;
+				try {
+					fileStream = new PrintStream("Test-Files/show-phases-with-clusters-pld-atlas-project.txt");
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.setOut(fileStream);
+				
+				/*Code for testing*/
+				
 				this.gui.timeWeight = jD.getTimeWeight();
 				this.gui.changeWeight = jD.getChangeWeight();
 				this.gui.preProcessingTime = jD.getPreProcessingTime();
@@ -262,6 +275,10 @@ public class BusinessLogic {
 					this.gui.tabbedPane.setSelectedIndex(0);
 					makeGeneralTablePhases();
 					fillClustersTree();
+					
+					fileStream.close();
+					System.setOut(System.out);
+					
 				} else {
 					JOptionPane.showMessageDialog(null, "Extract Phases first");
 				}
@@ -375,7 +392,7 @@ public class BusinessLogic {
 			jD.setVisible(true);
 
 			if (jD.getConfirmation()) {
-
+				
 				this.gui.timeWeight = jD.getTimeWeight();
 				this.gui.changeWeight = jD.getChangeWeight();
 				this.gui.preProcessingTime = jD.getPreProcessingTime();
@@ -407,6 +424,7 @@ public class BusinessLogic {
 					this.gui.tabbedPane.setSelectedIndex(0);
 					makeGeneralTablePhases();
 					fillPhasesTree();
+					
 				} else {
 					JOptionPane.showMessageDialog(null, "Extract Phases first");
 				}
@@ -416,6 +434,7 @@ public class BusinessLogic {
 			JOptionPane.showMessageDialog(null, "Please select a project first!");
 
 		}
+		
 	}
 
 	protected void fillClustersTree() {
@@ -466,7 +485,7 @@ public class BusinessLogic {
 
 	public void fillPhasesTree() {
 
-		TreeConstructionPhases tc = new TreeConstructionPhases(globalDataKeeper);
+		TreeConstructionPhases tc = new TreeConstructionPhases(this.globalDataKeeper);
 		this.gui.tablesTree = tc.constructTree();
 
 		this.gui.tablesTree.addTreeSelectionListener(eventListenerHandler.createTablesTreeValueChanged());
