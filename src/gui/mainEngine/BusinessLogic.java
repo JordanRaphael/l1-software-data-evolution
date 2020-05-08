@@ -223,18 +223,6 @@ public class BusinessLogic {
 
 			if (jD.getConfirmation()) {
 				
-				/*Code for testing*/
-				PrintStream fileStream = null;
-				try {
-					fileStream = new PrintStream("Test-Files/show-phases-with-clusters-pld-atlas-project.txt");
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				System.setOut(fileStream);
-				
-				/*Code for testing*/
-				
 				this.gui.timeWeight = jD.getTimeWeight();
 				this.gui.changeWeight = jD.getChangeWeight();
 				this.gui.preProcessingTime = jD.getPreProcessingTime();
@@ -275,9 +263,6 @@ public class BusinessLogic {
 					this.gui.tabbedPane.setSelectedIndex(0);
 					makeGeneralTablePhases();
 					fillClustersTree();
-					
-					fileStream.close();
-					System.setOut(System.out);
 					
 				} else {
 					JOptionPane.showMessageDialog(null, "Extract Phases first");
@@ -565,7 +550,21 @@ public class BusinessLogic {
 	}
 
 	protected void showLifetimeTableAction() {
+		
+		/*Code for testing*/
+		/*PrintStream fileStream = null;
+		try {
+			fileStream = new PrintStream("Test-Files/show-full-detailed-lifetime-table-atlas-project.txt");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.setOut(fileStream);*/
+		
+		/*Code for testing*/
+		
 		if (!(this.gui.currentProject == null)) {
+			
 			TableConstructionAllSquaresIncluded table = new TableConstructionAllSquaresIncluded(
 					globalDataKeeper);
 			final String[] columns = table.constructColumns();
@@ -573,6 +572,10 @@ public class BusinessLogic {
 			this.gui.segmentSizeDetailedTable = table.getSegmentSize();
 			this.gui.tabbedPane.setSelectedIndex(0);
 			this.gui.makeDetailedTable(columns, rows, true);
+			
+			//fileStream.close();
+			//System.setOut(System.out);
+			
 		} else {
 			JOptionPane.showMessageDialog(null, "Select a Project first");
 			return;

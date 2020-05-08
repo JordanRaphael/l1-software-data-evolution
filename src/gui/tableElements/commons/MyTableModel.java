@@ -84,7 +84,7 @@ public class MyTableModel extends AbstractTableModel {
         }
     }
 
-    private void printDebugData() {
+    public void printDebugData() {
         int numRows = getRowCount();
         int numCols = getColumnCount();
 

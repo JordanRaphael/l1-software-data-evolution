@@ -68,12 +68,12 @@ public class Gui extends JFrame {
 	protected String[][] finalRowsZoomArea = null;
 	protected String[] firstLevelUndoColumnsZoomArea = null;
 	protected String[][] firstLevelUndoRowsZoomArea = null;
-	protected String currentProject = null;
+	public String currentProject = null;
 	protected String project = null;
 
 	public Integer[] segmentSize = new Integer[4];
 	protected Integer[] segmentSizeZoomArea = new Integer[4];
-	protected Integer[] segmentSizeDetailedTable = new Integer[3];
+	public Integer[] segmentSizeDetailedTable = new Integer[3];
 
 	public Float timeWeight = null;
 	public Float changeWeight = null;
@@ -408,7 +408,7 @@ public class Gui extends JFrame {
 	}
 
 
-	protected void makeDetailedTable(String[] columns, String[][] rows, final boolean levelized) {
+	public void makeDetailedTable(String[] columns, String[][] rows, final boolean levelized) {
 
 		detailedModel = new MyTableModel(columns, rows);
 
@@ -593,6 +593,8 @@ public class Gui extends JFrame {
 		panelToAdd.add(detailedScrollPane);
 		detailedDialog.getContentPane().add(panelToAdd);
 		detailedDialog.setVisible(true);
+		
+		detailedModel.printDebugData();
 
 	}
 
