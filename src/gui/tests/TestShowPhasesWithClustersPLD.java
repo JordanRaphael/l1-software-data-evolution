@@ -15,16 +15,14 @@ import data.dataKeeper.GlobalDataKeeper;
 import gui.mainEngine.BusinessLogic;
 import gui.mainEngine.Gui;
 import gui.tableElements.tableConstructors.TableConstructionPhases;
-import gui.tableElements.tableConstructors.TableConstructionWithClusters;
 import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
-import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
 
-public class TestShowPhasesPLD {
+public class TestShowPhasesWithClustersPLD {
 
 	private BusinessLogic businessLogic;
 	private Gui gui;
 	
-	public TestShowPhasesPLD() {
+	public TestShowPhasesWithClustersPLD() {
 		
 		gui = new Gui();
 		businessLogic = new BusinessLogic(gui);
@@ -43,55 +41,42 @@ public class TestShowPhasesPLD {
 		}
 		
 		try {	
-			PrintStream fileStream = new PrintStream("Test-Files/show-phases-with-clusters-pld-atlas-project-test.txt");
+			PrintStream fileStream = new PrintStream("Test-Files/show-phases-pld-atlas-project-test.txt");
 			System.setOut(fileStream);
-			
 			gui.timeWeight = (float) 0.5;
 			gui.changeWeight = (float) 0.5;
 			gui.preProcessingTime = false;
 			gui.preProcessingChange = false;
-			gui.numberOfPhases = 56;
-			gui.numberOfClusters = 10;
-			gui.birthWeight = 0.333;
-			gui.deathWeight = 0.333;
-			gui.changeWeightCl = 0.333;
+			gui.numberOfPhases = 50;
 	
 			System.out.println(this.gui.timeWeight + " " + this.gui.changeWeight);
-
+	
 			PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(this.gui.inputCsv,
 					this.gui.outputAssessment1, this.gui.outputAssessment2, this.gui.timeWeight,
 					this.gui.changeWeight, this.gui.preProcessingTime, this.gui.preProcessingChange);
-
+	
 			mainEngine.parseInput();
 			System.out.println("\n\n\n");
 			mainEngine.extractPhases(this.gui.numberOfPhases);
-			mainEngine.connectTransitionsWithPhases(globalDataKeeper);
-			globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
-			TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,
-					this.gui.birthWeight, this.gui.deathWeight, this.gui.changeWeightCl);
-			mainEngine2.extractClusters(this.gui.numberOfClusters);
-			globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
-			mainEngine2.print();
-
-			if (globalDataKeeper.getPhaseCollectors().size() != 0) {
-				TableConstructionWithClusters table = new TableConstructionWithClusters(globalDataKeeper);
+			mainEngine.connectTransitionsWithPhases(businessLogic.getGlobalDataKeeper());
+			businessLogic.getGlobalDataKeeper().setPhaseCollectors(mainEngine.getPhaseCollectors());
+	
+			if (businessLogic.getGlobalDataKeeper().getPhaseCollectors().size() != 0) {
+				TableConstructionPhases table = new TableConstructionPhases(businessLogic.getGlobalDataKeeper());
 				final String[] columns = table.constructColumns();
 				final String[][] rows = table.constructRows();
 				this.gui.segmentSize = table.getSegmentSize();
-				System.out.println("Schemas: " + globalDataKeeper.getAllPPLSchemas().size());
+				System.out.println("Schemas: " + businessLogic.getGlobalDataKeeper().getAllPPLSchemas().size());
 				System.out.println("C: " + columns.length + " R: " + rows.length);
-
+	
 				this.gui.finalColumns = columns;
 				this.gui.finalRows = rows;
 				this.gui.tabbedPane.setSelectedIndex(0);
-				businessLogic.makeGeneralTablePhases();
-				businessLogic.fillClustersTree();
-				
-				fileStream.close();
-				System.setOut(System.out);
-				
+				this.businessLogic.makeGeneralTablePhases();
+				this.businessLogic.fillPhasesTree();
 			}
 			
+			fileStream.close();
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -99,8 +84,8 @@ public class TestShowPhasesPLD {
 		String content1 = null;
 		String content2 = null;
 		try {
-			content1 = new String(Files.readAllBytes(Paths.get("Test-Files/show-phases-with-clusters-pld-atlas-project-test.txt")), StandardCharsets.UTF_8);
-			content2 = new String(Files.readAllBytes(Paths.get("Test-Files/show-phases-with-clusters-pld-atlas-project.txt")), StandardCharsets.UTF_8);
+			content1 = new String(Files.readAllBytes(Paths.get("Test-Files/show-phases-pld-atlas-project-test.txt")), StandardCharsets.UTF_8);
+			content2 = new String(Files.readAllBytes(Paths.get("Test-Files/show-phases-pld-atlas-project.txt")), StandardCharsets.UTF_8);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

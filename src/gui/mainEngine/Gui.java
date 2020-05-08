@@ -77,12 +77,12 @@ public class Gui extends JFrame {
 
 	public Float timeWeight = null;
 	public Float changeWeight = null;
-	protected Double birthWeight = null;
-	protected Double deathWeight = null;
-	protected Double changeWeightCl = null;
+	public Double birthWeight = null;
+	public Double deathWeight = null;
+	public Double changeWeightCl = null;
 
 	public Integer numberOfPhases = null;
-	protected Integer numberOfClusters = null;
+	public Integer numberOfClusters = null;
 	public Boolean preProcessingTime = null;
 	public Boolean preProcessingChange = null;
 

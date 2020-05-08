@@ -437,7 +437,7 @@ public class BusinessLogic {
 		
 	}
 
-	protected void fillClustersTree() {
+	public void fillClustersTree() {
 
 		TreeConstructionPhasesWithClusters tc = new TreeConstructionPhasesWithClusters(globalDataKeeper);
 		this.gui.tablesTree = tc.constructTree();
