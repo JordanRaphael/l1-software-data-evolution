@@ -761,7 +761,7 @@ public class BusinessLogic {
 		
 	}
 
-	protected void makeGeneralTableIDU() {
+	public void makeGeneralTableIDU() {
 
 		PldRowSorter sorter = new PldRowSorter(gui.finalRowsZoomArea, globalDataKeeper);
 

@@ -112,7 +112,7 @@ public class Gui extends JFrame {
 	protected int[] selectedRowsFromMouse;
 	protected int selectedColumn = -1;
 	protected int selectedColumnZoomArea = -1;
-	protected int wholeCol = -1;
+	public int wholeCol = -1;
 	protected int wholeColZoomArea = -1;
 
 	public int rowHeight = 1;
@@ -120,13 +120,13 @@ public class Gui extends JFrame {
 
 	protected ArrayList<String> tablesSelected = new ArrayList<String>();
 
-	protected boolean showingPld = false;
+	public boolean showingPld = false;
 
 	protected JButton undoButton;
 	private JMenu mnProject;
 	private JMenuItem mntmInfo;
 	
-	protected  JvTable generalTable;
+	public  JvTable generalTable;
 
 	private BusinessLogic businessLogic = new BusinessLogic(Gui.this);
 	private EventListenerHandler eventListenerHandler = businessLogic.getEventListenerHandler();
@@ -620,6 +620,10 @@ public class Gui extends JFrame {
 
 	public void setDescription(String descr) {
 		descriptionText.setText(descr);
+	}
+	
+	public String getDescription() {
+		return descriptionText.getText();
 	}
 
 	public String getProject() {
