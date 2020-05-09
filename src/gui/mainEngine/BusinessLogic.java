@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -318,9 +317,6 @@ public class BusinessLogic {
 		for (int i = 0; i < numberOfRows; i++) {
 
 			rowsZoom[i][0] = this.gui.finalRowsZoomArea[i][0];
-		}
-		for (int i = 0; i < numberOfRows; i++) {
-			System.out.println("rowsZoom["+i+"][0]"+rowsZoom[i][0]);
 		}
 
 		this.gui.zoomModel = new MyTableModel(this.gui.finalColumnsZoomArea, rowsZoom);
@@ -805,9 +801,6 @@ public class BusinessLogic {
 
 		for (int i = 0; i < numberOfRows; i++) {
 			rows[i][0] = gui.finalRowsZoomArea[i][0];
-		}
-		for (int i = 0; i < numberOfRows; i++) {
-			System.out.println("rows["+i+"][0]"+rows[i][0]);
 		}
 
 		gui.zoomModel = new MyTableModel(gui.finalColumnsZoomArea, rows);

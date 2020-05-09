@@ -10,12 +10,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Test;
 
-import data.dataKeeper.GlobalDataKeeper;
 import gui.mainEngine.BusinessLogic;
 import gui.mainEngine.Gui;
 
@@ -23,7 +21,6 @@ public class TestShowPLD {
 
 	private BusinessLogic businessLogic;
 	private Gui frame;
-	private GlobalDataKeeper globalDataKeeper;
 	
 	public TestShowPLD() {
 		
@@ -41,7 +38,6 @@ public class TestShowPLD {
 			e.printStackTrace();
 		}
 
-		globalDataKeeper = businessLogic.getGlobalDataKeeper();
 		
 		fakeZoom();
 		fakeShowPLD();
