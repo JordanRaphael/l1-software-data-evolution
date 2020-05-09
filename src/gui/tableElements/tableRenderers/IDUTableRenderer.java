@@ -32,6 +32,7 @@ public class IDUTableRenderer extends DefaultTableCellRenderer{
 	@Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
 	{
+		System.out.println("IDUTableRenderer");
         final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         
         String tmpValue=finalRows[row][column];

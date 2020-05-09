@@ -28,6 +28,7 @@ public class GeneralTableHandler implements ITablesListenerHandler {
 			@Override
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 					boolean hasFocus, int row, int column) {
+				
 				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 						column);
 
@@ -229,6 +230,13 @@ public class GeneralTableHandler implements ITablesListenerHandler {
 					businessLogic.gui.selectedRowsFromMouse = target.getSelectedRows();
 					businessLogic.gui.selectedColumn = target.getSelectedColumn();
 					businessLogic.gui.LifeTimeTable.repaint();
+					System.out.println("createOneClickeMouseAdapter");
+					System.out.println(target.getSelectedColumn());
+					for (int num : target.getSelectedColumns()) {
+						System.out.println(num);
+					}
+						
+						
 				}
 
 			}
@@ -302,6 +310,7 @@ public class GeneralTableHandler implements ITablesListenerHandler {
 				public void mouseClicked(MouseEvent e) {
 					businessLogic.gui.wholeCol = businessLogic.gui.generalTable.columnAtPoint(e.getPoint());
 					String name = businessLogic.gui.generalTable.getColumnName(businessLogic.gui.wholeCol);
+					System.out.println("createColumnClickEvent");
 					System.out.println("Column index selected " + businessLogic.gui.wholeCol + " " + name);
 					businessLogic.gui.generalTable.repaint();
 					if (businessLogic.gui.showingPld) {

@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
@@ -24,6 +25,8 @@ public class ZoomTableHandler implements ITablesListenerHandler {
 			@Override
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 					boolean hasFocus, int row, int column) {
+				
+				System.out.println("ZoomTableHandler");
 				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 						column);
 
@@ -202,6 +205,10 @@ public class ZoomTableHandler implements ITablesListenerHandler {
 					businessLogic.gui.selectedRowsFromMouse = target.getSelectedRows();
 					businessLogic.gui.selectedColumn = target.getSelectedColumn();
 					businessLogic.gui.zoomAreaTable.repaint();
+					
+					
+					System.out.println("createOneClickMouseAdapter");
+					System.out.println(target.getSelectedRows()+" "+Arrays.toString(target.getSelectedColumns()));
 				}
 
 			}

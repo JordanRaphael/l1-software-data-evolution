@@ -194,6 +194,7 @@ public class EventListenerHandler {
 			@Override
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 					boolean hasFocus, int row, int column) {
+				System.out.println("EventListenerHandler");
 				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 						column);
 
@@ -572,6 +573,9 @@ public class EventListenerHandler {
 					gui.selectedRowsFromMouse = target.getSelectedRows();
 					gui.selectedColumnZoomArea = target.getSelectedColumn();
 					gui.zoomAreaTable.repaint();
+					
+					System.out.println("createZoomTableMouseClickedAdapter2");
+					System.out.println(target.getSelectedRows()+" "+target.getSelectedColumn());
 				}
 
 			}
@@ -592,6 +596,7 @@ public class EventListenerHandler {
 					JTable target1 = (JTable) e.getSource();
 					gui.selectedColumnZoomArea = target1.getSelectedColumn();
 					gui.selectedRowsFromMouse = target1.getSelectedRows();
+					System.out.println("createZoomTableMouseClickedAdapter3");
 					System.out.println(target1.getSelectedColumn());
 					System.out.println(target1.getSelectedRow());
 
