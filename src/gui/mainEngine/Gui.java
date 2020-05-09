@@ -134,7 +134,6 @@ public class Gui extends JFrame {
 	}
 	
 	private BusinessLogic businessLogic = new BusinessLogic(this);
-	//private EventListenerHandler eventListenerHandler = businessLogic.getEventListenerHandler();
 	
 
 	/**
