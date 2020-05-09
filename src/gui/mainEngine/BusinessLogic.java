@@ -1,6 +1,10 @@
 package gui.mainEngine;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,10 +13,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTree;
+import javax.swing.SwingUtilities;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.TreePath;
 
 import org.antlr.v4.runtime.RecognitionException;
 
@@ -41,7 +51,7 @@ public class BusinessLogic {
 
 	public Gui gui;
 	private GlobalDataKeeper globalDataKeeper;
-	private EventListenerHandler eventListenerHandler;
+	private GeneralTableListenerHandler generalTableListenerHandler;
 	private TablesListenerFactory tablesListenerFactory;
 	protected String[][] rowsZoom = null;
 	//protected final JvTable zoomTable = null;
@@ -49,7 +59,7 @@ public class BusinessLogic {
 
 	public BusinessLogic(Gui gui) {
 		this.gui = gui;
-		eventListenerHandler = new EventListenerHandler(this, gui);
+		generalTableListenerHandler = new GeneralTableListenerHandler(this, gui);
 		tablesListenerFactory = new TablesListenerFactory();
 	}
 	
@@ -69,9 +79,9 @@ public class BusinessLogic {
 		return this.renderer;
 	}
 	
-	public EventListenerHandler getEventListenerHandler() {
+	public GeneralTableListenerHandler getEventListenerHandler() {
 		
-		return this.eventListenerHandler;
+		return this.generalTableListenerHandler;
 	}
 	
 	protected void notUniformlyDistributedButtonMouseListener() {
@@ -115,19 +125,19 @@ public class BusinessLogic {
 		
 		//ITablesListenerHandler iTablesListenerHandler = tablesListenerFactory.getTableType("General Table", this);
 		//generalTable.setDefaultRenderer(Object.class, iTablesListenerHandler.createDefaultTableCellRenderer());
-		generalTable.setDefaultRenderer(Object.class, eventListenerHandler.createDefaultTableCellRenderer());
+		generalTable.setDefaultRenderer(Object.class, generalTableListenerHandler.createPhasesDefaultTableCellRenderer());
 		
 		//generalTable.addMouseListener(iTablesListenerHandler.createOneClickMouseAdapter());
-		generalTable.addMouseListener(eventListenerHandler.createOneClickMouseAdapter());
+		generalTable.addMouseListener(generalTableListenerHandler.createPhasesMouseClickedAdapter());
 		
 		//generalTable.addMouseListener(iTablesListenerHandler.createReleaseMouseAdapter());
-		generalTable.addMouseListener(eventListenerHandler.createReleaseMouseAdapter());
+		generalTable.addMouseListener(generalTableListenerHandler.createPhasesMouseClickedButton3Adapter(generalTable));
 		
 		//generalTable.getTableHeader().addMouseListener(iTablesListenerHandler.createColumnClickEvent());
-		generalTable.getTableHeader().addMouseListener(eventListenerHandler.createColumnClickEvent());
+		generalTable.getTableHeader().addMouseListener(generalTableListenerHandler.createPhasesMouseColumnClickedAdapter(generalTable));
 		
 		//generalTable.getTableHeader().addMouseListener(iTablesListenerHandler.createRightClickAdapter());
-		generalTable.getTableHeader().addMouseListener(eventListenerHandler.createRightClickAdapter());
+		generalTable.getTableHeader().addMouseListener(generalTableListenerHandler.createPhasesRightMouseClickedAdapter(generalTable));
 		
 		gui.LifeTimeTable = generalTable;
 
@@ -149,9 +159,31 @@ public class BusinessLogic {
 
 		this.gui.tablesTree = new JTree();
 		this.gui.tablesTree = tc.constructTree();
-		this.gui.tablesTree.addTreeSelectionListener(eventListenerHandler.createTreeSelectionListener());
+		this.gui.tablesTree.addTreeSelectionListener(new TreeSelectionListener() {
+            public void valueChanged(TreeSelectionEvent ae) {
+                TreePath selection = ae.getPath();
+                gui.selectedFromTree.add(selection.getLastPathComponent().toString());
+                System.out.println(selection.getLastPathComponent().toString() + " is selected");
+            }
+        });
 
-		this.gui.tablesTree.addMouseListener(eventListenerHandler.createGuiTablesTreeRightMouseListener());
+		this.gui.tablesTree.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    final JPopupMenu popupMenu = new JPopupMenu();
+                    JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
+                    showDetailsItem.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            gui.LifeTimeTable.repaint();
+                        }
+                    });
+                    popupMenu.add(showDetailsItem);
+                    popupMenu.show(gui.tablesTree, e.getX(), e.getY());
+                }
+            }
+        });
 
 		this.gui.treeScrollPane.setViewportView(this.gui.tablesTree);
 
@@ -426,9 +458,31 @@ public class BusinessLogic {
 		TreeConstructionPhasesWithClusters tc = globalDataKeeper.createTreeConstructionPhasesWithClusters();
 		this.gui.tablesTree = tc.constructTree();
 
-		this.gui.tablesTree.addTreeSelectionListener(eventListenerHandler.createTreeSelectionListener2());
+		this.gui.tablesTree.addTreeSelectionListener(new TreeSelectionListener() {
+            public void valueChanged(TreeSelectionEvent ae) {
+                TreePath selection = ae.getPath();
+                gui.selectedFromTree.add(selection.getLastPathComponent().toString());
+                System.out.println(selection.getLastPathComponent().toString() + " is selected");
+            }
+        });
 				
-		this.gui.tablesTree.addMouseListener(eventListenerHandler.createTreeSelectionListener3());
+		this.gui.tablesTree.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    final JPopupMenu popupMenu = new JPopupMenu();
+                    JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
+                    showDetailsItem.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            gui.LifeTimeTable.repaint();
+                        }
+                    });
+                    popupMenu.add(showDetailsItem);
+                    popupMenu.show(gui.tablesTree, e.getX(), e.getY());
+                }
+            }
+        });
 
 		this.gui.treeScrollPane.setViewportView(this.gui.tablesTree);
 
@@ -472,8 +526,31 @@ public class BusinessLogic {
 		TreeConstructionPhases tc = new TreeConstructionPhases(this.globalDataKeeper);
 		this.gui.tablesTree = tc.constructTree();
 
-		this.gui.tablesTree.addTreeSelectionListener(eventListenerHandler.createTablesTreeValueChanged());
-		this.gui.tablesTree.addMouseListener(eventListenerHandler.createTablesRightClickTreeEvent());
+		this.gui.tablesTree.addTreeSelectionListener(new TreeSelectionListener() {
+            public void valueChanged(TreeSelectionEvent ae) {
+                TreePath selection = ae.getPath();
+                gui.selectedFromTree.add(selection.getLastPathComponent().toString());
+                System.out.println(selection.getLastPathComponent().toString() + " is selected");
+            }
+        });
+		
+		this.gui.tablesTree.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    final JPopupMenu popupMenu = new JPopupMenu();
+                    JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
+                    showDetailsItem.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                        	gui.LifeTimeTable.repaint();
+                        }
+                    });
+                    popupMenu.add(showDetailsItem);
+                    popupMenu.show(gui.tablesTree, e.getX(), e.getY());
+                }
+            }
+        });
 
 		this.gui.treeScrollPane.setViewportView(this.gui.tablesTree);
 		this.gui.treeScrollPane.setBounds(5, 5, 250, 170);
@@ -846,17 +923,16 @@ public class BusinessLogic {
 		renderer = new IDUTableRenderer(gui, gui.finalRowsZoomArea, globalDataKeeper,
 				gui.segmentSize);
 
-		generalTable.setDefaultRenderer(Object.class, eventListenerHandler.createGeneralTableDefaultTableCellRenderer2()); 
-				
-		generalTable.addMouseListener(eventListenerHandler.createGeneralTableOneClickAdapter());
+		generalTable.setDefaultRenderer(Object.class, generalTableListenerHandler.createIDUDefaultTableCellRenderer());
 
-		generalTable.addMouseListener(eventListenerHandler.createGeneralTableRightClickAdapter());
+        generalTable.addMouseListener(generalTableListenerHandler.createIDUOneMouseClickAdapter(renderer));
 
-		generalTable.getTableHeader().addMouseListener(eventListenerHandler.createGeneralTableMouseClickedAdapter());
+        generalTable.addMouseListener(generalTableListenerHandler.createIDURightClickRowAdapter(generalTable));
+
+        generalTable.getTableHeader().addMouseListener(generalTableListenerHandler.createIDUMouseEvent(generalTable, renderer));
+
+        generalTable.getTableHeader().addMouseListener(generalTableListenerHandler.createIDURightClickAdapter(generalTable, renderer));
 		
-		generalTable.getTableHeader().addMouseListener(eventListenerHandler.createGeneralTableRightMouseClickedAdapter());
-		
-
 		gui.zoomAreaTable = generalTable;
 		gui.tmpScrollPaneZoomArea.setViewportView(gui.zoomAreaTable);
 		gui.tmpScrollPaneZoomArea.setAlignmentX(0);
