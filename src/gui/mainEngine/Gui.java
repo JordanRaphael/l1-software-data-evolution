@@ -65,7 +65,7 @@ public class Gui extends JFrame {
 	public String[][] finalRows = null;
 
 	protected String[] finalColumnsZoomArea = null;
-	protected String[][] finalRowsZoomArea = null;
+	public String[][] finalRowsZoomArea = null;
 	protected String[] firstLevelUndoColumnsZoomArea = null;
 	protected String[][] firstLevelUndoRowsZoomArea = null;
 	public String currentProject = null;
@@ -118,7 +118,7 @@ public class Gui extends JFrame {
 	public int rowHeight = 1;
 	public int columnWidth = 1;
 
-	protected ArrayList<String> tablesSelected = new ArrayList<String>();
+	public ArrayList<String> tablesSelected = new ArrayList<String>();
 
 	public boolean showingPld = false;
 
