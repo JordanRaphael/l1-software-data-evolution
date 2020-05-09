@@ -171,7 +171,12 @@ public class Gui extends JFrame {
 		menuBar.add(mnFile);
 
 		JMenuItem mntmCreateProject = new JMenuItem("Create Project");
-		//mntmCreateProject.addActionListener(eventListenerHandler.createProject());
+		mntmCreateProject.addActionListener( new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					businessLogic.createProjectAction();
+				}
+		});
+		
 		mntmCreateProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				businessLogic.createProjectAction();
@@ -468,7 +473,7 @@ public class Gui extends JFrame {
 			@Override
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 					boolean hasFocus, int row, int column) {
-				System.out.println("Gui getTableCellRendererComponent");
+
 				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 						column);
 
