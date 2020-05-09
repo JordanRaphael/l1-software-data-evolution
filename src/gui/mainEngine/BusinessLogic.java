@@ -16,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.JTree;
 
 import org.antlr.v4.runtime.RecognitionException;
+import org.omg.CosNaming._BindingIteratorImplBase;
 
 import data.dataKeeper.GlobalDataKeeper;
 import data.dataSorters.PldRowSorter;
@@ -46,7 +47,7 @@ public class BusinessLogic {
 	private EventListenerHandler eventListenerHandler;
 	private TablesListenerFactory tablesListenerFactory;
 	protected String[][] rowsZoom = null;
-	protected JvTable zoomTable = null;
+	//protected final JvTable zoomTable = null;
 	private IDUTableRenderer renderer; 
 
 	public BusinessLogic(Gui gui) {
@@ -65,10 +66,10 @@ public class BusinessLogic {
 		return this.gui;
 	}
 	
-	public JvTable getZoomTable() {
+	//public JvTable getZoomTable() {
 		
-		return zoomTable;
-	}
+	//	return zoomTable;
+	//}
 	
 	public IDUTableRenderer getRenderer() {
 		
@@ -119,17 +120,22 @@ public class BusinessLogic {
 			}
 		}
 		
-		ITablesListenerHandler iTablesListenerHandler = tablesListenerFactory.getTableType("General Table", this);
-		generalTable.setDefaultRenderer(Object.class, iTablesListenerHandler.createDefaultTableCellRenderer());
-
-		generalTable.addMouseListener(iTablesListenerHandler.createOneClickMouseAdapter());
-
-		generalTable.addMouseListener(iTablesListenerHandler.createReleaseMouseAdapter());
+		//ITablesListenerHandler iTablesListenerHandler = tablesListenerFactory.getTableType("General Table", this);
+		//generalTable.setDefaultRenderer(Object.class, iTablesListenerHandler.createDefaultTableCellRenderer());
+		generalTable.setDefaultRenderer(Object.class, eventListenerHandler.createDefaultTableCellRenderer());
 		
-		generalTable.getTableHeader().addMouseListener(iTablesListenerHandler.createColumnClickEvent());
-
-		generalTable.getTableHeader().addMouseListener(iTablesListenerHandler.createRightClickAdapter());
-
+		//generalTable.addMouseListener(iTablesListenerHandler.createOneClickMouseAdapter());
+		generalTable.addMouseListener(eventListenerHandler.createOneClickMouseAdapter());
+		
+		//generalTable.addMouseListener(iTablesListenerHandler.createReleaseMouseAdapter());
+		generalTable.addMouseListener(eventListenerHandler.createReleaseMouseAdapter());
+		
+		//generalTable.getTableHeader().addMouseListener(iTablesListenerHandler.createColumnClickEvent());
+		generalTable.getTableHeader().addMouseListener(eventListenerHandler.createColumnClickEvent());
+		
+		//generalTable.getTableHeader().addMouseListener(iTablesListenerHandler.createRightClickAdapter());
+		generalTable.getTableHeader().addMouseListener(eventListenerHandler.createRightClickAdapter());
+		
 		gui.LifeTimeTable = generalTable;
 
 		gui.tmpScrollPane.setViewportView(gui.LifeTimeTable);
@@ -338,7 +344,7 @@ public class BusinessLogic {
 
 		this.gui.zoomModel = new MyTableModel(this.gui.finalColumnsZoomArea, rowsZoom);
 
-		zoomTable = new JvTable(this.gui.zoomModel);
+		final JvTable zoomTable = new JvTable(this.gui.zoomModel);
 
 		zoomTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -357,16 +363,21 @@ public class BusinessLogic {
 			}
 		}
 
-		ITablesListenerHandler iTablesListenerHandler = tablesListenerFactory.getTableType("Zoom Table", this);
-		zoomTable.setDefaultRenderer(Object.class, iTablesListenerHandler.createDefaultTableCellRenderer());
+		//ITablesListenerHandler iTablesListenerHandler = tablesListenerFactory.getTableType("Zoom Table", this);
+		//zoomTable.setDefaultRenderer(Object.class, iTablesListenerHandler.createDefaultTableCellRenderer());
+		zoomTable.setDefaultRenderer(Object.class, eventListenerHandler.createZoomDefaultTableCellRenderer());
 		
-		zoomTable.addMouseListener(iTablesListenerHandler.createOneClickMouseAdapter());
+		//zoomTable.addMouseListener(iTablesListenerHandler.createOneClickMouseAdapter());
+		zoomTable.addMouseListener(eventListenerHandler.createZoomOneClickMouseAdapter());
 		
-		zoomTable.addMouseListener(iTablesListenerHandler.createRightClickAdapter());
+		//zoomTable.addMouseListener(iTablesListenerHandler.createRightClickAdapter());
+		zoomTable.addMouseListener(eventListenerHandler.createZoomRightClickAdapter());
 		
 		zoomTable.getTableHeader().addMouseListener(eventListenerHandler.createZoomTableMouseClickedAdapter());
 		
+		
 		zoomTable.getTableHeader().addMouseListener(eventListenerHandler.createZoomTableRightClickAdapter2());
+		
 		
 		gui.zoomAreaTable = zoomTable;
 
@@ -933,7 +944,7 @@ public class BusinessLogic {
 
 		gui.zoomModel = new MyTableModel(gui.finalColumnsZoomArea, rowsZoom);
 
-		zoomTable = new JvTable(gui.zoomModel);
+		final JvTable zoomTable = new JvTable(gui.zoomModel);
 
 		zoomTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
