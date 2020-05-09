@@ -52,7 +52,7 @@ public class Gui extends JFrame {
 	protected MyTableModel generalModel = null;
 	protected MyTableModel zoomModel = null;
 
-	protected JvTable LifeTimeTable = null;
+	public JvTable LifeTimeTable = null;
 	protected JvTable zoomAreaTable = null;
 
 	protected JScrollPane tmpScrollPane = new JScrollPane();
@@ -109,8 +109,8 @@ public class Gui extends JFrame {
 	protected JButton notUniformlyDistributedButton;
 	protected JButton showThisToPopup;
 
-	protected int[] selectedRowsFromMouse;
-	protected int selectedColumn = -1;
+	public int[] selectedRowsFromMouse;
+	public int selectedColumn = -1;
 	protected int selectedColumnZoomArea = -1;
 	public int wholeCol = -1;
 	protected int wholeColZoomArea = -1;
@@ -459,6 +459,7 @@ public class Gui extends JFrame {
 			@Override
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 					boolean hasFocus, int row, int column) {
+				System.out.println("Gui getTableCellRendererComponent");
 				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 						column);
 
@@ -621,6 +622,7 @@ public class Gui extends JFrame {
 	}
 
 	public void setDescription(String descr) {
+		System.out.println("SET DESCRIPTION!");
 		descriptionText.setText(descr);
 	}
 	

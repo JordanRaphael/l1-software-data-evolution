@@ -90,8 +90,8 @@ public class EnlargeTable extends JDialog {
 			@Override
 		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
 		    {
-				System.out.println("EnlargeTable");
-		        final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 		        
 		        String tmpValue=finalRowsZoomArea[row][column];
 		        String columnName=table.getColumnName(column);

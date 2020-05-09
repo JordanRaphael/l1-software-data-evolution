@@ -26,7 +26,6 @@ public class ZoomTableHandler implements ITablesListenerHandler {
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 					boolean hasFocus, int row, int column) {
 				
-				System.out.println("ZoomTableHandler");
 				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 						column);
 
@@ -206,9 +205,6 @@ public class ZoomTableHandler implements ITablesListenerHandler {
 					businessLogic.gui.selectedColumn = target.getSelectedColumn();
 					businessLogic.gui.zoomAreaTable.repaint();
 					
-					
-					System.out.println("createOneClickMouseAdapter");
-					System.out.println(target.getSelectedRows()+" "+Arrays.toString(target.getSelectedColumns()));
 				}
 
 			}

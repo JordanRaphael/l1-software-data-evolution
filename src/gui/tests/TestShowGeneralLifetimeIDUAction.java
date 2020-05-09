@@ -38,9 +38,20 @@ public class TestShowGeneralLifetimeIDUAction {
 		} catch (RecognitionException | IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		globalDataKeeper = businessLogic.getGlobalDataKeeper();
-		PrintStream fileStream;
+		
+		String description = businessLogic.gui.getDescription();
+		System.out.println("!!DECS!!:\n"+description);
+		
+		fakeClick();
+		businessLogic.showGeneralLifetimeIDUAction();
+
+		description = businessLogic.gui.getDescription();
+		System.out.println("!!DECS!!:\n"+description);
+		
+		
+		/*PrintStream fileStream;
 		try {
 			//fileStream = new PrintStream("Test-Files/tmp-atlas-to-test.txt");
 			String description = businessLogic.gui.getDescription();
@@ -51,7 +62,8 @@ public class TestShowGeneralLifetimeIDUAction {
 			System.out.println(description);
 			
 			fileStream.close();
-
+			
+			System.out.println("HELLOWORLD2");
 			fakeClick();
 			businessLogic.showGeneralLifetimeIDUAction();
 			
@@ -82,10 +94,18 @@ public class TestShowGeneralLifetimeIDUAction {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		Schemas:85
+Transitions:84
+Tables:88
+Column index selected 6 5*/
 		
 	}
 	
 	private void fakeClick() {
+ 		businessLogic.gui.selectedRowsFromMouse = new int[] {3};
+		businessLogic.gui.selectedColumn = 22;
+		businessLogic.gui.LifeTimeTable.repaint();
+		
 		businessLogic.gui.wholeCol = 5;
 		String name = businessLogic.gui.generalTable.getColumnName(businessLogic.gui.wholeCol);
 		System.out.println("FAKE METHOD Column index selected " + businessLogic.gui.wholeCol + " " + name);

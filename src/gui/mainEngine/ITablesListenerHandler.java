@@ -4,8 +4,6 @@ import java.awt.event.MouseAdapter;
 
 import javax.swing.table.DefaultTableCellRenderer;
 
-import gui.tableElements.commons.JvTable;
-
 public interface ITablesListenerHandler {
 
 	DefaultTableCellRenderer createDefaultTableCellRenderer(BusinessLogic businessLogic);

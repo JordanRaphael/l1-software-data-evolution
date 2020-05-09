@@ -6,16 +6,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTree;
-
 
 import org.antlr.v4.runtime.RecognitionException;
 
@@ -222,7 +219,6 @@ public class BusinessLogic {
 
 			jD.setVisible(true);
 
-			System.out.println("showGeneralLifetimePhasesWithClustersPLDAction before makeGeneralPhases");
 			if (jD.getConfirmation()) {
 				
 				this.gui.timeWeight = jD.getTimeWeight();
@@ -378,7 +374,6 @@ public class BusinessLogic {
 
 			jD.setVisible(true);
 
-			System.out.println("showGeneralLifetimePhasesPLDAction before makeGeneralPhases");
 			if (jD.getConfirmation()) {
 				
 				this.gui.timeWeight = jD.getTimeWeight();
@@ -465,7 +460,6 @@ public class BusinessLogic {
 			makeGeneralTableIDU();
 			fillTree();
 
-			System.out.println("!!DECS!!:\n"+gui.getDescription());
 		} else {
 			JOptionPane.showMessageDialog(null, "Select a Project first");
 			return;
@@ -536,7 +530,6 @@ public class BusinessLogic {
 		globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
 		mainEngine2.print();
 
-		System.out.println("fillTable before makeGeneralPhases");
 		if (globalDataKeeper.getPhaseCollectors().size() != 0) {
 			TableConstructionWithClusters tableP = new TableConstructionWithClusters(globalDataKeeper);
 			final String[] columnsP = tableP.constructColumns();
@@ -801,9 +794,6 @@ public class BusinessLogic {
 
 		int numberOfColumns = gui.finalRowsZoomArea[0].length;
 		int numberOfRows = gui.finalRowsZoomArea.length;
-		System.out.println("makeGeneralTableIDU");
-		System.out.println(numberOfColumns);
-		System.out.println(numberOfRows);
 		
 		gui.selectedRows = new ArrayList<Integer>();
 
