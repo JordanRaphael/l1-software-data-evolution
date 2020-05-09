@@ -134,7 +134,7 @@ public class Gui extends JFrame {
 	}
 	
 	private BusinessLogic businessLogic = new BusinessLogic(this);
-	private EventListenerHandler eventListenerHandler = businessLogic.getEventListenerHandler();
+	//private EventListenerHandler eventListenerHandler = businessLogic.getEventListenerHandler();
 	
 
 	/**
@@ -171,7 +171,7 @@ public class Gui extends JFrame {
 		menuBar.add(mnFile);
 
 		JMenuItem mntmCreateProject = new JMenuItem("Create Project");
-		mntmCreateProject.addActionListener(eventListenerHandler.createProject());
+		//mntmCreateProject.addActionListener(eventListenerHandler.createProject());
 		mntmCreateProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				businessLogic.createProjectAction();

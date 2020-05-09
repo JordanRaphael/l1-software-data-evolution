@@ -52,7 +52,6 @@ public class BusinessLogic {
 	public Gui gui;
 	private GlobalDataKeeper globalDataKeeper;
 	private GeneralTableListenerHandler generalTableListenerHandler;
-	private TablesListenerFactory tablesListenerFactory;
 	protected String[][] rowsZoom = null;
 	//protected final JvTable zoomTable = null;
 	private IDUTableRenderer renderer; 
@@ -60,7 +59,6 @@ public class BusinessLogic {
 	public BusinessLogic(Gui gui) {
 		this.gui = gui;
 		generalTableListenerHandler = new GeneralTableListenerHandler(this, gui);
-		tablesListenerFactory = new TablesListenerFactory();
 	}
 	
 	public GlobalDataKeeper getGlobalDataKeeper() {
@@ -370,18 +368,18 @@ public class BusinessLogic {
 
 		//ITablesListenerHandler iTablesListenerHandler = tablesListenerFactory.getTableType("Zoom Table", this);
 		//zoomTable.setDefaultRenderer(Object.class, iTablesListenerHandler.createDefaultTableCellRenderer());
-		zoomTable.setDefaultRenderer(Object.class, eventListenerHandler.createZoomDefaultTableCellRenderer());
+		//zoomTable.setDefaultRenderer(Object.class, eventListenerHandler.createZoomDefaultTableCellRenderer());
 		
 		//zoomTable.addMouseListener(iTablesListenerHandler.createOneClickMouseAdapter());
-		zoomTable.addMouseListener(eventListenerHandler.createZoomOneClickMouseAdapter());
+		//zoomTable.addMouseListener(eventListenerHandler.createZoomOneClickMouseAdapter());
 		
 		//zoomTable.addMouseListener(iTablesListenerHandler.createRightClickAdapter());
-		zoomTable.addMouseListener(eventListenerHandler.createZoomRightClickAdapter());
+		//zoomTable.addMouseListener(eventListenerHandler.createZoomRightClickAdapter());
 		
-		zoomTable.getTableHeader().addMouseListener(eventListenerHandler.createZoomTableMouseClickedAdapter());
+		//zoomTable.getTableHeader().addMouseListener(eventListenerHandler.createZoomTableMouseClickedAdapter());
 		
 		
-		zoomTable.getTableHeader().addMouseListener(eventListenerHandler.createZoomTableRightClickAdapter2());
+		//zoomTable.getTableHeader().addMouseListener(eventListenerHandler.createZoomTableRightClickAdapter2());
 		
 		
 		gui.zoomAreaTable = zoomTable;
@@ -1000,15 +998,15 @@ public class BusinessLogic {
 			}
 		}
 
-		zoomTable.setDefaultRenderer(Object.class, eventListenerHandler.createZoomTableCellRenderer2());
+		//zoomTable.setDefaultRenderer(Object.class, eventListenerHandler.createZoomTableCellRenderer2());
 		
-		zoomTable.addMouseListener(eventListenerHandler.createZoomTableMouseClickedAdapter2());
+		//zoomTable.addMouseListener(eventListenerHandler.createZoomTableMouseClickedAdapter2());
 
-		zoomTable.addMouseListener(eventListenerHandler.createZoomTableMouseClickedAdapter3());
+		//zoomTable.addMouseListener(eventListenerHandler.createZoomTableMouseClickedAdapter3());
 		
-		zoomTable.getTableHeader().addMouseListener(eventListenerHandler.createZoomTableMouseClickedAdapter4());
+		//zoomTable.getTableHeader().addMouseListener(eventListenerHandler.createZoomTableMouseClickedAdapter4());
 
-		zoomTable.getTableHeader().addMouseListener(eventListenerHandler.createZoomTableMouseClickedAdapter5());
+		//zoomTable.getTableHeader().addMouseListener(eventListenerHandler.createZoomTableMouseClickedAdapter5());
 
 		gui.zoomAreaTable = zoomTable;
 
