@@ -1,4 +1,4 @@
-package gui.tableElements.tableConstructors;
+package data.tableConstructors;
 
 public interface PldConstruction {
 

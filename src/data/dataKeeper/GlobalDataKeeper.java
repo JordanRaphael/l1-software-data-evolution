@@ -12,11 +12,19 @@ import data.dataPPL.pplTransition.AtomicChange;
 import data.dataPPL.pplTransition.PPLTransition;
 import data.dataPPL.pplTransition.TableChange;
 import data.dataProccessing.Worker;
+import data.tableConstructors.PldConstruction;
+import data.tableConstructors.TableConstructionClusterTablesPhasesZoomA;
+import data.tableConstructors.TableConstructionIDU;
+import data.tableConstructors.TableConstructionPhases;
+import data.tableConstructors.TableConstructionWithClusters;
+import data.tableConstructors.TableConstructionZoomArea;
+import data.treeElements.TreeConstructionGeneral;
+import data.treeElements.TreeConstructionPhasesWithClusters;
 
 public class GlobalDataKeeper {
 
 	private TreeMap<String,PPLSchema> allPPLSchemas = null;
-	private TreeMap<String,PPLTable> allTables = null;
+	private TreeMap<String,PPLTable> allPPLTables = null;
 	private ArrayList<AtomicChange> atomicChanges = null;
 	private TreeMap<String,TableChange> tableChanges = null;
 	private TreeMap<String,TableChange> tableChangesForTwo = null;
@@ -31,7 +39,7 @@ public class GlobalDataKeeper {
 
 	public GlobalDataKeeper(String fl,String transitionsFile){
 		allPPLSchemas = new TreeMap<String,PPLSchema>();
-		allTables = new  TreeMap<String,PPLTable>();
+		allPPLTables = new  TreeMap<String,PPLTable>();
 		atomicChanges = new ArrayList<AtomicChange>();
 		tableChanges = new TreeMap<String,TableChange>();
 		tableChangesForTwo = new TreeMap<String,TableChange>();
@@ -83,7 +91,7 @@ public class GlobalDataKeeper {
 	}
 	
 	private void setAllPPLTables(TreeMap<String,PPLTable> tmpAllTables){
-		 allTables=tmpAllTables;
+		 allPPLTables=tmpAllTables;
 
 		
 	}
@@ -119,7 +127,7 @@ public class GlobalDataKeeper {
 	
 	public TreeMap<String,PPLTable> getAllPPLTables(){
 		
-		return allTables;
+		return allPPLTables;
 		
 	}
 	
@@ -157,6 +165,58 @@ public class GlobalDataKeeper {
 	
 	public ArrayList<ClusterCollector> getClusterCollectors(){
 		return this.clusterCollectors;
+	}
+	
+	public void printInfo() {
+		System.out.println("Schemas:" + allPPLSchemas.size());
+		System.out.println("Transitions:" + allPPLTransitions.size());
+		System.out.println("Tables:" + allPPLTables.size());
+	}
+	
+	public PldConstruction showClusterSelectionToZoomArea(ArrayList<String> selectedTables, int selectedColumn) {
+		ArrayList<String> tablesOfCluster = new ArrayList<String>();
+		for (int i = 0; i < selectedTables.size(); i++) {
+			String[] selectedClusterSplit = selectedTables.get(i).split(" ");
+			int cluster = Integer.parseInt(selectedClusterSplit[1]);
+			ArrayList<String> namesOfTables =  clusterCollectors.get(0).getClusters()
+					.get(cluster).getNamesOfTables();
+			for (int j = 0; j < namesOfTables.size(); j++) {
+				tablesOfCluster.add(namesOfTables.get(j));
+			}
+			System.out.println(selectedTables.get(i));
+		}
+
+		PldConstruction table;
+		if (selectedColumn == 0) {
+			table = new TableConstructionClusterTablesPhasesZoomA(this, tablesOfCluster);
+		} else {
+			table = new TableConstructionZoomArea(this, tablesOfCluster, selectedColumn);
+		}
+		System.out.println("Schemas: " + allPPLSchemas.size());
+		System.out.println("C: " + table.constructColumns().length + " R: " + table.constructRows().length);
+		
+		return table;
+	}
+	
+	public TableConstructionPhases createTableConstructionPhases() {
+		return new TableConstructionPhases(this);
+	}
+	
+	public TreeConstructionPhasesWithClusters createTreeConstructionPhasesWithClusters() {
+		return new TreeConstructionPhasesWithClusters(this);
+		
+	}
+	
+	public TableConstructionIDU createTableConstructionIDU() {
+		return new TableConstructionIDU(this);
+	}
+	
+	public TableConstructionWithClusters createTableConstructionWithClusters() {
+		return new TableConstructionWithClusters(this);
+	}
+	
+	public TreeConstructionGeneral createTreeConstructionGeneral() {
+		return new TreeConstructionGeneral(this);
 	}
 	
 	

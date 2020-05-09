@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
@@ -16,10 +15,15 @@ import javax.swing.JTable;
 import javax.swing.JTree;
 
 import org.antlr.v4.runtime.RecognitionException;
-import org.omg.CosNaming._BindingIteratorImplBase;
 
 import data.dataKeeper.GlobalDataKeeper;
 import data.dataSorters.PldRowSorter;
+import data.tableConstructors.PldConstruction;
+import data.tableConstructors.TableConstructionAllSquaresIncluded;
+import data.tableConstructors.TableConstructionIDU;
+import data.tableConstructors.TableConstructionPhases;
+import data.tableConstructors.TableConstructionWithClusters;
+import data.tableConstructors.TableConstructionZoomArea;
 import data.treeElements.TreeConstructionGeneral;
 import data.treeElements.TreeConstructionPhases;
 import data.treeElements.TreeConstructionPhasesWithClusters;
@@ -28,13 +32,6 @@ import gui.dialogs.ParametersJDialog;
 import gui.dialogs.ProjectInfoDialog;
 import gui.tableElements.commons.JvTable;
 import gui.tableElements.commons.MyTableModel;
-import gui.tableElements.tableConstructors.PldConstruction;
-import gui.tableElements.tableConstructors.TableConstructionAllSquaresIncluded;
-import gui.tableElements.tableConstructors.TableConstructionClusterTablesPhasesZoomA;
-import gui.tableElements.tableConstructors.TableConstructionIDU;
-import gui.tableElements.tableConstructors.TableConstructionPhases;
-import gui.tableElements.tableConstructors.TableConstructionWithClusters;
-import gui.tableElements.tableConstructors.TableConstructionZoomArea;
 import gui.tableElements.tableRenderers.IDUHeaderTableRenderer;
 import gui.tableElements.tableRenderers.IDUTableRenderer;
 import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
@@ -66,10 +63,6 @@ public class BusinessLogic {
 		return this.gui;
 	}
 	
-	//public JvTable getZoomTable() {
-		
-	//	return zoomTable;
-	//}
 	
 	public IDUTableRenderer getRenderer() {
 		
@@ -152,7 +145,7 @@ public class BusinessLogic {
 
 	protected void fillTree() {
 
-		TreeConstructionGeneral tc = new TreeConstructionGeneral(globalDataKeeper);
+		TreeConstructionGeneral tc = globalDataKeeper.createTreeConstructionGeneral();
 
 		this.gui.tablesTree = new JTree();
 		this.gui.tablesTree = tc.constructTree();
@@ -216,9 +209,7 @@ public class BusinessLogic {
 			System.out.println("Output Assessment2:" + this.gui.outputAssessment2);
 			System.out.println("Transitions File:" + this.gui.transitionsFile);
 
-			System.out.println("Schemas:" + globalDataKeeper.getAllPPLSchemas().size());
-			System.out.println("Transitions:" + globalDataKeeper.getAllPPLTransitions().size());
-			System.out.println("Tables:" + globalDataKeeper.getAllPPLTables().size());
+			globalDataKeeper.printInfo();
 
 			ProjectInfoDialog infoDialog = new ProjectInfoDialog(this.gui.projectName, this.gui.datasetTxt,
 					this.gui.inputCsv, this.gui.transitionsFile, globalDataKeeper.getAllPPLSchemas().size(),
@@ -272,7 +263,7 @@ public class BusinessLogic {
 				mainEngine2.print();
 
 				if (globalDataKeeper.getPhaseCollectors().size() != 0) {
-					TableConstructionWithClusters table = new TableConstructionWithClusters(globalDataKeeper);
+					TableConstructionWithClusters table = globalDataKeeper.createTableConstructionWithClusters();
 					final String[] columns = table.constructColumns();
 					final String[][] rows = table.constructRows();
 					this.gui.segmentSize = table.getSegmentSize();
@@ -298,34 +289,16 @@ public class BusinessLogic {
 	}
 
 	protected void showClusterSelectionToZoomArea(int selectedColumn, String selectedCluster) {
-
-		ArrayList<String> tablesOfCluster = new ArrayList<String>();
-		for (int i = 0; i < this.gui.tablesSelected.size(); i++) {
-			String[] selectedClusterSplit = this.gui.tablesSelected.get(i).split(" ");
-			int cluster = Integer.parseInt(selectedClusterSplit[1]);
-			ArrayList<String> namesOfTables = globalDataKeeper.getClusterCollectors().get(0).getClusters()
-					.get(cluster).getNamesOfTables();
-			for (int j = 0; j < namesOfTables.size(); j++) {
-				tablesOfCluster.add(namesOfTables.get(j));
-			}
-			System.out.println(this.gui.tablesSelected.get(i));
-		}
-
-		PldConstruction table;
-		if (selectedColumn == 0) {
-			table = new TableConstructionClusterTablesPhasesZoomA(globalDataKeeper, tablesOfCluster);
-		} else {
-			table = new TableConstructionZoomArea(globalDataKeeper, tablesOfCluster, selectedColumn);
-		}
+		
+		PldConstruction table = globalDataKeeper.showClusterSelectionToZoomArea(this.gui.tablesSelected, selectedColumn);
+		
 		final String[] columns = table.constructColumns();
 		final String[][] rows = table.constructRows();
 		this.gui.segmentSizeZoomArea = table.getSegmentSize();
-		System.out.println("Schemas: " + globalDataKeeper.getAllPPLSchemas().size());
-		System.out.println("C: " + columns.length + " R: " + rows.length);
-
 		this.gui.finalColumnsZoomArea = columns;
 		this.gui.finalRowsZoomArea = rows;
 		this.gui.tabbedPane.setSelectedIndex(0);
+		
 		makeZoomAreaTableForCluster();
 
 	}
@@ -423,7 +396,7 @@ public class BusinessLogic {
 				globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
 
 				if (globalDataKeeper.getPhaseCollectors().size() != 0) {
-					TableConstructionPhases table = new TableConstructionPhases(globalDataKeeper);
+					TableConstructionPhases table = globalDataKeeper.createTableConstructionPhases();
 					final String[] columns = table.constructColumns();
 					final String[][] rows = table.constructRows();
 					this.gui.segmentSize = table.getSegmentSize();
@@ -450,7 +423,7 @@ public class BusinessLogic {
 
 	public void fillClustersTree() {
 
-		TreeConstructionPhasesWithClusters tc = new TreeConstructionPhasesWithClusters(globalDataKeeper);
+		TreeConstructionPhasesWithClusters tc = globalDataKeeper.createTreeConstructionPhasesWithClusters();
 		this.gui.tablesTree = tc.constructTree();
 
 		this.gui.tablesTree.addTreeSelectionListener(eventListenerHandler.createTreeSelectionListener2());
@@ -475,7 +448,7 @@ public class BusinessLogic {
 		if (!(this.gui.currentProject == null)) {
 			this.gui.zoomInButton.setVisible(true);
 			this.gui.zoomOutButton.setVisible(true);
-			TableConstructionIDU table = new TableConstructionIDU(globalDataKeeper);
+			TableConstructionIDU table = globalDataKeeper.createTableConstructionIDU();
 			final String[] columns = table.constructColumns();
 			final String[][] rows = table.constructRows();
 			this.gui.segmentSizeZoomArea = table.getSegmentSize();
@@ -516,7 +489,7 @@ public class BusinessLogic {
 	}
 
 	protected void fillTable() {
-		TableConstructionIDU table = new TableConstructionIDU(globalDataKeeper);
+		TableConstructionIDU table = globalDataKeeper.createTableConstructionIDU();
 		final String[] columns = table.constructColumns();
 		final String[][] rows = table.constructRows();
 		this.gui.segmentSizeZoomArea = table.getSegmentSize();
@@ -559,7 +532,7 @@ public class BusinessLogic {
 		mainEngine2.print();
 
 		if (globalDataKeeper.getPhaseCollectors().size() != 0) {
-			TableConstructionWithClusters tableP = new TableConstructionWithClusters(globalDataKeeper);
+			TableConstructionWithClusters tableP = globalDataKeeper.createTableConstructionWithClusters();
 			final String[] columnsP = tableP.constructColumns();
 			final String[][] rowsP = tableP.constructRows();
 			this.gui.segmentSize = tableP.getSegmentSize();
@@ -576,18 +549,6 @@ public class BusinessLogic {
 	}
 
 	protected void showLifetimeTableAction() {
-		
-		/*Code for testing*/
-		/*PrintStream fileStream = null;
-		try {
-			fileStream = new PrintStream("Test-Files/show-full-detailed-lifetime-table-atlas-project.txt");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.setOut(fileStream);*/
-		
-		/*Code for testing*/
 		
 		if (!(this.gui.currentProject == null)) {
 			

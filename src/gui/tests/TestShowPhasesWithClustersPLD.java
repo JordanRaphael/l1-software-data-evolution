@@ -12,9 +12,9 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Test;
 
 import data.dataKeeper.GlobalDataKeeper;
+import data.tableConstructors.TableConstructionPhases;
 import gui.mainEngine.BusinessLogic;
 import gui.mainEngine.Gui;
-import gui.tableElements.tableConstructors.TableConstructionPhases;
 import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
 
 public class TestShowPhasesWithClustersPLD {

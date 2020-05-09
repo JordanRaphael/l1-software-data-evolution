@@ -12,10 +12,10 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Test;
 
 import data.dataKeeper.GlobalDataKeeper;
+import data.tableConstructors.TableConstructionPhases;
+import data.tableConstructors.TableConstructionWithClusters;
 import gui.mainEngine.BusinessLogic;
 import gui.mainEngine.Gui;
-import gui.tableElements.tableConstructors.TableConstructionPhases;
-import gui.tableElements.tableConstructors.TableConstructionWithClusters;
 import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
 import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
 

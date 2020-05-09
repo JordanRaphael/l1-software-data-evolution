@@ -1,4 +1,4 @@
-package gui.tableElements.tableConstructors;
+package data.tableConstructors;
 
 import java.util.ArrayList;
 import java.util.Map;
