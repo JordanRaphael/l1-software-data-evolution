@@ -6,13 +6,13 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 public interface ITablesListenerHandler {
 
-	DefaultTableCellRenderer createDefaultTableCellRenderer(BusinessLogic businessLogic);
+	DefaultTableCellRenderer createDefaultTableCellRenderer();
 	
-	MouseAdapter createOneClickMouseAdapter(BusinessLogic businessLogic);
+	MouseAdapter createOneClickMouseAdapter();
 	
-	MouseAdapter createReleaseMouseAdapter(BusinessLogic businessLogic);
+	MouseAdapter createReleaseMouseAdapter();
 	
-	MouseAdapter createColumnClickEvent(BusinessLogic businessLogic);
+	MouseAdapter createColumnClickEvent();
 	
-	MouseAdapter createRightClickAdapter(BusinessLogic businessLogic);
+	MouseAdapter createRightClickAdapter();
 }

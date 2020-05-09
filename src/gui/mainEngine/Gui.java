@@ -127,8 +127,13 @@ public class Gui extends JFrame {
 	private JMenuItem mntmInfo;
 	
 	public  JvTable generalTable;
-
-	private BusinessLogic businessLogic = new BusinessLogic(Gui.this);
+	
+	public JvTable getGeneralTable() {
+		
+		return generalTable;
+	}
+	
+	private BusinessLogic businessLogic = new BusinessLogic(this);
 	private EventListenerHandler eventListenerHandler = businessLogic.getEventListenerHandler();
 	
 
@@ -261,7 +266,7 @@ public class Gui extends JFrame {
 
 		lifeTimePanel.add(sideMenu);
 
-		JButton buttonHelp = jItemsCreator.createJButton("Help", 900, 900, 80, 40);
+		JButton buttonHelp = new JButton("Help");
 		buttonHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String message = "To open a project, you must select a .txt file that contains the names ONLY of "
@@ -271,7 +276,7 @@ public class Gui extends JFrame {
 						+ "Both .txt file and dataset folder must be in the same folder.";
 				JOptionPane.showMessageDialog(null, message);
 			}
-		});
+		});		
 
 		mnProject = new JMenu("Project");
 		menuBar.add(mnProject);
@@ -283,6 +288,8 @@ public class Gui extends JFrame {
 			}
 		});
 		mnProject.add(mntmInfo);
+		
+		buttonHelp.setBounds(900,900 , 80, 40);
 		menuBar.add(buttonHelp);
 
 		contentPane = new JPanel();
@@ -305,8 +312,8 @@ public class Gui extends JFrame {
 				gl_lifeTimePanel.createParallelGroup(Alignment.LEADING).addGap(0, 743, Short.MAX_VALUE));
 		lifeTimePanel.setLayout(gl_lifeTimePanel);
 
-		generalTableLabel = jItemsCreator.createJLabel("Parallel Lives Diagram", "", 300, 0, 150, 30, Color.BLACK);
-
+		generalTableLabel = jItemsCreator.createJLabel("", "Parallel Lives Diagram", 300, 0, 150, 30, Color.BLACK);
+		
 		zoomAreaLabel = jItemsCreator.createJLabel("", "<HTML>Z<br>o<br>o<br>m<br><br>A<br>r<br>e<br>a</HTML>", 1255,
 				325, 15, 300, Color.BLACK);
 
@@ -349,8 +356,10 @@ public class Gui extends JFrame {
 
 		showThisToPopup.setVisible(false);
 
-		undoButton = jItemsCreator.createJButton("Undo", 680, 560, 100, 30);
-
+		//undoButton = jItemsCreator.createJButton("Undo", 680, 560, 100, 30);
+		undoButton = new JButton("Undo");
+		undoButton.setBounds(680, 560, 100, 30);
+		
 		undoButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

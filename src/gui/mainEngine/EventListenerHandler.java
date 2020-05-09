@@ -73,7 +73,7 @@ public class EventListenerHandler {
 				if (SwingUtilities.isRightMouseButton(e)) {
 					System.out.println("Right Click Tree");
 
-					final JPopupMenu popupMenu = new JPopupMenu();
+					JPopupMenu popupMenu = new JPopupMenu();
 					JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
 					showDetailsItem.addActionListener(new ActionListener() {
 
@@ -95,11 +95,12 @@ public class EventListenerHandler {
 		return adapter;
 	}
 
-	public MouseAdapter createZoomTableMouseClickedAdapter(final JvTable zoomTable) {
-
+	public MouseAdapter createZoomTableMouseClickedAdapter() {
+		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				JvTable zoomTable = businessLogic.getZoomTable();
 				gui.wholeColZoomArea = zoomTable.columnAtPoint(e.getPoint());
 				String name = zoomTable.getColumnName(gui.wholeColZoomArea);
 				System.out.println("Column index selected " + gui.wholeCol + " " + name);
@@ -110,20 +111,22 @@ public class EventListenerHandler {
 		return adapter;
 	}
 
-	public MouseAdapter createZoomTableRightClickAdapter2(final JvTable zoomTable) {
+	public MouseAdapter createZoomTableRightClickAdapter2() {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				JvTable zoomTable = businessLogic.getZoomTable();
 				if (SwingUtilities.isRightMouseButton(e)) {
 					System.out.println("Right Click");
 
-					final JPopupMenu popupMenu = new JPopupMenu();
+					JPopupMenu popupMenu = new JPopupMenu();
 					JMenuItem showDetailsItem = new JMenuItem("Clear Column Selection");
 					showDetailsItem.addActionListener(new ActionListener() {
 
 						@Override
 						public void actionPerformed(ActionEvent e) {
+							JvTable zoomTable = businessLogic.getZoomTable();
 							gui.wholeColZoomArea = -1;
 							zoomTable.repaint();
 						}
@@ -162,7 +165,7 @@ public class EventListenerHandler {
 				if (SwingUtilities.isRightMouseButton(e)) {
 					System.out.println("Right Click Tree");
 
-					final JPopupMenu popupMenu = new JPopupMenu();
+					JPopupMenu popupMenu = new JPopupMenu();
 					JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
 					showDetailsItem.addActionListener(new ActionListener() {
 
@@ -195,7 +198,7 @@ public class EventListenerHandler {
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 					boolean hasFocus, int row, int column) {
 
-				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
+				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 						column);
 
 				String tmpValue = gui.finalRowsZoomArea[row][column];
@@ -350,7 +353,7 @@ public class EventListenerHandler {
 				if (SwingUtilities.isRightMouseButton(e)) {
 					System.out.println("Right Click Tree");
 
-					final JPopupMenu popupMenu = new JPopupMenu();
+					JPopupMenu popupMenu = new JPopupMenu();
 					JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
 					showDetailsItem.addActionListener(new ActionListener() {
 
@@ -382,7 +385,7 @@ public class EventListenerHandler {
 			@Override
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 					boolean hasFocus, int row, int column) {
-				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
+				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 						column);
 
 				String tmpValue = gui.finalRowsZoomArea[row][column];
@@ -582,12 +585,13 @@ public class EventListenerHandler {
 		return adapter;
 	}
 
-	public MouseAdapter createZoomTableMouseClickedAdapter3(final JvTable zoomTable) {
+	public MouseAdapter createZoomTableMouseClickedAdapter3() {
 
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-
+				
+				JvTable zoomTable = businessLogic.getZoomTable();
 				if (SwingUtilities.isRightMouseButton(e)) {
 					System.out.println("Right Click");
 
@@ -605,7 +609,7 @@ public class EventListenerHandler {
 					}
 					if (zoomTable.getColumnName(gui.selectedColumnZoomArea).contains("Phase")) {
 
-						final JPopupMenu popupMenu = new JPopupMenu();
+						JPopupMenu popupMenu = new JPopupMenu();
 						JMenuItem showDetailsItem = new JMenuItem("Show Details");
 						showDetailsItem.addActionListener(new ActionListener() {
 
@@ -627,11 +631,12 @@ public class EventListenerHandler {
 		return adapter;
 	}
 
-	public MouseAdapter createZoomTableMouseClickedAdapter4(final JvTable zoomTable) {
+	public MouseAdapter createZoomTableMouseClickedAdapter4() {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				JvTable zoomTable = businessLogic.getZoomTable();
 				gui.wholeColZoomArea = zoomTable.columnAtPoint(e.getPoint());
 				String name = zoomTable.getColumnName(gui.wholeColZoomArea);
 				System.out.println("Column index selected " + gui.wholeCol + " " + name);
@@ -642,20 +647,22 @@ public class EventListenerHandler {
 		return adapter;
 	}
 
-	public MouseListener createZoomTableMouseClickedAdapter5(final JvTable zoomTable) {
+	public MouseListener createZoomTableMouseClickedAdapter5() {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				JvTable zoomTable = businessLogic.getZoomTable();
 				if (SwingUtilities.isRightMouseButton(e)) {
 					System.out.println("Right Click");
 
-					final JPopupMenu popupMenu = new JPopupMenu();
+					JPopupMenu popupMenu = new JPopupMenu();
 					JMenuItem showDetailsItem = new JMenuItem("Clear Column Selection");
 					showDetailsItem.addActionListener(new ActionListener() {
 
 						@Override
 						public void actionPerformed(ActionEvent e) {
+							JvTable zoomTable = businessLogic.getZoomTable();
 							gui.wholeColZoomArea = -1;
 							zoomTable.repaint();
 						}
@@ -685,12 +692,14 @@ public class EventListenerHandler {
 		return listener;
 	}
 
-	public MouseListener createGeneralTableOneClickAdapter(final IDUTableRenderer renderer) {
+	public MouseListener createGeneralTableOneClickAdapter() {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
+				
+				IDUTableRenderer renderer = businessLogic.getRenderer();
+				
 				if (e.getClickCount() == 1) {
 					JTable target = (JTable) e.getSource();
 
@@ -708,12 +717,14 @@ public class EventListenerHandler {
 		return adapter;
 	}
 
-	public MouseAdapter createGeneralTableRightClickAdapter(final JvTable generalTable) {
+	public MouseAdapter createGeneralTableRightClickAdapter() {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-
+				
+				JvTable generalTable = gui.getGeneralTable();
+				
 				if (SwingUtilities.isRightMouseButton(e)) {
 					System.out.println("Right Click");
 
@@ -725,7 +736,7 @@ public class EventListenerHandler {
 					for (int rowsSelected = 0; rowsSelected < gui.selectedRowsFromMouse.length; rowsSelected++) {
 						System.out.println(generalTable.getValueAt(gui.selectedRowsFromMouse[rowsSelected], 0));
 					}
-					final JPopupMenu popupMenu = new JPopupMenu();
+					JPopupMenu popupMenu = new JPopupMenu();
 					JMenuItem showDetailsItem = new JMenuItem("Clear Selection");
 					showDetailsItem.addActionListener(new ActionListener() {
 
@@ -746,11 +757,14 @@ public class EventListenerHandler {
 		return adapter;
 	}
 
-	public MouseAdapter createGeneralTableMouseClickedAdapter(final JvTable generalTable, final IDUTableRenderer renderer) {
+	public MouseAdapter createGeneralTableMouseClickedAdapter() {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				IDUTableRenderer renderer = businessLogic.getRenderer();
+				JvTable generalTable = gui.getGeneralTable();
+				
 				gui.wholeColZoomArea = generalTable.columnAtPoint(e.getPoint());
 				renderer.setWholeCol(generalTable.columnAtPoint(e.getPoint()));
 				generalTable.repaint();
@@ -760,20 +774,27 @@ public class EventListenerHandler {
 		return adapter;
 	}
 
-	public MouseAdapter createGeneralTableRightMouseClickedAdapter(final JvTable generalTable, final IDUTableRenderer renderer) {
+	public MouseAdapter createGeneralTableRightMouseClickedAdapter() {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				
+				JvTable generalTable = gui.getGeneralTable();
+				
 				if (SwingUtilities.isRightMouseButton(e)) {
 					System.out.println("Right Click");
 
-					final JPopupMenu popupMenu = new JPopupMenu();
+					JPopupMenu popupMenu = new JPopupMenu();
 					JMenuItem showDetailsItem = new JMenuItem("Clear Column Selection");
 					showDetailsItem.addActionListener(new ActionListener() {
 
 						@Override
 						public void actionPerformed(ActionEvent e) {
+							
+							IDUTableRenderer renderer = businessLogic.getRenderer();
+							JvTable generalTable = gui.getGeneralTable();
+							
 							gui.wholeColZoomArea = -1;
 							renderer.setWholeCol(gui.wholeColZoomArea);
 
@@ -791,5 +812,4 @@ public class EventListenerHandler {
 		return adapter;
 	}
 	
-		
 }
