@@ -16,7 +16,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
@@ -267,20 +266,16 @@ public class BusinessLogic {
 
 				System.out.println(this.gui.timeWeight + " " + this.gui.changeWeight);
 
-				PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(this.gui.inputCsv,
-						this.gui.outputAssessment1, this.gui.outputAssessment2, this.gui.timeWeight,
-						this.gui.changeWeight, this.gui.preProcessingTime, this.gui.preProcessingChange);
+				PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(gui.inputCsv,
+						gui.outputAssessment1, gui.outputAssessment2, gui.timeWeight,
+						gui.changeWeight, gui.preProcessingTime, gui.preProcessingChange);
 
-				mainEngine.parseInput();
-				System.out.println("\n\n\n");
-				mainEngine.extractPhases(this.gui.numberOfPhases);
-				mainEngine.connectTransitionsWithPhases(globalDataKeeper);
-				globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
+				globalDataKeeper.populateWithPhases(mainEngine, gui.numberOfPhases);
+				
 				TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,
-						this.gui.birthWeight, this.gui.deathWeight, this.gui.changeWeightCl);
-				mainEngine2.extractClusters(this.gui.numberOfClusters);
-				globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
-				mainEngine2.print();
+						gui.birthWeight, gui.deathWeight, gui.changeWeightCl);
+				
+				globalDataKeeper.populateWithClusters(mainEngine2, gui.numberOfClusters);
 
 				if (globalDataKeeper.getPhaseCollectors().size() != 0) {
 					TableConstructionWithClusters table = globalDataKeeper.createTableConstructionWithClusters();
@@ -394,15 +389,11 @@ public class BusinessLogic {
 
 				System.out.println(this.gui.timeWeight + " " + this.gui.changeWeight);
 
-				PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(this.gui.inputCsv,
-						this.gui.outputAssessment1, this.gui.outputAssessment2, this.gui.timeWeight,
-						this.gui.changeWeight, this.gui.preProcessingTime, this.gui.preProcessingChange);
+				PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(gui.inputCsv,
+						gui.outputAssessment1, gui.outputAssessment2, gui.timeWeight,
+						gui.changeWeight, gui.preProcessingTime, gui.preProcessingChange);
 
-				mainEngine.parseInput();
-				System.out.println("\n\n\n");
-				mainEngine.extractPhases(this.gui.numberOfPhases);
-				mainEngine.connectTransitionsWithPhases(globalDataKeeper);
-				globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
+				globalDataKeeper.populateWithPhases(mainEngine, gui.numberOfPhases);
 
 				if (globalDataKeeper.getPhaseCollectors().size() != 0) {
 					TableConstructionPhases table = globalDataKeeper.createTableConstructionPhases();
@@ -561,24 +552,20 @@ public class BusinessLogic {
 
 		System.out.println(this.gui.timeWeight + " " + this.gui.changeWeight);
 
-		PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(this.gui.inputCsv, this.gui.outputAssessment1,
-				this.gui.outputAssessment2, this.gui.timeWeight, this.gui.changeWeight, this.gui.preProcessingTime,
-				this.gui.preProcessingChange);
+		PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(gui.inputCsv, gui.outputAssessment1,
+				gui.outputAssessment2, gui.timeWeight, gui.changeWeight, gui.preProcessingTime,
+				gui.preProcessingChange);
 
+		globalDataKeeper.populateWithPhases(mainEngine, gui.numberOfPhases);
+		
 		Double b = new Double(0.3);
 		Double d = new Double(0.3);
 		Double c = new Double(0.3);
 
-		mainEngine.parseInput();
-		System.out.println("\n\n\n");
-		mainEngine.extractPhases(this.gui.numberOfPhases);
-
-		mainEngine.connectTransitionsWithPhases(globalDataKeeper);
-		globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
 		TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper, b, d, c);
-		mainEngine2.extractClusters(this.gui.numberOfClusters);
-		globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
-		mainEngine2.print();
+		
+		globalDataKeeper.populateWithClusters(mainEngine2, gui.numberOfClusters);
+		
 
 		if (globalDataKeeper.getPhaseCollectors().size() != 0) {
 			TableConstructionWithClusters tableP = globalDataKeeper.createTableConstructionWithClusters();

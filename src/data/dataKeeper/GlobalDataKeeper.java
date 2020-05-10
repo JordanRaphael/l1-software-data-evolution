@@ -20,7 +20,9 @@ import data.tableConstructors.TableConstructionZoomArea;
 import data.treeElements.TreeConstructionGeneral;
 import data.treeElements.TreeConstructionPhasesWithClusters;
 import phaseAnalyzer.commons.PhaseCollector;
+import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
 import tableClustering.clusterExtractor.commons.ClusterCollector;
+import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
 
 public class GlobalDataKeeper {
 
@@ -231,5 +233,20 @@ public class GlobalDataKeeper {
 	public TableConstructionClusterTablesPhasesZoomA createTableConstructionClusterTablesPhasesZoomA(ArrayList<String> tablesOfCluster) {
 		return new TableConstructionClusterTablesPhasesZoomA(this, tablesOfCluster);
 	}
+	
+	public void populateWithPhases(PhaseAnalyzerMainEngine mainEngine, Integer numberOfPhases) {
+		mainEngine.parseInput();
+		System.out.println("\n\n\n");
+		mainEngine.extractPhases(numberOfPhases);
+		mainEngine.connectTransitionsWithPhases(this);
+		setPhaseCollectors(mainEngine.getPhaseCollectors());
+	}
+	
+	public void populateWithClusters(TableClusteringMainEngine mainEngine, Integer numberOfClusters) {
+		mainEngine.extractClusters(numberOfClusters);
+		setClusterCollectors(mainEngine.getClusterCollectors());
+		mainEngine.print();
+	}
+	
 	
 }
