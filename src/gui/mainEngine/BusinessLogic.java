@@ -48,13 +48,13 @@ import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
 
 public class BusinessLogic {
 
-	public Gui gui;
+	private Gui gui;
 	private GlobalDataKeeper globalDataKeeper;
 	private GeneralTableListenerHandler generalTableListenerHandler;
 	private ZoomTableListenerHandler zoomTableListenerHandler;
 	protected String[][] rowsZoom = null;
 	protected final JvTable zoomTable = null;
-	private IDUTableRenderer renderer; 
+	private IDUTableRenderer renderer;
 	private JItemsHandler jItemsHandler;
 
 	public BusinessLogic(Gui gui) {
@@ -63,32 +63,31 @@ public class BusinessLogic {
 		this.zoomTableListenerHandler = new ZoomTableListenerHandler(this, gui);
 		this.jItemsHandler = new JItemsHandler();
 	}
-	
+
 	public GlobalDataKeeper getGlobalDataKeeper() {
-		
+
 		return globalDataKeeper;
 	}
-	
+
 	public Gui getGui() {
-		
-		return this.gui;
+
+		return gui;
 	}
-	
-	
+
 	public IDUTableRenderer getRenderer() {
-		
-		return this.renderer;
+
+		return renderer;
 	}
-	
+
 	public GeneralTableListenerHandler getEventListenerHandler() {
-		
-		return this.generalTableListenerHandler;
+
+		return generalTableListenerHandler;
 	}
-	
+
 	protected void notUniformlyDistributedButtonMouseListener() {
 		gui.LifeTimeTable.notUniformlyDistributed(globalDataKeeper);
 	}
-	
+
 	public void makeGeneralTablePhases() {
 		gui.uniformlyDistributedButton.setVisible(true);
 
@@ -123,22 +122,22 @@ public class BusinessLogic {
 				generalTable.getColumnModel().getColumn(i).setPreferredWidth(1);
 			}
 		}
-		
+
 		generalTable.setDefaultRenderer(Object.class, generalTableListenerHandler.createPhasesDefaultTableCellRenderer());
-		
+
 		generalTable.addMouseListener(generalTableListenerHandler.createPhasesMouseClickedAdapter());
-		
+
 		generalTable.addMouseListener(generalTableListenerHandler.createPhasesMouseClickedButton3Adapter(generalTable));
-		
+
 		generalTable.getTableHeader().addMouseListener(generalTableListenerHandler.createPhasesMouseColumnClickedAdapter(generalTable));
-		
+
 		generalTable.getTableHeader().addMouseListener(generalTableListenerHandler.createPhasesRightMouseClickedAdapter(generalTable));
-		
+
 		gui.LifeTimeTable = generalTable;
 
 		gui.tmpScrollPane.setViewportView(gui.LifeTimeTable);
 		jItemsHandler.setJScrollPanePosition(gui.tmpScrollPane, 300, 30, 950, 265);
-		
+
 		gui.lifeTimePanel.setCursor(gui.getCursor());
 		gui.lifeTimePanel.add(gui.tmpScrollPane);
 
@@ -148,42 +147,42 @@ public class BusinessLogic {
 
 		TreeConstructionGeneral tc = globalDataKeeper.createTreeConstructionGeneral();
 
-		this.gui.tablesTree = new JTree();
-		this.gui.tablesTree = tc.constructTree();
-		this.gui.tablesTree.addTreeSelectionListener(new TreeSelectionListener() {
-            public void valueChanged(TreeSelectionEvent ae) {
-                TreePath selection = ae.getPath();
-                gui.selectedFromTree.add(selection.getLastPathComponent().toString());
-                System.out.println(selection.getLastPathComponent().toString() + " is selected");
-            }
-        });
+		gui.tablesTree = new JTree();
+		gui.tablesTree = tc.constructTree();
+		gui.tablesTree.addTreeSelectionListener(new TreeSelectionListener() {
+			public void valueChanged(TreeSelectionEvent ae) {
+				TreePath selection = ae.getPath();
+				gui.selectedFromTree.add(selection.getLastPathComponent().toString());
+				System.out.println(selection.getLastPathComponent().toString() + " is selected");
+			}
+		});
 
-		this.gui.tablesTree.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (SwingUtilities.isRightMouseButton(e)) {
-                    final JPopupMenu popupMenu = new JPopupMenu();
-                    JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
-                    showDetailsItem.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            gui.LifeTimeTable.repaint();
-                        }
-                    });
-                    popupMenu.add(showDetailsItem);
-                    popupMenu.show(gui.tablesTree, e.getX(), e.getY());
-                }
-            }
-        });
+		gui.tablesTree.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if (SwingUtilities.isRightMouseButton(e)) {
+					final JPopupMenu popupMenu = new JPopupMenu();
+					JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
+					showDetailsItem.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							gui.LifeTimeTable.repaint();
+						}
+					});
+					popupMenu.add(showDetailsItem);
+					popupMenu.show(gui.tablesTree, e.getX(), e.getY());
+				}
+			}
+		});
 
-		this.gui.treeScrollPane.setViewportView(this.gui.tablesTree);
-		jItemsHandler.setJScrollPanePosition(this.gui.treeScrollPane, 5, 5, 250, 170);
-		
-		this.gui.tablesTreePanel.add(this.gui.treeScrollPane);
-		this.gui.treeLabel.setText("General Tree");
+		gui.treeScrollPane.setViewportView(gui.tablesTree);
+		jItemsHandler.setJScrollPanePosition(gui.treeScrollPane, 5, 5, 250, 170);
 
-		this.gui.sideMenu.revalidate();
-		this.gui.sideMenu.repaint();
+		gui.tablesTreePanel.add(gui.treeScrollPane);
+		gui.treeLabel.setText("General Tree");
+
+		gui.sideMenu.revalidate();
+		gui.sideMenu.repaint();
 
 	}
 
@@ -191,7 +190,6 @@ public class BusinessLogic {
 		CreateProjectJDialog createProjectDialog = new CreateProjectJDialog("", "", "", "", "", "");
 
 		createProjectDialog.setModal(true);
-
 		createProjectDialog.setVisible(true);
 
 		if (createProjectDialog.getConfirmation()) {
@@ -200,9 +198,9 @@ public class BusinessLogic {
 
 			File file = createProjectDialog.getFile();
 			System.out.println(file.toString());
-			this.gui.project = file.getName();
+			gui.project = file.getName();
 			String fileName = file.toString();
-			System.out.println("!!" + this.gui.project);
+			System.out.println("!!" + gui.project);
 
 			try {
 				importData(fileName);
@@ -220,21 +218,20 @@ public class BusinessLogic {
 	}
 
 	protected void infoAction() {
-		if (!(this.gui.currentProject == null)) {
+		if (!(gui.currentProject == null)) {
 
-			System.out.println("Project Name:" + this.gui.projectName);
-			System.out.println("Dataset txt:" + this.gui.datasetTxt);
-			System.out.println("Input Csv:" + this.gui.inputCsv);
-			System.out.println("Output Assessment1:" + this.gui.outputAssessment1);
-			System.out.println("Output Assessment2:" + this.gui.outputAssessment2);
-			System.out.println("Transitions File:" + this.gui.transitionsFile);
+			System.out.println("Project Name:" + gui.projectName);
+			System.out.println("Dataset txt:" + gui.datasetTxt);
+			System.out.println("Input Csv:" + gui.inputCsv);
+			System.out.println("Output Assessment1:" + gui.outputAssessment1);
+			System.out.println("Output Assessment2:" + gui.outputAssessment2);
+			System.out.println("Transitions File:" + gui.transitionsFile);
 
 			globalDataKeeper.printInfo();
 
-			ProjectInfoDialog infoDialog = new ProjectInfoDialog(this.gui.projectName, this.gui.datasetTxt,
-					this.gui.inputCsv, this.gui.transitionsFile, globalDataKeeper.getAllPPLSchemas().size(),
-					globalDataKeeper.getAllPPLTransitions().size(),
-					globalDataKeeper.getAllPPLTables().size());
+			ProjectInfoDialog infoDialog = new ProjectInfoDialog(gui.projectName, gui.datasetTxt,
+					gui.inputCsv, gui.transitionsFile, globalDataKeeper.getAllPPLSchemas().size(),
+					globalDataKeeper.getAllPPLTransitions().size(), globalDataKeeper.getAllPPLTables().size());
 
 			infoDialog.setVisible(true);
 		} else {
@@ -244,8 +241,8 @@ public class BusinessLogic {
 	}
 
 	protected void showGeneralLifetimePhasesWithClustersPLDAction() {
-		this.gui.wholeCol = -1;
-		if (!(this.gui.project == null)) {
+		gui.wholeCol = -1;
+		if (!(gui.project == null)) {
 
 			ParametersJDialog jD = new ParametersJDialog(true);
 
@@ -253,44 +250,44 @@ public class BusinessLogic {
 			jD.setVisible(true);
 
 			if (jD.getConfirmation()) {
-				
-				this.gui.timeWeight = jD.getTimeWeight();
-				this.gui.changeWeight = jD.getChangeWeight();
-				this.gui.preProcessingTime = jD.getPreProcessingTime();
-				this.gui.preProcessingChange = jD.getPreProcessingChange();
-				this.gui.numberOfPhases = jD.getNumberOfPhases();
-				this.gui.numberOfClusters = jD.getNumberOfClusters();
-				this.gui.birthWeight = jD.geBirthWeight();
-				this.gui.deathWeight = jD.getDeathWeight();
-				this.gui.changeWeightCl = jD.getChangeWeightCluster();
 
-				System.out.println(this.gui.timeWeight + " " + this.gui.changeWeight);
+				gui.timeWeight = jD.getTimeWeight();
+				gui.changeWeight = jD.getChangeWeight();
+				gui.preProcessingTime = jD.getPreProcessingTime();
+				gui.preProcessingChange = jD.getPreProcessingChange();
+				gui.numberOfPhases = jD.getNumberOfPhases();
+				gui.numberOfClusters = jD.getNumberOfClusters();
+				gui.birthWeight = jD.geBirthWeight();
+				gui.deathWeight = jD.getDeathWeight();
+				gui.changeWeightCl = jD.getChangeWeightCluster();
 
-				PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(gui.inputCsv,
-						gui.outputAssessment1, gui.outputAssessment2, gui.timeWeight,
-						gui.changeWeight, gui.preProcessingTime, gui.preProcessingChange);
+				System.out.println(gui.timeWeight + " " + gui.changeWeight);
+
+				PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(gui.inputCsv, gui.outputAssessment1,
+						gui.outputAssessment2, gui.timeWeight, gui.changeWeight, gui.preProcessingTime,
+						gui.preProcessingChange);
 
 				globalDataKeeper.populateWithPhases(mainEngine, gui.numberOfPhases);
-				
-				TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper,
-						gui.birthWeight, gui.deathWeight, gui.changeWeightCl);
-				
+
+				TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper, gui.birthWeight,
+						gui.deathWeight, gui.changeWeightCl);
+
 				globalDataKeeper.populateWithClusters(mainEngine2, gui.numberOfClusters);
 
 				if (globalDataKeeper.getPhaseCollectors().size() != 0) {
 					TableConstructionWithClusters table = globalDataKeeper.createTableConstructionWithClusters();
 					final String[] columns = table.constructColumns();
 					final String[][] rows = table.constructRows();
-					this.gui.segmentSize = table.getSegmentSize();
+					gui.segmentSize = table.getSegmentSize();
 					System.out.println("Schemas: " + globalDataKeeper.getAllPPLSchemas().size());
 					System.out.println("C: " + columns.length + " R: " + rows.length);
 
-					this.gui.finalColumns = columns;
-					this.gui.finalRows = rows;
-					this.gui.tabbedPane.setSelectedIndex(0);
+					gui.finalColumns = columns;
+					gui.finalRows = rows;
+					gui.tabbedPane.setSelectedIndex(0);
 					makeGeneralTablePhases();
 					fillClustersTree();
-					
+
 				} else {
 					JOptionPane.showMessageDialog(null, "Extract Phases first");
 				}
@@ -304,35 +301,36 @@ public class BusinessLogic {
 	}
 
 	protected void showClusterSelectionToZoomArea(int selectedColumn, String selectedCluster) {
-		
-		PldConstruction table = globalDataKeeper.showClusterSelectionToZoomArea(this.gui.tablesSelected, selectedColumn);
-		
+
+		PldConstruction table = globalDataKeeper.showClusterSelectionToZoomArea(gui.tablesSelected,
+				selectedColumn);
+
 		final String[] columns = table.constructColumns();
 		final String[][] rows = table.constructRows();
-		this.gui.segmentSizeZoomArea = table.getSegmentSize();
-		this.gui.finalColumnsZoomArea = columns;
-		this.gui.finalRowsZoomArea = rows;
-		this.gui.tabbedPane.setSelectedIndex(0);
-		
+		gui.segmentSizeZoomArea = table.getSegmentSize();
+		gui.finalColumnsZoomArea = columns;
+		gui.finalRowsZoomArea = rows;
+		gui.tabbedPane.setSelectedIndex(0);
+
 		makeZoomAreaTableForCluster();
 
 	}
 
 	protected void makeZoomAreaTable() {
-		this.gui.showingPld = false;
-		int numberOfColumns = this.gui.finalRowsZoomArea[0].length;
-		int numberOfRows = this.gui.finalRowsZoomArea.length;
+		gui.showingPld = false;
+		int numberOfColumns = gui.finalRowsZoomArea[0].length;
+		int numberOfRows = gui.finalRowsZoomArea.length;
 
 		rowsZoom = new String[numberOfRows][numberOfColumns];
 
 		for (int i = 0; i < numberOfRows; i++) {
 
-			rowsZoom[i][0] = this.gui.finalRowsZoomArea[i][0];
+			rowsZoom[i][0] = gui.finalRowsZoomArea[i][0];
 		}
 
-		this.gui.zoomModel = new MyTableModel(this.gui.finalColumnsZoomArea, rowsZoom);
+		gui.zoomModel = new MyTableModel(gui.finalColumnsZoomArea, rowsZoom);
 
-		final JvTable zoomTable = new JvTable(this.gui.zoomModel);
+		final JvTable zoomTable = new JvTable(gui.zoomModel);
 
 		zoomTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		zoomTable.setShowGrid(false);
@@ -350,19 +348,22 @@ public class BusinessLogic {
 			}
 		}
 
-		zoomTable.setDefaultRenderer(Object.class, zoomTableListenerHandler.createZoomAreaDefaultTableRenderer(rowsZoom));
-		
+		zoomTable.setDefaultRenderer(Object.class,
+				zoomTableListenerHandler.createZoomAreaDefaultTableRenderer(rowsZoom));
+
 		zoomTable.addMouseListener(zoomTableListenerHandler.createZoomAreaMouseClickedHandler());
-		
+
 		zoomTable.addMouseListener(zoomTableListenerHandler.createZoomAreaRightClickHandler());
-		
-		zoomTable.getTableHeader().addMouseListener(zoomTableListenerHandler.createZoomAreaColumnRightClickHandler(zoomTable));
-		
-		zoomTable.getTableHeader().addMouseListener(zoomTableListenerHandler.createZoomAreaRightClickReleasedHandler(zoomTable));
-		
+
+		zoomTable.getTableHeader()
+				.addMouseListener(zoomTableListenerHandler.createZoomAreaColumnRightClickHandler(zoomTable));
+
+		zoomTable.getTableHeader()
+				.addMouseListener(zoomTableListenerHandler.createZoomAreaRightClickReleasedHandler(zoomTable));
+
 		gui.zoomAreaTable = zoomTable;
 		gui.tmpScrollPaneZoomArea.setViewportView(gui.zoomAreaTable);
-		
+
 		jItemsHandler.setJScrollPanePosition(gui.tmpScrollPaneZoomArea, 300, 300, 950, 250);
 
 		gui.lifeTimePanel.setCursor(gui.getCursor());
@@ -371,8 +372,8 @@ public class BusinessLogic {
 	}
 
 	protected void showGeneralLifetimePhasesPLDAction() {
-		if (!(this.gui.project == null)) {
-			this.gui.wholeCol = -1;
+		if (!(gui.project == null)) {
+			gui.wholeCol = -1;
 			ParametersJDialog jD = new ParametersJDialog(false);
 
 			jD.setModal(true);
@@ -380,18 +381,18 @@ public class BusinessLogic {
 			jD.setVisible(true);
 
 			if (jD.getConfirmation()) {
-				
-				this.gui.timeWeight = jD.getTimeWeight();
-				this.gui.changeWeight = jD.getChangeWeight();
-				this.gui.preProcessingTime = jD.getPreProcessingTime();
-				this.gui.preProcessingChange = jD.getPreProcessingChange();
-				this.gui.numberOfPhases = jD.getNumberOfPhases();
 
-				System.out.println(this.gui.timeWeight + " " + this.gui.changeWeight);
+				gui.timeWeight = jD.getTimeWeight();
+				gui.changeWeight = jD.getChangeWeight();
+				gui.preProcessingTime = jD.getPreProcessingTime();
+				gui.preProcessingChange = jD.getPreProcessingChange();
+				gui.numberOfPhases = jD.getNumberOfPhases();
 
-				PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(gui.inputCsv,
-						gui.outputAssessment1, gui.outputAssessment2, gui.timeWeight,
-						gui.changeWeight, gui.preProcessingTime, gui.preProcessingChange);
+				System.out.println(gui.timeWeight + " " + gui.changeWeight);
+
+				PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(gui.inputCsv, gui.outputAssessment1,
+						gui.outputAssessment2, gui.timeWeight, gui.changeWeight, gui.preProcessingTime,
+						gui.preProcessingChange);
 
 				globalDataKeeper.populateWithPhases(mainEngine, gui.numberOfPhases);
 
@@ -399,16 +400,16 @@ public class BusinessLogic {
 					TableConstructionPhases table = globalDataKeeper.createTableConstructionPhases();
 					final String[] columns = table.constructColumns();
 					final String[][] rows = table.constructRows();
-					this.gui.segmentSize = table.getSegmentSize();
+					gui.segmentSize = table.getSegmentSize();
 					System.out.println("Schemas: " + globalDataKeeper.getAllPPLSchemas().size());
 					System.out.println("C: " + columns.length + " R: " + rows.length);
 
-					this.gui.finalColumns = columns;
-					this.gui.finalRows = rows;
-					this.gui.tabbedPane.setSelectedIndex(0);
+					gui.finalColumns = columns;
+					gui.finalRows = rows;
+					gui.tabbedPane.setSelectedIndex(0);
 					makeGeneralTablePhases();
 					fillPhasesTree();
-					
+
 				} else {
 					JOptionPane.showMessageDialog(null, "Extract Phases first");
 				}
@@ -418,65 +419,67 @@ public class BusinessLogic {
 			JOptionPane.showMessageDialog(null, "Please select a project first!");
 
 		}
-		
+
 	}
 
 	public void fillClustersTree() {
 
 		TreeConstructionPhasesWithClusters tc = globalDataKeeper.createTreeConstructionPhasesWithClusters();
-		this.gui.tablesTree = tc.constructTree();
+		gui.tablesTree = tc.constructTree();
 
-		this.gui.tablesTree.addTreeSelectionListener(new TreeSelectionListener() {
-            public void valueChanged(TreeSelectionEvent ae) {
-                TreePath selection = ae.getPath();
-                gui.selectedFromTree.add(selection.getLastPathComponent().toString());
-                System.out.println(selection.getLastPathComponent().toString() + " is selected");
-            }
-        });
-				
-		this.gui.tablesTree.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (SwingUtilities.isRightMouseButton(e)) {
-                    final JPopupMenu popupMenu = new JPopupMenu();
-                    JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
-                    showDetailsItem.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            gui.LifeTimeTable.repaint();
-                        }
-                    });
-                    popupMenu.add(showDetailsItem);
-                    popupMenu.show(gui.tablesTree, e.getX(), e.getY());
-                }
-            }
-        });
+		gui.tablesTree.addTreeSelectionListener(new TreeSelectionListener() {
+			public void valueChanged(TreeSelectionEvent ae) {
+				TreePath selection = ae.getPath();
+				gui.selectedFromTree.add(selection.getLastPathComponent().toString());
+				System.out.println(selection.getLastPathComponent().toString() + " is selected");
+			}
+		});
 
-		this.gui.treeScrollPane.setViewportView(this.gui.tablesTree);
-		jItemsHandler.setJScrollPanePosition(this.gui.treeScrollPane, 5, 5, 250, 170);
-		
-		this.gui.tablesTreePanel.add(this.gui.treeScrollPane);
-		this.gui.treeLabel.setText("Clusters Tree");
+		gui.tablesTree.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if (SwingUtilities.isRightMouseButton(e)) {
+					final JPopupMenu popupMenu = new JPopupMenu();
+					JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
+					showDetailsItem.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							gui.LifeTimeTable.repaint();
+						}
+					});
+					popupMenu.add(showDetailsItem);
+					popupMenu.show(gui.tablesTree, e.getX(), e.getY());
+				}
+			}
+		});
 
-		this.gui.sideMenu.revalidate();
-		this.gui.sideMenu.repaint();
+		gui.treeScrollPane.setViewportView(gui.tablesTree);
+		jItemsHandler.setJScrollPanePosition(gui.treeScrollPane, 5, 5, 250, 170);
+
+		gui.tablesTreePanel.add(gui.treeScrollPane);
+		gui.treeLabel.setText("Clusters Tree");
+
+		gui.sideMenu.revalidate();
+		gui.sideMenu.repaint();
 
 	}
 
 	public void showGeneralLifetimeIDUAction() {
-		if (!(this.gui.currentProject == null)) {
-			this.gui.zoomInButton.setVisible(true);
-			this.gui.zoomOutButton.setVisible(true);
+		if (!(gui.currentProject == null)) {
+			gui.zoomInButton.setVisible(true);
+			gui.zoomOutButton.setVisible(true);
+			
 			TableConstructionIDU table = globalDataKeeper.createTableConstructionIDU();
+			
 			final String[] columns = table.constructColumns();
 			final String[][] rows = table.constructRows();
-			this.gui.segmentSizeZoomArea = table.getSegmentSize();
+			gui.segmentSizeZoomArea = table.getSegmentSize();
 			System.out.println("Schemas: " + globalDataKeeper.getAllPPLSchemas().size());
 			System.out.println("C: " + columns.length + " R: " + rows.length);
 
-			this.gui.finalColumnsZoomArea = columns;
-			this.gui.finalRowsZoomArea = rows;
-			this.gui.tabbedPane.setSelectedIndex(0);
+			gui.finalColumnsZoomArea = columns;
+			gui.finalRowsZoomArea = rows;
+			gui.tabbedPane.setSelectedIndex(0);
 			makeGeneralTableIDU();
 			fillTree();
 
@@ -489,42 +492,42 @@ public class BusinessLogic {
 	public void fillPhasesTree() {
 
 		TreeConstructionPhases tc = new TreeConstructionPhases(this.globalDataKeeper);
-		this.gui.tablesTree = tc.constructTree();
+		gui.tablesTree = tc.constructTree();
 
-		this.gui.tablesTree.addTreeSelectionListener(new TreeSelectionListener() {
-            public void valueChanged(TreeSelectionEvent ae) {
-                TreePath selection = ae.getPath();
-                gui.selectedFromTree.add(selection.getLastPathComponent().toString());
-                System.out.println(selection.getLastPathComponent().toString() + " is selected");
-            }
-        });
-		
-		this.gui.tablesTree.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (SwingUtilities.isRightMouseButton(e)) {
-                    final JPopupMenu popupMenu = new JPopupMenu();
-                    JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
-                    showDetailsItem.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                        	gui.LifeTimeTable.repaint();
-                        }
-                    });
-                    popupMenu.add(showDetailsItem);
-                    popupMenu.show(gui.tablesTree, e.getX(), e.getY());
-                }
-            }
-        });
+		gui.tablesTree.addTreeSelectionListener(new TreeSelectionListener() {
+			public void valueChanged(TreeSelectionEvent ae) {
+				TreePath selection = ae.getPath();
+				gui.selectedFromTree.add(selection.getLastPathComponent().toString());
+				System.out.println(selection.getLastPathComponent().toString() + " is selected");
+			}
+		});
 
-		this.gui.treeScrollPane.setViewportView(this.gui.tablesTree);
-		jItemsHandler.setJScrollPanePosition(this.gui.treeScrollPane, 5, 5, 250, 170);
-		
-		this.gui.tablesTreePanel.add(this.gui.treeScrollPane);
-		this.gui.treeLabel.setText("Phases Tree");
+		gui.tablesTree.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if (SwingUtilities.isRightMouseButton(e)) {
+					final JPopupMenu popupMenu = new JPopupMenu();
+					JMenuItem showDetailsItem = new JMenuItem("Show This into the Table");
+					showDetailsItem.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							gui.LifeTimeTable.repaint();
+						}
+					});
+					popupMenu.add(showDetailsItem);
+					popupMenu.show(gui.tablesTree, e.getX(), e.getY());
+				}
+			}
+		});
 
-		this.gui.sideMenu.revalidate();
-		this.gui.sideMenu.repaint();
+		gui.treeScrollPane.setViewportView(gui.tablesTree);
+		jItemsHandler.setJScrollPanePosition(gui.treeScrollPane, 5, 5, 250, 170);
+
+		gui.tablesTreePanel.add(gui.treeScrollPane);
+		gui.treeLabel.setText("Phases Tree");
+
+		gui.sideMenu.revalidate();
+		gui.sideMenu.repaint();
 
 	}
 
@@ -532,49 +535,48 @@ public class BusinessLogic {
 		TableConstructionIDU table = globalDataKeeper.createTableConstructionIDU();
 		final String[] columns = table.constructColumns();
 		final String[][] rows = table.constructRows();
-		this.gui.segmentSizeZoomArea = table.getSegmentSize();
+		gui.segmentSizeZoomArea = table.getSegmentSize();
 
-		this.gui.finalColumnsZoomArea = columns;
-		this.gui.finalRowsZoomArea = rows;
-		this.gui.tabbedPane.setSelectedIndex(0);
+		gui.finalColumnsZoomArea = columns;
+		gui.finalRowsZoomArea = rows;
+		gui.tabbedPane.setSelectedIndex(0);
 		makeGeneralTableIDU();
 
-		this.gui.timeWeight = (float) 0.5;
-		this.gui.changeWeight = (float) 0.5;
-		this.gui.preProcessingTime = false;
-		this.gui.preProcessingChange = false;
+		gui.timeWeight = (float) 0.5;
+		gui.changeWeight = (float) 0.5;
+		gui.preProcessingTime = false;
+		gui.preProcessingChange = false;
 		if (globalDataKeeper.getAllPPLTransitions().size() < 56) {
-			this.gui.numberOfPhases = 40;
+			gui.numberOfPhases = 40;
 		} else {
-			this.gui.numberOfPhases = 56;
+			gui.numberOfPhases = 56;
 		}
-		this.gui.numberOfClusters = 14;
+		gui.numberOfClusters = 14;
 
-		System.out.println(this.gui.timeWeight + " " + this.gui.changeWeight);
+		System.out.println(gui.timeWeight + " " + gui.changeWeight);
 
 		PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(gui.inputCsv, gui.outputAssessment1,
 				gui.outputAssessment2, gui.timeWeight, gui.changeWeight, gui.preProcessingTime,
 				gui.preProcessingChange);
 
 		globalDataKeeper.populateWithPhases(mainEngine, gui.numberOfPhases);
-		
+
 		Double b = new Double(0.3);
 		Double d = new Double(0.3);
 		Double c = new Double(0.3);
 
 		TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper, b, d, c);
-		
+
 		globalDataKeeper.populateWithClusters(mainEngine2, gui.numberOfClusters);
-		
 
 		if (globalDataKeeper.getPhaseCollectors().size() != 0) {
 			TableConstructionWithClusters tableP = globalDataKeeper.createTableConstructionWithClusters();
 			final String[] columnsP = tableP.constructColumns();
 			final String[][] rowsP = tableP.constructRows();
-			this.gui.segmentSize = tableP.getSegmentSize();
-			this.gui.finalColumns = columnsP;
-			this.gui.finalRows = rowsP;
-			this.gui.tabbedPane.setSelectedIndex(0);
+			gui.segmentSize = tableP.getSegmentSize();
+			gui.finalColumns = columnsP;
+			gui.finalRows = rowsP;
+			gui.tabbedPane.setSelectedIndex(0);
 			makeGeneralTablePhases();
 			fillClustersTree();
 		}
@@ -585,16 +587,16 @@ public class BusinessLogic {
 	}
 
 	protected void showLifetimeTableAction() {
-		
-		if (!(this.gui.currentProject == null)) {
-			
+
+		if (!(gui.currentProject == null)) {
+
 			TableConstructionAllSquaresIncluded table = globalDataKeeper.createTableConstructionAllSquaresIncluded();
 			final String[] columns = table.constructColumns();
 			final String[][] rows = table.constructRows();
-			this.gui.segmentSizeDetailedTable = table.getSegmentSize();
-			this.gui.tabbedPane.setSelectedIndex(0);
-			this.gui.makeDetailedTable(columns, rows, true);
-			
+			gui.segmentSizeDetailedTable = table.getSegmentSize();
+			gui.tabbedPane.setSelectedIndex(0);
+			gui.makeDetailedTable(columns, rows, true);
+
 		} else {
 			JOptionPane.showMessageDialog(null, "Select a Project first");
 			return;
@@ -607,15 +609,15 @@ public class BusinessLogic {
 		File dir = new File("filesHandler/inis");
 		JFileChooser fcOpen1 = new JFileChooser();
 		fcOpen1.setCurrentDirectory(dir);
-		int returnVal = fcOpen1.showDialog(this.gui, "Open");
+		int returnVal = fcOpen1.showDialog(gui, "Open");
 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 
 			File file = fcOpen1.getSelectedFile();
 			System.out.println(file.toString());
-			this.gui.project = file.getName();
+			gui.project = file.getName();
 			fileName = file.toString();
-			System.out.println("!!" + this.gui.project);
+			System.out.println("!!" + gui.project);
 
 			BufferedReader br;
 			try {
@@ -628,22 +630,22 @@ public class BusinessLogic {
 						break;
 					if (line.contains("Project-name")) {
 						String[] projectNameTable = line.split(":");
-						this.gui.projectName = projectNameTable[1];
+						gui.projectName = projectNameTable[1];
 					} else if (line.contains("Dataset-txt")) {
 						String[] datasetTxtTable = line.split(":");
-						this.gui.datasetTxt = datasetTxtTable[1];
+						gui.datasetTxt = datasetTxtTable[1];
 					} else if (line.contains("Input-csv")) {
 						String[] inputCsvTable = line.split(":");
-						this.gui.inputCsv = inputCsvTable[1];
+						gui.inputCsv = inputCsvTable[1];
 					} else if (line.contains("Assessement1-output")) {
 						String[] outputAss1 = line.split(":");
-						this.gui.outputAssessment1 = outputAss1[1];
+						gui.outputAssessment1 = outputAss1[1];
 					} else if (line.contains("Assessement2-output")) {
 						String[] outputAss2 = line.split(":");
-						this.gui.outputAssessment2 = outputAss2[1];
+						gui.outputAssessment2 = outputAss2[1];
 					} else if (line.contains("Transition-xml")) {
 						String[] transitionXmlTable = line.split(":");
-						this.gui.transitionsFile = transitionXmlTable[1];
+						gui.transitionsFile = transitionXmlTable[1];
 					}
 
 				}
@@ -657,11 +659,11 @@ public class BusinessLogic {
 
 			}
 
-			System.out.println(this.gui.projectName);
+			System.out.println(gui.projectName);
 
-			CreateProjectJDialog createProjectDialog = new CreateProjectJDialog(this.gui.projectName,
-					this.gui.datasetTxt, this.gui.inputCsv, this.gui.outputAssessment1, this.gui.outputAssessment2,
-					this.gui.transitionsFile);
+			CreateProjectJDialog createProjectDialog = new CreateProjectJDialog(gui.projectName,
+					gui.datasetTxt, gui.inputCsv, gui.outputAssessment1, gui.outputAssessment2,
+					gui.transitionsFile);
 
 			createProjectDialog.setModal(true);
 			createProjectDialog.setVisible(true);
@@ -672,9 +674,9 @@ public class BusinessLogic {
 
 				file = createProjectDialog.getFile();
 				System.out.println(file.toString());
-				this.gui.project = file.getName();
+				gui.project = file.getName();
 				fileName = file.toString();
-				System.out.println("!!" + this.gui.project);
+				System.out.println("!!" + gui.project);
 
 				try {
 					importData(fileName);
@@ -701,15 +703,15 @@ public class BusinessLogic {
 		File dir = new File("filesHandler/inis");
 		JFileChooser fcOpen1 = new JFileChooser();
 		fcOpen1.setCurrentDirectory(dir);
-		int returnVal = fcOpen1.showDialog(this.gui, "Open");
+		int returnVal = fcOpen1.showDialog(gui, "Open");
 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 
 			File file = fcOpen1.getSelectedFile();
 			System.out.println(file.toString());
-			this.gui.project = file.getName();
+			gui.project = file.getName();
 			fileName = file.toString();
-			System.out.println("!!" + this.gui.project);
+			System.out.println("!!" + gui.project);
 			System.out.println(fileName);
 
 		} else {
@@ -735,15 +737,15 @@ public class BusinessLogic {
 	}
 
 	public void zoomOutAction() {
-		this.gui.rowHeight = this.gui.rowHeight - 2;
-		this.gui.columnWidth = this.gui.columnWidth - 1;
-		if (this.gui.rowHeight < 1) {
-			this.gui.rowHeight = 1;
+		gui.rowHeight = gui.rowHeight - 2;
+		gui.columnWidth = gui.columnWidth - 1;
+		if (gui.rowHeight < 1) {
+			gui.rowHeight = 1;
 		}
-		if (this.gui.columnWidth < 1) {
-			this.gui.columnWidth = 1;
+		if (gui.columnWidth < 1) {
+			gui.columnWidth = 1;
 		}
-		this.gui.zoomAreaTable.setZoom(this.gui.rowHeight, this.gui.columnWidth);
+		gui.zoomAreaTable.setZoom(gui.rowHeight, gui.columnWidth);
 	}
 
 	public void importData(String fileName) throws IOException, RecognitionException {
@@ -797,7 +799,7 @@ public class BusinessLogic {
 		fillTree();
 
 		gui.currentProject = fileName;
-		
+
 	}
 
 	public void makeGeneralTableIDU() {
@@ -813,7 +815,7 @@ public class BusinessLogic {
 
 		int numberOfColumns = gui.finalRowsZoomArea[0].length;
 		int numberOfRows = gui.finalRowsZoomArea.length;
-		
+
 		gui.selectedRows = new ArrayList<Integer>();
 
 		String[][] rows = new String[numberOfRows][numberOfColumns];
@@ -873,19 +875,20 @@ public class BusinessLogic {
 			}
 		}
 
-		renderer = new IDUTableRenderer(gui, gui.finalRowsZoomArea, globalDataKeeper,
-				gui.segmentSize);
+		renderer = new IDUTableRenderer(gui, gui.finalRowsZoomArea, globalDataKeeper, gui.segmentSize);
 
 		generalTable.setDefaultRenderer(Object.class, generalTableListenerHandler.createIDUDefaultTableCellRenderer());
 
-        generalTable.addMouseListener(generalTableListenerHandler.createIDUOneMouseClickAdapter(renderer));
+		generalTable.addMouseListener(generalTableListenerHandler.createIDUOneMouseClickAdapter(renderer));
 
-        generalTable.addMouseListener(generalTableListenerHandler.createIDURightClickRowAdapter(generalTable));
+		generalTable.addMouseListener(generalTableListenerHandler.createIDURightClickRowAdapter(generalTable));
 
-        generalTable.getTableHeader().addMouseListener(generalTableListenerHandler.createIDUMouseEvent(generalTable, renderer));
+		generalTable.getTableHeader()
+				.addMouseListener(generalTableListenerHandler.createIDUMouseEvent(generalTable, renderer));
 
-        generalTable.getTableHeader().addMouseListener(generalTableListenerHandler.createIDURightClickAdapter(generalTable, renderer));
-		
+		generalTable.getTableHeader()
+				.addMouseListener(generalTableListenerHandler.createIDURightClickAdapter(generalTable, renderer));
+
 		gui.zoomAreaTable = generalTable;
 		gui.tmpScrollPaneZoomArea.setViewportView(gui.zoomAreaTable);
 		jItemsHandler.setJScrollPanePosition(gui.tmpScrollPaneZoomArea, 300, 300, 950, 250);
@@ -897,8 +900,9 @@ public class BusinessLogic {
 
 	public void showSelectionToZoomArea(int selectedColumn) {
 
-		System.out.println("selectedColumn "+selectedColumn+" tablesSelected "+gui.tablesSelected);
-		TableConstructionZoomArea table = globalDataKeeper.createTableConstructionZoomArea(gui.tablesSelected, selectedColumn);
+		System.out.println("selectedColumn " + selectedColumn + " tablesSelected " + gui.tablesSelected);
+		TableConstructionZoomArea table = globalDataKeeper.createTableConstructionZoomArea(gui.tablesSelected,
+				selectedColumn);
 		final String[] columns = table.constructColumns();
 		final String[][] rows = table.constructRows();
 		gui.segmentSizeZoomArea = table.getSegmentSize();
@@ -912,12 +916,12 @@ public class BusinessLogic {
 		makeZoomAreaTable();
 
 	}
-	
+
 	protected void makeZoomAreaTableForCluster() {
 		gui.showingPld = false;
 		int numberOfColumns = gui.finalRowsZoomArea[0].length;
 		int numberOfRows = gui.finalRowsZoomArea.length;
-		this.gui.undoButton.setVisible(true);
+		gui.undoButton.setVisible(true);
 
 		final String[][] rowsZoom = new String[numberOfRows][numberOfColumns];
 
@@ -949,14 +953,16 @@ public class BusinessLogic {
 		}
 
 		zoomTable.setDefaultRenderer(Object.class, zoomTableListenerHandler.createClusterDefaultTableRenderer());
-		
+
 		zoomTable.addMouseListener(zoomTableListenerHandler.createClusterOneClickHandler());
 
 		zoomTable.addMouseListener(zoomTableListenerHandler.createClusterRightClickHandler(zoomTable));
-		
-		zoomTable.getTableHeader().addMouseListener(zoomTableListenerHandler.createClusterColumnClickedHandler(zoomTable));
 
-		zoomTable.getTableHeader().addMouseListener(zoomTableListenerHandler.createClusterColumnRightClickHandler(zoomTable));
+		zoomTable.getTableHeader()
+				.addMouseListener(zoomTableListenerHandler.createClusterColumnClickedHandler(zoomTable));
+
+		zoomTable.getTableHeader()
+				.addMouseListener(zoomTableListenerHandler.createClusterColumnRightClickHandler(zoomTable));
 
 		gui.zoomAreaTable = zoomTable;
 

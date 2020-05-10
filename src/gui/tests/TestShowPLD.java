@@ -47,10 +47,10 @@ public class TestShowPLD {
 			fileStream = new PrintStream("Test-Files/tmp-atlas-testShowPLD.txt");
 			System.setOut(fileStream);
 			
-			int numberOfRows = businessLogic.gui.finalRowsZoomArea.length;
+			int numberOfRows = frame.finalRowsZoomArea.length;
 			for (int i = 0; i < numberOfRows; i++) {
-				for (int j = 0; j < businessLogic.gui.finalRowsZoomArea[i].length; j++) {
-					System.out.println(businessLogic.gui.finalRowsZoomArea[i][j]);
+				for (int j = 0; j < frame.finalRowsZoomArea[i].length; j++) {
+					System.out.println(frame.finalRowsZoomArea[i][j]);
 				}
 			}
 			
@@ -78,7 +78,7 @@ public class TestShowPLD {
 	
 	@SuppressWarnings("serial")
 	private void fakeZoom() {
-		businessLogic.gui.tablesSelected = new ArrayList<String>() {{add("hlt_property");}};
+		frame.tablesSelected = new ArrayList<String>() {{add("hlt_property");}};
 		businessLogic.showSelectionToZoomArea(0);
 		
 	}

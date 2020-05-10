@@ -35,7 +35,6 @@ public class TestShowPhasesPLD {
 	@Test
 	public void testShowPhasesPLD() {
 
-		GlobalDataKeeper globalDataKeeper = this.businessLogic.getGlobalDataKeeper();
 		String filename = "filesHandler/inis/Atlas.ini";
 		try {
 			businessLogic.importData(filename);
@@ -65,7 +64,8 @@ public class TestShowPhasesPLD {
 			businessLogic.getGlobalDataKeeper().setPhaseCollectors(mainEngine.getPhaseCollectors());
 
 			if (businessLogic.getGlobalDataKeeper().getPhaseCollectors().size() != 0) {
-				TableConstructionPhases table = globalDataKeeper.createTableConstructionPhases();
+				TableConstructionPhases table = businessLogic.getGlobalDataKeeper().createTableConstructionPhases();
+				
 				final String[] columns = table.constructColumns();
 				final String[][] rows = table.constructRows();
 				this.gui.segmentSize = table.getSegmentSize();

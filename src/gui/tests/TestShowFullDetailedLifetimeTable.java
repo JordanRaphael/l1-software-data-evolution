@@ -1,6 +1,6 @@
 package gui.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -8,15 +8,15 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import javax.swing.JOptionPane;
+
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Test;
 
 import data.dataKeeper.GlobalDataKeeper;
 import data.tableConstructors.TableConstructionAllSquaresIncluded;
-import data.tableConstructors.TableConstructionPhases;
 import gui.mainEngine.BusinessLogic;
 import gui.mainEngine.Gui;
-import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
 
 public class TestShowFullDetailedLifetimeTable {
 	
@@ -33,7 +33,6 @@ public class TestShowFullDetailedLifetimeTable {
 	@Test
 	public void testShowFullDetailedLifetimeTable() {
 		
-		GlobalDataKeeper globalDataKeeper = this.businessLogic.getGlobalDataKeeper();
 		String filename = "filesHandler/inis/Atlas.ini";
 		try {
 			businessLogic.importData(filename);
@@ -46,7 +45,7 @@ public class TestShowFullDetailedLifetimeTable {
 			System.setOut(fileStream);
 			
 			if (!(gui.currentProject == null)) {
-				TableConstructionAllSquaresIncluded table = globalDataKeeper.createTableConstructionAllSquaresIncluded();
+				TableConstructionAllSquaresIncluded table = businessLogic.getGlobalDataKeeper().createTableConstructionAllSquaresIncluded();
 				final String[] columns = table.constructColumns();
 				final String[][] rows = table.constructRows();
 				gui.segmentSizeDetailedTable = table.getSegmentSize();
