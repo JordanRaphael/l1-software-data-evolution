@@ -19,8 +19,10 @@ import data.tableConstructors.TableConstructionWithClusters;
 import data.tableConstructors.TableConstructionZoomArea;
 import data.treeElements.TreeConstructionGeneral;
 import data.treeElements.TreeConstructionPhasesWithClusters;
+import phaseAnalyzer.commons.Phase;
 import phaseAnalyzer.commons.PhaseCollector;
 import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
+import tableClustering.clusterExtractor.commons.Cluster;
 import tableClustering.clusterExtractor.commons.ClusterCollector;
 import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
 

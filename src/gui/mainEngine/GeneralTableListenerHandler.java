@@ -17,8 +17,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
 import data.dataKeeper.GlobalDataKeeper;
+import data.dataPPL.pplSQLSchema.PPLTable;
 import gui.tableElements.commons.JvTable;
 import gui.tableElements.tableRenderers.IDUTableRenderer;
+import phaseAnalyzer.commons.Phase;
+import tableClustering.clusterExtractor.commons.Cluster;
 
 public class GeneralTableListenerHandler {
 
@@ -51,23 +54,17 @@ public class GeneralTableListenerHandler {
 			c.setForeground(fr);
 
 			if (column == gui.wholeCol && gui.wholeCol != 0) {
-
+				Phase phase  = globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(column - 1);
 				String description = table.getColumnName(column) + "\n";
 				description = description + "First Transition ID:"
-						+ globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(column - 1).getStartPos()
-						+ "\n";
+						+ phase.getStartPos() + "\n";
 				description = description + "Last Transition ID:"
-						+ globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(column - 1).getEndPos()
-						+ "\n";
+						+ phase.getEndPos() + "\n";
 				description = description + "Total Changes For This Phase:"
-						+ globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(column - 1).getTotalUpdates()
-						+ "\n";
-				description = description + "Additions For This Phase:" + globalDataKeeper.getPhaseCollectors()
-						.get(0).getPhases().get(column - 1).getTotalAdditionsOfPhase() + "\n";
-				description = description + "Deletions For This Phase:" + globalDataKeeper.getPhaseCollectors()
-						.get(0).getPhases().get(column - 1).getTotalDeletionsOfPhase() + "\n";
-				description = description + "Updates For This Phase:" + globalDataKeeper.getPhaseCollectors().get(0)
-						.getPhases().get(column - 1).getTotalUpdatesOfPhase() + "\n";
+						+ phase.getTotalUpdates() + "\n";
+				description = description + "Additions For This Phase:" + phase.getTotalAdditionsOfPhase() + "\n";
+				description = description + "Deletions For This Phase:" + phase.getTotalDeletionsOfPhase() + "\n";
+				description = description + "Updates For This Phase:" + phase.getTotalUpdatesOfPhase() + "\n";
 
 				gui.descriptionText.setText(description);
 
@@ -79,38 +76,28 @@ public class GeneralTableListenerHandler {
 				if (isSelected) {
 
 					if (gui.finalRows[row][0].contains("Cluster")) {
+						
+						Cluster cluster = globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row);
 						String description = "Cluster:" + gui.finalRows[row][0] + "\n";
-						description = description + "Birth Version Name:" + globalDataKeeper.getClusterCollectors()
-								.get(0).getClusters().get(row).getBirthSqlFile() + "\n";
-						description = description + "Birth Version ID:"
-								+ globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getBirth()
-								+ "\n";
-						description = description + "Death Version Name:" + globalDataKeeper.getClusterCollectors()
-								.get(0).getClusters().get(row).getDeathSqlFile() + "\n";
-						description = description + "Death Version ID:"
-								+ globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getDeath()
-								+ "\n";
-						description = description + "Tables:" + globalDataKeeper.getClusterCollectors().get(0)
-								.getClusters().get(row).getNamesOfTables().size() + "\n";
-						description = description + "Total Changes:" + globalDataKeeper.getClusterCollectors()
-								.get(0).getClusters().get(row).getTotalChanges() + "\n";
+						
+						description = description + "Birth Version Name:" + cluster.getBirthSqlFile() + "\n";
+						description = description + "Birth Version ID:" + cluster.getBirth() + "\n";
+						description = description + "Death Version Name:" + cluster.getDeathSqlFile() + "\n";
+						description = description + "Death Version ID:" + cluster.getDeath() + "\n";
+						description = description + "Tables:" + cluster.getNamesOfTables().size() + "\n";
+						description = description + "Total Changes:" + cluster.getTotalChanges() + "\n";
 
 						gui.descriptionText.setText(description);
 					} else {
+						
+						PPLTable tmpTable = globalDataKeeper.getAllPPLTables().get(gui.finalRows[row][0]);
 						String description = "Table:" + gui.finalRows[row][0] + "\n";
-						description = description + "Birth Version Name:"
-								+ globalDataKeeper.getAllPPLTables().get(gui.finalRows[row][0]).getBirth() + "\n";
-						description = description + "Birth Version ID:"
-								+ globalDataKeeper.getAllPPLTables().get(gui.finalRows[row][0]).getBirthVersionID()
-								+ "\n";
-						description = description + "Death Version Name:"
-								+ globalDataKeeper.getAllPPLTables().get(gui.finalRows[row][0]).getDeath() + "\n";
-						description = description + "Death Version ID:"
-								+ globalDataKeeper.getAllPPLTables().get(gui.finalRows[row][0]).getDeathVersionID()
-								+ "\n";
-						description = description + "Total Changes:"
-								+ globalDataKeeper.getAllPPLTables().get(gui.finalRows[row][0]).getTotalChanges()
-								+ "\n";
+						
+						description = description + "Birth Version Name:" + tmpTable.getBirth() + "\n";
+						description = description + "Birth Version ID:" + tmpTable.getBirthVersionID() + "\n";
+						description = description + "Death Version Name:" + tmpTable.getDeath() + "\n";
+						description = description + "Death Version ID:" + tmpTable.getDeathVersionID() + "\n";
+						description = description + "Total Changes:" + tmpTable.getTotalChanges() + "\n";
 						gui.descriptionText.setText(description);
 
 					}
@@ -134,26 +121,24 @@ public class GeneralTableListenerHandler {
 
 					String description = "";
 					if (!table.getColumnName(column).contains("Table name")) {
-
+						
+						Phase tmpPhase = globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(column - 1);
+						
 						if (gui.finalRows[row][0].contains("Cluster")) {
-
+							
+							Cluster cluster = globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row);
+							
 							description = gui.finalRows[row][0] + "\n";
-							description = description + "Tables:" + globalDataKeeper.getClusterCollectors().get(0)
-									.getClusters().get(row).getNamesOfTables().size() + "\n\n";
-
+							description = description + "Tables:" + cluster.getNamesOfTables().size() + "\n\n";
 							description = description + table.getColumnName(column) + "\n";
-							description = description + "First Transition ID:" + globalDataKeeper
-									.getPhaseCollectors().get(0).getPhases().get(column - 1).getStartPos() + "\n";
-							description = description + "Last Transition ID:" + globalDataKeeper
-									.getPhaseCollectors().get(0).getPhases().get(column - 1).getEndPos() + "\n\n";
+							description = description + "First Transition ID:" + tmpPhase.getStartPos() + "\n";
+							description = description + "Last Transition ID:" + tmpPhase.getEndPos() + "\n\n";
 							description = description + "Total Changes For This Phase:" + tmpValue + "\n";
 
 						} else {
 							description = table.getColumnName(column) + "\n";
-							description = description + "First Transition ID:" + globalDataKeeper
-									.getPhaseCollectors().get(0).getPhases().get(column - 1).getStartPos() + "\n";
-							description = description + "Last Transition ID:" + globalDataKeeper
-									.getPhaseCollectors().get(0).getPhases().get(column - 1).getEndPos() + "\n\n";
+							description = description + "First Transition ID:" + tmpPhase.getStartPos() + "\n";
+							description = description + "Last Transition ID:" + tmpPhase.getEndPos() + "\n\n";
 							description = description + "Table:" + gui.finalRows[row][0] + "\n";
 							description = description + "Birth Version Name:"
 									+ globalDataKeeper.getAllPPLTables().get(gui.finalRows[row][0]).getBirth()
@@ -673,5 +658,6 @@ public class GeneralTableListenerHandler {
         
         return adapter;
     }
+	
 
 }
