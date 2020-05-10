@@ -120,9 +120,8 @@ public class SimpleTextParser implements IParser {
 		    currentTransition = transitionsIter.next();
 		    currentTransition.setTimeDistFromPrevious(currentTransition.getTime() - previousTransition.getTime());
 		    previousTransition = currentTransition;
-	    }
-	  
-		
+		}
+
 		return transitionHistory;
 	}
 

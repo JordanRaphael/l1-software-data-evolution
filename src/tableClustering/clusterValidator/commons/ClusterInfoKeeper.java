@@ -16,10 +16,10 @@ import tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluatio
 import tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalClusterMetrics.InternalClusterMetrics;
 
 public class ClusterInfoKeeper {
-	
+
 	private Cluster cluster = new Cluster();
-	private Centroid clusterCentroid=null;
-	private Centroid overallCentroid=null;
+	private Centroid clusterCentroid = null;
+	private Centroid overallCentroid = null;
 	private Double clusterCohesion = null;
 	private Double clusterSeparation = null;
 	private Double clusterEntropy = null;
@@ -27,127 +27,130 @@ public class ClusterInfoKeeper {
 	private ArrayList<Double> recalls = new ArrayList<Double>();
 	private ArrayList<Double> fMeasures = new ArrayList<Double>();
 
-	public ClusterInfoKeeper(Cluster cluster,Centroid overallCentroid){
-		this.cluster=cluster;
-		this.overallCentroid=overallCentroid;
+	public ClusterInfoKeeper(Cluster cluster, Centroid overallCentroid) {
+		this.cluster = cluster;
+		this.overallCentroid = overallCentroid;
 		initialize();
-	}	
-	
-	private void initialize(){
-		
+	}
+
+	private void initialize() {
+
 		initializeCentroid();
 		computeClusterCohesion();
-		computeClusterSeparation();		
-		
+		computeClusterSeparation();
+
 	}
-	
-	private void initializeCentroid(){
-		
-		TreeMap<String, PPLTable> tables=this.cluster.getTables();
-		double x=0;
-		double y=0;
-		double z=0;
-		for(Map.Entry<String,PPLTable> pplTab:tables.entrySet()){
-			x = x +pplTab.getValue().getBirthVersionID();
-			y = y+pplTab.getValue().getDeathVersionID();
-			z= z+pplTab.getValue().getTotalChanges();
+
+	private void initializeCentroid() {
+
+		TreeMap<String, PPLTable> tables = cluster.getTables();
+		double x = 0;
+		double y = 0;
+		double z = 0;
+		for (Map.Entry<String, PPLTable> pplTab : tables.entrySet()) {
+			x = x + pplTab.getValue().getBirthVersionID();
+			y = y + pplTab.getValue().getDeathVersionID();
+			z = z + pplTab.getValue().getTotalChanges();
 		}
-		
-		x= x/tables.size();
-		y= y/tables.size();
-		z= z/tables.size();
-		
-		this.clusterCentroid=new Centroid(x, y, z);
-				
+
+		x = x / tables.size();
+		y = y / tables.size();
+		z = z / tables.size();
+
+		clusterCentroid = new Centroid(x, y, z);
+
 	}
-	
-	private void computeClusterCohesion(){
-		
+
+	private void computeClusterCohesion() {
+
 		InternalClusterMetrics cohesionMetricCalculator = new ClusterCohesionMetric(this);
 		cohesionMetricCalculator.computeMetric();
-		clusterCohesion=cohesionMetricCalculator.getResult();
-		
+		clusterCohesion = cohesionMetricCalculator.getResult();
+
 	}
-	
-	private void computeClusterSeparation(){
-		
-		InternalClusterMetrics separationMetricCalculator = new ClusterSeparationMetric(clusterCentroid,overallCentroid);
+
+	private void computeClusterSeparation() {
+
+		InternalClusterMetrics separationMetricCalculator = new ClusterSeparationMetric(clusterCentroid,
+				overallCentroid);
 		separationMetricCalculator.computeMetric();
-		clusterSeparation=(double)this.cluster.getTables().size()*separationMetricCalculator.getResult();
-		
+		clusterSeparation = (double) cluster.getTables().size() * separationMetricCalculator.getResult();
+
 	}
-	
-	public void computeClusterEntropy(ArrayList<ClassOfObjects> classesOfObjects,ArrayList<Cluster> clusters,int classIndex){
-		
-		ExternalClusterMetric entropyMetricCalculator = new ClusterEntropyMetric(classesOfObjects,clusters,classIndex);
+
+	public void computeClusterEntropy(ArrayList<ClassOfObjects> classesOfObjects, ArrayList<Cluster> clusters,
+			int classIndex) {
+
+		ExternalClusterMetric entropyMetricCalculator = new ClusterEntropyMetric(classesOfObjects, clusters,
+				classIndex);
 		entropyMetricCalculator.compute();
 		clusterEntropy = entropyMetricCalculator.getResult();
-		
+
 	}
-	
-	public void computeClusterPrecision(ArrayList<ClassOfObjects> classesOfObjects){
-		
+
+	public void computeClusterPrecision(ArrayList<ClassOfObjects> classesOfObjects) {
+
 		ExternalClusterMetric precisionMetricCalculator;
-		for(int i=0; i<classesOfObjects.size(); i++){
-			precisionMetricCalculator = new ClusterPrecisionMetric(this.cluster,classesOfObjects.get(i));
+		for (int i = 0; i < classesOfObjects.size(); i++) {
+			precisionMetricCalculator = new ClusterPrecisionMetric(cluster, classesOfObjects.get(i));
 			precisionMetricCalculator.compute();
 			precisions.add(precisionMetricCalculator.getResult());
 		}
-		
+
 	}
-	
-	public void computeClusterRecall(ArrayList<ClassOfObjects> classesOfObjects){
-		
+
+	public void computeClusterRecall(ArrayList<ClassOfObjects> classesOfObjects) {
+
 		ExternalClusterMetric recallMetricCalculator;
-		for(int i=0; i<classesOfObjects.size(); i++){
-			recallMetricCalculator = new ClusterRecallMetric(this.cluster,classesOfObjects.get(i));
+		for (int i = 0; i < classesOfObjects.size(); i++) {
+			recallMetricCalculator = new ClusterRecallMetric(cluster, classesOfObjects.get(i));
 			recallMetricCalculator.compute();
 			recalls.add(recallMetricCalculator.getResult());
 		}
-				
+
 	}
-	
-	public void computeClusterFMeasure(){
-		
+
+	public void computeClusterFMeasure() {
+
 		ExternalClusterMetric fMeasureMetricCalculator;
-		for(int i=0; i<precisions.size(); i++){
-			fMeasureMetricCalculator = new ClusterFMeasureMetric(precisions.get(i),recalls.get(i));
+		for (int i = 0; i < precisions.size(); i++) {
+			fMeasureMetricCalculator = new ClusterFMeasureMetric(precisions.get(i), recalls.get(i));
 			fMeasureMetricCalculator.compute();
 			fMeasures.add(fMeasureMetricCalculator.getResult());
 		}
-				
+
 	}
-	
-	public Cluster getCluster(){
-		return this.cluster;
+
+	public Cluster getCluster() {
+		return cluster;
 	}
-	
-	public Centroid getCentroid(){
-		return this.clusterCentroid;
+
+	public Centroid getCentroid() {
+		return clusterCentroid;
 	}
-	
+
 	public Double getClusterCohesion() {
 		return clusterCohesion;
 	}
-	
+
 	public Double getClusterSeparation() {
 		return clusterSeparation;
 	}
-	
+
 	public Double getClusterEntropy() {
 		return clusterEntropy;
 	}
 
-	public ArrayList<Double> getPrecisions(){
+	public ArrayList<Double> getPrecisions() {
 		return precisions;
 	}
-	
-	public ArrayList<Double> getRecalls(){
+
+	public ArrayList<Double> getRecalls() {
 		return recalls;
 	}
-	
-	public ArrayList<Double> getFmeasures(){
+
+	public ArrayList<Double> getFmeasures() {
 		return fMeasures;
 	}
-	
+
 }

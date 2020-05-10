@@ -3,7 +3,7 @@ package tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluati
 public interface InternalTotalMetrics {
 
 	public Double getResult();
-	
+
 	public void compute();
-	
+
 }

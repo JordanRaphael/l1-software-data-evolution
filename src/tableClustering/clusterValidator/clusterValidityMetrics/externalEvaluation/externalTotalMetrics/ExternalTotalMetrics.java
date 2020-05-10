@@ -3,7 +3,7 @@ package tableClustering.clusterValidator.clusterValidityMetrics.externalEvaluati
 public interface ExternalTotalMetrics {
 
 	public void compute();
-	
+
 	public Double getResult();
-	
+
 }

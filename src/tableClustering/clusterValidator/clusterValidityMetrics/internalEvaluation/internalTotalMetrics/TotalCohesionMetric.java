@@ -8,35 +8,35 @@ import tableClustering.clusterValidator.commons.ClusterInfoKeeper;
 public class TotalCohesionMetric implements InternalTotalMetrics {
 
 	private ArrayList<ClusterInfoKeeper> clusterInfoKeepers = new ArrayList<ClusterInfoKeeper>();
-	private Double totalCohesion=null;
-	
+	private Double totalCohesion = null;
+
 	public TotalCohesionMetric(ArrayList<ClusterInfoKeeper> clusterInfoKeepers) {
-	
-		this.clusterInfoKeepers=clusterInfoKeepers;
-		
+
+		this.clusterInfoKeepers = clusterInfoKeepers;
+
 	}
-	
+
 	@Override
-	public void compute(){
-		
+	public void compute() {
+
 		Iterator<ClusterInfoKeeper> iteratorClusterInfoKeeper = clusterInfoKeepers.iterator();
 		totalCohesion = new Double(0);
 
- 		while(iteratorClusterInfoKeeper.hasNext()){
-			
+		while (iteratorClusterInfoKeeper.hasNext()) {
+
 			ClusterInfoKeeper currClusterInfoKeeper = iteratorClusterInfoKeeper.next();
-			
-			totalCohesion= totalCohesion + currClusterInfoKeeper.getClusterCohesion();
-			
+
+			totalCohesion = totalCohesion + currClusterInfoKeeper.getClusterCohesion();
+
 		}
-		System.err.println("Total Cohesion:"+totalCohesion);
+		System.err.println("Total Cohesion:" + totalCohesion);
 
 	}
-	
+
 	@Override
 	public Double getResult() {
-		
-		return this.totalCohesion;
+
+		return totalCohesion;
 	}
 
 }

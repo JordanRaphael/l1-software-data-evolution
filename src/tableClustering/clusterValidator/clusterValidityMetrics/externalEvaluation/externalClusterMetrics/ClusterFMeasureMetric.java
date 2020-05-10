@@ -10,15 +10,15 @@ public class ClusterFMeasureMetric implements ExternalClusterMetric {
 		this.precision = precision;
 		this.recall = recall;
 	}
-	
+
 	@Override
 	public void compute() {
-		
-		Double numerator = new Double(2*precision*recall);
-		Double denominator = new Double(precision+recall);
-		
-		if(numerator!=0 && denominator!=0)
-			fMeasure = numerator/denominator;
+
+		Double numerator = new Double(2 * precision * recall);
+		Double denominator = new Double(precision + recall);
+
+		if (numerator != 0 && denominator != 0)
+			fMeasure = numerator / denominator;
 
 	}
 

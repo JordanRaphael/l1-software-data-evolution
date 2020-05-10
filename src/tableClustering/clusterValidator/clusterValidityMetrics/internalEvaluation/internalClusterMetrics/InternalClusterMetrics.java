@@ -5,5 +5,5 @@ public interface InternalClusterMetrics {
 	public void computeMetric();
 
 	public Double getResult();
-	
+
 }

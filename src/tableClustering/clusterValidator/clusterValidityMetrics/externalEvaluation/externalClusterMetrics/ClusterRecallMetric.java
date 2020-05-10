@@ -8,36 +8,35 @@ import tableClustering.clusterValidator.commons.ClassOfObjects;
 public class ClusterRecallMetric implements ExternalClusterMetric {
 
 	private Cluster currentCluster = new Cluster();
-	private ClassOfObjects classOfObjects=null;
+	private ClassOfObjects classOfObjects = null;
 	private Double recall = new Double(0);
-	
-	public ClusterRecallMetric(Cluster currentCluster,ClassOfObjects classOfObjects) {
+
+	public ClusterRecallMetric(Cluster currentCluster, ClassOfObjects classOfObjects) {
 		this.currentCluster = currentCluster;
 		this.classOfObjects = classOfObjects;
-		
+
 	}
-	
+
 	@Override
 	public void compute() {
-		
+
 		Double mj = new Double(0);
 		Double mij = new Double(0);
-		
-		mj = (double)classOfObjects.getObjects().size();
-		mij=0.0;
-		
+
+		mj = (double) classOfObjects.getObjects().size();
+		mij = 0.0;
+
 		ArrayList<String> tablesToCompare = currentCluster.getNamesOfTables();
 		ArrayList<String> objects = classOfObjects.getObjects();
-		
-		
-		for(int j=0; j<objects.size(); j++){
-			if(tablesToCompare.contains(objects.get(j))){
+
+		for (int j = 0; j < objects.size(); j++) {
+			if (tablesToCompare.contains(objects.get(j))) {
 				mij++;
 			}
 		}
-				
-		recall=mij/mj;
-		
+
+		recall = mij / mj;
+
 	}
 
 	@Override
