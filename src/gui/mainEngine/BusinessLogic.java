@@ -468,7 +468,9 @@ public class BusinessLogic {
 		if (!(gui.currentProject == null)) {
 			gui.zoomInButton.setVisible(true);
 			gui.zoomOutButton.setVisible(true);
+			
 			TableConstructionIDU table = globalDataKeeper.createTableConstructionIDU();
+			
 			final String[] columns = table.constructColumns();
 			final String[][] rows = table.constructRows();
 			gui.segmentSizeZoomArea = table.getSegmentSize();
