@@ -42,7 +42,7 @@ public class Gui extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private JItemsCreator jItemsCreator = new JItemsCreator();
+	private JItemsHandler jItemsHandler = new JItemsHandler();
 
 	private JPanel contentPane;
 	protected JPanel lifeTimePanel = new JPanel();
@@ -95,7 +95,7 @@ public class Gui extends JFrame {
 	protected ArrayList<String> selectedFromTree = new ArrayList<String>();
 
 	protected JTree tablesTree = new JTree();
-	protected JPanel sideMenu = jItemsCreator.createJPanel();
+	protected JPanel sideMenu = jItemsHandler.createJPanel();
 	protected JPanel tablesTreePanel = new JPanel();
 	private JPanel descriptionPanel = new JPanel();
 	protected JLabel treeLabel;
@@ -245,7 +245,7 @@ public class Gui extends JFrame {
 
 		tablesTreePanel.setLayout(gl_tablesTreePanel);
 
-		treeLabel = jItemsCreator.createJLabel("", "Tree", 10, 370, 260, 40, Color.WHITE);
+		treeLabel = jItemsHandler.createJLabel("", "Tree", 10, 370, 260, 40, Color.WHITE);
 
 		descriptionPanel.setBounds(10, 190, 260, 180);
 		descriptionPanel.setBackground(Color.LIGHT_GRAY);
@@ -256,11 +256,11 @@ public class Gui extends JFrame {
 
 		descriptionPanel.setLayout(gl_descriptionPanel);
 
-		descriptionText = jItemsCreator.createTextArea(" ", 5, 5, 250, 170, Color.BLACK, Color.LIGHT_GRAY);
+		descriptionText = jItemsHandler.createTextArea(" ", 5, 5, 250, 170, Color.BLACK, Color.LIGHT_GRAY);
 
 		descriptionPanel.add(descriptionText);
 
-		descriptionLabel = jItemsCreator.createJLabel("", "Description", 10, 160, 260, 40, Color.WHITE);
+		descriptionLabel = jItemsHandler.createJLabel("", "Description", 10, 160, 260, 40, Color.WHITE);
 
 		sideMenu.add(treeLabel);
 		sideMenu.add(tablesTreePanel);
@@ -316,12 +316,12 @@ public class Gui extends JFrame {
 				gl_lifeTimePanel.createParallelGroup(Alignment.LEADING).addGap(0, 743, Short.MAX_VALUE));
 		lifeTimePanel.setLayout(gl_lifeTimePanel);
 
-		generalTableLabel = jItemsCreator.createJLabel("", "Parallel Lives Diagram", 300, 0, 150, 30, Color.BLACK);
+		generalTableLabel = jItemsHandler.createJLabel("", "Parallel Lives Diagram", 300, 0, 150, 30, Color.BLACK);
 		
-		zoomAreaLabel = jItemsCreator.createJLabel("", "<HTML>Z<br>o<br>o<br>m<br><br>A<br>r<br>e<br>a</HTML>", 1255,
+		zoomAreaLabel = jItemsHandler.createJLabel("", "<HTML>Z<br>o<br>o<br>m<br><br>A<br>r<br>e<br>a</HTML>", 1255,
 				325, 15, 300, Color.BLACK);
 
-		zoomInButton = jItemsCreator.createJButton("Zoom In", 1000, 560, 100, 30);
+		zoomInButton = jItemsHandler.createJButton("Zoom In", 1000, 560, 100, 30);
 
 		zoomInButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -330,7 +330,7 @@ public class Gui extends JFrame {
 			}
 		});
 
-		zoomOutButton = jItemsCreator.createJButton("Zoom Out", 1110, 560, 100, 30);
+		zoomOutButton = jItemsHandler.createJButton("Zoom Out", 1110, 560, 100, 30);
 
 		zoomOutButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -360,7 +360,6 @@ public class Gui extends JFrame {
 
 		showThisToPopup.setVisible(false);
 
-		//undoButton = jItemsCreator.createJButton("Undo", 680, 560, 100, 30);
 		undoButton = new JButton("Undo");
 		undoButton.setBounds(680, 560, 100, 30);
 		
@@ -378,7 +377,7 @@ public class Gui extends JFrame {
 
 		undoButton.setVisible(false);
 
-		uniformlyDistributedButton = jItemsCreator.createJButton("Same Width", 980, 0, 120, 30);
+		uniformlyDistributedButton = jItemsHandler.createJButton("Same Width", 980, 0, 120, 30);
 
 		// TODO Move to BusinessLogic
 		uniformlyDistributedButton.addMouseListener(new MouseAdapter() {
@@ -391,7 +390,7 @@ public class Gui extends JFrame {
 
 		uniformlyDistributedButton.setVisible(false);
 
-		notUniformlyDistributedButton = jItemsCreator.createJButton("Over Time", 1100, 0, 120, 30);
+		notUniformlyDistributedButton = jItemsHandler.createJButton("Over Time", 1100, 0, 120, 30);
 
 		notUniformlyDistributedButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -588,14 +587,14 @@ public class Gui extends JFrame {
 		tmpLifeTimeTable.getSelectionModel().addListSelectionListener(new RowListener());
 		tmpLifeTimeTable.getColumnModel().getSelectionModel().addListSelectionListener(new ColumnListener());
 
-		JScrollPane detailedScrollPane = jItemsCreator.createJScrollPane(0, 0, 1280, 650);
+		JScrollPane detailedScrollPane = jItemsHandler.createJScrollPane(0, 0, 1280, 650);
 		detailedScrollPane.setViewportView(tmpLifeTimeTable);
 		detailedScrollPane.setAlignmentX(0);
 		detailedScrollPane.setAlignmentY(0);
 
 		detailedScrollPane.setCursor(getCursor());
 
-		JDialog detailedDialog = jItemsCreator.createJDialog(100, 100, 1300, 700);
+		JDialog detailedDialog = jItemsHandler.createJDialog(100, 100, 1300, 700);
 
 		JPanel panelToAdd = new JPanel();
 

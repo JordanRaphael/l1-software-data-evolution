@@ -56,11 +56,13 @@ public class BusinessLogic {
 	protected String[][] rowsZoom = null;
 	protected final JvTable zoomTable = null;
 	private IDUTableRenderer renderer; 
+	private JItemsHandler jItemsHandler;
 
 	public BusinessLogic(Gui gui) {
 		this.gui = gui;
 		this.generalTableListenerHandler = new GeneralTableListenerHandler(this, gui);
 		this.zoomTableListenerHandler = new ZoomTableListenerHandler(this, gui);
+		this.jItemsHandler = new JItemsHandler();
 	}
 	
 	public GlobalDataKeeper getGlobalDataKeeper() {
@@ -123,31 +125,21 @@ public class BusinessLogic {
 			}
 		}
 		
-		//ITablesListenerHandler iTablesListenerHandler = tablesListenerFactory.getTableType("General Table", this);
-		//generalTable.setDefaultRenderer(Object.class, iTablesListenerHandler.createDefaultTableCellRenderer());
 		generalTable.setDefaultRenderer(Object.class, generalTableListenerHandler.createPhasesDefaultTableCellRenderer());
 		
-		//generalTable.addMouseListener(iTablesListenerHandler.createOneClickMouseAdapter());
 		generalTable.addMouseListener(generalTableListenerHandler.createPhasesMouseClickedAdapter());
 		
-		//generalTable.addMouseListener(iTablesListenerHandler.createReleaseMouseAdapter());
 		generalTable.addMouseListener(generalTableListenerHandler.createPhasesMouseClickedButton3Adapter(generalTable));
 		
-		//generalTable.getTableHeader().addMouseListener(iTablesListenerHandler.createColumnClickEvent());
 		generalTable.getTableHeader().addMouseListener(generalTableListenerHandler.createPhasesMouseColumnClickedAdapter(generalTable));
 		
-		//generalTable.getTableHeader().addMouseListener(iTablesListenerHandler.createRightClickAdapter());
 		generalTable.getTableHeader().addMouseListener(generalTableListenerHandler.createPhasesRightMouseClickedAdapter(generalTable));
 		
 		gui.LifeTimeTable = generalTable;
 
 		gui.tmpScrollPane.setViewportView(gui.LifeTimeTable);
-		gui.tmpScrollPane.setAlignmentX(0);
-		gui.tmpScrollPane.setAlignmentY(0);
-		gui.tmpScrollPane.setBounds(300, 30, 950, 265);
-		gui.tmpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		gui.tmpScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-
+		jItemsHandler.setJScrollPanePosition(gui.tmpScrollPane, 300, 30, 950, 265);
+		
 		gui.lifeTimePanel.setCursor(gui.getCursor());
 		gui.lifeTimePanel.add(gui.tmpScrollPane);
 
@@ -186,12 +178,9 @@ public class BusinessLogic {
         });
 
 		this.gui.treeScrollPane.setViewportView(this.gui.tablesTree);
-
-		this.gui.treeScrollPane.setBounds(5, 5, 250, 170);
-		this.gui.treeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		this.gui.treeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		jItemsHandler.setJScrollPanePosition(this.gui.treeScrollPane, 5, 5, 250, 170);
+		
 		this.gui.tablesTreePanel.add(this.gui.treeScrollPane);
-
 		this.gui.treeLabel.setText("General Tree");
 
 		this.gui.sideMenu.revalidate();
@@ -262,7 +251,6 @@ public class BusinessLogic {
 			ParametersJDialog jD = new ParametersJDialog(true);
 
 			jD.setModal(true);
-
 			jD.setVisible(true);
 
 			if (jD.getConfirmation()) {
@@ -352,7 +340,6 @@ public class BusinessLogic {
 		final JvTable zoomTable = new JvTable(this.gui.zoomModel);
 
 		zoomTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
 		zoomTable.setShowGrid(false);
 		zoomTable.setIntercellSpacing(new Dimension(0, 0));
 
@@ -378,15 +365,10 @@ public class BusinessLogic {
 		
 		zoomTable.getTableHeader().addMouseListener(zoomTableListenerHandler.createZoomAreaRightClickReleasedHandler(zoomTable));
 		
-		
 		gui.zoomAreaTable = zoomTable;
-
 		gui.tmpScrollPaneZoomArea.setViewportView(gui.zoomAreaTable);
-		gui.tmpScrollPaneZoomArea.setAlignmentX(0);
-		gui.tmpScrollPaneZoomArea.setAlignmentY(0);
-		gui.tmpScrollPaneZoomArea.setBounds(300, 300, 950, 250);
-		gui.tmpScrollPaneZoomArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		gui.tmpScrollPaneZoomArea.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		
+		jItemsHandler.setJScrollPanePosition(gui.tmpScrollPaneZoomArea, 300, 300, 950, 250);
 
 		gui.lifeTimePanel.setCursor(gui.getCursor());
 		gui.lifeTimePanel.add(gui.tmpScrollPaneZoomArea);
@@ -480,12 +462,9 @@ public class BusinessLogic {
         });
 
 		this.gui.treeScrollPane.setViewportView(this.gui.tablesTree);
-
-		this.gui.treeScrollPane.setBounds(5, 5, 250, 170);
-		this.gui.treeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		this.gui.treeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		jItemsHandler.setJScrollPanePosition(this.gui.treeScrollPane, 5, 5, 250, 170);
+		
 		this.gui.tablesTreePanel.add(this.gui.treeScrollPane);
-
 		this.gui.treeLabel.setText("Clusters Tree");
 
 		this.gui.sideMenu.revalidate();
@@ -548,11 +527,9 @@ public class BusinessLogic {
         });
 
 		this.gui.treeScrollPane.setViewportView(this.gui.tablesTree);
-		this.gui.treeScrollPane.setBounds(5, 5, 250, 170);
-		this.gui.treeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		this.gui.treeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		jItemsHandler.setJScrollPanePosition(this.gui.treeScrollPane, 5, 5, 250, 170);
+		
 		this.gui.tablesTreePanel.add(this.gui.treeScrollPane);
-
 		this.gui.treeLabel.setText("Phases Tree");
 
 		this.gui.sideMenu.revalidate();
@@ -632,9 +609,6 @@ public class BusinessLogic {
 			this.gui.tabbedPane.setSelectedIndex(0);
 			this.gui.makeDetailedTable(columns, rows, true);
 			
-			//fileStream.close();
-			//System.setOut(System.out);
-			
 		} else {
 			JOptionPane.showMessageDialog(null, "Select a Project first");
 			return;
@@ -704,7 +678,6 @@ public class BusinessLogic {
 					this.gui.transitionsFile);
 
 			createProjectDialog.setModal(true);
-
 			createProjectDialog.setVisible(true);
 
 			if (createProjectDialog.getConfirmation()) {
@@ -790,7 +763,6 @@ public class BusinessLogic {
 	public void importData(String fileName) throws IOException, RecognitionException {
 
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
-
 		String line;
 
 		while (true) {
@@ -930,11 +902,7 @@ public class BusinessLogic {
 		
 		gui.zoomAreaTable = generalTable;
 		gui.tmpScrollPaneZoomArea.setViewportView(gui.zoomAreaTable);
-		gui.tmpScrollPaneZoomArea.setAlignmentX(0);
-		gui.tmpScrollPaneZoomArea.setAlignmentY(0);
-		gui.tmpScrollPaneZoomArea.setBounds(300, 300, 950, 250);
-		gui.tmpScrollPaneZoomArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		gui.tmpScrollPaneZoomArea.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		jItemsHandler.setJScrollPanePosition(gui.tmpScrollPaneZoomArea, 300, 300, 950, 250);
 
 		gui.lifeTimePanel.setCursor(gui.getCursor());
 		gui.lifeTimePanel.add(gui.tmpScrollPaneZoomArea);
@@ -1008,11 +976,7 @@ public class BusinessLogic {
 		gui.zoomAreaTable = zoomTable;
 
 		gui.tmpScrollPaneZoomArea.setViewportView(gui.zoomAreaTable);
-		gui.tmpScrollPaneZoomArea.setAlignmentX(0);
-		gui.tmpScrollPaneZoomArea.setAlignmentY(0);
-		gui.tmpScrollPaneZoomArea.setBounds(300, 300, 950, 250);
-		gui.tmpScrollPaneZoomArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		gui.tmpScrollPaneZoomArea.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		jItemsHandler.setJScrollPanePosition(gui.tmpScrollPaneZoomArea, 300, 300, 950, 250);
 
 		gui.lifeTimePanel.setCursor(gui.getCursor());
 		gui.lifeTimePanel.add(gui.tmpScrollPaneZoomArea);

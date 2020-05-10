@@ -5,7 +5,7 @@ import java.awt.Color;
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 
-public class JItemsCreator {
+public class JItemsHandler {
 	
 	public JButton createJButton(String name, int x, int y, int width, int height ) {
 		
@@ -37,6 +37,17 @@ public class JItemsCreator {
 		
 		return scrollPane;
 	}
+	
+	public void setJScrollPanePosition(JScrollPane pane, int x, int y, int width, int height) {
+		
+		pane.setAlignmentX(0);
+		pane.setAlignmentY(0);
+		pane.setBounds(x, y, width, height);
+		pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		
+	}
+	
 	
 	public JPanel createJPanel() {
 		
