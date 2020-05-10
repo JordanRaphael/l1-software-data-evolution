@@ -11,22 +11,22 @@ public class PPLSchema {
 	private TreeMap<String, PPLTable> tables;
 
 	public PPLSchema(TreeMap<String, PPLTable> t) {
-		this.tables = t;
+		 tables = t;
 	}	
 	
 	public PPLSchema() {
-		this.tables = new TreeMap<String, PPLTable>();
+		 tables = new TreeMap<String, PPLTable>();
 	}
 	
 	public PPLSchema(String name) {
-		this.tables = new TreeMap<String, PPLTable>();
+		 tables = new TreeMap<String, PPLTable>();
 		this.name = name;
 	}
 
 	public PPLSchema(String tmpName,Schema tmpHecSchema){
 		
 		name=tmpName;
-		this.tables = new TreeMap<String, PPLTable>();
+		 tables = new TreeMap<String, PPLTable>();
 
 	}
 	
@@ -37,11 +37,11 @@ public class PPLSchema {
 	}
 	
 	public TreeMap<String, PPLTable> getTables() {
-		return this.tables;
+		return tables;
 	}
 	
 	public void addTable(PPLTable table) {
-		this.tables.put(table.getName(), table);
+		 tables.put(table.getName(), table);
 	}
 	
 	public String toString() {
@@ -50,15 +50,15 @@ public class PPLSchema {
 
 	public int[] getSize() {
 		int attr = 0;
-		for (PPLTable t : this.tables.values()) {
+		for (PPLTable t :  tables.values()) {
 			attr += t.getSize();
 		}
-		int[] res = {this.tables.size(), attr};
+		int[] res = { tables.size(), attr};
 		return res;
 	}
 
 	public void setTitle(String title) {
-		this.name = title;
+		 name = title;
 	}
 
 	public PPLTable getTableAt(int i) {

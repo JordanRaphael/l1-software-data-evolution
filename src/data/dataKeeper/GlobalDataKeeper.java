@@ -64,7 +64,6 @@ public class GlobalDataKeeper {
 		try {
 			w.work();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -163,11 +162,11 @@ public class GlobalDataKeeper {
 	}
 	
 	public ArrayList<PhaseCollector> getPhaseCollectors(){
-		return this.phaseCollectors;
+		return phaseCollectors;
 	}
 	
 	public ArrayList<ClusterCollector> getClusterCollectors(){
-		return this.clusterCollectors;
+		return clusterCollectors;
 	}
 	
 	public void printInfo() {

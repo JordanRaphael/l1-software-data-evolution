@@ -68,7 +68,7 @@ public class TableConstructionZoomArea implements PldConstruction {
 	private void fillSelectedTables(){
 		
 		for(int i=0; i<sSelectedTables.size(); i++){
-			selectedTables.put(sSelectedTables.get(i),this.globalDataKeeper.getAllPPLTables().get(sSelectedTables.get(i)) );
+			selectedTables.put(sSelectedTables.get(i), globalDataKeeper.getAllPPLTables().get(sSelectedTables.get(i)) );
 		}
 		
 	}
