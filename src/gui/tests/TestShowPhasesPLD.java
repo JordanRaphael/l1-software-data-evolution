@@ -65,7 +65,7 @@ public class TestShowPhasesPLD {
 			businessLogic.getGlobalDataKeeper().setPhaseCollectors(mainEngine.getPhaseCollectors());
 
 			if (businessLogic.getGlobalDataKeeper().getPhaseCollectors().size() != 0) {
-				TableConstructionPhases table = new TableConstructionPhases(businessLogic.getGlobalDataKeeper());
+				TableConstructionPhases table = globalDataKeeper.createTableConstructionPhases();
 				final String[] columns = table.constructColumns();
 				final String[][] rows = table.constructRows();
 				this.gui.segmentSize = table.getSegmentSize();

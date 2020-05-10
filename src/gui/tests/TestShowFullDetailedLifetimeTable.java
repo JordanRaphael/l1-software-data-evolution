@@ -46,8 +46,7 @@ public class TestShowFullDetailedLifetimeTable {
 			System.setOut(fileStream);
 			
 			if (!(gui.currentProject == null)) {
-				TableConstructionAllSquaresIncluded table = new TableConstructionAllSquaresIncluded(
-						businessLogic.getGlobalDataKeeper());
+				TableConstructionAllSquaresIncluded table = globalDataKeeper.createTableConstructionAllSquaresIncluded();
 				final String[] columns = table.constructColumns();
 				final String[][] rows = table.constructRows();
 				gui.segmentSizeDetailedTable = table.getSegmentSize();

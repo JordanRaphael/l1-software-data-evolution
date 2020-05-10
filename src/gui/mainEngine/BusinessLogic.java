@@ -601,8 +601,7 @@ public class BusinessLogic {
 		
 		if (!(this.gui.currentProject == null)) {
 			
-			TableConstructionAllSquaresIncluded table = new TableConstructionAllSquaresIncluded(
-					globalDataKeeper);
+			TableConstructionAllSquaresIncluded table = globalDataKeeper.createTableConstructionAllSquaresIncluded();
 			final String[] columns = table.constructColumns();
 			final String[][] rows = table.constructRows();
 			this.gui.segmentSizeDetailedTable = table.getSegmentSize();
@@ -912,8 +911,7 @@ public class BusinessLogic {
 	public void showSelectionToZoomArea(int selectedColumn) {
 
 		System.out.println("selectedColumn "+selectedColumn+" tablesSelected "+gui.tablesSelected);
-		TableConstructionZoomArea table = new TableConstructionZoomArea(globalDataKeeper, gui.tablesSelected,
-				selectedColumn);
+		TableConstructionZoomArea table = globalDataKeeper.createTableConstructionZoomArea(gui.tablesSelected, selectedColumn);
 		final String[] columns = table.constructColumns();
 		final String[][] rows = table.constructRows();
 		gui.segmentSizeZoomArea = table.getSegmentSize();

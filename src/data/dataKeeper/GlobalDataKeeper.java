@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-import phaseAnalyzer.commons.PhaseCollector;
-import tableClustering.clusterExtractor.commons.ClusterCollector;
 import data.dataPPL.pplSQLSchema.PPLSchema;
 import data.dataPPL.pplSQLSchema.PPLTable;
 import data.dataPPL.pplTransition.AtomicChange;
@@ -13,6 +11,7 @@ import data.dataPPL.pplTransition.PPLTransition;
 import data.dataPPL.pplTransition.TableChange;
 import data.dataProccessing.Worker;
 import data.tableConstructors.PldConstruction;
+import data.tableConstructors.TableConstructionAllSquaresIncluded;
 import data.tableConstructors.TableConstructionClusterTablesPhasesZoomA;
 import data.tableConstructors.TableConstructionIDU;
 import data.tableConstructors.TableConstructionPhases;
@@ -20,6 +19,8 @@ import data.tableConstructors.TableConstructionWithClusters;
 import data.tableConstructors.TableConstructionZoomArea;
 import data.treeElements.TreeConstructionGeneral;
 import data.treeElements.TreeConstructionPhasesWithClusters;
+import phaseAnalyzer.commons.PhaseCollector;
+import tableClustering.clusterExtractor.commons.ClusterCollector;
 
 public class GlobalDataKeeper {
 
@@ -190,7 +191,7 @@ public class GlobalDataKeeper {
 		if (selectedColumn == 0) {
 			table = new TableConstructionClusterTablesPhasesZoomA(this, tablesOfCluster);
 		} else {
-			table = new TableConstructionZoomArea(this, tablesOfCluster, selectedColumn);
+			table = createTableConstructionZoomArea(tablesOfCluster, selectedColumn);
 		}
 		System.out.println("Schemas: " + allPPLSchemas.size());
 		System.out.println("C: " + table.constructColumns().length + " R: " + table.constructRows().length);
@@ -219,6 +220,16 @@ public class GlobalDataKeeper {
 		return new TreeConstructionGeneral(this);
 	}
 	
+	public TableConstructionZoomArea createTableConstructionZoomArea(ArrayList<String> tablesOfCluster, int selectedColumn) {
+		return new TableConstructionZoomArea(this, tablesOfCluster, selectedColumn);
+	}
 	
+	public TableConstructionAllSquaresIncluded createTableConstructionAllSquaresIncluded() {
+		return new TableConstructionAllSquaresIncluded(this);
+	}
+	
+	public TableConstructionClusterTablesPhasesZoomA createTableConstructionClusterTablesPhasesZoomA(ArrayList<String> tablesOfCluster) {
+		return new TableConstructionClusterTablesPhasesZoomA(this, tablesOfCluster);
+	}
 	
 }
