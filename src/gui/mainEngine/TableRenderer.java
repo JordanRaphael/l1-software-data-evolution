@@ -8,10 +8,10 @@ public abstract class TableRenderer {
 	
 	private Gui gui;
 	
-	public TableRenderer(BusinessLogic businessLogic, Gui gui) {
+	public TableRenderer(BusinessLogic businessLogic) {
 		
 		this.businessLogic = businessLogic;
-		this.gui = gui;
+		this.gui = businessLogic.getGui();
 	}
 
 	public BusinessLogic getBusinessLogic() {
@@ -31,5 +31,7 @@ public abstract class TableRenderer {
 	}
 	
 	public abstract DefaultTableCellRenderer createTableCellRenderer();
+	
+	public abstract DefaultTableCellRenderer createDefaultTableRenderer();
 	
 }

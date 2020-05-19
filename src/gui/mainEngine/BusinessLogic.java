@@ -85,6 +85,11 @@ public class BusinessLogic {
 
 		return generalTableListenerHandler;
 	}
+	
+	public String[][] getRowsZoom(){
+		
+		return rowsZoom;
+	}
 
 	protected void notUniformlyDistributedButtonMouseListener() {
 		gui.LifeTimeTable.notUniformlyDistributed(globalDataKeeper);
@@ -125,7 +130,7 @@ public class BusinessLogic {
 			}
 		}
 		
-		TableRenderer tableRenderer = tablesFactory.getTableType("General Table", this, gui);
+		TableRenderer tableRenderer = tablesFactory.getTableType("General Table", this);
 		generalTable.setDefaultRenderer(Object.class, tableRenderer.createTableCellRenderer());
 		
 		generalTable.addMouseListener(generalTableListenerHandler.createPhasesMouseClickedAdapter());
@@ -350,9 +355,11 @@ public class BusinessLogic {
 				zoomTable.getColumnModel().getColumn(i).setMinWidth(20);
 			}
 		}
-
-		zoomTable.setDefaultRenderer(Object.class,
-				zoomTableListenerHandler.createZoomAreaDefaultTableRenderer(rowsZoom));
+		
+		TableRenderer tableRenderer = tablesFactory.getTableType("Zoom Table", this);
+		//zoomTable.setDefaultRenderer(Object.class,
+		//		zoomTableListenerHandler.createZoomAreaDefaultTableRenderer());
+		zoomTable.setDefaultRenderer(Object.class, tableRenderer.createDefaultTableRenderer());
 
 		zoomTable.addMouseListener(zoomTableListenerHandler.createZoomAreaMouseClickedHandler());
 
@@ -879,9 +886,10 @@ public class BusinessLogic {
 		}
 
 		renderer = new IDUTableRenderer(gui, gui.finalRowsZoomArea, globalDataKeeper, gui.segmentSize);
-
-		generalTable.setDefaultRenderer(Object.class, generalTableListenerHandler.createIDUDefaultTableCellRenderer());
-
+		
+		TableRenderer tableRenderer = tablesFactory.getTableType("General Table", this);
+		generalTable.setDefaultRenderer(Object.class, tableRenderer.createDefaultTableRenderer());
+		
 		generalTable.addMouseListener(generalTableListenerHandler.createIDUOneMouseClickAdapter(renderer));
 
 		generalTable.addMouseListener(generalTableListenerHandler.createIDURightClickRowAdapter(generalTable));
@@ -926,7 +934,7 @@ public class BusinessLogic {
 		int numberOfRows = gui.finalRowsZoomArea.length;
 		gui.undoButton.setVisible(true);
 
-		final String[][] rowsZoom = new String[numberOfRows][numberOfColumns];
+		rowsZoom = new String[numberOfRows][numberOfColumns];
 
 		for (int i = 0; i < numberOfRows; i++) {
 
@@ -955,8 +963,8 @@ public class BusinessLogic {
 			}
 		}
 
-		//zoomTable.setDefaultRenderer(Object.class, zoomTableListenerHandler.createClusterDefaultTableRenderer());
-		TableRenderer tableRenderer = tablesFactory.getTableType("Zoom Table", this, gui);
+		
+		TableRenderer tableRenderer = tablesFactory.getTableType("Zoom Table", this);
 		zoomTable.setDefaultRenderer(Object.class, tableRenderer.createTableCellRenderer());
 
 		zoomTable.addMouseListener(zoomTableListenerHandler.createClusterOneClickHandler());
