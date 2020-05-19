@@ -52,6 +52,7 @@ public class BusinessLogic {
 	private GlobalDataKeeper globalDataKeeper;
 	private GeneralTableListenerHandler generalTableListenerHandler;
 	private ZoomTableListenerHandler zoomTableListenerHandler;
+	private TablesFactory tablesFactory;
 	protected String[][] rowsZoom = null;
 	protected final JvTable zoomTable = null;
 	private IDUTableRenderer renderer;
@@ -62,6 +63,7 @@ public class BusinessLogic {
 		this.generalTableListenerHandler = new GeneralTableListenerHandler(this, gui);
 		this.zoomTableListenerHandler = new ZoomTableListenerHandler(this, gui);
 		this.jItemsHandler = new JItemsHandler();
+		this.tablesFactory = new TablesFactory();
 	}
 
 	public GlobalDataKeeper getGlobalDataKeeper() {
@@ -122,9 +124,10 @@ public class BusinessLogic {
 				generalTable.getColumnModel().getColumn(i).setPreferredWidth(1);
 			}
 		}
-
-		generalTable.setDefaultRenderer(Object.class, generalTableListenerHandler.createPhasesDefaultTableCellRenderer());
-
+		
+		TableRenderer tableRenderer = tablesFactory.getTableType("General Table", this, gui);
+		generalTable.setDefaultRenderer(Object.class, tableRenderer.createTableCellRenderer());
+		
 		generalTable.addMouseListener(generalTableListenerHandler.createPhasesMouseClickedAdapter());
 
 		generalTable.addMouseListener(generalTableListenerHandler.createPhasesMouseClickedButton3Adapter(generalTable));
@@ -952,7 +955,9 @@ public class BusinessLogic {
 			}
 		}
 
-		zoomTable.setDefaultRenderer(Object.class, zoomTableListenerHandler.createClusterDefaultTableRenderer());
+		//zoomTable.setDefaultRenderer(Object.class, zoomTableListenerHandler.createClusterDefaultTableRenderer());
+		TableRenderer tableRenderer = tablesFactory.getTableType("Zoom Table", this, gui);
+		zoomTable.setDefaultRenderer(Object.class, tableRenderer.createTableCellRenderer());
 
 		zoomTable.addMouseListener(zoomTableListenerHandler.createClusterOneClickHandler());
 
