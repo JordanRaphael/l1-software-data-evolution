@@ -8,18 +8,18 @@ import java.io.IOException;
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Test;
 
-import gui.mainEngine.BusinessLogic;
+import gui.mainEngine.GuiController;
 import gui.mainEngine.Gui;
 
 public class TestZoomIn {
 	
-	private BusinessLogic businessLogic;
+	private GuiController businessLogic;
 	private Gui frame;
 	
 	public TestZoomIn() {
 		
 		frame = new Gui();
-		businessLogic = new BusinessLogic(frame);
+		businessLogic = new GuiController(frame);
 		
 	}
 	

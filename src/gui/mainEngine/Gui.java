@@ -133,7 +133,7 @@ public class Gui extends JFrame {
 		return generalTable;
 	}
 	
-	private BusinessLogic businessLogic = new BusinessLogic(this);
+	private GuiController businessLogic = new GuiController(this);
 	
 
 	/**

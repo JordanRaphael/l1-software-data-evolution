@@ -15,18 +15,18 @@ import org.junit.Test;
 
 import data.dataKeeper.GlobalDataKeeper;
 import data.tableConstructors.TableConstructionAllSquaresIncluded;
-import gui.mainEngine.BusinessLogic;
+import gui.mainEngine.GuiController;
 import gui.mainEngine.Gui;
 
 public class TestShowFullDetailedLifetimeTable {
 	
-	private BusinessLogic businessLogic;
+	private GuiController businessLogic;
 	private Gui gui;
 	
 	public TestShowFullDetailedLifetimeTable() {
 		
 		gui = new Gui();
-		businessLogic = new BusinessLogic(gui);
+		businessLogic = new GuiController(gui);
 		
 	}
 	

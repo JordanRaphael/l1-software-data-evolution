@@ -46,7 +46,7 @@ import gui.tableElements.tableRenderers.IDUTableRenderer;
 import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
 import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
 
-public class BusinessLogic {
+public class GuiController {
 
 	private Gui gui;
 	private GlobalDataKeeper globalDataKeeper;
@@ -58,7 +58,7 @@ public class BusinessLogic {
 	private IDUTableRenderer renderer;
 	private JItemsHandler jItemsHandler;
 
-	public BusinessLogic(Gui gui) {
+	public GuiController(Gui gui) {
 		this.gui = gui;
 		this.generalTableListenerHandler = new GeneralTableListenerHandler(this, gui);
 		this.zoomTableListenerHandler = new ZoomTableListenerHandler(this, gui);

@@ -4,21 +4,21 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 public abstract class TableRenderer {
 
-	private BusinessLogic businessLogic;
+	private GuiController businessLogic;
 	
 	private Gui gui;
 	
-	public TableRenderer(BusinessLogic businessLogic) {
+	public TableRenderer(GuiController businessLogic) {
 		
 		this.businessLogic = businessLogic;
 		this.gui = businessLogic.getGui();
 	}
 
-	public BusinessLogic getBusinessLogic() {
+	public GuiController getBusinessLogic() {
 		return businessLogic;
 	}
 
-	public void setBusinessLogic(BusinessLogic businessLogic) {
+	public void setBusinessLogic(GuiController businessLogic) {
 		this.businessLogic = businessLogic;
 	}
 

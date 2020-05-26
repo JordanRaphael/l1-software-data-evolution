@@ -15,10 +15,10 @@ import gui.tableElements.commons.JvTable;
 
 public class ZoomTableListenerHandler {
 
-	private BusinessLogic businessLogic;
+	private GuiController businessLogic;
 	private Gui gui;
 	
-	public ZoomTableListenerHandler(BusinessLogic businessLogic, Gui gui) {
+	public ZoomTableListenerHandler(GuiController businessLogic, Gui gui) {
 		
 		this.businessLogic = businessLogic;
 		this.gui = gui;

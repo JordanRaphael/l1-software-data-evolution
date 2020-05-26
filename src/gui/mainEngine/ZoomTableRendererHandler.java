@@ -9,7 +9,7 @@ import data.dataKeeper.GlobalDataKeeper;
 
 public class ZoomTableRendererHandler extends TableRenderer{
 
-	public ZoomTableRendererHandler(BusinessLogic businessLogic) {
+	public ZoomTableRendererHandler(GuiController businessLogic) {
 		
 		super(businessLogic);
 	}

@@ -13,7 +13,7 @@ import tableClustering.clusterExtractor.commons.Cluster;
 
 public class GeneralTableRendererHandler extends TableRenderer{
 
-	public GeneralTableRendererHandler(BusinessLogic businessLogic) {
+	public GeneralTableRendererHandler(GuiController businessLogic) {
 
 		super(businessLogic);
 		

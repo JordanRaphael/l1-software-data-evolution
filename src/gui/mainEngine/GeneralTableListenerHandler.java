@@ -16,10 +16,10 @@ import gui.tableElements.tableRenderers.IDUTableRenderer;
 
 public class GeneralTableListenerHandler {
 
-	private BusinessLogic businessLogic;
+	private GuiController businessLogic;
 	private Gui gui;
 	
-	public GeneralTableListenerHandler(BusinessLogic businessLogic, Gui gui) {
+	public GeneralTableListenerHandler(GuiController businessLogic, Gui gui) {
 		
 		this.businessLogic = businessLogic;
 		this.gui = gui;

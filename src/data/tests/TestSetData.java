@@ -14,18 +14,18 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Test;
 
 import data.dataKeeper.GlobalDataKeeper;
-import gui.mainEngine.BusinessLogic;
+import gui.mainEngine.GuiController;
 import gui.mainEngine.Gui;
 
 public class TestSetData {
-	private BusinessLogic businessLogic;
+	private GuiController businessLogic;
 	private Gui frame;
 	private GlobalDataKeeper globalDataKeeper;
 	
 	public TestSetData() {
 		
 		frame = new Gui();
-		businessLogic = new BusinessLogic(frame);
+		businessLogic = new GuiController(frame);
 	}
 	
 	@Test
