@@ -18,26 +18,26 @@ import gui.mainEngine.GuiController;
 import gui.mainEngine.Gui;
 
 public class TestSetData {
-	private GuiController businessLogic;
+	private GuiController guiController;
 	private Gui frame;
 	private GlobalDataKeeper globalDataKeeper;
 	
 	public TestSetData() {
 		
 		frame = new Gui();
-		businessLogic = new GuiController(frame);
+		guiController = new GuiController(frame);
 	}
 	
 	@Test
 	public void testSetData() {
 		String filename = "filesHandler/inis/Atlas.ini";
 		try {
-			businessLogic.importData(filename);
+			guiController.importData(filename);
 		} catch (RecognitionException | IOException e) {
 			e.printStackTrace();
 		}
 		
-		globalDataKeeper = businessLogic.getGlobalDataKeeper();
+		globalDataKeeper = guiController.getGlobalDataKeeper();
 		PrintStream fileStream;
 		try {
 			fileStream = new PrintStream("Test-Files/tmp-atlas-to-test.txt");

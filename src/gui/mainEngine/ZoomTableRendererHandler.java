@@ -9,9 +9,9 @@ import data.dataKeeper.GlobalDataKeeper;
 
 public class ZoomTableRendererHandler extends TableRenderer{
 
-	public ZoomTableRendererHandler(GuiController businessLogic) {
+	public ZoomTableRendererHandler(GuiController guiController) {
 		
-		super(businessLogic);
+		super(guiController);
 	}
 	
 	
@@ -28,7 +28,7 @@ public class ZoomTableRendererHandler extends TableRenderer{
 				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 						column);
 
-				GlobalDataKeeper globalDataKeeper = getBusinessLogic().getGlobalDataKeeper();
+				GlobalDataKeeper globalDataKeeper = getGuiController().getGlobalDataKeeper();
 				String tmpValue = getGui().finalRowsZoomArea[row][column];
 				String columnName = table.getColumnName(column);
 				Color fr = new Color(0, 0, 0);
@@ -185,7 +185,7 @@ public class ZoomTableRendererHandler extends TableRenderer{
 				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 						column);
 				
-				GlobalDataKeeper globalDataKeeper = getBusinessLogic().getGlobalDataKeeper();
+				GlobalDataKeeper globalDataKeeper = getGuiController().getGlobalDataKeeper();
 				String tmpValue = getGui().finalRowsZoomArea[row][column];
 				String columnName = table.getColumnName(column);
 				Color fr = new Color(0, 0, 0);
@@ -201,19 +201,19 @@ public class ZoomTableRendererHandler extends TableRenderer{
 
 					description = description + "Transition Changes:"
 							+ globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column)))
-									.getNumberOfClusterChangesForOneTr(getBusinessLogic().getRowsZoom())
+									.getNumberOfClusterChangesForOneTr(getGuiController().getRowsZoom())
 							+ "\n";
 					description = description + "Additions:"
 							+ globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column)))
-									.getNumberOfClusterAdditionsForOneTr(getBusinessLogic().getRowsZoom())
+									.getNumberOfClusterAdditionsForOneTr(getGuiController().getRowsZoom())
 							+ "\n";
 					description = description + "Deletions:"
 							+ globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column)))
-									.getNumberOfClusterDeletionsForOneTr(getBusinessLogic().getRowsZoom())
+									.getNumberOfClusterDeletionsForOneTr(getGuiController().getRowsZoom())
 							+ "\n";
 					description = description + "Updates:"
 							+ globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column)))
-									.getNumberOfClusterUpdatesForOneTr(getBusinessLogic().getRowsZoom())
+									.getNumberOfClusterUpdatesForOneTr(getGuiController().getRowsZoom())
 							+ "\n";
 
 					getGui().descriptionText.setText(description);

@@ -16,13 +16,13 @@ import gui.mainEngine.Gui;
 
 public class TestLoadProject {
 
-	private GuiController businessLogic;
+	private GuiController guiController;
 	private Gui frame;
 	
 	public TestLoadProject() {
 		
 		frame = new Gui();
-		businessLogic = new GuiController(frame);
+		guiController = new GuiController(frame);
 		
 	}
 	
@@ -35,12 +35,12 @@ public class TestLoadProject {
 			
 			PrintStream fileStream = new PrintStream("Test-Files/load-atlas-project-business-logic-test.txt");
 			System.setOut(fileStream);
-			businessLogic.importData(filename);
+			guiController.importData(filename);
 			fileStream.close();
 
 			fileStream = new PrintStream("Test-Files/load-atlas-project-test.txt");
 			System.setOut(fileStream);
-			businessLogic.importData(filename);
+			guiController.importData(filename);
 			fileStream.close();	
 			
 		} catch (RecognitionException e) {

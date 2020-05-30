@@ -11,17 +11,18 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+
 import gui.tableElements.commons.JvTable;
 import gui.tableElements.tableRenderers.IDUTableRenderer;
 
 public class GeneralTableListenerHandler {
 
-	private GuiController businessLogic;
+	private GuiController guiController;
 	private Gui gui;
 	
 	public GeneralTableListenerHandler(GuiController businessLogic, Gui gui) {
 		
-		this.businessLogic = businessLogic;
+		this.guiController = businessLogic;
 		this.gui = gui;
 		
 	}
@@ -75,10 +76,10 @@ public class GeneralTableListenerHandler {
 						@Override
 						public void actionPerformed(ActionEvent le) {
 							if (sSelectedRow.contains("Cluster ")) {
-								businessLogic.showClusterSelectionToZoomArea(gui.selectedColumn, sSelectedRow);
+								guiController.showClusterSelectionToZoomArea(gui.selectedColumn, sSelectedRow);
 
 							} else {
-								businessLogic.showSelectionToZoomArea(gui.selectedColumn);
+								guiController.showSelectionToZoomArea(gui.selectedColumn);
 							}
 						}
 					});
@@ -115,7 +116,7 @@ public class GeneralTableListenerHandler {
 				System.out.println("Column index selected " + gui.wholeCol + " " + name);
 				generalTable.repaint();
 				if (gui.showingPld) {
-					businessLogic.makeGeneralTableIDU();
+					guiController.makeGeneralTableIDU();
 				}
 			}
 		};
@@ -142,7 +143,7 @@ public class GeneralTableListenerHandler {
 							gui.wholeCol = -1;
 							generalTable.repaint();
 							if (gui.showingPld) {
-								businessLogic.makeGeneralTableIDU();
+								guiController.makeGeneralTableIDU();
 							}
 						}
 					});
@@ -160,9 +161,9 @@ public class GeneralTableListenerHandler {
 
 							if (!sSelectedRow.contains("Cluster ")) {
 
-								businessLogic.showSelectionToZoomArea(gui.wholeCol);
+								guiController.showSelectionToZoomArea(gui.wholeCol);
 							} else {
-								businessLogic.showClusterSelectionToZoomArea(gui.wholeCol, "");
+								guiController.showClusterSelectionToZoomArea(gui.wholeCol, "");
 							}
 
 						}

@@ -19,13 +19,13 @@ import gui.mainEngine.Gui;
 
 public class TestShowPLD {
 
-	private GuiController businessLogic;
+	private GuiController guiController;
 	private Gui frame;
 	
 	public TestShowPLD() {
 		
 		frame = new Gui();
-		businessLogic = new GuiController(frame);
+		guiController = new GuiController(frame);
 	}
 	
 	@Test
@@ -33,7 +33,7 @@ public class TestShowPLD {
 		
 		String filename = "filesHandler/inis/Atlas.ini";
 		try {
-			businessLogic.importData(filename);
+			guiController.importData(filename);
 		} catch (RecognitionException | IOException e) {
 			e.printStackTrace();
 		}
@@ -79,12 +79,12 @@ public class TestShowPLD {
 	@SuppressWarnings("serial")
 	private void fakeZoom() {
 		frame.tablesSelected = new ArrayList<String>() {{add("hlt_property");}};
-		businessLogic.showSelectionToZoomArea(0);
+		guiController.showSelectionToZoomArea(0);
 		
 	}
 	
 	private void fakeShowPLD() {
-		businessLogic.showGeneralLifetimeIDUAction();
+		guiController.showGeneralLifetimeIDUAction();
 	}
 	
 }

@@ -15,12 +15,12 @@ import gui.tableElements.commons.JvTable;
 
 public class ZoomTableListenerHandler {
 
-	private GuiController businessLogic;
+	private GuiController guiController;
 	private Gui gui;
 	
 	public ZoomTableListenerHandler(GuiController businessLogic, Gui gui) {
 		
-		this.businessLogic = businessLogic;
+		this.guiController = businessLogic;
 		this.gui = gui;
 		
 	}
@@ -75,7 +75,7 @@ public class ZoomTableListenerHandler {
 							public void actionPerformed(ActionEvent e) {
 								gui.firstLevelUndoColumnsZoomArea = gui.finalColumnsZoomArea;
 								gui.firstLevelUndoRowsZoomArea = gui.finalRowsZoomArea;
-								businessLogic.showSelectionToZoomArea(gui.selectedColumnZoomArea);
+								guiController.showSelectionToZoomArea(gui.selectedColumnZoomArea);
 
 							}
 						});

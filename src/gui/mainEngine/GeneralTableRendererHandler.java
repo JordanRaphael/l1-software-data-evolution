@@ -13,9 +13,9 @@ import tableClustering.clusterExtractor.commons.Cluster;
 
 public class GeneralTableRendererHandler extends TableRenderer{
 
-	public GeneralTableRendererHandler(GuiController businessLogic) {
+	public GeneralTableRendererHandler(GuiController guiController) {
 
-		super(businessLogic);
+		super(guiController);
 		
 	}
 	
@@ -32,7 +32,7 @@ public class GeneralTableRendererHandler extends TableRenderer{
 			final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 					column);
 			
-			GlobalDataKeeper globalDataKeeper = getBusinessLogic().getGlobalDataKeeper();
+			GlobalDataKeeper globalDataKeeper = getGuiController().getGlobalDataKeeper();
 			String tmpValue = getGui().finalRows[row][column];
 			String columnName = table.getColumnName(column);
 			Color fr = new Color(0, 0, 0);
@@ -207,7 +207,7 @@ public class GeneralTableRendererHandler extends TableRenderer{
 					final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 							column);
 					
-					GlobalDataKeeper globalDataKeeper = getBusinessLogic().getGlobalDataKeeper();
+					GlobalDataKeeper globalDataKeeper = getGuiController().getGlobalDataKeeper();
 					String tmpValue = getGui().finalRowsZoomArea[row][column];
 					String columnName = table.getColumnName(column);
 					Color fr = new Color(0, 0, 0);

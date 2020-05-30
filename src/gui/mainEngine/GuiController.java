@@ -25,6 +25,7 @@ import javax.swing.tree.TreePath;
 
 import org.antlr.v4.runtime.RecognitionException;
 
+import data.dataKeeper.DataManipulator;
 import data.dataKeeper.GlobalDataKeeper;
 import data.dataSorters.PldRowSorter;
 import data.tableConstructors.PldConstruction;
@@ -49,6 +50,7 @@ import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
 public class GuiController {
 
 	private Gui gui;
+	private DataManipulator dataManipulator;
 	private GlobalDataKeeper globalDataKeeper;
 	private GeneralTableListenerHandler generalTableListenerHandler;
 	private ZoomTableListenerHandler zoomTableListenerHandler;
@@ -59,6 +61,7 @@ public class GuiController {
 	private JItemsHandler jItemsHandler;
 
 	public GuiController(Gui gui) {
+		this.dataManipulator = new DataManipulator();
 		this.gui = gui;
 		this.generalTableListenerHandler = new GeneralTableListenerHandler(this, gui);
 		this.zoomTableListenerHandler = new ZoomTableListenerHandler(this, gui);
@@ -85,9 +88,9 @@ public class GuiController {
 
 		return generalTableListenerHandler;
 	}
-	
-	public String[][] getRowsZoom(){
-		
+
+	public String[][] getRowsZoom() {
+
 		return rowsZoom;
 	}
 
@@ -129,17 +132,19 @@ public class GuiController {
 				generalTable.getColumnModel().getColumn(i).setPreferredWidth(1);
 			}
 		}
-		
+
 		TableRenderer tableRenderer = tablesFactory.getTableType("General Table", this);
 		generalTable.setDefaultRenderer(Object.class, tableRenderer.createTableCellRenderer());
-		
+
 		generalTable.addMouseListener(generalTableListenerHandler.createPhasesMouseClickedAdapter());
 
 		generalTable.addMouseListener(generalTableListenerHandler.createPhasesMouseClickedButton3Adapter(generalTable));
 
-		generalTable.getTableHeader().addMouseListener(generalTableListenerHandler.createPhasesMouseColumnClickedAdapter(generalTable));
+		generalTable.getTableHeader()
+				.addMouseListener(generalTableListenerHandler.createPhasesMouseColumnClickedAdapter(generalTable));
 
-		generalTable.getTableHeader().addMouseListener(generalTableListenerHandler.createPhasesRightMouseClickedAdapter(generalTable));
+		generalTable.getTableHeader()
+				.addMouseListener(generalTableListenerHandler.createPhasesRightMouseClickedAdapter(generalTable));
 
 		gui.LifeTimeTable = generalTable;
 
@@ -153,7 +158,7 @@ public class GuiController {
 
 	protected void fillTree() {
 
-		TreeConstructionGeneral tc = globalDataKeeper.createTreeConstructionGeneral();
+		TreeConstructionGeneral tc = dataManipulator.createTreeConstructionGeneral(globalDataKeeper);
 
 		gui.tablesTree = new JTree();
 		gui.tablesTree = tc.constructTree();
@@ -237,8 +242,8 @@ public class GuiController {
 
 			globalDataKeeper.printInfo();
 
-			ProjectInfoDialog infoDialog = new ProjectInfoDialog(gui.projectName, gui.datasetTxt,
-					gui.inputCsv, gui.transitionsFile, globalDataKeeper.getAllPPLSchemas().size(),
+			ProjectInfoDialog infoDialog = new ProjectInfoDialog(gui.projectName, gui.datasetTxt, gui.inputCsv,
+					gui.transitionsFile, globalDataKeeper.getAllPPLSchemas().size(),
 					globalDataKeeper.getAllPPLTransitions().size(), globalDataKeeper.getAllPPLTables().size());
 
 			infoDialog.setVisible(true);
@@ -275,15 +280,16 @@ public class GuiController {
 						gui.outputAssessment2, gui.timeWeight, gui.changeWeight, gui.preProcessingTime,
 						gui.preProcessingChange);
 
-				globalDataKeeper.populateWithPhases(mainEngine, gui.numberOfPhases);
+				dataManipulator.populateWithPhases(globalDataKeeper, mainEngine, gui.numberOfPhases);
 
 				TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper, gui.birthWeight,
 						gui.deathWeight, gui.changeWeightCl);
 
-				globalDataKeeper.populateWithClusters(mainEngine2, gui.numberOfClusters);
+				dataManipulator.populateWithClusters(globalDataKeeper, mainEngine2, gui.numberOfClusters);
 
 				if (globalDataKeeper.getPhaseCollectors().size() != 0) {
-					TableConstructionWithClusters table = globalDataKeeper.createTableConstructionWithClusters();
+					TableConstructionWithClusters table = dataManipulator
+							.createTableConstructionWithClusters(globalDataKeeper);
 					final String[] columns = table.constructColumns();
 					final String[][] rows = table.constructRows();
 					gui.segmentSize = table.getSegmentSize();
@@ -310,7 +316,7 @@ public class GuiController {
 
 	protected void showClusterSelectionToZoomArea(int selectedColumn, String selectedCluster) {
 
-		PldConstruction table = globalDataKeeper.showClusterSelectionToZoomArea(gui.tablesSelected,
+		PldConstruction table = dataManipulator.showClusterSelectionToZoomArea(globalDataKeeper, gui.tablesSelected,
 				selectedColumn);
 
 		final String[] columns = table.constructColumns();
@@ -355,10 +361,10 @@ public class GuiController {
 				zoomTable.getColumnModel().getColumn(i).setMinWidth(20);
 			}
 		}
-		
+
 		TableRenderer tableRenderer = tablesFactory.getTableType("Zoom Table", this);
-		//zoomTable.setDefaultRenderer(Object.class,
-		//		zoomTableListenerHandler.createZoomAreaDefaultTableRenderer());
+		// zoomTable.setDefaultRenderer(Object.class,
+		// zoomTableListenerHandler.createZoomAreaDefaultTableRenderer());
 		zoomTable.setDefaultRenderer(Object.class, tableRenderer.createDefaultTableRenderer());
 
 		zoomTable.addMouseListener(zoomTableListenerHandler.createZoomAreaMouseClickedHandler());
@@ -404,10 +410,10 @@ public class GuiController {
 						gui.outputAssessment2, gui.timeWeight, gui.changeWeight, gui.preProcessingTime,
 						gui.preProcessingChange);
 
-				globalDataKeeper.populateWithPhases(mainEngine, gui.numberOfPhases);
+				dataManipulator.populateWithPhases(globalDataKeeper, mainEngine, gui.numberOfPhases);
 
 				if (globalDataKeeper.getPhaseCollectors().size() != 0) {
-					TableConstructionPhases table = globalDataKeeper.createTableConstructionPhases();
+					TableConstructionPhases table = dataManipulator.createTableConstructionPhases(globalDataKeeper);
 					final String[] columns = table.constructColumns();
 					final String[][] rows = table.constructRows();
 					gui.segmentSize = table.getSegmentSize();
@@ -434,7 +440,8 @@ public class GuiController {
 
 	public void fillClustersTree() {
 
-		TreeConstructionPhasesWithClusters tc = globalDataKeeper.createTreeConstructionPhasesWithClusters();
+		TreeConstructionPhasesWithClusters tc = dataManipulator
+				.createTreeConstructionPhasesWithClusters(globalDataKeeper);
 		gui.tablesTree = tc.constructTree();
 
 		gui.tablesTree.addTreeSelectionListener(new TreeSelectionListener() {
@@ -478,9 +485,9 @@ public class GuiController {
 		if (!(gui.currentProject == null)) {
 			gui.zoomInButton.setVisible(true);
 			gui.zoomOutButton.setVisible(true);
-			
-			TableConstructionIDU table = globalDataKeeper.createTableConstructionIDU();
-			
+
+			TableConstructionIDU table = dataManipulator.createTableConstructionIDU(globalDataKeeper);
+
 			final String[] columns = table.constructColumns();
 			final String[][] rows = table.constructRows();
 			gui.segmentSizeZoomArea = table.getSegmentSize();
@@ -542,7 +549,7 @@ public class GuiController {
 	}
 
 	protected void fillTable() {
-		TableConstructionIDU table = globalDataKeeper.createTableConstructionIDU();
+		TableConstructionIDU table = dataManipulator.createTableConstructionIDU(globalDataKeeper);
 		final String[] columns = table.constructColumns();
 		final String[][] rows = table.constructRows();
 		gui.segmentSizeZoomArea = table.getSegmentSize();
@@ -569,7 +576,7 @@ public class GuiController {
 				gui.outputAssessment2, gui.timeWeight, gui.changeWeight, gui.preProcessingTime,
 				gui.preProcessingChange);
 
-		globalDataKeeper.populateWithPhases(mainEngine, gui.numberOfPhases);
+		dataManipulator.populateWithPhases(globalDataKeeper, mainEngine, gui.numberOfPhases);
 
 		Double b = new Double(0.3);
 		Double d = new Double(0.3);
@@ -577,10 +584,11 @@ public class GuiController {
 
 		TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper, b, d, c);
 
-		globalDataKeeper.populateWithClusters(mainEngine2, gui.numberOfClusters);
+		dataManipulator.populateWithClusters(globalDataKeeper, mainEngine2, gui.numberOfClusters);
 
 		if (globalDataKeeper.getPhaseCollectors().size() != 0) {
-			TableConstructionWithClusters tableP = globalDataKeeper.createTableConstructionWithClusters();
+			TableConstructionWithClusters tableP = dataManipulator
+					.createTableConstructionWithClusters(globalDataKeeper);
 			final String[] columnsP = tableP.constructColumns();
 			final String[][] rowsP = tableP.constructRows();
 			gui.segmentSize = tableP.getSegmentSize();
@@ -600,7 +608,8 @@ public class GuiController {
 
 		if (!(gui.currentProject == null)) {
 
-			TableConstructionAllSquaresIncluded table = globalDataKeeper.createTableConstructionAllSquaresIncluded();
+			TableConstructionAllSquaresIncluded table = dataManipulator
+					.createTableConstructionAllSquaresIncluded(globalDataKeeper);
 			final String[] columns = table.constructColumns();
 			final String[][] rows = table.constructRows();
 			gui.segmentSizeDetailedTable = table.getSegmentSize();
@@ -671,9 +680,8 @@ public class GuiController {
 
 			System.out.println(gui.projectName);
 
-			CreateProjectJDialog createProjectDialog = new CreateProjectJDialog(gui.projectName,
-					gui.datasetTxt, gui.inputCsv, gui.outputAssessment1, gui.outputAssessment2,
-					gui.transitionsFile);
+			CreateProjectJDialog createProjectDialog = new CreateProjectJDialog(gui.projectName, gui.datasetTxt,
+					gui.inputCsv, gui.outputAssessment1, gui.outputAssessment2, gui.transitionsFile);
 
 			createProjectDialog.setModal(true);
 			createProjectDialog.setVisible(true);
@@ -886,10 +894,10 @@ public class GuiController {
 		}
 
 		renderer = new IDUTableRenderer(gui, gui.finalRowsZoomArea, globalDataKeeper, gui.segmentSize);
-		
+
 		TableRenderer tableRenderer = tablesFactory.getTableType("General Table", this);
 		generalTable.setDefaultRenderer(Object.class, tableRenderer.createDefaultTableRenderer());
-		
+
 		generalTable.addMouseListener(generalTableListenerHandler.createIDUOneMouseClickAdapter(renderer));
 
 		generalTable.addMouseListener(generalTableListenerHandler.createIDURightClickRowAdapter(generalTable));
@@ -912,8 +920,8 @@ public class GuiController {
 	public void showSelectionToZoomArea(int selectedColumn) {
 
 		System.out.println("selectedColumn " + selectedColumn + " tablesSelected " + gui.tablesSelected);
-		TableConstructionZoomArea table = globalDataKeeper.createTableConstructionZoomArea(gui.tablesSelected,
-				selectedColumn);
+		TableConstructionZoomArea table = dataManipulator.createTableConstructionZoomArea(globalDataKeeper,
+				gui.tablesSelected, selectedColumn);
 		final String[] columns = table.constructColumns();
 		final String[][] rows = table.constructRows();
 		gui.segmentSizeZoomArea = table.getSegmentSize();
@@ -963,7 +971,6 @@ public class GuiController {
 			}
 		}
 
-		
 		TableRenderer tableRenderer = tablesFactory.getTableType("Zoom Table", this);
 		zoomTable.setDefaultRenderer(Object.class, tableRenderer.createTableCellRenderer());
 

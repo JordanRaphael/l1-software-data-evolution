@@ -1,6 +1,6 @@
 package gui.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -11,24 +11,23 @@ import java.nio.file.Paths;
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Test;
 
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataKeeper.DataManipulator;
 import data.tableConstructors.TableConstructionPhases;
-import data.tableConstructors.TableConstructionWithClusters;
-import gui.mainEngine.GuiController;
 import gui.mainEngine.Gui;
+import gui.mainEngine.GuiController;
 import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
-import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
 
 public class TestShowPhasesPLD {
 
-	private GuiController businessLogic;
+	private GuiController guiController;
+	private DataManipulator dataManipulator;
 	private Gui gui;
 	
 	public TestShowPhasesPLD() {
 		
 		gui = new Gui();
-		businessLogic = new GuiController(gui);
-		
+		guiController = new GuiController(gui);
+		dataManipulator = new DataManipulator();
 	}
 	
 	
@@ -37,7 +36,7 @@ public class TestShowPhasesPLD {
 
 		String filename = "filesHandler/inis/Atlas.ini";
 		try {
-			businessLogic.importData(filename);
+			guiController.importData(filename);
 		} catch (RecognitionException | IOException e) {
 			e.printStackTrace();
 		}
@@ -60,23 +59,23 @@ public class TestShowPhasesPLD {
 			mainEngine.parseInput();
 			System.out.println("\n\n\n");
 			mainEngine.extractPhases(this.gui.numberOfPhases);
-			mainEngine.connectTransitionsWithPhases(businessLogic.getGlobalDataKeeper());
-			businessLogic.getGlobalDataKeeper().setPhaseCollectors(mainEngine.getPhaseCollectors());
+			mainEngine.connectTransitionsWithPhases(guiController.getGlobalDataKeeper());
+			guiController.getGlobalDataKeeper().setPhaseCollectors(mainEngine.getPhaseCollectors());
 
-			if (businessLogic.getGlobalDataKeeper().getPhaseCollectors().size() != 0) {
-				TableConstructionPhases table = businessLogic.getGlobalDataKeeper().createTableConstructionPhases();
+			if (guiController.getGlobalDataKeeper().getPhaseCollectors().size() != 0) {
+				TableConstructionPhases table = dataManipulator.createTableConstructionPhases(guiController.getGlobalDataKeeper());
 				
 				final String[] columns = table.constructColumns();
 				final String[][] rows = table.constructRows();
 				this.gui.segmentSize = table.getSegmentSize();
-				System.out.println("Schemas: " + businessLogic.getGlobalDataKeeper().getAllPPLSchemas().size());
+				System.out.println("Schemas: " + guiController.getGlobalDataKeeper().getAllPPLSchemas().size());
 				System.out.println("C: " + columns.length + " R: " + rows.length);
 
 				this.gui.finalColumns = columns;
 				this.gui.finalRows = rows;
 				this.gui.tabbedPane.setSelectedIndex(0);
-				this.businessLogic.makeGeneralTablePhases();
-				this.businessLogic.fillPhasesTree();
+				this.guiController.makeGeneralTablePhases();
+				this.guiController.fillPhasesTree();
 			}
 
 			fileStream.close();

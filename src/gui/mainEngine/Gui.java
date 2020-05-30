@@ -133,7 +133,7 @@ public class Gui extends JFrame {
 		return generalTable;
 	}
 	
-	private GuiController businessLogic = new GuiController(this);
+	private GuiController guiController = new GuiController(this);
 	
 
 	/**
@@ -172,13 +172,13 @@ public class Gui extends JFrame {
 		JMenuItem mntmCreateProject = new JMenuItem("Create Project");
 		mntmCreateProject.addActionListener( new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					businessLogic.createProjectAction();
+					guiController.createProjectAction();
 				}
 		});
 		
 		mntmCreateProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				businessLogic.createProjectAction();
+				guiController.createProjectAction();
 			}
 		});
 		mnFile.add(mntmCreateProject);
@@ -187,7 +187,7 @@ public class Gui extends JFrame {
 
 		mntmLoadProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e1) {
-				businessLogic.loadProjectAction();
+				guiController.loadProjectAction();
 			}
 		});
 		mnFile.add(mntmLoadProject);
@@ -195,7 +195,7 @@ public class Gui extends JFrame {
 		JMenuItem mntmEditProject = new JMenuItem("Edit Project");
 		mntmEditProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				businessLogic.editProjectAction();
+				guiController.editProjectAction();
 			}
 		});
 		mnFile.add(mntmEditProject);
@@ -206,14 +206,14 @@ public class Gui extends JFrame {
 		JMenuItem mntmShowLifetimeTable = new JMenuItem("Show Full Detailed LifeTime Table");
 		mntmShowLifetimeTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				businessLogic.showLifetimeTableAction();
+				guiController.showLifetimeTableAction();
 			}
 		});
 
 		JMenuItem mntmShowGeneralLifetimeIDU = new JMenuItem("Show PLD");
 		mntmShowGeneralLifetimeIDU.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				businessLogic.showGeneralLifetimeIDUAction();
+				guiController.showGeneralLifetimeIDUAction();
 			}
 		});
 		mnTable.add(mntmShowGeneralLifetimeIDU);
@@ -221,7 +221,7 @@ public class Gui extends JFrame {
 		JMenuItem mntmShowGeneralLifetimePhasesPLD = new JMenuItem("Show Phases PLD");
 		mntmShowGeneralLifetimePhasesPLD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				businessLogic.showGeneralLifetimePhasesPLDAction();
+				guiController.showGeneralLifetimePhasesPLDAction();
 			}
 		});
 		mnTable.add(mntmShowGeneralLifetimePhasesPLD);
@@ -229,7 +229,7 @@ public class Gui extends JFrame {
 		JMenuItem mntmShowGeneralLifetimePhasesWithClustersPLD = new JMenuItem("Show Phases With Clusters PLD");
 		mntmShowGeneralLifetimePhasesWithClustersPLD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				businessLogic.showGeneralLifetimePhasesWithClustersPLDAction();
+				guiController.showGeneralLifetimePhasesWithClustersPLDAction();
 			}
 		});
 		mnTable.add(mntmShowGeneralLifetimePhasesWithClustersPLD);
@@ -288,7 +288,7 @@ public class Gui extends JFrame {
 		mntmInfo = new JMenuItem("Info");
 		mntmInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				businessLogic.infoAction();
+				guiController.infoAction();
 			}
 		});
 		mnProject.add(mntmInfo);
@@ -326,7 +326,7 @@ public class Gui extends JFrame {
 		zoomInButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				businessLogic.zoomInAction();
+				guiController.zoomInAction();
 			}
 		});
 
@@ -335,7 +335,7 @@ public class Gui extends JFrame {
 		zoomOutButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				businessLogic.zoomOutAction();
+				guiController.zoomOutAction();
 			}
 		});
 
@@ -369,7 +369,7 @@ public class Gui extends JFrame {
 				if (firstLevelUndoColumnsZoomArea != null) {
 					finalColumnsZoomArea = firstLevelUndoColumnsZoomArea;
 					finalRowsZoomArea = firstLevelUndoRowsZoomArea;
-					businessLogic.makeZoomAreaTableForCluster();
+					guiController.makeZoomAreaTableForCluster();
 				}
 
 			}
@@ -395,7 +395,7 @@ public class Gui extends JFrame {
 		notUniformlyDistributedButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				businessLogic.notUniformlyDistributedButtonMouseListener();
+				guiController.notUniformlyDistributedButtonMouseListener();
 			}
 		});
 

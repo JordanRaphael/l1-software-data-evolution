@@ -10,19 +10,8 @@ import data.dataPPL.pplTransition.AtomicChange;
 import data.dataPPL.pplTransition.PPLTransition;
 import data.dataPPL.pplTransition.TableChange;
 import data.dataProccessing.Worker;
-import data.tableConstructors.PldConstruction;
-import data.tableConstructors.TableConstructionAllSquaresIncluded;
-import data.tableConstructors.TableConstructionClusterTablesPhasesZoomA;
-import data.tableConstructors.TableConstructionIDU;
-import data.tableConstructors.TableConstructionPhases;
-import data.tableConstructors.TableConstructionWithClusters;
-import data.tableConstructors.TableConstructionZoomArea;
-import data.treeElements.TreeConstructionGeneral;
-import data.treeElements.TreeConstructionPhasesWithClusters;
 import phaseAnalyzer.commons.PhaseCollector;
-import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
 import tableClustering.clusterExtractor.commons.ClusterCollector;
-import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
 
 public class GlobalDataKeeper {
 
@@ -167,83 +156,6 @@ public class GlobalDataKeeper {
 		System.out.println("Schemas:" + allPPLSchemas.size());
 		System.out.println("Transitions:" + allPPLTransitions.size());
 		System.out.println("Tables:" + allPPLTables.size());
-	}
-
-	public PldConstruction showClusterSelectionToZoomArea(ArrayList<String> selectedTables, int selectedColumn) {
-		ArrayList<String> tablesOfCluster = new ArrayList<String>();
-		for (int i = 0; i < selectedTables.size(); i++) {
-			String[] selectedClusterSplit = selectedTables.get(i).split(" ");
-			int cluster = Integer.parseInt(selectedClusterSplit[1]);
-			ArrayList<String> namesOfTables = clusterCollectors.get(0).getClusters().get(cluster).getNamesOfTables();
-			for (int j = 0; j < namesOfTables.size(); j++) {
-				tablesOfCluster.add(namesOfTables.get(j));
-			}
-			System.out.println(selectedTables.get(i));
-		}
-
-		PldConstruction table;
-		if (selectedColumn == 0) {
-			table = new TableConstructionClusterTablesPhasesZoomA(allPPLSchemas, phaseCollectors.get(0).getPhases(),
-					tablesOfCluster);
-		} else {
-			table = createTableConstructionZoomArea(tablesOfCluster, selectedColumn);
-		}
-		System.out.println("Schemas: " + allPPLSchemas.size());
-		System.out.println("C: " + table.constructColumns().length + " R: " + table.constructRows().length);
-
-		return table;
-	}
-
-	public TableConstructionPhases createTableConstructionPhases() {
-		return new TableConstructionPhases(allPPLSchemas, getPhaseCollectors().get(0).getPhases());
-	}
-
-	public TreeConstructionPhasesWithClusters createTreeConstructionPhasesWithClusters() {
-		return new TreeConstructionPhasesWithClusters(this);
-
-	}
-
-	public TableConstructionIDU createTableConstructionIDU() {
-		return new TableConstructionIDU(allPPLSchemas, allPPLTransitions);
-	}
-
-	public TableConstructionWithClusters createTableConstructionWithClusters() {
-		return new TableConstructionWithClusters(phaseCollectors.get(0).getPhases(),
-				getClusterCollectors().get(0).getClusters());
-	}
-
-	public TreeConstructionGeneral createTreeConstructionGeneral() {
-		return new TreeConstructionGeneral(this);
-	}
-
-	public TableConstructionZoomArea createTableConstructionZoomArea(ArrayList<String> tablesOfCluster,
-			int selectedColumn) {
-		return new TableConstructionZoomArea(phaseCollectors.get(0).getPhases(), allPPLTransitions, allPPLSchemas,
-				allPPLTables, tablesOfCluster, selectedColumn);
-	}
-
-	public TableConstructionAllSquaresIncluded createTableConstructionAllSquaresIncluded() {
-		return new TableConstructionAllSquaresIncluded(allPPLSchemas, allPPLTransitions);
-	}
-
-	public TableConstructionClusterTablesPhasesZoomA createTableConstructionClusterTablesPhasesZoomA(
-			ArrayList<String> tablesOfCluster) {
-		return new TableConstructionClusterTablesPhasesZoomA(allPPLSchemas, getPhaseCollectors().get(0).getPhases(),
-				tablesOfCluster);
-	}
-
-	public void populateWithPhases(PhaseAnalyzerMainEngine mainEngine, Integer numberOfPhases) {
-		mainEngine.parseInput();
-		System.out.println("\n\n\n");
-		mainEngine.extractPhases(numberOfPhases);
-		mainEngine.connectTransitionsWithPhases(this);
-		setPhaseCollectors(mainEngine.getPhaseCollectors());
-	}
-
-	public void populateWithClusters(TableClusteringMainEngine mainEngine, Integer numberOfClusters) {
-		mainEngine.extractClusters(numberOfClusters);
-		setClusterCollectors(mainEngine.getClusterCollectors());
-		mainEngine.print();
 	}
 
 }

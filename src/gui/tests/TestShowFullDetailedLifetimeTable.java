@@ -8,74 +8,80 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import javax.swing.JOptionPane;
-
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Test;
 
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataKeeper.DataManipulator;
 import data.tableConstructors.TableConstructionAllSquaresIncluded;
-import gui.mainEngine.GuiController;
 import gui.mainEngine.Gui;
+import gui.mainEngine.GuiController;
 
 public class TestShowFullDetailedLifetimeTable {
-	
-	private GuiController businessLogic;
+
+	private GuiController guiController;
+	private DataManipulator dataManipulator;
 	private Gui gui;
-	
+
 	public TestShowFullDetailedLifetimeTable() {
-		
+
 		gui = new Gui();
-		businessLogic = new GuiController(gui);
-		
+		guiController = new GuiController(gui);
+		dataManipulator = new DataManipulator();
+
 	}
-	
+
 	@Test
 	public void testShowFullDetailedLifetimeTable() {
-		
+
 		String filename = "filesHandler/inis/Atlas.ini";
 		try {
-			businessLogic.importData(filename);
+			guiController.importData(filename);
 		} catch (RecognitionException | IOException e) {
 			e.printStackTrace();
 		}
-		
-		try {	
-			PrintStream fileStream = new PrintStream("Test-Files/show-full-detailed-lifetime-table-atlas-project-test.txt");
+
+		try {
+			PrintStream fileStream = new PrintStream(
+					"Test-Files/show-full-detailed-lifetime-table-atlas-project-test.txt");
 			System.setOut(fileStream);
-			
+
 			if (!(gui.currentProject == null)) {
-				TableConstructionAllSquaresIncluded table = businessLogic.getGlobalDataKeeper().createTableConstructionAllSquaresIncluded();
+				TableConstructionAllSquaresIncluded table = dataManipulator
+						.createTableConstructionAllSquaresIncluded(guiController.getGlobalDataKeeper());
 				final String[] columns = table.constructColumns();
 				final String[][] rows = table.constructRows();
 				gui.segmentSizeDetailedTable = table.getSegmentSize();
 				gui.tabbedPane.setSelectedIndex(0);
 				gui.makeDetailedTable(columns, rows, true);
-				
+
 				fileStream.close();
 				System.setOut(System.out);
-				
+
 			}
-			
+
 			fileStream.close();
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+
 		String content1 = null;
 		String content2 = null;
 		try {
-			content1 = new String(Files.readAllBytes(Paths.get("Test-Files/show-full-detailed-lifetime-table-atlas-project-test.txt")), StandardCharsets.UTF_8);
-			content2 = new String(Files.readAllBytes(Paths.get("Test-Files/show-full-detailed-lifetime-table-atlas-project.txt")), StandardCharsets.UTF_8);
+			content1 = new String(
+					Files.readAllBytes(
+							Paths.get("Test-Files/show-full-detailed-lifetime-table-atlas-project-test.txt")),
+					StandardCharsets.UTF_8);
+			content2 = new String(
+					Files.readAllBytes(Paths.get("Test-Files/show-full-detailed-lifetime-table-atlas-project.txt")),
+					StandardCharsets.UTF_8);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		assertEquals(content1, content2);
-		
-		
+
 	}
 
 }
