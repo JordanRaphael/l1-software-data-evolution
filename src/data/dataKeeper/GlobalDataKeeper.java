@@ -19,171 +19,162 @@ import data.tableConstructors.TableConstructionWithClusters;
 import data.tableConstructors.TableConstructionZoomArea;
 import data.treeElements.TreeConstructionGeneral;
 import data.treeElements.TreeConstructionPhasesWithClusters;
-import phaseAnalyzer.commons.Phase;
 import phaseAnalyzer.commons.PhaseCollector;
 import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
-import tableClustering.clusterExtractor.commons.Cluster;
 import tableClustering.clusterExtractor.commons.ClusterCollector;
 import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
 
 public class GlobalDataKeeper {
 
-	private TreeMap<String,PPLSchema> allPPLSchemas = null;
-	private TreeMap<String,PPLTable> allPPLTables = null;
+	private TreeMap<String, PPLSchema> allPPLSchemas = null;
+	private TreeMap<String, PPLTable> allPPLTables = null;
 	private ArrayList<AtomicChange> atomicChanges = null;
-	private TreeMap<String,TableChange> tableChanges = null;
-	private TreeMap<String,TableChange> tableChangesForTwo = null;
-	private TreeMap<Integer,PPLTransition> allPPLTransitions = null;
+	private TreeMap<String, TableChange> tableChanges = null;
+	private TreeMap<String, TableChange> tableChangesForTwo = null;
+	private TreeMap<Integer, PPLTransition> allPPLTransitions = null;
 	private ArrayList<PhaseCollector> phaseCollectors = null;
 	private ArrayList<ClusterCollector> clusterCollectors = null;
 
-	private String 	projectDataFolder=null;
-	private String filename=null;
-	private String transitionsFile="";
-	
+	private String projectDataFolder = null;
+	private String filename = null;
+	private String transitionsFile = "";
 
-	public GlobalDataKeeper(String fl,String transitionsFile){
-		allPPLSchemas = new TreeMap<String,PPLSchema>();
-		allPPLTables = new  TreeMap<String,PPLTable>();
+	public GlobalDataKeeper(String fl, String transitionsFile) {
+		allPPLSchemas = new TreeMap<String, PPLSchema>();
+		allPPLTables = new TreeMap<String, PPLTable>();
 		atomicChanges = new ArrayList<AtomicChange>();
-		tableChanges = new TreeMap<String,TableChange>();
-		tableChangesForTwo = new TreeMap<String,TableChange>();
-		allPPLTransitions = new TreeMap<Integer,PPLTransition>();
+		tableChanges = new TreeMap<String, TableChange>();
+		tableChangesForTwo = new TreeMap<String, TableChange>();
+		allPPLTransitions = new TreeMap<Integer, PPLTransition>();
 		phaseCollectors = new ArrayList<PhaseCollector>();
 		clusterCollectors = new ArrayList<ClusterCollector>();
-		filename=fl;
-		this.transitionsFile=transitionsFile;
+		filename = fl;
+		this.transitionsFile = transitionsFile;
 	}
-	
-	public GlobalDataKeeper(){
-		
-		
+
+	public GlobalDataKeeper() {
+
 	}
-	
-	public void setData(){
-		
-		Worker w = new Worker(filename,transitionsFile);
+
+	public void setData() {
+
+		Worker w = new Worker(filename, transitionsFile);
 		try {
 			w.work();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		setAllPPLSchemas(w.getAllPPLSchemas());
 		setAllPPLTables(w.getAllPPLTables());
 		setAllPPLTransitions(w.getAllPPLTransitions());
 		setAllTableChanges(w.getAllTableChanges());
 		setAtomicChanges(w.getAtomicChanges());
 		setDataFolder(w.getDataFolder());
-		
 
-		
 	}
-	
-	public void setPhaseCollectors(ArrayList<PhaseCollector> phaseCollectors){
-		this.phaseCollectors=phaseCollectors;
-	}
-	
-	public void setClusterCollectors(ArrayList<ClusterCollector> clusterCollectors){
-		this.clusterCollectors=clusterCollectors;
-	}
-	
-	private void setAllPPLSchemas(TreeMap<String,PPLSchema> tmpAllPPLSchemas){
-		
-		allPPLSchemas=tmpAllPPLSchemas;
-		
-	}
-	
-	private void setAllPPLTables(TreeMap<String,PPLTable> tmpAllTables){
-		 allPPLTables=tmpAllTables;
 
-		
+	public void setPhaseCollectors(ArrayList<PhaseCollector> phaseCollectors) {
+		this.phaseCollectors = phaseCollectors;
 	}
-	
-	private void setAtomicChanges(ArrayList<AtomicChange> tmpAtomicChanges){
-		
-		 atomicChanges=tmpAtomicChanges;
-		
+
+	public void setClusterCollectors(ArrayList<ClusterCollector> clusterCollectors) {
+		this.clusterCollectors = clusterCollectors;
 	}
-	
-	private void setAllTableChanges(TreeMap<String,TableChange> tmpTableChanges){
-		
-		 tableChanges=tmpTableChanges;
-		
+
+	private void setAllPPLSchemas(TreeMap<String, PPLSchema> tmpAllPPLSchemas) {
+
+		allPPLSchemas = tmpAllPPLSchemas;
+
 	}
-	
-	
-	private void setAllPPLTransitions(TreeMap<Integer,PPLTransition> tmpAllPPLTransitions){
-		
-		 allPPLTransitions=tmpAllPPLTransitions;
-		
+
+	private void setAllPPLTables(TreeMap<String, PPLTable> tmpAllTables) {
+		allPPLTables = tmpAllTables;
+
 	}
-	
-	private void setDataFolder(String tmpProjectDataFolder){
-		 projectDataFolder=tmpProjectDataFolder;
+
+	private void setAtomicChanges(ArrayList<AtomicChange> tmpAtomicChanges) {
+
+		atomicChanges = tmpAtomicChanges;
+
 	}
-	
-	public TreeMap<String,PPLSchema> getAllPPLSchemas(){
-		
+
+	private void setAllTableChanges(TreeMap<String, TableChange> tmpTableChanges) {
+
+		tableChanges = tmpTableChanges;
+
+	}
+
+	private void setAllPPLTransitions(TreeMap<Integer, PPLTransition> tmpAllPPLTransitions) {
+
+		allPPLTransitions = tmpAllPPLTransitions;
+
+	}
+
+	private void setDataFolder(String tmpProjectDataFolder) {
+		projectDataFolder = tmpProjectDataFolder;
+	}
+
+	public TreeMap<String, PPLSchema> getAllPPLSchemas() {
+
 		return allPPLSchemas;
-		
+
 	}
-	
-	public TreeMap<String,PPLTable> getAllPPLTables(){
-		
+
+	public TreeMap<String, PPLTable> getAllPPLTables() {
+
 		return allPPLTables;
-		
+
 	}
-	
-	public ArrayList<AtomicChange> getAtomicChanges(){
-		
+
+	public ArrayList<AtomicChange> getAtomicChanges() {
+
 		return atomicChanges;
-		
+
 	}
-	
-	public TreeMap<String,TableChange> getAllTableChanges(){
-		
+
+	public TreeMap<String, TableChange> getAllTableChanges() {
+
 		return tableChanges;
-		
+
 	}
-	
-	public TreeMap<String,TableChange> getTmpTableChanges(){
-		
+
+	public TreeMap<String, TableChange> getTmpTableChanges() {
+
 		return tableChangesForTwo;
-		
+
 	}
-	
-	public TreeMap<Integer,PPLTransition> getAllPPLTransitions(){
-		
+
+	public TreeMap<Integer, PPLTransition> getAllPPLTransitions() {
+
 		return allPPLTransitions;
-		
+
 	}
-	
-	public String getDataFolder(){
+
+	public String getDataFolder() {
 		return projectDataFolder;
 	}
-	
-	public ArrayList<PhaseCollector> getPhaseCollectors(){
+
+	public ArrayList<PhaseCollector> getPhaseCollectors() {
 		return phaseCollectors;
 	}
-	
-	public ArrayList<ClusterCollector> getClusterCollectors(){
+
+	public ArrayList<ClusterCollector> getClusterCollectors() {
 		return clusterCollectors;
 	}
-	
+
 	public void printInfo() {
 		System.out.println("Schemas:" + allPPLSchemas.size());
 		System.out.println("Transitions:" + allPPLTransitions.size());
 		System.out.println("Tables:" + allPPLTables.size());
 	}
-	
+
 	public PldConstruction showClusterSelectionToZoomArea(ArrayList<String> selectedTables, int selectedColumn) {
 		ArrayList<String> tablesOfCluster = new ArrayList<String>();
 		for (int i = 0; i < selectedTables.size(); i++) {
 			String[] selectedClusterSplit = selectedTables.get(i).split(" ");
 			int cluster = Integer.parseInt(selectedClusterSplit[1]);
-			ArrayList<String> namesOfTables =  clusterCollectors.get(0).getClusters()
-					.get(cluster).getNamesOfTables();
+			ArrayList<String> namesOfTables = clusterCollectors.get(0).getClusters().get(cluster).getNamesOfTables();
 			for (int j = 0; j < namesOfTables.size(); j++) {
 				tablesOfCluster.add(namesOfTables.get(j));
 			}
@@ -192,49 +183,55 @@ public class GlobalDataKeeper {
 
 		PldConstruction table;
 		if (selectedColumn == 0) {
-			table = new TableConstructionClusterTablesPhasesZoomA(this, tablesOfCluster);
+			table = new TableConstructionClusterTablesPhasesZoomA(allPPLSchemas, phaseCollectors.get(0).getPhases(),
+					tablesOfCluster);
 		} else {
 			table = createTableConstructionZoomArea(tablesOfCluster, selectedColumn);
 		}
 		System.out.println("Schemas: " + allPPLSchemas.size());
 		System.out.println("C: " + table.constructColumns().length + " R: " + table.constructRows().length);
-		
+
 		return table;
 	}
-	
+
 	public TableConstructionPhases createTableConstructionPhases() {
-		return new TableConstructionPhases(this);
+		return new TableConstructionPhases(allPPLSchemas, getPhaseCollectors().get(0).getPhases());
 	}
-	
+
 	public TreeConstructionPhasesWithClusters createTreeConstructionPhasesWithClusters() {
 		return new TreeConstructionPhasesWithClusters(this);
-		
+
 	}
-	
+
 	public TableConstructionIDU createTableConstructionIDU() {
-		return new TableConstructionIDU(this);
+		return new TableConstructionIDU(allPPLSchemas, allPPLTransitions);
 	}
-	
+
 	public TableConstructionWithClusters createTableConstructionWithClusters() {
-		return new TableConstructionWithClusters(this);
+		return new TableConstructionWithClusters(phaseCollectors.get(0).getPhases(),
+				getClusterCollectors().get(0).getClusters());
 	}
-	
+
 	public TreeConstructionGeneral createTreeConstructionGeneral() {
 		return new TreeConstructionGeneral(this);
 	}
-	
-	public TableConstructionZoomArea createTableConstructionZoomArea(ArrayList<String> tablesOfCluster, int selectedColumn) {
-		return new TableConstructionZoomArea(this, tablesOfCluster, selectedColumn);
+
+	public TableConstructionZoomArea createTableConstructionZoomArea(ArrayList<String> tablesOfCluster,
+			int selectedColumn) {
+		return new TableConstructionZoomArea(phaseCollectors.get(0).getPhases(), allPPLTransitions, allPPLSchemas,
+				allPPLTables, tablesOfCluster, selectedColumn);
 	}
-	
+
 	public TableConstructionAllSquaresIncluded createTableConstructionAllSquaresIncluded() {
-		return new TableConstructionAllSquaresIncluded(this);
+		return new TableConstructionAllSquaresIncluded(allPPLSchemas, allPPLTransitions);
 	}
-	
-	public TableConstructionClusterTablesPhasesZoomA createTableConstructionClusterTablesPhasesZoomA(ArrayList<String> tablesOfCluster) {
-		return new TableConstructionClusterTablesPhasesZoomA(this, tablesOfCluster);
+
+	public TableConstructionClusterTablesPhasesZoomA createTableConstructionClusterTablesPhasesZoomA(
+			ArrayList<String> tablesOfCluster) {
+		return new TableConstructionClusterTablesPhasesZoomA(allPPLSchemas, getPhaseCollectors().get(0).getPhases(),
+				tablesOfCluster);
 	}
-	
+
 	public void populateWithPhases(PhaseAnalyzerMainEngine mainEngine, Integer numberOfPhases) {
 		mainEngine.parseInput();
 		System.out.println("\n\n\n");
@@ -242,12 +239,11 @@ public class GlobalDataKeeper {
 		mainEngine.connectTransitionsWithPhases(this);
 		setPhaseCollectors(mainEngine.getPhaseCollectors());
 	}
-	
+
 	public void populateWithClusters(TableClusteringMainEngine mainEngine, Integer numberOfClusters) {
 		mainEngine.extractClusters(numberOfClusters);
 		setClusterCollectors(mainEngine.getClusterCollectors());
 		mainEngine.print();
 	}
-	
-	
+
 }
