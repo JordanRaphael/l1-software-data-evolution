@@ -20,14 +20,12 @@ public class GlobalDataManager {
 	private CollectorsData collectorsData;
 	
 	private ProjectDetailsData projectDetailsData;
-	private DataManipulator dataManipulator;
 
 	public GlobalDataManager(String filename, String transitionsFile) {
 		pplData = new PPLData();
 		dbChangesData = new DBChangesData();
 		collectorsData = new CollectorsData();
 		projectDetailsData = new ProjectDetailsData(filename, transitionsFile);
-		dataManipulator = new DataManipulator(this);
 	}
 
 	public GlobalDataManager() {
@@ -136,10 +134,6 @@ public class GlobalDataManager {
 
 	public ArrayList<ClusterCollector> getClusterCollectors() {
 		return collectorsData.getClusterCollectors();
-	}
-
-	public DataManipulator getDataManipulator() {
-		return dataManipulator;
 	}
 
 	public void printInfo() {

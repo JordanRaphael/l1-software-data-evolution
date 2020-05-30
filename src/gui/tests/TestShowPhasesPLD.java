@@ -22,27 +22,26 @@ public class TestShowPhasesPLD {
 	private GuiController guiController;
 	private DataManipulator dataManipulator;
 	private Gui gui;
-	
+
 	public TestShowPhasesPLD() {
-		
+
 		gui = new Gui();
 		guiController = new GuiController(gui);
-		
+		dataManipulator = new DataManipulator();
+
 	}
-	
-	
+
 	@Test
 	public void testShowPhasesPLD() {
 
 		String filename = "filesHandler/inis/Atlas.ini";
 		try {
 			guiController.importData(filename);
-			dataManipulator = guiController.getGlobalDataKeeper().getDataManipulator();
 		} catch (RecognitionException | IOException e) {
 			e.printStackTrace();
 		}
 
-		try {	
+		try {
 			PrintStream fileStream = new PrintStream("Test-Files/show-phases-pld-atlas-project-test.txt");
 			System.setOut(fileStream);
 			gui.timeWeight = (float) 0.5;
@@ -54,8 +53,8 @@ public class TestShowPhasesPLD {
 			System.out.println(this.gui.timeWeight + " " + this.gui.changeWeight);
 
 			PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(this.gui.inputCsv,
-					this.gui.outputAssessment1, this.gui.outputAssessment2, this.gui.timeWeight,
-					this.gui.changeWeight, this.gui.preProcessingTime, this.gui.preProcessingChange);
+					this.gui.outputAssessment1, this.gui.outputAssessment2, this.gui.timeWeight, this.gui.changeWeight,
+					this.gui.preProcessingTime, this.gui.preProcessingChange);
 
 			mainEngine.parseInput();
 			System.out.println("\n\n\n");
@@ -64,8 +63,9 @@ public class TestShowPhasesPLD {
 			guiController.getGlobalDataKeeper().setPhaseCollectors(mainEngine.getPhaseCollectors());
 
 			if (guiController.getGlobalDataKeeper().getPhaseCollectors().size() != 0) {
-				TableConstructionPhases table = dataManipulator.createTableConstructionPhases();
-				
+				TableConstructionPhases table = dataManipulator
+						.createTableConstructionPhases(guiController.getGlobalDataKeeper());
+
 				final String[] columns = table.constructColumns();
 				final String[][] rows = table.constructRows();
 				this.gui.segmentSize = table.getSegmentSize();
@@ -80,15 +80,17 @@ public class TestShowPhasesPLD {
 			}
 
 			fileStream.close();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: handle exception
 		}
 
 		String content1 = null;
 		String content2 = null;
 		try {
-			content1 = new String(Files.readAllBytes(Paths.get("Test-Files/show-phases-pld-atlas-project-test.txt")), StandardCharsets.UTF_8);
-			content2 = new String(Files.readAllBytes(Paths.get("Test-Files/show-phases-pld-atlas-project.txt")), StandardCharsets.UTF_8);
+			content1 = new String(Files.readAllBytes(Paths.get("Test-Files/show-phases-pld-atlas-project-test.txt")),
+					StandardCharsets.UTF_8);
+			content2 = new String(Files.readAllBytes(Paths.get("Test-Files/show-phases-pld-atlas-project.txt")),
+					StandardCharsets.UTF_8);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -14,20 +14,20 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Test;
 
 import data.dataKeeper.GlobalDataManager;
-import gui.mainEngine.GuiController;
 import gui.mainEngine.Gui;
+import gui.mainEngine.GuiController;
 
 public class TestSetData {
 	private GuiController guiController;
 	private Gui frame;
 	private GlobalDataManager globalDataKeeper;
-	
+
 	public TestSetData() {
-		
+
 		frame = new Gui();
 		guiController = new GuiController(frame);
 	}
-	
+
 	@Test
 	public void testSetData() {
 		String filename = "filesHandler/inis/Atlas.ini";
@@ -36,13 +36,13 @@ public class TestSetData {
 		} catch (RecognitionException | IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		globalDataKeeper = guiController.getGlobalDataKeeper();
 		PrintStream fileStream;
 		try {
 			fileStream = new PrintStream("Test-Files/tmp-atlas-to-test.txt");
 			System.setOut(fileStream);
-			
+
 			System.out.println(globalDataKeeper.getAllPPLSchemas().toString());
 			System.out.println(globalDataKeeper.getAllPPLTables().toString());
 			System.out.println(globalDataKeeper.getAtomicChanges().toString());
@@ -52,28 +52,28 @@ public class TestSetData {
 			System.out.println(globalDataKeeper.getProjectDetailsData().getDataFolder().toString());
 			System.out.println(globalDataKeeper.getPhaseCollectors().toString());
 			System.out.println(globalDataKeeper.getClusterCollectors().toString());
-			
+
 			fileStream.close();
-			
+
 			String groundTruth = null;
 			String toTest = null;
 			try {
-				groundTruth = new String(Files.readAllBytes(Paths.get("Test-Files/atlas-testSetData.txt")), StandardCharsets.UTF_8);
-				toTest = new String(Files.readAllBytes(Paths.get("Test-Files/tmp-atlas-to-test.txt")), StandardCharsets.UTF_8);
+				groundTruth = new String(Files.readAllBytes(Paths.get("Test-Files/atlas-testSetData.txt")),
+						StandardCharsets.UTF_8);
+				toTest = new String(Files.readAllBytes(Paths.get("Test-Files/tmp-atlas-to-test.txt")),
+						StandardCharsets.UTF_8);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
 			assertEquals(groundTruth, toTest);
-			
-			
+
 			File file = new File("Test-Files/tmp-atlas-to-test.txt");
 			file.delete();
-			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 }

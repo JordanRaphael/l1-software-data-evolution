@@ -26,6 +26,7 @@ public class TestShowFullDetailedLifetimeTable {
 
 		gui = new Gui();
 		guiController = new GuiController(gui);
+		dataManipulator = new DataManipulator();
 	}
 
 	@Test
@@ -34,7 +35,6 @@ public class TestShowFullDetailedLifetimeTable {
 		String filename = "filesHandler/inis/Atlas.ini";
 		try {
 			guiController.importData(filename);
-			dataManipulator = guiController.getGlobalDataKeeper().getDataManipulator();
 		} catch (RecognitionException | IOException e) {
 			e.printStackTrace();
 		}
@@ -46,7 +46,7 @@ public class TestShowFullDetailedLifetimeTable {
 
 			if (!(gui.currentProject == null)) {
 				TableConstructionAllSquaresIncluded table = dataManipulator
-						.createTableConstructionAllSquaresIncluded();
+						.createTableConstructionAllSquaresIncluded(guiController.getGlobalDataKeeper());
 				final String[] columns = table.constructColumns();
 				final String[][] rows = table.constructRows();
 				gui.segmentSizeDetailedTable = table.getSegmentSize();
