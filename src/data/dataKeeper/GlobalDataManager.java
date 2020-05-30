@@ -33,6 +33,11 @@ public class GlobalDataManager {
 	public GlobalDataManager() {
 
 	}
+	
+	public ProjectDetailsData getProjectDetailsData() {
+	
+		return projectDetailsData;
+	}
 
 	public void setData() {
 

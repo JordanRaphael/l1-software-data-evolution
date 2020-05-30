@@ -49,7 +49,7 @@ public class TestSetData {
 			System.out.println(globalDataKeeper.getAllTableChanges().toString());
 			System.out.println(globalDataKeeper.getTmpTableChanges().toString());
 			System.out.println(globalDataKeeper.getAllPPLTransitions().toString());
-			System.out.println(globalDataKeeper.getDataFolder().toString());
+			System.out.println(globalDataKeeper.getProjectDetailsData().getDataFolder().toString());
 			System.out.println(globalDataKeeper.getPhaseCollectors().toString());
 			System.out.println(globalDataKeeper.getClusterCollectors().toString());
 			
