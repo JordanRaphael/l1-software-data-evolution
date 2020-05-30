@@ -59,13 +59,15 @@ public class GuiController {
 	protected final JvTable zoomTable = null;
 	private IDUTableRenderer renderer;
 	private JItemsHandler jItemsHandler;
+	private TableRenderer tableRenderer;
 
 	public GuiController(Gui gui) {
 		this.gui = gui;
-		this.generalTableListenerHandler = new GeneralTableListenerHandler(gui);
-		this.zoomTableListenerHandler = new ZoomTableListenerHandler(gui);
+		this.generalTableListenerHandler = new GeneralTableListenerHandler();
+		this.zoomTableListenerHandler = new ZoomTableListenerHandler();
 		this.jItemsHandler = new JItemsHandler();
 		this.tablesFactory = new TablesFactory();
+		tableRenderer = tablesFactory.getTableType("Zoom Table");
 	}
 
 	public GlobalDataManager getGlobalDataKeeper() {
@@ -135,15 +137,15 @@ public class GuiController {
 		TableRenderer tableRenderer = tablesFactory.getTableType("General Table");
 		generalTable.setDefaultRenderer(Object.class, tableRenderer.createTableCellRenderer(this));
 
-		generalTable.addMouseListener(generalTableListenerHandler.createPhasesMouseClickedAdapter());
+		generalTable.addMouseListener(generalTableListenerHandler.createPhasesMouseClickedAdapter(gui));
 
-		generalTable.addMouseListener(generalTableListenerHandler.createPhasesMouseClickedButton3Adapter(generalTable));
-
-		generalTable.getTableHeader()
-				.addMouseListener(generalTableListenerHandler.createPhasesMouseColumnClickedAdapter(generalTable));
+		generalTable.addMouseListener(generalTableListenerHandler.createPhasesMouseClickedButton3Adapter(generalTable, gui));
 
 		generalTable.getTableHeader()
-				.addMouseListener(generalTableListenerHandler.createPhasesRightMouseClickedAdapter(generalTable));
+				.addMouseListener(generalTableListenerHandler.createPhasesMouseColumnClickedAdapter(generalTable, gui));
+
+		generalTable.getTableHeader()
+				.addMouseListener(generalTableListenerHandler.createPhasesRightMouseClickedAdapter(generalTable, gui));
 
 		gui.LifeTimeTable = generalTable;
 
@@ -364,15 +366,15 @@ public class GuiController {
 		// zoomTableListenerHandler.createZoomAreaDefaultTableRenderer());
 		zoomTable.setDefaultRenderer(Object.class, tableRenderer.createDefaultTableRenderer(this));
 
-		zoomTable.addMouseListener(zoomTableListenerHandler.createZoomAreaMouseClickedHandler());
+		zoomTable.addMouseListener(zoomTableListenerHandler.createZoomAreaMouseClickedHandler(gui));
 
-		zoomTable.addMouseListener(zoomTableListenerHandler.createZoomAreaRightClickHandler());
-
-		zoomTable.getTableHeader()
-				.addMouseListener(zoomTableListenerHandler.createZoomAreaColumnRightClickHandler(zoomTable));
+		zoomTable.addMouseListener(zoomTableListenerHandler.createZoomAreaRightClickHandler(gui));
 
 		zoomTable.getTableHeader()
-				.addMouseListener(zoomTableListenerHandler.createZoomAreaRightClickReleasedHandler(zoomTable));
+				.addMouseListener(zoomTableListenerHandler.createZoomAreaColumnRightClickHandler(zoomTable, gui));
+
+		zoomTable.getTableHeader()
+				.addMouseListener(zoomTableListenerHandler.createZoomAreaRightClickReleasedHandler(zoomTable, gui));
 
 		gui.zoomAreaTable = zoomTable;
 		gui.tmpScrollPaneZoomArea.setViewportView(gui.zoomAreaTable);
@@ -893,15 +895,15 @@ public class GuiController {
 		TableRenderer tableRenderer = tablesFactory.getTableType("General Table");
 		generalTable.setDefaultRenderer(Object.class, tableRenderer.createDefaultTableRenderer(this));
 
-		generalTable.addMouseListener(generalTableListenerHandler.createIDUOneMouseClickAdapter(renderer));
+		generalTable.addMouseListener(generalTableListenerHandler.createIDUOneMouseClickAdapter(renderer, gui));
 
-		generalTable.addMouseListener(generalTableListenerHandler.createIDURightClickRowAdapter(generalTable));
-
-		generalTable.getTableHeader()
-				.addMouseListener(generalTableListenerHandler.createIDUMouseEvent(generalTable, renderer));
+		generalTable.addMouseListener(generalTableListenerHandler.createIDURightClickRowAdapter(generalTable, gui));
 
 		generalTable.getTableHeader()
-				.addMouseListener(generalTableListenerHandler.createIDURightClickAdapter(generalTable, renderer));
+				.addMouseListener(generalTableListenerHandler.createIDUMouseEvent(generalTable, renderer, gui));
+
+		generalTable.getTableHeader()
+				.addMouseListener(generalTableListenerHandler.createIDURightClickAdapter(generalTable, renderer, gui));
 
 		gui.zoomAreaTable = generalTable;
 		gui.tmpScrollPaneZoomArea.setViewportView(gui.zoomAreaTable);
@@ -969,15 +971,15 @@ public class GuiController {
 		TableRenderer tableRenderer = tablesFactory.getTableType("Zoom Table");
 		zoomTable.setDefaultRenderer(Object.class, tableRenderer.createTableCellRenderer(this));
 
-		zoomTable.addMouseListener(zoomTableListenerHandler.createClusterOneClickHandler());
+		zoomTable.addMouseListener(zoomTableListenerHandler.createClusterOneClickHandler(gui));
 
-		zoomTable.addMouseListener(zoomTableListenerHandler.createClusterRightClickHandler(zoomTable));
-
-		zoomTable.getTableHeader()
-				.addMouseListener(zoomTableListenerHandler.createClusterColumnClickedHandler(zoomTable));
+		zoomTable.addMouseListener(zoomTableListenerHandler.createClusterRightClickHandler(zoomTable, gui));
 
 		zoomTable.getTableHeader()
-				.addMouseListener(zoomTableListenerHandler.createClusterColumnRightClickHandler(zoomTable));
+				.addMouseListener(zoomTableListenerHandler.createClusterColumnClickedHandler(zoomTable, gui));
+
+		zoomTable.getTableHeader()
+				.addMouseListener(zoomTableListenerHandler.createClusterColumnRightClickHandler(zoomTable, gui));
 
 		gui.zoomAreaTable = zoomTable;
 

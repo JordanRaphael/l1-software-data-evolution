@@ -17,14 +17,7 @@ import gui.tableElements.tableRenderers.IDUTableRenderer;
 
 public class GeneralTableListenerHandler {
 
-	private Gui gui;
-	
-	public GeneralTableListenerHandler(Gui gui) {
-		
-		this.gui = gui;
-	}
-	
-	public MouseAdapter createPhasesMouseClickedAdapter() {
+	public MouseAdapter createPhasesMouseClickedAdapter(final Gui gui) {
 		MouseAdapter adapter = new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -44,7 +37,7 @@ public class GeneralTableListenerHandler {
 	}
 
 
-	public MouseAdapter createPhasesMouseClickedButton3Adapter(final JvTable generalTable) {
+	public MouseAdapter createPhasesMouseClickedButton3Adapter(final JvTable generalTable, final Gui gui) {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
@@ -101,7 +94,7 @@ public class GeneralTableListenerHandler {
 	}
 
 
-	public MouseAdapter createPhasesMouseColumnClickedAdapter(final JvTable generalTable) {
+	public MouseAdapter createPhasesMouseColumnClickedAdapter(final JvTable generalTable, final Gui gui) {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
@@ -121,7 +114,7 @@ public class GeneralTableListenerHandler {
 	}
 
 
-	public MouseListener createPhasesRightMouseClickedAdapter(final JvTable generalTable) {
+	public MouseListener createPhasesRightMouseClickedAdapter(final JvTable generalTable, final Gui gui) {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
@@ -174,7 +167,7 @@ public class GeneralTableListenerHandler {
 	}
 
 	
-	public MouseAdapter createIDUOneMouseClickAdapter(final IDUTableRenderer renderer) {
+	public MouseAdapter createIDUOneMouseClickAdapter(final IDUTableRenderer renderer, final Gui gui) {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
@@ -197,7 +190,7 @@ public class GeneralTableListenerHandler {
 	}
 
 
-	public MouseAdapter createIDURightClickRowAdapter(final JvTable generalTable) {
+	public MouseAdapter createIDURightClickRowAdapter(final JvTable generalTable, final Gui gui) {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
@@ -235,7 +228,7 @@ public class GeneralTableListenerHandler {
 	}
 
 
-	public MouseAdapter createIDURightClickAdapter(final JvTable generalTable, final IDUTableRenderer renderer) {
+	public MouseAdapter createIDURightClickAdapter(final JvTable generalTable, final IDUTableRenderer renderer, final Gui gui) {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
@@ -265,7 +258,7 @@ public class GeneralTableListenerHandler {
 		return adapter;
 	}
 	
-	public MouseAdapter createIDUMouseEvent(final JvTable generalTable, final IDUTableRenderer renderer) {
+	public MouseAdapter createIDUMouseEvent(final JvTable generalTable, final IDUTableRenderer renderer, final Gui gui) {
         MouseAdapter adapter = new MouseAdapter() {
             
             public void mouseClicked(MouseEvent e) {
