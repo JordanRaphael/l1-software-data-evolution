@@ -15,14 +15,7 @@ import gui.tableElements.commons.JvTable;
 
 public class ZoomTableListenerHandler {
 
-	private Gui gui;
-	
-	public ZoomTableListenerHandler(Gui gui) {
-		
-		this.gui = gui;
-	}
-
-	public MouseAdapter createClusterOneClickHandler() {
+	public MouseAdapter createClusterOneClickHandler(final Gui gui) {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
@@ -42,7 +35,7 @@ public class ZoomTableListenerHandler {
 		return adapter;
 	}
 
-	public MouseAdapter createClusterRightClickHandler(final JvTable zoomTable) {
+	public MouseAdapter createClusterRightClickHandler(final JvTable zoomTable, final Gui gui) {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			
@@ -87,7 +80,7 @@ public class ZoomTableListenerHandler {
 		return adapter;
 	}
 
-	public MouseAdapter createClusterColumnClickedHandler(final JvTable zoomTable) {
+	public MouseAdapter createClusterColumnClickedHandler(final JvTable zoomTable, final Gui gui) {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
@@ -103,7 +96,7 @@ public class ZoomTableListenerHandler {
 
 	}
 
-	public MouseAdapter createClusterColumnRightClickHandler(final JvTable zoomTable) {
+	public MouseAdapter createClusterColumnRightClickHandler(final JvTable zoomTable, final Gui gui) {
 		MouseAdapter adapter = new MouseAdapter() {
 			
 			public void mouseReleased(MouseEvent e) {
@@ -130,7 +123,7 @@ public class ZoomTableListenerHandler {
 	}
 
 	
-	public MouseListener createZoomAreaMouseClickedHandler() {
+	public MouseListener createZoomAreaMouseClickedHandler(final Gui gui) {
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -148,7 +141,7 @@ public class ZoomTableListenerHandler {
 		return adapter;
 	}
 
-	public MouseAdapter createZoomAreaRightClickHandler() {
+	public MouseAdapter createZoomAreaRightClickHandler(final Gui gui) {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
@@ -167,7 +160,7 @@ public class ZoomTableListenerHandler {
 		return adapter;
 	}
 
-	public MouseAdapter createZoomAreaColumnRightClickHandler(final JvTable zoomTable) {
+	public MouseAdapter createZoomAreaColumnRightClickHandler(final JvTable zoomTable, final Gui gui) {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
@@ -182,7 +175,7 @@ public class ZoomTableListenerHandler {
 		return adapter;
 	}
 
-	public MouseAdapter createZoomAreaRightClickReleasedHandler(final JvTable zoomTable) {
+	public MouseAdapter createZoomAreaRightClickReleasedHandler(final JvTable zoomTable, final Gui gui) {
 		
 		MouseAdapter adapter = new MouseAdapter() {
 			@Override
