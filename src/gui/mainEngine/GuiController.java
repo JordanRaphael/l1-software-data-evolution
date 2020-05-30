@@ -132,7 +132,7 @@ public class GuiController {
 			}
 		}
 
-		TableRenderer tableRenderer = tablesFactory.getTableType("General Table", this);
+		TableRenderer tableRenderer = tablesFactory.getTableType("General Table");
 		generalTable.setDefaultRenderer(Object.class, tableRenderer.createTableCellRenderer(this));
 
 		generalTable.addMouseListener(generalTableListenerHandler.createPhasesMouseClickedAdapter());
@@ -359,7 +359,7 @@ public class GuiController {
 			}
 		}
 
-		TableRenderer tableRenderer = tablesFactory.getTableType("Zoom Table", this);
+		TableRenderer tableRenderer = tablesFactory.getTableType("Zoom Table");
 		// zoomTable.setDefaultRenderer(Object.class,
 		// zoomTableListenerHandler.createZoomAreaDefaultTableRenderer());
 		zoomTable.setDefaultRenderer(Object.class, tableRenderer.createDefaultTableRenderer(this));
@@ -890,7 +890,7 @@ public class GuiController {
 
 		renderer = new IDUTableRenderer(gui, gui.finalRowsZoomArea, globalDataKeeper, gui.segmentSize);
 
-		TableRenderer tableRenderer = tablesFactory.getTableType("General Table", this);
+		TableRenderer tableRenderer = tablesFactory.getTableType("General Table");
 		generalTable.setDefaultRenderer(Object.class, tableRenderer.createDefaultTableRenderer(this));
 
 		generalTable.addMouseListener(generalTableListenerHandler.createIDUOneMouseClickAdapter(renderer));
@@ -966,7 +966,7 @@ public class GuiController {
 			}
 		}
 
-		TableRenderer tableRenderer = tablesFactory.getTableType("Zoom Table", this);
+		TableRenderer tableRenderer = tablesFactory.getTableType("Zoom Table");
 		zoomTable.setDefaultRenderer(Object.class, tableRenderer.createTableCellRenderer(this));
 
 		zoomTable.addMouseListener(zoomTableListenerHandler.createClusterOneClickHandler());

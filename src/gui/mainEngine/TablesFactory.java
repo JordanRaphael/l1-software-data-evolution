@@ -5,7 +5,7 @@ public class TablesFactory {
 
 	private String tableType;
 
-	public TableRenderer getTableType(String tableType, GuiController guiController) {
+	public TableRenderer getTableType(String tableType) {
 
 		if(tableType == null) {
 			return null;
