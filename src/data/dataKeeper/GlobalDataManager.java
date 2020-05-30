@@ -23,10 +23,11 @@ public class GlobalDataManager {
 	private DataManipulator dataManipulator;
 
 	public GlobalDataManager(String filename, String transitionsFile) {
+		pplData = new PPLData();
+		dbChangesData = new DBChangesData();
+		collectorsData = new CollectorsData();
 		projectDetailsData = new ProjectDetailsData(filename, transitionsFile);
 		dataManipulator = new DataManipulator(this);
-		dbChangesData = new DBChangesData();
-		pplData = new PPLData();
 	}
 
 	public GlobalDataManager() {
