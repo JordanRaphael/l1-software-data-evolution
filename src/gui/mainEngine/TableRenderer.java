@@ -8,13 +8,17 @@ public abstract class TableRenderer {
 	
 	private Gui gui;
 	
-	public TableRenderer(GuiController businessLogic) {
+	/*public TableRenderer(GuiController businessLogic) {
 		
 		this.guiController = businessLogic;
 		this.gui = businessLogic.getGui();
-	}
+	}*/
+	
+	public abstract DefaultTableCellRenderer createTableCellRenderer(GuiController guiController);
+	
+	public abstract DefaultTableCellRenderer createDefaultTableRenderer(GuiController guiController);
 
-	public GuiController getGuiController() {
+	/*public GuiController getGuiController() {
 		return guiController;
 	}
 
@@ -28,10 +32,6 @@ public abstract class TableRenderer {
 
 	public void setGui(Gui gui) {
 		this.gui = gui;
-	}
-	
-	public abstract DefaultTableCellRenderer createTableCellRenderer();
-	
-	public abstract DefaultTableCellRenderer createDefaultTableRenderer();
+	}*/
 	
 }

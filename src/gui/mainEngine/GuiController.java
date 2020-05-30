@@ -133,7 +133,7 @@ public class GuiController {
 		}
 
 		TableRenderer tableRenderer = tablesFactory.getTableType("General Table", this);
-		generalTable.setDefaultRenderer(Object.class, tableRenderer.createTableCellRenderer());
+		generalTable.setDefaultRenderer(Object.class, tableRenderer.createTableCellRenderer(this));
 
 		generalTable.addMouseListener(generalTableListenerHandler.createPhasesMouseClickedAdapter());
 
@@ -362,7 +362,7 @@ public class GuiController {
 		TableRenderer tableRenderer = tablesFactory.getTableType("Zoom Table", this);
 		// zoomTable.setDefaultRenderer(Object.class,
 		// zoomTableListenerHandler.createZoomAreaDefaultTableRenderer());
-		zoomTable.setDefaultRenderer(Object.class, tableRenderer.createDefaultTableRenderer());
+		zoomTable.setDefaultRenderer(Object.class, tableRenderer.createDefaultTableRenderer(this));
 
 		zoomTable.addMouseListener(zoomTableListenerHandler.createZoomAreaMouseClickedHandler());
 
@@ -891,7 +891,7 @@ public class GuiController {
 		renderer = new IDUTableRenderer(gui, gui.finalRowsZoomArea, globalDataKeeper, gui.segmentSize);
 
 		TableRenderer tableRenderer = tablesFactory.getTableType("General Table", this);
-		generalTable.setDefaultRenderer(Object.class, tableRenderer.createDefaultTableRenderer());
+		generalTable.setDefaultRenderer(Object.class, tableRenderer.createDefaultTableRenderer(this));
 
 		generalTable.addMouseListener(generalTableListenerHandler.createIDUOneMouseClickAdapter(renderer));
 
@@ -967,7 +967,7 @@ public class GuiController {
 		}
 
 		TableRenderer tableRenderer = tablesFactory.getTableType("Zoom Table", this);
-		zoomTable.setDefaultRenderer(Object.class, tableRenderer.createTableCellRenderer());
+		zoomTable.setDefaultRenderer(Object.class, tableRenderer.createTableCellRenderer(this));
 
 		zoomTable.addMouseListener(zoomTableListenerHandler.createClusterOneClickHandler());
 

@@ -11,13 +11,12 @@ public class TablesFactory {
 			return null;
 		}
 		if(tableType.equals("Zoom Table")) {
-			return new ZoomTableRendererHandler(guiController);
+			return new ZoomTableRendererHandler();
 
 		}else if (tableType.equals("General Table")) {
-			return new GeneralTableRendererHandler(guiController);
+			return new GeneralTableRendererHandler();
 
 		}
-
 
 		return null;
 	}

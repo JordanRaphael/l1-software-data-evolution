@@ -9,14 +9,14 @@ import data.dataKeeper.GlobalDataManager;
 
 public class ZoomTableRendererHandler extends TableRenderer{
 
-	public ZoomTableRendererHandler(GuiController guiController) {
+	/*public ZoomTableRendererHandler(GuiController guiController) {
 		
 		super(guiController);
-	}
-	
-	
+	}*/
+
+
 	@Override
-	public DefaultTableCellRenderer createTableCellRenderer() {
+	public DefaultTableCellRenderer createTableCellRenderer(final GuiController guiController) {
 		
 		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
 
@@ -28,13 +28,13 @@ public class ZoomTableRendererHandler extends TableRenderer{
 				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 						column);
 
-				GlobalDataManager globalDataKeeper = getGuiController().getGlobalDataKeeper();
-				String tmpValue = getGui().finalRowsZoomArea[row][column];
+				GlobalDataManager globalDataKeeper = guiController.getGlobalDataKeeper();
+				String tmpValue = guiController.getGui().finalRowsZoomArea[row][column];
 				String columnName = table.getColumnName(column);
 				Color fr = new Color(0, 0, 0);
 				c.setForeground(fr);
 
-				if (column == getGui().wholeColZoomArea && getGui().wholeColZoomArea != 0) {
+				if (column == guiController.getGui().wholeColZoomArea && guiController.getGui().wholeColZoomArea != 0) {
 
 					String description = table.getColumnName(column) + "\n";
 					description = description + "First Transition ID:"
@@ -53,30 +53,30 @@ public class ZoomTableRendererHandler extends TableRenderer{
 					description = description + "Updates For This Phase:" + globalDataKeeper.getPhaseCollectors().get(0)
 							.getPhases().get(column - 1).getTotalUpdatesOfPhase() + "\n";
 
-					getGui().descriptionText.setText(description);
+					guiController.getGui().descriptionText.setText(description);
 
 					Color cl = new Color(255, 69, 0, 100);
 
 					c.setBackground(cl);
 					return c;
-				} else if (getGui().selectedColumnZoomArea == 0) {
+				} else if (guiController.getGui().selectedColumnZoomArea == 0) {
 					if (isSelected) {
 
-						String description = "Table:" + getGui().finalRowsZoomArea[row][0] + "\n";
+						String description = "Table:" + guiController.getGui().finalRowsZoomArea[row][0] + "\n";
 						description = description + "Birth Version Name:"
-								+ globalDataKeeper.getAllPPLTables().get(getGui().finalRowsZoomArea[row][0]).getBirth() + "\n";
+								+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getBirth() + "\n";
 						description = description + "Birth Version ID:"
-								+ globalDataKeeper.getAllPPLTables().get(getGui().finalRowsZoomArea[row][0]).getBirthVersionID()
+								+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getBirthVersionID()
 								+ "\n";
 						description = description + "Death Version Name:"
-								+ globalDataKeeper.getAllPPLTables().get(getGui().finalRowsZoomArea[row][0]).getDeath() + "\n";
+								+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getDeath() + "\n";
 						description = description + "Death Version ID:"
-								+ globalDataKeeper.getAllPPLTables().get(getGui().finalRowsZoomArea[row][0]).getDeathVersionID()
+								+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getDeathVersionID()
 								+ "\n";
 						description = description + "Total Changes:"
-								+ globalDataKeeper.getAllPPLTables().get(getGui().finalRowsZoomArea[row][0]).getTotalChanges()
+								+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getTotalChanges()
 								+ "\n";
-						getGui().descriptionText.setText(description);
+						guiController.getGui().descriptionText.setText(description);
 
 						Color cl = new Color(255, 69, 0, 100);
 
@@ -101,20 +101,20 @@ public class ZoomTableRendererHandler extends TableRenderer{
 											.get(Integer.parseInt(table.getColumnName(column))).getNewVersionName()
 									+ "\n\n";
 
-							description = description + "Table:" + getGui().finalRowsZoomArea[row][0] + "\n";
+							description = description + "Table:" + guiController.getGui().finalRowsZoomArea[row][0] + "\n";
 							description = description + "Birth Version Name:"
-									+ globalDataKeeper.getAllPPLTables().get(getGui().finalRowsZoomArea[row][0]).getBirth()
+									+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getBirth()
 									+ "\n";
 							description = description + "Birth Version ID:" + globalDataKeeper.getAllPPLTables()
-									.get(getGui().finalRowsZoomArea[row][0]).getBirthVersionID() + "\n";
+									.get(guiController.getGui().finalRowsZoomArea[row][0]).getBirthVersionID() + "\n";
 							description = description + "Death Version Name:"
-									+ globalDataKeeper.getAllPPLTables().get(getGui().finalRowsZoomArea[row][0]).getDeath()
+									+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getDeath()
 									+ "\n";
 							description = description + "Death Version ID:" + globalDataKeeper.getAllPPLTables()
-									.get(getGui().finalRowsZoomArea[row][0]).getDeathVersionID() + "\n";
+									.get(guiController.getGui().finalRowsZoomArea[row][0]).getDeathVersionID() + "\n";
 							description = description + "Total Changes For This Phase:" + tmpValue + "\n";
 
-							getGui().descriptionText.setText(description);
+							guiController.getGui().descriptionText.setText(description);
 
 						}
 
@@ -133,13 +133,13 @@ public class ZoomTableRendererHandler extends TableRenderer{
 
 					if (numericValue == 0) {
 						insersionColor = new Color(0, 100, 0);
-					} else if (numericValue > 0 && numericValue <= getGui().segmentSizeZoomArea[3]) {
+					} else if (numericValue > 0 && numericValue <= guiController.getGui().segmentSizeZoomArea[3]) {
 
 						insersionColor = new Color(176, 226, 255);
-					} else if (numericValue > getGui().segmentSizeZoomArea[3] && numericValue <= 2 * getGui().segmentSizeZoomArea[3]) {
+					} else if (numericValue > guiController.getGui().segmentSizeZoomArea[3] && numericValue <= 2 * guiController.getGui().segmentSizeZoomArea[3]) {
 						insersionColor = new Color(92, 172, 238);
-					} else if (numericValue > 2 * getGui().segmentSizeZoomArea[3]
-							&& numericValue <= 3 * getGui().segmentSizeZoomArea[3]) {
+					} else if (numericValue > 2 * guiController.getGui().segmentSizeZoomArea[3]
+							&& numericValue <= 3 * guiController.getGui().segmentSizeZoomArea[3]) {
 
 						insersionColor = new Color(28, 134, 238);
 					} else {
@@ -173,7 +173,7 @@ public class ZoomTableRendererHandler extends TableRenderer{
 
 	
 	@Override
-	public DefaultTableCellRenderer createDefaultTableRenderer() {
+	public DefaultTableCellRenderer createDefaultTableRenderer(final GuiController guiController) {
 		
 		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
 
@@ -185,13 +185,13 @@ public class ZoomTableRendererHandler extends TableRenderer{
 				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 						column);
 				
-				GlobalDataManager globalDataKeeper = getGuiController().getGlobalDataKeeper();
-				String tmpValue = getGui().finalRowsZoomArea[row][column];
+				GlobalDataManager globalDataKeeper = guiController.getGlobalDataKeeper();
+				String tmpValue = guiController.getGui().finalRowsZoomArea[row][column];
 				String columnName = table.getColumnName(column);
 				Color fr = new Color(0, 0, 0);
 				c.setForeground(fr);
 
-				if (column == getGui().wholeColZoomArea) {
+				if (column == guiController.getGui().wholeColZoomArea) {
 
 					String description = "Transition ID:" + table.getColumnName(column) + "\n";
 					description = description + "Old Version Name:" + globalDataKeeper.getAllPPLTransitions()
@@ -201,45 +201,45 @@ public class ZoomTableRendererHandler extends TableRenderer{
 
 					description = description + "Transition Changes:"
 							+ globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column)))
-									.getNumberOfClusterChangesForOneTr(getGuiController().getRowsZoom())
+									.getNumberOfClusterChangesForOneTr(guiController.getRowsZoom())
 							+ "\n";
 					description = description + "Additions:"
 							+ globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column)))
-									.getNumberOfClusterAdditionsForOneTr(getGuiController().getRowsZoom())
+									.getNumberOfClusterAdditionsForOneTr(guiController.getRowsZoom())
 							+ "\n";
 					description = description + "Deletions:"
 							+ globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column)))
-									.getNumberOfClusterDeletionsForOneTr(getGuiController().getRowsZoom())
+									.getNumberOfClusterDeletionsForOneTr(guiController.getRowsZoom())
 							+ "\n";
 					description = description + "Updates:"
 							+ globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column)))
-									.getNumberOfClusterUpdatesForOneTr(getGuiController().getRowsZoom())
+									.getNumberOfClusterUpdatesForOneTr(guiController.getRowsZoom())
 							+ "\n";
 
-					getGui().descriptionText.setText(description);
+					guiController.getGui().descriptionText.setText(description);
 					Color cl = new Color(255, 69, 0, 100);
 					c.setBackground(cl);
 
 					return c;
-				} else if (getGui().selectedColumnZoomArea == 0) {
+				} else if (guiController.getGui().selectedColumnZoomArea == 0) {
 					if (isSelected) {
-						String description = "Table:" + getGui().finalRowsZoomArea[row][0] + "\n";
+						String description = "Table:" + guiController.getGui().finalRowsZoomArea[row][0] + "\n";
 						description = description + "Birth Version Name:"
-								+ globalDataKeeper.getAllPPLTables().get(getGui().finalRowsZoomArea[row][0]).getBirth() + "\n";
+								+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getBirth() + "\n";
 						description = description + "Birth Version ID:"
-								+ globalDataKeeper.getAllPPLTables().get(getGui().finalRowsZoomArea[row][0]).getBirthVersionID()
+								+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getBirthVersionID()
 								+ "\n";
 						description = description + "Death Version Name:"
-								+ globalDataKeeper.getAllPPLTables().get(getGui().finalRowsZoomArea[row][0]).getDeath() + "\n";
+								+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getDeath() + "\n";
 						description = description + "Death Version ID:"
-								+ globalDataKeeper.getAllPPLTables().get(getGui().finalRowsZoomArea[row][0]).getDeathVersionID()
+								+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getDeathVersionID()
 								+ "\n";
 						description = description + "Total Changes:"
-								+ globalDataKeeper.getAllPPLTables().get(getGui().finalRowsZoomArea[row][0])
+								+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0])
 										.getTotalChangesForOnePhase(Integer.parseInt(table.getColumnName(1)),
 												Integer.parseInt(table.getColumnName(table.getColumnCount() - 1)))
 								+ "\n";
-						getGui().descriptionText.setText(description);
+						guiController.getGui().descriptionText.setText(description);
 
 						Color cl = new Color(255, 69, 0, 100);
 
@@ -251,7 +251,7 @@ public class ZoomTableRendererHandler extends TableRenderer{
 
 						String description = "";
 						if (!table.getColumnName(column).contains("Table name")) {
-							description = "Table:" + getGui().finalRowsZoomArea[row][0] + "\n";
+							description = "Table:" + guiController.getGui().finalRowsZoomArea[row][0] + "\n";
 
 							description = description + "Old Version Name:"
 									+ globalDataKeeper.getAllPPLTransitions()
@@ -261,25 +261,25 @@ public class ZoomTableRendererHandler extends TableRenderer{
 									+ globalDataKeeper.getAllPPLTransitions()
 											.get(Integer.parseInt(table.getColumnName(column))).getNewVersionName()
 									+ "\n";
-							if (globalDataKeeper.getAllPPLTables().get(getGui().finalRowsZoomArea[row][0]).getTableChanges()
+							if (globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getTableChanges()
 									.getTableAtChForOneTransition(
 											Integer.parseInt(table.getColumnName(column))) != null) {
 								description = description + "Transition Changes:" + globalDataKeeper.getAllPPLTables()
-										.get(getGui().finalRowsZoomArea[row][0]).getTableChanges()
+										.get(guiController.getGui().finalRowsZoomArea[row][0]).getTableChanges()
 										.getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(column)))
 										.size() + "\n";
 								description = description + "Additions:"
-										+ globalDataKeeper.getAllPPLTables().get(getGui().finalRowsZoomArea[row][0])
+										+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0])
 												.getNumberOfAdditionsForOneTr(
 														Integer.parseInt(table.getColumnName(column)))
 										+ "\n";
 								description = description + "Deletions:"
-										+ globalDataKeeper.getAllPPLTables().get(getGui().finalRowsZoomArea[row][0])
+										+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0])
 												.getNumberOfDeletionsForOneTr(
 														Integer.parseInt(table.getColumnName(column)))
 										+ "\n";
 								description = description + "Updates:"
-										+ globalDataKeeper.getAllPPLTables().get(getGui().finalRowsZoomArea[row][0])
+										+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0])
 												.getNumberOfUpdatesForOneTr(
 														Integer.parseInt(table.getColumnName(column)))
 										+ "\n";
@@ -292,7 +292,7 @@ public class ZoomTableRendererHandler extends TableRenderer{
 
 							}
 
-							getGui().descriptionText.setText(description);
+							guiController.getGui().descriptionText.setText(description);
 						}
 
 						Color cl = new Color(255, 69, 0, 100);
@@ -310,13 +310,13 @@ public class ZoomTableRendererHandler extends TableRenderer{
 
 					if (numericValue == 0) {
 						insersionColor = new Color(0, 100, 0);
-					} else if (numericValue > 0 && numericValue <= getGui().segmentSizeZoomArea[3]) {
+					} else if (numericValue > 0 && numericValue <= guiController.getGui().segmentSizeZoomArea[3]) {
 
 						insersionColor = new Color(176, 226, 255);
-					} else if (numericValue > getGui().segmentSizeZoomArea[3] && numericValue <= 2 * getGui().segmentSizeZoomArea[3]) {
+					} else if (numericValue > guiController.getGui().segmentSizeZoomArea[3] && numericValue <= 2 * guiController.getGui().segmentSizeZoomArea[3]) {
 						insersionColor = new Color(92, 172, 238);
-					} else if (numericValue > 2 * getGui().segmentSizeZoomArea[3]
-							&& numericValue <= 3 * getGui().segmentSizeZoomArea[3]) {
+					} else if (numericValue > 2 * guiController.getGui().segmentSizeZoomArea[3]
+							&& numericValue <= 3 * guiController.getGui().segmentSizeZoomArea[3]) {
 
 						insersionColor = new Color(28, 134, 238);
 					} else {
