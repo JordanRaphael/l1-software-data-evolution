@@ -9,12 +9,6 @@ import data.dataKeeper.GlobalDataManager;
 
 public class ZoomTableRendererHandler extends TableRenderer{
 
-	/*public ZoomTableRendererHandler(GuiController guiController) {
-		
-		super(guiController);
-	}*/
-
-
 	@Override
 	public DefaultTableCellRenderer createTableCellRenderer(final GuiController guiController) {
 		

@@ -12,13 +12,6 @@ import phaseAnalyzer.commons.Phase;
 import tableClustering.clusterExtractor.commons.Cluster;
 
 public class GeneralTableRendererHandler extends TableRenderer{
-
-	/*public GeneralTableRendererHandler(GuiController guiController) {
-
-		super(guiController);
-		
-	}*/
-	
 	
 	@Override
 	public DefaultTableCellRenderer createTableCellRenderer(final GuiController guiController) {
