@@ -63,8 +63,8 @@ public class GuiController {
 	public GuiController(Gui gui) {
 		this.dataManipulator = new DataManipulator();
 		this.gui = gui;
-		this.generalTableListenerHandler = new GeneralTableListenerHandler(this, gui);
-		this.zoomTableListenerHandler = new ZoomTableListenerHandler(this, gui);
+		this.generalTableListenerHandler = new GeneralTableListenerHandler(gui);
+		this.zoomTableListenerHandler = new ZoomTableListenerHandler(gui);
 		this.jItemsHandler = new JItemsHandler();
 		this.tablesFactory = new TablesFactory();
 	}

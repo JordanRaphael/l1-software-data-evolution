@@ -17,16 +17,12 @@ import gui.tableElements.tableRenderers.IDUTableRenderer;
 
 public class GeneralTableListenerHandler {
 
-	private GuiController guiController;
 	private Gui gui;
 	
-	public GeneralTableListenerHandler(GuiController businessLogic, Gui gui) {
+	public GeneralTableListenerHandler(Gui gui) {
 		
-		this.guiController = businessLogic;
 		this.gui = gui;
-		
 	}
-	
 	
 	public MouseAdapter createPhasesMouseClickedAdapter() {
 		MouseAdapter adapter = new MouseAdapter() {
@@ -76,10 +72,10 @@ public class GeneralTableListenerHandler {
 						@Override
 						public void actionPerformed(ActionEvent le) {
 							if (sSelectedRow.contains("Cluster ")) {
-								guiController.showClusterSelectionToZoomArea(gui.selectedColumn, sSelectedRow);
+								gui.getGuiController().showClusterSelectionToZoomArea(gui.selectedColumn, sSelectedRow);
 
 							} else {
-								guiController.showSelectionToZoomArea(gui.selectedColumn);
+								gui.getGuiController().showSelectionToZoomArea(gui.selectedColumn);
 							}
 						}
 					});
@@ -98,7 +94,6 @@ public class GeneralTableListenerHandler {
 					popupMenu.show(generalTable, e.getX(), e.getY());
 
 				}
-
 			}
 		};
 		
@@ -116,7 +111,7 @@ public class GeneralTableListenerHandler {
 				System.out.println("Column index selected " + gui.wholeCol + " " + name);
 				generalTable.repaint();
 				if (gui.showingPld) {
-					guiController.makeGeneralTableIDU();
+					gui.getGuiController().makeGeneralTableIDU();
 				}
 			}
 		};
@@ -143,7 +138,7 @@ public class GeneralTableListenerHandler {
 							gui.wholeCol = -1;
 							generalTable.repaint();
 							if (gui.showingPld) {
-								guiController.makeGeneralTableIDU();
+								gui.getGuiController().makeGeneralTableIDU();
 							}
 						}
 					});
@@ -161,9 +156,9 @@ public class GeneralTableListenerHandler {
 
 							if (!sSelectedRow.contains("Cluster ")) {
 
-								guiController.showSelectionToZoomArea(gui.wholeCol);
+								gui.getGuiController().showSelectionToZoomArea(gui.wholeCol);
 							} else {
-								guiController.showClusterSelectionToZoomArea(gui.wholeCol, "");
+								gui.getGuiController().showClusterSelectionToZoomArea(gui.wholeCol, "");
 							}
 
 						}
@@ -173,7 +168,6 @@ public class GeneralTableListenerHandler {
 
 				}
 			}
-
 		};
 		
 		return adapter;
@@ -234,7 +228,6 @@ public class GeneralTableListenerHandler {
 					popupMenu.show(generalTable, e.getX(), e.getY());
 
 				}
-
 			}
 		};
 		
@@ -288,5 +281,4 @@ public class GeneralTableListenerHandler {
         return adapter;
     }
 	
-
 }

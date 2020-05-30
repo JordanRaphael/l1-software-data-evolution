@@ -135,6 +135,11 @@ public class Gui extends JFrame {
 	
 	private GuiController guiController = new GuiController(this);
 	
+	public GuiController getGuiController() {
+		
+		return guiController;
+	}
+	
 
 	/**
 	 * Launch the application.

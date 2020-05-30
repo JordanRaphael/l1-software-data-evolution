@@ -15,14 +15,11 @@ import gui.tableElements.commons.JvTable;
 
 public class ZoomTableListenerHandler {
 
-	private GuiController guiController;
 	private Gui gui;
 	
-	public ZoomTableListenerHandler(GuiController businessLogic, Gui gui) {
+	public ZoomTableListenerHandler(Gui gui) {
 		
-		this.guiController = businessLogic;
 		this.gui = gui;
-		
 	}
 
 	public MouseAdapter createClusterOneClickHandler() {
@@ -75,7 +72,7 @@ public class ZoomTableListenerHandler {
 							public void actionPerformed(ActionEvent e) {
 								gui.firstLevelUndoColumnsZoomArea = gui.finalColumnsZoomArea;
 								gui.firstLevelUndoRowsZoomArea = gui.finalRowsZoomArea;
-								guiController.showSelectionToZoomArea(gui.selectedColumnZoomArea);
+								gui.getGuiController().showSelectionToZoomArea(gui.selectedColumnZoomArea);
 
 							}
 						});
@@ -84,7 +81,6 @@ public class ZoomTableListenerHandler {
 					}
 
 				}
-
 			}
 		};
 		
@@ -127,7 +123,6 @@ public class ZoomTableListenerHandler {
 					popupMenu.show(zoomTable, e.getX(), e.getY());
 
 				}
-
 			}
 
 		};
@@ -215,6 +210,5 @@ public class ZoomTableListenerHandler {
 		
 		return adapter;
 	}
-	
-	
+		
 }
