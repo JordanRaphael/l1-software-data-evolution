@@ -3,7 +3,7 @@ package gui.tableElements.commons;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataKeeper.GlobalDataManager;
 
 public class JvTable extends JTable {
 
@@ -52,7 +52,7 @@ public class JvTable extends JTable {
 		firePropertyChange("uniformly", 1500, 5000);
 	}
 
-	public void notUniformlyDistributed(GlobalDataKeeper globalDataKeeper) {
+	public void notUniformlyDistributed(GlobalDataManager globalDataKeeper) {
 		for (int i = 0; i < super.getColumnCount(); i++) {
 			if (i == 0) {
 				super.getColumnModel().getColumn(0).setPreferredWidth(60);

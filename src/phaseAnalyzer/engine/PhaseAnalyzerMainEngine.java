@@ -3,7 +3,7 @@ package phaseAnalyzer.engine;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataKeeper.GlobalDataManager;
 import phaseAnalyzer.analysis.IPhaseExtractor;
 import phaseAnalyzer.analysis.PhaseExtractorFactory;
 import phaseAnalyzer.commons.PhaseCollector;
@@ -64,7 +64,7 @@ public class PhaseAnalyzerMainEngine {
 		allPhaseCollectors.put(inputCsv, phaseCollectors);
 	}
 
-	public void connectTransitionsWithPhases(GlobalDataKeeper tmpGlobalDataKeeper) {
+	public void connectTransitionsWithPhases(GlobalDataManager tmpGlobalDataKeeper) {
 		phaseCollectors.get(0).connectPhasesWithTransitions(tmpGlobalDataKeeper);
 	}
 

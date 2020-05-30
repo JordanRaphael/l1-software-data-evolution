@@ -6,7 +6,7 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataKeeper.GlobalDataManager;
 import data.dataPPL.pplSQLSchema.PPLTable;
 import phaseAnalyzer.commons.Phase;
 import tableClustering.clusterExtractor.commons.Cluster;
@@ -32,7 +32,7 @@ public class GeneralTableRendererHandler extends TableRenderer{
 			final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 					column);
 			
-			GlobalDataKeeper globalDataKeeper = getGuiController().getGlobalDataKeeper();
+			GlobalDataManager globalDataKeeper = getGuiController().getGlobalDataKeeper();
 			String tmpValue = getGui().finalRows[row][column];
 			String columnName = table.getColumnName(column);
 			Color fr = new Color(0, 0, 0);
@@ -207,7 +207,7 @@ public class GeneralTableRendererHandler extends TableRenderer{
 					final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 							column);
 					
-					GlobalDataKeeper globalDataKeeper = getGuiController().getGlobalDataKeeper();
+					GlobalDataManager globalDataKeeper = getGuiController().getGlobalDataKeeper();
 					String tmpValue = getGui().finalRowsZoomArea[row][column];
 					String columnName = table.getColumnName(column);
 					Color fr = new Color(0, 0, 0);

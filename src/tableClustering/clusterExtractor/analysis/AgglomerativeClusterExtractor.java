@@ -6,13 +6,13 @@ import java.util.TreeMap;
 
 import tableClustering.clusterExtractor.commons.Cluster;
 import tableClustering.clusterExtractor.commons.ClusterCollector;
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataKeeper.GlobalDataManager;
 import data.dataPPL.pplSQLSchema.PPLTable;
 
 public class AgglomerativeClusterExtractor implements ClusterExtractor {
 
 	@Override
-	public ClusterCollector extractAtMostKClusters(GlobalDataKeeper dataKeeper, int numClusters, Double birthWeight,
+	public ClusterCollector extractAtMostKClusters(GlobalDataManager dataKeeper, int numClusters, Double birthWeight,
 			Double deathWeight, Double changeWeight) {
 
 		ClusterCollector initSolution = new ClusterCollector();
@@ -92,7 +92,7 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor {
 		return newCollector;
 	}
 
-	public ClusterCollector init(GlobalDataKeeper dataKeeper, ClusterCollector clusterCollector) {
+	public ClusterCollector init(GlobalDataManager dataKeeper, ClusterCollector clusterCollector) {
 
 		TreeMap<String, PPLTable> tables = dataKeeper.getAllPPLTables();
 

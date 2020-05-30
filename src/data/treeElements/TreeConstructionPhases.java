@@ -8,16 +8,16 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import phaseAnalyzer.commons.Phase;
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataKeeper.GlobalDataManager;
 import data.dataPPL.pplSQLSchema.PPLSchema;
 import data.dataPPL.pplTransition.PPLTransition;
 import data.dataPPL.pplTransition.TableChange;
 
 public class TreeConstructionPhases implements TreeConstruction {
 	
-	private GlobalDataKeeper dataKeeper=null;
+	private GlobalDataManager dataKeeper=null;
 
-	public TreeConstructionPhases(GlobalDataKeeper dataKeeper) {
+	public TreeConstructionPhases(GlobalDataManager dataKeeper) {
 		this.dataKeeper=dataKeeper;
 	}
 	

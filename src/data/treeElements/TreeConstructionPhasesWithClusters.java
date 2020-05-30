@@ -6,13 +6,13 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import tableClustering.clusterExtractor.commons.Cluster;
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataKeeper.GlobalDataManager;
 
 public class TreeConstructionPhasesWithClusters implements TreeConstruction {
 	
-	private GlobalDataKeeper dataKeeper=null;
+	private GlobalDataManager dataKeeper=null;
 
-	public TreeConstructionPhasesWithClusters(GlobalDataKeeper dataKeeper) {
+	public TreeConstructionPhasesWithClusters(GlobalDataManager dataKeeper) {
 		this.dataKeeper=dataKeeper;
 	}
 	

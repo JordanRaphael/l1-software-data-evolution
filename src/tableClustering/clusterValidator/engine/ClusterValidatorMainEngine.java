@@ -17,12 +17,12 @@ import tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluatio
 import tableClustering.clusterValidator.commons.Centroid;
 import tableClustering.clusterValidator.commons.ClassOfObjects;
 import tableClustering.clusterValidator.commons.ClusterInfoKeeper;
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataKeeper.GlobalDataManager;
 import data.dataPPL.pplSQLSchema.PPLTable;
 
 public class ClusterValidatorMainEngine {
 
-	private GlobalDataKeeper globalDataKeeper = null;
+	private GlobalDataManager globalDataKeeper = null;
 	private ArrayList<ClusterInfoKeeper> clusterInfoKeepers = new ArrayList<ClusterInfoKeeper>();
 	private Centroid overallCentroid = null;
 	private Double totalCohesion = null;
@@ -31,7 +31,7 @@ public class ClusterValidatorMainEngine {
 
 	private ArrayList<ClassOfObjects> classesOfObjects = new ArrayList<ClassOfObjects>();
 
-	public ClusterValidatorMainEngine(GlobalDataKeeper globalDataKeeper) throws IOException {
+	public ClusterValidatorMainEngine(GlobalDataManager globalDataKeeper) throws IOException {
 		this.globalDataKeeper = globalDataKeeper;
 		initialize();
 

@@ -3,7 +3,7 @@ package phaseAnalyzer.commons;
 
 import java.util.ArrayList;
 
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataKeeper.GlobalDataManager;
 
 public class PhaseCollector {
 
@@ -82,7 +82,7 @@ public class PhaseCollector {
 		return s;
 	}
 
-	public void connectPhasesWithTransitions(GlobalDataKeeper tmpGlobalDataKeeper) {
+	public void connectPhasesWithTransitions(GlobalDataManager tmpGlobalDataKeeper) {
 		for (Phase p : phases) {
 
 			p.connectWithPPLTransitions(tmpGlobalDataKeeper);

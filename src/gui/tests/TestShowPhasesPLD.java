@@ -27,7 +27,7 @@ public class TestShowPhasesPLD {
 		
 		gui = new Gui();
 		guiController = new GuiController(gui);
-		dataManipulator = new DataManipulator();
+		
 	}
 	
 	
@@ -37,6 +37,7 @@ public class TestShowPhasesPLD {
 		String filename = "filesHandler/inis/Atlas.ini";
 		try {
 			guiController.importData(filename);
+			dataManipulator = guiController.getGlobalDataKeeper().getDataManipulator();
 		} catch (RecognitionException | IOException e) {
 			e.printStackTrace();
 		}
@@ -63,7 +64,7 @@ public class TestShowPhasesPLD {
 			guiController.getGlobalDataKeeper().setPhaseCollectors(mainEngine.getPhaseCollectors());
 
 			if (guiController.getGlobalDataKeeper().getPhaseCollectors().size() != 0) {
-				TableConstructionPhases table = dataManipulator.createTableConstructionPhases(guiController.getGlobalDataKeeper());
+				TableConstructionPhases table = dataManipulator.createTableConstructionPhases();
 				
 				final String[] columns = table.constructColumns();
 				final String[][] rows = table.constructRows();

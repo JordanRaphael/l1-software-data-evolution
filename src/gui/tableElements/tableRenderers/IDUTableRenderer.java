@@ -6,7 +6,7 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataKeeper.GlobalDataManager;
 import gui.mainEngine.Gui;
 
 public class IDUTableRenderer extends DefaultTableCellRenderer {
@@ -14,13 +14,13 @@ public class IDUTableRenderer extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = 1L;
 	private String[][] finalRows;
 	private int wholeCol = -1;
-	private GlobalDataKeeper globalDataKeeper = new GlobalDataKeeper();
+	private GlobalDataManager globalDataKeeper = new GlobalDataManager();
 	private String description = "";
 	private int selectedColumn;
 	private Integer[] segmentSize = new Integer[3];
 	private Gui gui;
 
-	public IDUTableRenderer(Gui gui, String[][] finalRows, GlobalDataKeeper globalDataKeeper, Integer[] segmentSize) {
+	public IDUTableRenderer(Gui gui, String[][] finalRows, GlobalDataManager globalDataKeeper, Integer[] segmentSize) {
 		this.finalRows = finalRows;
 		this.globalDataKeeper = globalDataKeeper;
 		this.segmentSize = segmentSize;

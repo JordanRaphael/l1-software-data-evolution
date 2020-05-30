@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import tableClustering.clusterExtractor.analysis.ClusterExtractor;
 import tableClustering.clusterExtractor.analysis.ClusterExtractorFactory;
 import tableClustering.clusterExtractor.commons.ClusterCollector;
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataKeeper.GlobalDataManager;
 
 public class TableClusteringMainEngine {
 	
-	private GlobalDataKeeper dataKeeper;
+	private GlobalDataManager dataKeeper;
 	private Double birthWeight;
 	private Double deathWeight;
 	private Double changeWeight;
@@ -18,7 +18,7 @@ public class TableClusteringMainEngine {
 	private ClusterExtractor clusterExtractor;
 	private ArrayList<ClusterCollector> allClusterCollectors;
 
-	public TableClusteringMainEngine(GlobalDataKeeper dataKeeper,Double birthWeight, Double deathWeight,
+	public TableClusteringMainEngine(GlobalDataManager dataKeeper,Double birthWeight, Double deathWeight,
 			Double changeWeight){
 		
 		this.dataKeeper=dataKeeper;

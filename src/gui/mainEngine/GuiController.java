@@ -26,7 +26,7 @@ import javax.swing.tree.TreePath;
 import org.antlr.v4.runtime.RecognitionException;
 
 import data.dataKeeper.DataManipulator;
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataKeeper.GlobalDataManager;
 import data.dataSorters.PldRowSorter;
 import data.tableConstructors.PldConstruction;
 import data.tableConstructors.TableConstructionAllSquaresIncluded;
@@ -51,7 +51,7 @@ public class GuiController {
 
 	private Gui gui;
 	private DataManipulator dataManipulator;
-	private GlobalDataKeeper globalDataKeeper;
+	private GlobalDataManager globalDataKeeper;
 	private GeneralTableListenerHandler generalTableListenerHandler;
 	private ZoomTableListenerHandler zoomTableListenerHandler;
 	private TablesFactory tablesFactory;
@@ -61,7 +61,6 @@ public class GuiController {
 	private JItemsHandler jItemsHandler;
 
 	public GuiController(Gui gui) {
-		this.dataManipulator = new DataManipulator();
 		this.gui = gui;
 		this.generalTableListenerHandler = new GeneralTableListenerHandler(gui);
 		this.zoomTableListenerHandler = new ZoomTableListenerHandler(gui);
@@ -69,7 +68,7 @@ public class GuiController {
 		this.tablesFactory = new TablesFactory();
 	}
 
-	public GlobalDataKeeper getGlobalDataKeeper() {
+	public GlobalDataManager getGlobalDataKeeper() {
 
 		return globalDataKeeper;
 	}
@@ -158,7 +157,7 @@ public class GuiController {
 
 	protected void fillTree() {
 
-		TreeConstructionGeneral tc = dataManipulator.createTreeConstructionGeneral(globalDataKeeper);
+		TreeConstructionGeneral tc = dataManipulator.createTreeConstructionGeneral();
 
 		gui.tablesTree = new JTree();
 		gui.tablesTree = tc.constructTree();
@@ -280,16 +279,15 @@ public class GuiController {
 						gui.outputAssessment2, gui.timeWeight, gui.changeWeight, gui.preProcessingTime,
 						gui.preProcessingChange);
 
-				dataManipulator.populateWithPhases(globalDataKeeper, mainEngine, gui.numberOfPhases);
+				dataManipulator.populateWithPhases(mainEngine, gui.numberOfPhases);
 
-				TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper, gui.birthWeight,
-						gui.deathWeight, gui.changeWeightCl);
+				TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper, gui.birthWeight, gui.deathWeight,
+						gui.changeWeightCl);
 
-				dataManipulator.populateWithClusters(globalDataKeeper, mainEngine2, gui.numberOfClusters);
+				dataManipulator.populateWithClusters(mainEngine2, gui.numberOfClusters);
 
 				if (globalDataKeeper.getPhaseCollectors().size() != 0) {
-					TableConstructionWithClusters table = dataManipulator
-							.createTableConstructionWithClusters(globalDataKeeper);
+					TableConstructionWithClusters table = dataManipulator.createTableConstructionWithClusters();
 					final String[] columns = table.constructColumns();
 					final String[][] rows = table.constructRows();
 					gui.segmentSize = table.getSegmentSize();
@@ -316,8 +314,7 @@ public class GuiController {
 
 	protected void showClusterSelectionToZoomArea(int selectedColumn, String selectedCluster) {
 
-		PldConstruction table = dataManipulator.showClusterSelectionToZoomArea(globalDataKeeper, gui.tablesSelected,
-				selectedColumn);
+		PldConstruction table = dataManipulator.showClusterSelectionToZoomArea(gui.tablesSelected, selectedColumn);
 
 		final String[] columns = table.constructColumns();
 		final String[][] rows = table.constructRows();
@@ -410,10 +407,10 @@ public class GuiController {
 						gui.outputAssessment2, gui.timeWeight, gui.changeWeight, gui.preProcessingTime,
 						gui.preProcessingChange);
 
-				dataManipulator.populateWithPhases(globalDataKeeper, mainEngine, gui.numberOfPhases);
+				dataManipulator.populateWithPhases(mainEngine, gui.numberOfPhases);
 
 				if (globalDataKeeper.getPhaseCollectors().size() != 0) {
-					TableConstructionPhases table = dataManipulator.createTableConstructionPhases(globalDataKeeper);
+					TableConstructionPhases table = dataManipulator.createTableConstructionPhases();
 					final String[] columns = table.constructColumns();
 					final String[][] rows = table.constructRows();
 					gui.segmentSize = table.getSegmentSize();
@@ -440,8 +437,7 @@ public class GuiController {
 
 	public void fillClustersTree() {
 
-		TreeConstructionPhasesWithClusters tc = dataManipulator
-				.createTreeConstructionPhasesWithClusters(globalDataKeeper);
+		TreeConstructionPhasesWithClusters tc = dataManipulator.createTreeConstructionPhasesWithClusters();
 		gui.tablesTree = tc.constructTree();
 
 		gui.tablesTree.addTreeSelectionListener(new TreeSelectionListener() {
@@ -486,7 +482,7 @@ public class GuiController {
 			gui.zoomInButton.setVisible(true);
 			gui.zoomOutButton.setVisible(true);
 
-			TableConstructionIDU table = dataManipulator.createTableConstructionIDU(globalDataKeeper);
+			TableConstructionIDU table = dataManipulator.createTableConstructionIDU();
 
 			final String[] columns = table.constructColumns();
 			final String[][] rows = table.constructRows();
@@ -549,7 +545,7 @@ public class GuiController {
 	}
 
 	protected void fillTable() {
-		TableConstructionIDU table = dataManipulator.createTableConstructionIDU(globalDataKeeper);
+		TableConstructionIDU table = dataManipulator.createTableConstructionIDU();
 		final String[] columns = table.constructColumns();
 		final String[][] rows = table.constructRows();
 		gui.segmentSizeZoomArea = table.getSegmentSize();
@@ -576,7 +572,7 @@ public class GuiController {
 				gui.outputAssessment2, gui.timeWeight, gui.changeWeight, gui.preProcessingTime,
 				gui.preProcessingChange);
 
-		dataManipulator.populateWithPhases(globalDataKeeper, mainEngine, gui.numberOfPhases);
+		dataManipulator.populateWithPhases(mainEngine, gui.numberOfPhases);
 
 		Double b = new Double(0.3);
 		Double d = new Double(0.3);
@@ -584,11 +580,10 @@ public class GuiController {
 
 		TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(globalDataKeeper, b, d, c);
 
-		dataManipulator.populateWithClusters(globalDataKeeper, mainEngine2, gui.numberOfClusters);
+		dataManipulator.populateWithClusters(mainEngine2, gui.numberOfClusters);
 
 		if (globalDataKeeper.getPhaseCollectors().size() != 0) {
-			TableConstructionWithClusters tableP = dataManipulator
-					.createTableConstructionWithClusters(globalDataKeeper);
+			TableConstructionWithClusters tableP = dataManipulator.createTableConstructionWithClusters();
 			final String[] columnsP = tableP.constructColumns();
 			final String[][] rowsP = tableP.constructRows();
 			gui.segmentSize = tableP.getSegmentSize();
@@ -608,8 +603,7 @@ public class GuiController {
 
 		if (!(gui.currentProject == null)) {
 
-			TableConstructionAllSquaresIncluded table = dataManipulator
-					.createTableConstructionAllSquaresIncluded(globalDataKeeper);
+			TableConstructionAllSquaresIncluded table = dataManipulator.createTableConstructionAllSquaresIncluded();
 			final String[] columns = table.constructColumns();
 			final String[][] rows = table.constructRows();
 			gui.segmentSizeDetailedTable = table.getSegmentSize();
@@ -807,7 +801,8 @@ public class GuiController {
 		System.out.println("Output Assessment2:" + gui.outputAssessment2);
 		System.out.println("Transitions File:" + gui.transitionsFile);
 
-		globalDataKeeper = new GlobalDataKeeper(gui.datasetTxt, gui.transitionsFile);
+		globalDataKeeper = new GlobalDataManager(gui.datasetTxt, gui.transitionsFile);
+		this.dataManipulator = globalDataKeeper.getDataManipulator();
 		globalDataKeeper.setData();
 		System.out.println(globalDataKeeper.getAllPPLTables().size());
 
@@ -920,8 +915,8 @@ public class GuiController {
 	public void showSelectionToZoomArea(int selectedColumn) {
 
 		System.out.println("selectedColumn " + selectedColumn + " tablesSelected " + gui.tablesSelected);
-		TableConstructionZoomArea table = dataManipulator.createTableConstructionZoomArea(globalDataKeeper,
-				gui.tablesSelected, selectedColumn);
+		TableConstructionZoomArea table = dataManipulator.createTableConstructionZoomArea(gui.tablesSelected,
+				selectedColumn);
 		final String[] columns = table.constructColumns();
 		final String[][] rows = table.constructRows();
 		gui.segmentSizeZoomArea = table.getSegmentSize();

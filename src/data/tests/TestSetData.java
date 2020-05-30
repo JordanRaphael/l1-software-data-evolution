@@ -13,14 +13,14 @@ import java.nio.file.Paths;
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Test;
 
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataKeeper.GlobalDataManager;
 import gui.mainEngine.GuiController;
 import gui.mainEngine.Gui;
 
 public class TestSetData {
 	private GuiController guiController;
 	private Gui frame;
-	private GlobalDataKeeper globalDataKeeper;
+	private GlobalDataManager globalDataKeeper;
 	
 	public TestSetData() {
 		

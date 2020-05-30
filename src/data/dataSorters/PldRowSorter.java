@@ -2,15 +2,15 @@ package data.dataSorters;
 
 import java.util.Map;
 
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataKeeper.GlobalDataManager;
 import data.dataPPL.pplSQLSchema.PPLTable;
 
 public class PldRowSorter {
 	
 	private String[][] finalRows;
-	private GlobalDataKeeper globalDataKeeper = new GlobalDataKeeper();
+	private GlobalDataManager globalDataKeeper = new GlobalDataManager();
 
-	public PldRowSorter(String[][] finalRows,GlobalDataKeeper globalDataKeeper){
+	public PldRowSorter(String[][] finalRows,GlobalDataManager globalDataKeeper){
 		this.finalRows=finalRows;
 		this.globalDataKeeper=globalDataKeeper;
 	}
