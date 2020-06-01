@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import phaseAnalyzer.commons.PhaseCollector;
 import tableClustering.clusterExtractor.commons.ClusterCollector;
 
-public class CollectorsData {
+public class DataCollectorsManager {
 	
 	private ArrayList<PhaseCollector> phaseCollectors = null;
 	private ArrayList<ClusterCollector> clusterCollectors = null;
 	
-	protected CollectorsData() {
+	protected DataCollectorsManager() {
 		phaseCollectors = new ArrayList<PhaseCollector>();
 		clusterCollectors = new ArrayList<ClusterCollector>();
 	}

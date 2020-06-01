@@ -35,13 +35,11 @@ public class TableChange {
 	public ArrayList<AtomicChange> getTableAtChForOneTransition(Integer transition){
 		
 		return atomicChanges.get(transition);
-		
 	}
 	
 	public ArrayList<AtomicChange> getTableAtChForOneTransition(){
 		
 		return atomicChangesForOneTransition;
-		
 	}
 	
 	
@@ -129,15 +127,11 @@ public class TableChange {
 		
 		return message;
 		
-		
 	}
 	
 	public String getAffectedTableName(){
 		
 		return affectedTable;
-		
 	}
-	
-	
 
 }

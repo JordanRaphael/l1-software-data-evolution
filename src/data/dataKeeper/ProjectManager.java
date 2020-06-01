@@ -1,12 +1,12 @@
 package data.dataKeeper;
 
-public class ProjectDetailsData {
+public class ProjectManager {
 
 	private String projectDataFolder = null;
 	private String filename = null;
 	private String transitionsFile = "";
 
-	protected ProjectDetailsData(String filename, String transitionsFile) {
+	protected ProjectManager(String filename, String transitionsFile) {
 		this.filename = filename;
 		this.transitionsFile = transitionsFile;
 	}

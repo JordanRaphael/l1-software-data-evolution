@@ -6,13 +6,13 @@ import data.dataPPL.pplSQLSchema.PPLSchema;
 import data.dataPPL.pplSQLSchema.PPLTable;
 import data.dataPPL.pplTransition.PPLTransition;
 
-public class PPLData {
+public class PPLDataManager {
 	
 	private TreeMap<String, PPLSchema> allPPLSchemas = null;
 	private TreeMap<String, PPLTable> allPPLTables = null;
 	private TreeMap<Integer, PPLTransition> allPPLTransitions = null;
 	
-	protected PPLData() {
+	protected PPLDataManager() {
 		allPPLSchemas = new TreeMap<String, PPLSchema>();
 		allPPLTables = new TreeMap<String, PPLTable>();
 		allPPLTransitions = new TreeMap<Integer, PPLTransition>();

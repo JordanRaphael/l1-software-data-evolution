@@ -6,13 +6,13 @@ import java.util.TreeMap;
 import data.dataPPL.pplTransition.AtomicChange;
 import data.dataPPL.pplTransition.TableChange;
 
-public class DBChangesData {
+public class TableChangeManager {
 
 	private ArrayList<AtomicChange> atomicChanges = null;
 	private TreeMap<String, TableChange> tableChanges = null;
 	private TreeMap<String, TableChange> tableChangesForTwo = null;
 	
-	protected DBChangesData() {
+	protected TableChangeManager() {
 		atomicChanges = new ArrayList<AtomicChange>();
 		tableChanges = new TreeMap<String, TableChange>();
 		tableChangesForTwo = new TreeMap<String, TableChange>();

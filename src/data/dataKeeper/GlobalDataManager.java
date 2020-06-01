@@ -15,31 +15,31 @@ import tableClustering.clusterExtractor.commons.ClusterCollector;
 
 public class GlobalDataManager {
 
-	private PPLData pplData;
-	private DBChangesData dbChangesData;
-	private CollectorsData collectorsData;
+	private PPLDataManager pplData;
+	private TableChangeManager dbChangesData;
+	private DataCollectorsManager dataCollectorsManager;
 	
-	private ProjectDetailsData projectDetailsData;
+	private ProjectManager projectManager;
 
 	public GlobalDataManager(String filename, String transitionsFile) {
-		pplData = new PPLData();
-		dbChangesData = new DBChangesData();
-		collectorsData = new CollectorsData();
-		projectDetailsData = new ProjectDetailsData(filename, transitionsFile);
+		pplData = new PPLDataManager();
+		dbChangesData = new TableChangeManager();
+		dataCollectorsManager = new DataCollectorsManager();
+		projectManager = new ProjectManager(filename, transitionsFile);
 	}
 
 	public GlobalDataManager() {
 
 	}
 	
-	public ProjectDetailsData getProjectDetailsData() {
+	public ProjectManager getProjectDetailsData() {
 	
-		return projectDetailsData;
+		return projectManager;
 	}
 
 	public void setData() {
 
-		Worker worker = new Worker(projectDetailsData.getFilename(), projectDetailsData.getTransitionsFile());
+		Worker worker = new Worker(projectManager.getFilename(), projectManager.getTransitionsFile());
 		try {
 			worker.work();
 		} catch (IOException e) {
@@ -51,16 +51,16 @@ public class GlobalDataManager {
 		setAllPPLTransitions(worker.getAllPPLTransitions());
 		setAllTableChanges(worker.getAllTableChanges());
 		setAtomicChanges(worker.getAtomicChanges());
-		projectDetailsData.setDataFolder(worker.getDataFolder());
+		projectManager.setDataFolder(worker.getDataFolder());
 
 	}
 
 	public void setPhaseCollectors(ArrayList<PhaseCollector> phaseCollectors) {
-		collectorsData.setPhaseCollectors(phaseCollectors);
+		dataCollectorsManager.setPhaseCollectors(phaseCollectors);
 	}
 
 	public void setClusterCollectors(ArrayList<ClusterCollector> clusterCollectors) {
-		collectorsData.setClusterCollectors(clusterCollectors);
+		dataCollectorsManager.setClusterCollectors(clusterCollectors);
 	}
 
 	private void setAllPPLSchemas(TreeMap<String, PPLSchema> allPPLSchemas) {
@@ -129,11 +129,11 @@ public class GlobalDataManager {
 	}
 
 	public ArrayList<PhaseCollector> getPhaseCollectors() {
-		return collectorsData.getPhaseCollectors();
+		return dataCollectorsManager.getPhaseCollectors();
 	}
 
 	public ArrayList<ClusterCollector> getClusterCollectors() {
-		return collectorsData.getClusterCollectors();
+		return dataCollectorsManager.getClusterCollectors();
 	}
 
 	public void printInfo() {
