@@ -42,6 +42,12 @@ public class PPLDataManager {
 		this.allPPLTransitions = allPPLTransitions;
 	}
 	
+	public void printInfo() {
+		System.out.println("Schemas:" + getAllPPLSchemas().size());
+		System.out.println("Transitions:" + getAllPPLTransitions().size());
+		System.out.println("Tables:" + getAllPPLTables().size());
+	}
+	
 	
 
 }
