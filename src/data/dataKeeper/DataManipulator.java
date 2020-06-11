@@ -30,7 +30,7 @@ public class DataManipulator {
 			System.out.println(selectedTables.get(i));
 		}
 
-		PldConstruction table;
+		PldConstruction table;	
 		if (selectedColumn == 0) {
 			table = new TableConstructionClusterTablesPhasesZoomA(globalDataKeeper.getAllPPLSchemas(),
 					globalDataKeeper.getPhaseCollectors().get(0).getPhases(), tablesOfCluster);
