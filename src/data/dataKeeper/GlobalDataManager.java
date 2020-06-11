@@ -10,10 +10,19 @@ import data.dataPPL.pplTransition.AtomicChange;
 import data.dataPPL.pplTransition.PPLTransition;
 import data.dataPPL.pplTransition.TableChange;
 import data.dataProccessing.Worker;
+import data.tableConstructors.PldConstruction;
+import data.tableConstructors.TableConstructionAllSquaresIncluded;
+import data.tableConstructors.TableConstructionClusterTablesPhasesZoomA;
+import data.tableConstructors.TableConstructionIDU;
+import data.tableConstructors.TableConstructionPhases;
+import data.tableConstructors.TableConstructionWithClusters;
+import data.tableConstructors.TableConstructionZoomArea;
 import data.treeElements.TreeConstructionGeneral;
+import data.treeElements.TreeConstructionPhasesWithClusters;
 import phaseAnalyzer.commons.PhaseCollector;
 import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
 import tableClustering.clusterExtractor.commons.ClusterCollector;
+import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
 
 public class GlobalDataManager {
 
@@ -121,38 +130,117 @@ public class GlobalDataManager {
 	public TreeMap<String, TableChange> getAllTableChanges() {
 
 		return dbChangesData.getTableChanges();
-
 	}
 
 	public TreeMap<String, TableChange> getTmpTableChanges() {
 
 		return dbChangesData.getTableChanges();
-
 	}
 
 	public ArrayList<PhaseCollector> getPhaseCollectors() {
+		
 		return dataCollectorsManager.getPhaseCollectors();
 	}
 
 	public ArrayList<ClusterCollector> getClusterCollectors() {
+		
 		return dataCollectorsManager.getClusterCollectors();
 	}
 
 	public void printInfo() {
+		
 		pplData.printInfo();
 	}
 	
 	public TreeConstructionGeneral createTreeConstructionGeneral() {
+		
 		return new TreeConstructionGeneral(this);
 	}
 	
-	public void populateWithPhases(PhaseAnalyzerMainEngine mainEngine,
-			Integer numberOfPhases) {
+	public void populateWithPhases(PhaseAnalyzerMainEngine mainEngine, Integer numberOfPhases) {
+		
 		mainEngine.parseInput();
 		System.out.println("\n\n\n");
 		mainEngine.extractPhases(numberOfPhases);
 		mainEngine.connectTransitionsWithPhases(this);
 		setPhaseCollectors(mainEngine.getPhaseCollectors());
 	}
+	
+	public void populateWithClusters(TableClusteringMainEngine mainEngine, Integer numberOfClusters) {
+		
+		mainEngine.extractClusters(numberOfClusters);
+		setClusterCollectors(mainEngine.getClusterCollectors());
+		mainEngine.print();
+	}
+	
+	public TableConstructionAllSquaresIncluded createTableConstructionAllSquaresIncluded() {
+		
+		return new TableConstructionAllSquaresIncluded(getAllPPLSchemas(), getAllPPLTransitions());
+	}
+	
+	public TableConstructionZoomArea createTableConstructionZoomArea(ArrayList<String> tablesOfCluster, int selectedColumn) {
+		
+		return new TableConstructionZoomArea(getPhaseCollectors().get(0).getPhases(),
+				getAllPPLTransitions(), getAllPPLSchemas(),
+				getAllPPLTables(), tablesOfCluster, selectedColumn);
+	}
+	
+	public TableConstructionWithClusters createTableConstructionWithClusters() {
+		
+		return new TableConstructionWithClusters(getPhaseCollectors().get(0).getPhases(),
+				getClusterCollectors().get(0).getClusters());
+	}
+	
+	public PldConstruction showClusterSelectionToZoomArea(ArrayList<String> selectedTables, int selectedColumn) {
+		
+		ArrayList<String> tablesOfCluster = new ArrayList<String>();
+		
+		for (int i = 0; i < selectedTables.size(); i++) {
+			String[] selectedClusterSplit = selectedTables.get(i).split(" ");
+			int cluster = Integer.parseInt(selectedClusterSplit[1]);
+			ArrayList<String> namesOfTables = getClusterCollectors().get(0).getClusters().get(cluster)
+					.getNamesOfTables();
+			for (int j = 0; j < namesOfTables.size(); j++) {
+				tablesOfCluster.add(namesOfTables.get(j));
+			}
+			System.out.println(selectedTables.get(i));
+		}
+
+		PldConstruction table;	
+		if (selectedColumn == 0) {
+			table = new TableConstructionClusterTablesPhasesZoomA(getAllPPLSchemas(),
+					getPhaseCollectors().get(0).getPhases(), tablesOfCluster);
+		} else {
+			table = createTableConstructionZoomArea(tablesOfCluster, selectedColumn);
+		}
+		
+		System.out.println("Schemas: " + getAllPPLSchemas().size());
+		System.out.println("C: " + table.constructColumns().length + " R: " + table.constructRows().length);
+
+		return table;
+	}
+	
+	public TableConstructionPhases createTableConstructionPhases() {
+		
+		return new TableConstructionPhases(getAllPPLSchemas(), getPhaseCollectors().get(0).getPhases());
+	}
+	
+	public TreeConstructionPhasesWithClusters createTreeConstructionPhasesWithClusters() {
+		
+		return new TreeConstructionPhasesWithClusters(this);
+	}
+	
+	public TableConstructionIDU createTableConstructionIDU() {
+		
+		return new TableConstructionIDU(getAllPPLSchemas(), getAllPPLTransitions());
+	}
+	
+	/*Not used anywhere????*/
+	public TableConstructionClusterTablesPhasesZoomA createTableConstructionClusterTablesPhasesZoomA(ArrayList<String> tablesOfCluster) {
+
+		return new TableConstructionClusterTablesPhasesZoomA(getAllPPLSchemas(),
+				getPhaseCollectors().get(0).getPhases(), tablesOfCluster);
+	}
+	
 
 }

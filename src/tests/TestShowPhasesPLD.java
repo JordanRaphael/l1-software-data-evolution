@@ -1,4 +1,4 @@
-package gui.tests;
+package tests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,7 +11,6 @@ import java.nio.file.Paths;
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Test;
 
-import data.dataKeeper.DataManipulator;
 import data.tableConstructors.TableConstructionPhases;
 import gui.mainEngine.Gui;
 import gui.mainEngine.GuiController;
@@ -20,15 +19,12 @@ import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
 public class TestShowPhasesPLD {
 
 	private GuiController guiController;
-	private DataManipulator dataManipulator;
 	private Gui gui;
 
 	public TestShowPhasesPLD() {
 
 		gui = new Gui();
 		guiController = new GuiController(gui);
-		dataManipulator = new DataManipulator();
-
 	}
 
 	@Test
@@ -63,8 +59,8 @@ public class TestShowPhasesPLD {
 			guiController.getGlobalDataKeeper().setPhaseCollectors(mainEngine.getPhaseCollectors());
 
 			if (guiController.getGlobalDataKeeper().getPhaseCollectors().size() != 0) {
-				TableConstructionPhases table = dataManipulator
-						.createTableConstructionPhases(guiController.getGlobalDataKeeper());
+				TableConstructionPhases table = guiController.getGlobalDataKeeper()
+						.createTableConstructionPhases();
 
 				final String[] columns = table.constructColumns();
 				final String[][] rows = table.constructRows();

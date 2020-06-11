@@ -1,4 +1,4 @@
-package gui.tests;
+package tests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,7 +11,6 @@ import java.nio.file.Paths;
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Test;
 
-import data.dataKeeper.DataManipulator;
 import data.tableConstructors.TableConstructionAllSquaresIncluded;
 import gui.mainEngine.Gui;
 import gui.mainEngine.GuiController;
@@ -19,14 +18,12 @@ import gui.mainEngine.GuiController;
 public class TestShowFullDetailedLifetimeTable {
 
 	private GuiController guiController;
-	private DataManipulator dataManipulator;
 	private Gui gui;
 
 	public TestShowFullDetailedLifetimeTable() {
 
 		gui = new Gui();
 		guiController = new GuiController(gui);
-		dataManipulator = new DataManipulator();
 	}
 
 	@Test
@@ -45,10 +42,12 @@ public class TestShowFullDetailedLifetimeTable {
 			System.setOut(fileStream);
 
 			if (!(gui.currentProject == null)) {
-				TableConstructionAllSquaresIncluded table = dataManipulator
-						.createTableConstructionAllSquaresIncluded(guiController.getGlobalDataKeeper());
+				
+				TableConstructionAllSquaresIncluded table = guiController.getGlobalDataKeeper().createTableConstructionAllSquaresIncluded();
+				
 				final String[] columns = table.constructColumns();
 				final String[][] rows = table.constructRows();
+				
 				gui.segmentSizeDetailedTable = table.getSegmentSize();
 				gui.tabbedPane.setSelectedIndex(0);
 				gui.makeDetailedTable(columns, rows, true);

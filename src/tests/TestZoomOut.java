@@ -1,5 +1,4 @@
-package gui.tests;
-
+package tests;
 
 import static org.junit.Assert.assertTrue;
 
@@ -11,12 +10,12 @@ import org.junit.Test;
 import gui.mainEngine.GuiController;
 import gui.mainEngine.Gui;
 
-public class TestZoomIn {
-	
+public class TestZoomOut {
+
 	private GuiController guiController;
 	private Gui frame;
 	
-	public TestZoomIn() {
+	public TestZoomOut() {
 		
 		frame = new Gui();
 		guiController = new GuiController(frame);
@@ -24,21 +23,27 @@ public class TestZoomIn {
 	}
 	
 	@Test
-	public void testZoomIn() {
+	public void testZoomOut() {
 		try {
 			guiController.importData("filesHandler/inis/phpBB.ini");
 		} catch (RecognitionException | IOException e) {
 			e.printStackTrace();
 		}
-		frame.rowHeight = 1;
-		frame.columnWidth = 1;
+		frame.rowHeight = 10;
+		frame.columnWidth = 10;
 		int height = frame.rowHeight;
 		int width = frame.columnWidth;
-		guiController.zoomInAction();
-		assertTrue(frame.rowHeight == height+2);
-		assertTrue(frame.columnWidth == width+1);
+		guiController.zoomOutAction();
+		assertTrue(frame.rowHeight == height-2);
+		assertTrue(frame.columnWidth == width-1);
+		
+		frame.rowHeight = 2;
+		frame.columnWidth = 1;
+		height = frame.rowHeight;
+		width = frame.columnWidth;
+		guiController.zoomOutAction();
+		assertTrue(frame.rowHeight == 1);
+		assertTrue(frame.columnWidth == 1);
+		
 	}
-	
-	
-
 }
