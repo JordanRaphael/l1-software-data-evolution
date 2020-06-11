@@ -13,6 +13,7 @@ public class PPLDataManager {
 	private TreeMap<Integer, PPLTransition> allPPLTransitions = null;
 	
 	protected PPLDataManager() {
+		
 		allPPLSchemas = new TreeMap<String, PPLSchema>();
 		allPPLTables = new TreeMap<String, PPLTable>();
 		allPPLTransitions = new TreeMap<Integer, PPLTransition>();
@@ -43,9 +44,30 @@ public class PPLDataManager {
 	}
 	
 	public void printInfo() {
+		
 		System.out.println("Schemas:" + getAllPPLSchemas().size());
 		System.out.println("Transitions:" + getAllPPLTransitions().size());
 		System.out.println("Tables:" + getAllPPLTables().size());
+	}
+
+	public String getPPLTablesDescription(String area) {
+		
+		String description = "";
+		description = description + "Birth Version Name:"
+				+ getAllPPLTables().get(area).getBirth() + "\n";
+		description = description + "Birth Version ID:"
+				+ getAllPPLTables().get(area).getBirthVersionID()
+				+ "\n";
+		description = description + "Death Version Name:"
+				+ getAllPPLTables().get(area).getDeath() + "\n";
+		description = description + "Death Version ID:"
+				+ getAllPPLTables().get(area).getDeathVersionID()
+				+ "\n";
+		description = description + "Total Changes:"
+				+ getAllPPLTables().get(area).getTotalChanges()
+				+ "\n";
+		
+		return description;
 	}
 	
 	

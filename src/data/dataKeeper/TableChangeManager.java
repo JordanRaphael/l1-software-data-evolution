@@ -8,37 +8,52 @@ import data.dataPPL.pplTransition.TableChange;
 
 public class TableChangeManager {
 
-	private ArrayList<AtomicChange> atomicChanges = null;
-	private TreeMap<String, TableChange> tableChanges = null;
-	private TreeMap<String, TableChange> tableChangesForTwo = null;
+	private ArrayList<AtomicChange> atomicChanges;
+	private TreeMap<String, TableChange> tableChanges;
+	private TreeMap<String, TableChange> tableChangesForTwo;
 	
-	protected TableChangeManager() {
+	public TableChangeManager() {
+		
 		atomicChanges = new ArrayList<AtomicChange>();
 		tableChanges = new TreeMap<String, TableChange>();
 		tableChangesForTwo = new TreeMap<String, TableChange>();
 	}
-	
-	protected void setAtomicChanges(ArrayList<AtomicChange> atomicChanges){
-		this.atomicChanges = atomicChanges;
-	}
-	
-	protected ArrayList<AtomicChange> getAtomicChanges(){
+	public ArrayList<AtomicChange> getAtomicChanges(){
+		
 		return atomicChanges;
 	}
 	
-	protected void setTableChanges(TreeMap<String, TableChange> tableChanges){
+	public void setAtomicChanges(ArrayList<AtomicChange> atomicChanges){
+		
+		this.atomicChanges = atomicChanges;
+	}
+	
+	
+	public void setTableChanges(TreeMap<String, TableChange> tableChanges){
+		
 		this.tableChanges = tableChanges;
 	}
 	
-	protected TreeMap<String, TableChange> getTableChanges(){
+	
+	public TreeMap<String, TableChange> getTableChanges(){
+	
 		return tableChanges;
 	}
 	
-	protected void setTableChangesForTwo(TreeMap<String, TableChange> tableChangesForTwo){
+	
+	public void setTableChangesForTwo(TreeMap<String, TableChange> tableChangesForTwo){
+	
 		this.tableChangesForTwo = tableChangesForTwo;
 	}
 	
-	protected TreeMap<String, TableChange> getTableChangesForTwo(){
+	
+	public TreeMap<String, TableChange> getTableChangesForTwo(){
+	
 		return tableChangesForTwo;
+	}
+	
+	public void setAllTableChanges(TreeMap<String, TableChange> tableChanges) {
+
+		this.tableChanges = tableChanges;
 	}
 }

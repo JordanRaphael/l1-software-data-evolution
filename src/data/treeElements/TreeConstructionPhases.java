@@ -28,7 +28,7 @@ public class TreeConstructionPhases implements TreeConstruction {
 		TreeMap<String, PPLSchema> schemas=new TreeMap<String, PPLSchema>();
 		
 				
-		ArrayList<Phase> phases=dataKeeper.getPhaseCollectors().get(0).getPhases();
+		ArrayList<Phase> phases = dataKeeper.getPhaseCollectors().get(0).getPhases();
 		
 		for(int i=0; i<phases.size(); i++){
 			

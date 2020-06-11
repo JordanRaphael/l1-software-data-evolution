@@ -6,24 +6,29 @@ public class ProjectManager {
 	private String filename = null;
 	private String transitionsFile = "";
 
-	protected ProjectManager(String filename, String transitionsFile) {
+	public ProjectManager(String filename, String transitionsFile) {
+		
 		this.filename = filename;
 		this.transitionsFile = transitionsFile;
 	}
 
-	protected String getFilename() {
+	public String getFilename() {
+		
 		return filename;
 	}
 	
-	protected String getTransitionsFile() {
+	public String getTransitionsFile() {
+		
 		return transitionsFile;
 	}
 	
-	protected void setDataFolder(String projectDataFolder) {
+	public void setDataFolder(String projectDataFolder) {
+		
 		this.projectDataFolder = projectDataFolder;
 	}
 	
 	public String getDataFolder() {
+		
 		return projectDataFolder;
 	}
 	

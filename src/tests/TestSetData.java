@@ -48,9 +48,9 @@ public class TestSetData {
 
 			System.out.println(globalDataKeeper.getAllPPLSchemas().toString());
 			System.out.println(globalDataKeeper.getAllPPLTables().toString());
-			System.out.println(globalDataKeeper.getAtomicChanges().toString());
-			System.out.println(globalDataKeeper.getAllTableChanges().toString());
-			System.out.println(globalDataKeeper.getTmpTableChanges().toString());
+			System.out.println(globalDataKeeper.getTableChangeManager().getAtomicChanges().toString());
+			System.out.println(globalDataKeeper.getTableChangeManager().getTableChanges().toString());
+			System.out.println(globalDataKeeper.getTableChangeManager().getTableChanges().toString());
 			//Jo des edw
 			System.out.println(globalDataKeeper.getAllPPLTransitions().toString());
 			System.out.println(globalDataKeeper.getProjectDetailsData().getDataFolder().toString());

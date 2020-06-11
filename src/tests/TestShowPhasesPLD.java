@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Test;
 
+import data.dataKeeper.DataCollectorsManager;
 import data.tableConstructors.TableConstructionPhases;
 import gui.mainEngine.Gui;
 import gui.mainEngine.GuiController;
@@ -56,7 +57,8 @@ public class TestShowPhasesPLD {
 			System.out.println("\n\n\n");
 			mainEngine.extractPhases(this.gui.numberOfPhases);
 			mainEngine.connectTransitionsWithPhases(guiController.getGlobalDataKeeper());
-			guiController.getGlobalDataKeeper().setPhaseCollectors(mainEngine.getPhaseCollectors());
+			DataCollectorsManager dataCollectorsManager = guiController.getGlobalDataKeeper().getDataCollectorsManager(); 
+			dataCollectorsManager.setPhaseCollectors(mainEngine.getPhaseCollectors());
 
 			if (guiController.getGlobalDataKeeper().getPhaseCollectors().size() != 0) {
 				TableConstructionPhases table = guiController.getGlobalDataKeeper()

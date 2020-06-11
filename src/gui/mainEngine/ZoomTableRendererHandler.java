@@ -57,19 +57,9 @@ public class ZoomTableRendererHandler extends TableRenderer{
 					if (isSelected) {
 
 						String description = "Table:" + guiController.getGui().finalRowsZoomArea[row][0] + "\n";
-						description = description + "Birth Version Name:"
-								+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getBirth() + "\n";
-						description = description + "Birth Version ID:"
-								+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getBirthVersionID()
-								+ "\n";
-						description = description + "Death Version Name:"
-								+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getDeath() + "\n";
-						description = description + "Death Version ID:"
-								+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getDeathVersionID()
-								+ "\n";
-						description = description + "Total Changes:"
-								+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getTotalChanges()
-								+ "\n";
+						String area = guiController.getGui().finalRowsZoomArea[row][0];
+						description += globalDataKeeper.getPPLTablesDescription(area);
+								
 						guiController.getGui().descriptionText.setText(description);
 
 						Color cl = new Color(255, 69, 0, 100);

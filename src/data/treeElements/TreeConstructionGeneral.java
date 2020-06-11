@@ -12,16 +12,16 @@ import data.dataPPL.pplSQLSchema.PPLTable;
 
 public class TreeConstructionGeneral {
 
-	private GlobalDataManager dataKeeper = null;
+	private GlobalDataManager globalDataManager = null;
 
-	public TreeConstructionGeneral(GlobalDataManager dataKeeper) {
-		this.dataKeeper = dataKeeper;
+	public TreeConstructionGeneral(GlobalDataManager globalDataManager) {
+		this.globalDataManager = globalDataManager;
 	}
 
 	public JTree constructTree() {
 
 		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Versions");
-		TreeMap<String, PPLSchema> schemas = dataKeeper.getAllPPLSchemas();
+		TreeMap<String, PPLSchema> schemas = globalDataManager.getAllPPLSchemas();
 
 		for (Map.Entry<String, PPLSchema> pplSc : schemas.entrySet()) {
 

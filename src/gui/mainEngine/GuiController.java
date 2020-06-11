@@ -157,7 +157,7 @@ public class GuiController {
 
 	protected void fillTree() {
 
-		TreeConstructionGeneral tc = globalDataManager.createTreeConstructionGeneral();
+		TreeConstructionGeneral tc = new TreeConstructionGeneral(globalDataManager);
 
 		gui.tablesTree = new JTree();
 		gui.tablesTree = tc.constructTree();
@@ -437,7 +437,7 @@ public class GuiController {
 
 	public void fillClustersTree() {
 
-		TreeConstructionPhasesWithClusters tc = globalDataManager.createTreeConstructionPhasesWithClusters();
+		TreeConstructionPhasesWithClusters tc = new TreeConstructionPhasesWithClusters(globalDataManager);
 		gui.tablesTree = tc.constructTree();
 
 		gui.tablesTree.addTreeSelectionListener(new TreeSelectionListener() {

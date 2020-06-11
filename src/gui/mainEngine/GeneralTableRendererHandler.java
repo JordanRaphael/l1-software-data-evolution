@@ -9,7 +9,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import data.dataKeeper.GlobalDataManager;
 import data.dataPPL.pplSQLSchema.PPLTable;
 import phaseAnalyzer.commons.Phase;
-import tableClustering.clusterExtractor.commons.Cluster;
 
 public class GeneralTableRendererHandler extends TableRenderer{
 	
@@ -25,14 +24,15 @@ public class GeneralTableRendererHandler extends TableRenderer{
 			final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 					column);
 			
-			GlobalDataManager globalDataKeeper = guiController.getGlobalDataKeeper();
+			GlobalDataManager globalDataManager = guiController.getGlobalDataKeeper();
+			
 			String tmpValue = guiController.getGui().finalRows[row][column];
 			String columnName = table.getColumnName(column);
 			Color fr = new Color(0, 0, 0);
 			c.setForeground(fr);
 
 			if (column == guiController.getGui().wholeCol && guiController.getGui().wholeCol != 0) {
-				Phase phase  = globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(column - 1);
+				Phase phase  = globalDataManager.getPhaseCollectors().get(0).getPhases().get(column - 1);
 				String description = table.getColumnName(column) + "\n";
 				description = description + "First Transition ID:"
 						+ phase.getStartPos() + "\n";
@@ -55,20 +55,14 @@ public class GeneralTableRendererHandler extends TableRenderer{
 
 					if (guiController.getGui().finalRows[row][0].contains("Cluster")) {
 						
-						Cluster cluster = globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row);
 						String description = "Cluster:" + guiController.getGui().finalRows[row][0] + "\n";
+						description = globalDataManager.getClusterDescription(description, row);
 						
-						description = description + "Birth Version Name:" + cluster.getBirthSqlFile() + "\n";
-						description = description + "Birth Version ID:" + cluster.getBirth() + "\n";
-						description = description + "Death Version Name:" + cluster.getDeathSqlFile() + "\n";
-						description = description + "Death Version ID:" + cluster.getDeath() + "\n";
-						description = description + "Tables:" + cluster.getNamesOfTables().size() + "\n";
-						description = description + "Total Changes:" + cluster.getTotalChanges() + "\n";
-
 						guiController.getGui().descriptionText.setText(description);
+						
 					} else {
 						
-						PPLTable tmpTable = globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRows[row][0]);
+						PPLTable tmpTable = globalDataManager.getAllPPLTables().get(guiController.getGui().finalRows[row][0]);
 						String description = "Table:" + guiController.getGui().finalRows[row][0] + "\n";
 						
 						description = description + "Birth Version Name:" + tmpTable.getBirth() + "\n";
@@ -100,33 +94,34 @@ public class GeneralTableRendererHandler extends TableRenderer{
 					String description = "";
 					if (!table.getColumnName(column).contains("Table name")) {
 						
-						Phase tmpPhase = globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(column - 1);
+						Phase tmpPhase = globalDataManager.getPhaseCollectors().get(0).getPhases().get(column - 1);
 						
 						if (guiController.getGui().finalRows[row][0].contains("Cluster")) {
 							
-							Cluster cluster = globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row);
+							int nameOfTablesSize = globalDataManager.getDataCollectorsManager().getNamesOfTables(row);
 							
 							description = guiController.getGui().finalRows[row][0] + "\n";
-							description = description + "Tables:" + cluster.getNamesOfTables().size() + "\n\n";
+							description = description + "Tables:" + nameOfTablesSize + "\n\n";
 							description = description + table.getColumnName(column) + "\n";
 							description = description + "First Transition ID:" + tmpPhase.getStartPos() + "\n";
 							description = description + "Last Transition ID:" + tmpPhase.getEndPos() + "\n\n";
 							description = description + "Total Changes For This Phase:" + tmpValue + "\n";
 
 						} else {
+							
 							description = table.getColumnName(column) + "\n";
 							description = description + "First Transition ID:" + tmpPhase.getStartPos() + "\n";
 							description = description + "Last Transition ID:" + tmpPhase.getEndPos() + "\n\n";
 							description = description + "Table:" + guiController.getGui().finalRows[row][0] + "\n";
 							description = description + "Birth Version Name:"
-									+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRows[row][0]).getBirth()
+									+ globalDataManager.getAllPPLTables().get(guiController.getGui().finalRows[row][0]).getBirth()
 									+ "\n";
-							description = description + "Birth Version ID:" + globalDataKeeper.getAllPPLTables()
+							description = description + "Birth Version ID:" + globalDataManager.getAllPPLTables()
 									.get(guiController.getGui().finalRows[row][0]).getBirthVersionID() + "\n";
 							description = description + "Death Version Name:"
-									+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRows[row][0]).getDeath()
+									+ globalDataManager.getAllPPLTables().get(guiController.getGui().finalRows[row][0]).getDeath()
 									+ "\n";
-							description = description + "Death Version ID:" + globalDataKeeper.getAllPPLTables()
+							description = description + "Death Version ID:" + globalDataManager.getAllPPLTables()
 									.get(guiController.getGui().finalRows[row][0]).getDeathVersionID() + "\n";
 							description = description + "Total Changes For This Phase:" + tmpValue + "\n";
 
@@ -200,7 +195,7 @@ public class GeneralTableRendererHandler extends TableRenderer{
 					final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 							column);
 					
-					GlobalDataManager globalDataKeeper = guiController.getGlobalDataKeeper();
+					GlobalDataManager globalDataManager = guiController.getGlobalDataKeeper();
 					String tmpValue = guiController.getGui().finalRowsZoomArea[row][column];
 					String columnName = table.getColumnName(column);
 					Color fr = new Color(0, 0, 0);
@@ -211,25 +206,25 @@ public class GeneralTableRendererHandler extends TableRenderer{
 					if (column == guiController.getGui().wholeColZoomArea && guiController.getGui().wholeColZoomArea != 0) {
 
 						String description = "Transition ID:" + table.getColumnName(column) + "\n";
-						description = description + "Old Version Name:" + globalDataKeeper.getAllPPLTransitions()
+						description = description + "Old Version Name:" + globalDataManager.getAllPPLTransitions()
 								.get(Integer.parseInt(table.getColumnName(column))).getOldVersionName() + "\n";
-						description = description + "New Version Name:" + globalDataKeeper.getAllPPLTransitions()
+						description = description + "New Version Name:" + globalDataManager.getAllPPLTransitions()
 								.get(Integer.parseInt(table.getColumnName(column))).getNewVersionName() + "\n";
 
 						description = description
-								+ "Transition Changes:" + globalDataKeeper.getAllPPLTransitions()
+								+ "Transition Changes:" + globalDataManager.getAllPPLTransitions()
 										.get(Integer.parseInt(table.getColumnName(column))).getNumberOfChangesForOneTr()
 								+ "\n";
 						description = description
-								+ "Additions:" + globalDataKeeper.getAllPPLTransitions()
+								+ "Additions:" + globalDataManager.getAllPPLTransitions()
 										.get(Integer.parseInt(table.getColumnName(column))).getNumberOfAdditionsForOneTr()
 								+ "\n";
 						description = description
-								+ "Deletions:" + globalDataKeeper.getAllPPLTransitions()
+								+ "Deletions:" + globalDataManager.getAllPPLTransitions()
 										.get(Integer.parseInt(table.getColumnName(column))).getNumberOfDeletionsForOneTr()
 								+ "\n";
 						description = description
-								+ "Updates:" + globalDataKeeper.getAllPPLTransitions()
+								+ "Updates:" + globalDataManager.getAllPPLTransitions()
 										.get(Integer.parseInt(table.getColumnName(column))).getNumberOfUpdatesForOneTr()
 								+ "\n";
 
@@ -247,16 +242,16 @@ public class GeneralTableRendererHandler extends TableRenderer{
 
 							String description = "Table:" + guiController.getGui().finalRowsZoomArea[row][0] + "\n";
 							description = description + "Birth Version Name:"
-									+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getBirth()
+									+ globalDataManager.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getBirth()
 									+ "\n";
-							description = description + "Birth Version ID:" + globalDataKeeper.getAllPPLTables()
+							description = description + "Birth Version ID:" + globalDataManager.getAllPPLTables()
 									.get(guiController.getGui().finalRowsZoomArea[row][0]).getBirthVersionID() + "\n";
 							description = description + "Death Version Name:"
-									+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getDeath()
+									+ globalDataManager.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getDeath()
 									+ "\n";
-							description = description + "Death Version ID:" + globalDataKeeper.getAllPPLTables()
+							description = description + "Death Version ID:" + globalDataManager.getAllPPLTables()
 									.get(guiController.getGui().finalRowsZoomArea[row][0]).getDeathVersionID() + "\n";
-							description = description + "Total Changes:" + globalDataKeeper.getAllPPLTables()
+							description = description + "Total Changes:" + globalDataManager.getAllPPLTables()
 									.get(guiController.getGui().finalRowsZoomArea[row][0]).getTotalChanges() + "\n";
 
 							guiController.getGui().descriptionText.setText(description);
@@ -282,32 +277,32 @@ public class GeneralTableRendererHandler extends TableRenderer{
 								description = "Table:" + guiController.getGui().finalRowsZoomArea[row][0] + "\n";
 
 								description = description + "Old Version Name:"
-										+ globalDataKeeper.getAllPPLTransitions()
+										+ globalDataManager.getAllPPLTransitions()
 												.get(Integer.parseInt(table.getColumnName(column))).getOldVersionName()
 										+ "\n";
 								description = description + "New Version Name:"
-										+ globalDataKeeper.getAllPPLTransitions()
+										+ globalDataManager.getAllPPLTransitions()
 												.get(Integer.parseInt(table.getColumnName(column))).getNewVersionName()
 										+ "\n";
-								if (globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getTableChanges()
+								if (globalDataManager.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0]).getTableChanges()
 										.getTableAtChForOneTransition(
 												Integer.parseInt(table.getColumnName(column))) != null) {
-									description = description + "Transition Changes:" + globalDataKeeper.getAllPPLTables()
+									description = description + "Transition Changes:" + globalDataManager.getAllPPLTables()
 											.get(guiController.getGui().finalRowsZoomArea[row][0]).getTableChanges()
 											.getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(column)))
 											.size() + "\n";
 									description = description + "Additions:"
-											+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0])
+											+ globalDataManager.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0])
 													.getNumberOfAdditionsForOneTr(
 															Integer.parseInt(table.getColumnName(column)))
 											+ "\n";
 									description = description + "Deletions:"
-											+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0])
+											+ globalDataManager.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0])
 													.getNumberOfDeletionsForOneTr(
 															Integer.parseInt(table.getColumnName(column)))
 											+ "\n";
 									description = description + "Updates:"
-											+ globalDataKeeper.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0])
+											+ globalDataManager.getAllPPLTables().get(guiController.getGui().finalRowsZoomArea[row][0])
 													.getNumberOfUpdatesForOneTr(
 															Integer.parseInt(table.getColumnName(column)))
 											+ "\n";
