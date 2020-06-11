@@ -43,15 +43,6 @@ public class DataManipulator {
 		return table;
 	}
 
-	public void populateWithPhases(GlobalDataManager globalDataKeeper, PhaseAnalyzerMainEngine mainEngine,
-			Integer numberOfPhases) {
-		mainEngine.parseInput();
-		System.out.println("\n\n\n");
-		mainEngine.extractPhases(numberOfPhases);
-		mainEngine.connectTransitionsWithPhases(globalDataKeeper);
-		globalDataKeeper.setPhaseCollectors(mainEngine.getPhaseCollectors());
-	}
-
 	public void populateWithClusters(GlobalDataManager globalDataKeeper, TableClusteringMainEngine mainEngine,
 			Integer numberOfClusters) {
 		mainEngine.extractClusters(numberOfClusters);
@@ -77,10 +68,6 @@ public class DataManipulator {
 	public TableConstructionWithClusters createTableConstructionWithClusters(GlobalDataManager globalDataKeeper) {
 		return new TableConstructionWithClusters(globalDataKeeper.getPhaseCollectors().get(0).getPhases(),
 				globalDataKeeper.getClusterCollectors().get(0).getClusters());
-	}
-
-	public TreeConstructionGeneral createTreeConstructionGeneral(GlobalDataManager globalDataKeeper) {
-		return new TreeConstructionGeneral(globalDataKeeper);
 	}
 
 	public TableConstructionZoomArea createTableConstructionZoomArea(GlobalDataManager globalDataKeeper,

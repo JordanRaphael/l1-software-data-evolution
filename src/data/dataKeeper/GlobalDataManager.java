@@ -10,7 +10,9 @@ import data.dataPPL.pplTransition.AtomicChange;
 import data.dataPPL.pplTransition.PPLTransition;
 import data.dataPPL.pplTransition.TableChange;
 import data.dataProccessing.Worker;
+import data.treeElements.TreeConstructionGeneral;
 import phaseAnalyzer.commons.PhaseCollector;
+import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
 import tableClustering.clusterExtractor.commons.ClusterCollector;
 
 public class GlobalDataManager {
@@ -137,9 +139,20 @@ public class GlobalDataManager {
 	}
 
 	public void printInfo() {
-		System.out.println("Schemas:" + pplData.getAllPPLSchemas().size());
-		System.out.println("Transitions:" + pplData.getAllPPLTransitions().size());
-		System.out.println("Tables:" + pplData.getAllPPLTables().size());
+		pplData.printInfo();
+	}
+	
+	public TreeConstructionGeneral createTreeConstructionGeneral() {
+		return new TreeConstructionGeneral(this);
+	}
+	
+	public void populateWithPhases(PhaseAnalyzerMainEngine mainEngine,
+			Integer numberOfPhases) {
+		mainEngine.parseInput();
+		System.out.println("\n\n\n");
+		mainEngine.extractPhases(numberOfPhases);
+		mainEngine.connectTransitionsWithPhases(this);
+		setPhaseCollectors(mainEngine.getPhaseCollectors());
 	}
 
 }
