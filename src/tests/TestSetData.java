@@ -18,7 +18,7 @@ import gui.mainEngine.Gui;
 import gui.mainEngine.GuiController;
 
 public class TestSetData {
-	
+
 	private GuiController guiController;
 	private Gui frame;
 	private GlobalDataManager globalDataKeeper;
@@ -32,29 +32,25 @@ public class TestSetData {
 	@Test
 	public void testSetData() {
 		String filename = "filesHandler/inis/Atlas.ini";
-		
+
 		try {
 			guiController.importData(filename);
 		} catch (RecognitionException | IOException e) {
 			e.printStackTrace();
 		}
 
-		globalDataKeeper = guiController.getGlobalDataKeeper();
+		globalDataKeeper = guiController.getGlobalDataManager();
 		PrintStream fileStream;
-		
+
 		try {
 			fileStream = new PrintStream("Test-Files/tmp-atlas-to-test.txt");
 			System.setOut(fileStream);
 
 			System.out.println(globalDataKeeper.getAllPPLSchemas().toString());
-			System.out.println(globalDataKeeper.getAllPPLTables().toString());
 			System.out.println(globalDataKeeper.getTableChangeManager().getAtomicChanges().toString());
 			System.out.println(globalDataKeeper.getTableChangeManager().getTableChanges().toString());
 			System.out.println(globalDataKeeper.getTableChangeManager().getTableChanges().toString());
-			//Jo des edw
-			System.out.println(globalDataKeeper.getAllPPLTransitions().toString());
-			System.out.println(globalDataKeeper.getProjectDetailsData().getDataFolder().toString());
-			System.out.println(globalDataKeeper.getPhaseCollectors().toString());
+			System.out.println(globalDataKeeper.getProjectDataManager().getDataFolder().toString());
 			System.out.println(globalDataKeeper.getClusterCollectors().toString());
 
 			fileStream.close();

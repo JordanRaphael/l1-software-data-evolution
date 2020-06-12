@@ -86,12 +86,12 @@ public class Gui extends JFrame {
 	public Boolean preProcessingTime = null;
 	public Boolean preProcessingChange = null;
 
-	public String projectName = "";
-	public String datasetTxt = "";
-	public String inputCsv = "";
-	public String outputAssessment1 = "";
-	public String outputAssessment2 = "";
-	public String transitionsFile = "";
+	//public String projectName = "";
+	//public String datasetTxt = "";
+	//public String inputCsv = "";
+	//public String outputAssessment1 = "";
+	//public String outputAssessment2 = "";
+	//public String transitionsFile = "";
 	protected ArrayList<String> selectedFromTree = new ArrayList<String>();
 
 	protected JTree tablesTree = new JTree();

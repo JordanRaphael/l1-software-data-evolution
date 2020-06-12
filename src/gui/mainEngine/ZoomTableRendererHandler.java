@@ -22,7 +22,7 @@ public class ZoomTableRendererHandler extends TableRenderer{
 				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 						column);
 
-				GlobalDataManager globalDataKeeper = guiController.getGlobalDataKeeper();
+				GlobalDataManager globalDataKeeper = guiController.getGlobalDataManager();
 				String tmpValue = guiController.getGui().finalRowsZoomArea[row][column];
 				String columnName = table.getColumnName(column);
 				Color fr = new Color(0, 0, 0);
@@ -169,7 +169,7 @@ public class ZoomTableRendererHandler extends TableRenderer{
 				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 						column);
 				
-				GlobalDataManager globalDataKeeper = guiController.getGlobalDataKeeper();
+				GlobalDataManager globalDataKeeper = guiController.getGlobalDataManager();
 				String tmpValue = guiController.getGui().finalRowsZoomArea[row][column];
 				String columnName = table.getColumnName(column);
 				Color fr = new Color(0, 0, 0);

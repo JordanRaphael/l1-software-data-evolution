@@ -24,7 +24,7 @@ public class GeneralTableRendererHandler extends TableRenderer{
 			final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 					column);
 			
-			GlobalDataManager globalDataManager = guiController.getGlobalDataKeeper();
+			GlobalDataManager globalDataManager = guiController.getGlobalDataManager();
 			
 			String tmpValue = guiController.getGui().finalRows[row][column];
 			String columnName = table.getColumnName(column);
@@ -195,7 +195,7 @@ public class GeneralTableRendererHandler extends TableRenderer{
 					final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
 							column);
 					
-					GlobalDataManager globalDataManager = guiController.getGlobalDataKeeper();
+					GlobalDataManager globalDataManager = guiController.getGlobalDataManager();
 					String tmpValue = guiController.getGui().finalRowsZoomArea[row][column];
 					String columnName = table.getColumnName(column);
 					Color fr = new Color(0, 0, 0);

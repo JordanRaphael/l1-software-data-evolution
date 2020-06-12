@@ -43,7 +43,7 @@ public class TestShowFullDetailedLifetimeTable {
 
 			if (!(gui.currentProject == null)) {
 				
-				TableConstructionAllSquaresIncluded table = guiController.getGlobalDataKeeper().createTableConstructionAllSquaresIncluded();
+				TableConstructionAllSquaresIncluded table = guiController.getGlobalDataManager().createTableConstructionAllSquaresIncluded();
 				
 				final String[] columns = table.constructColumns();
 				final String[][] rows = table.constructRows();

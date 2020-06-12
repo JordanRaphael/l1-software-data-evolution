@@ -12,6 +12,7 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Test;
 
 import data.dataKeeper.DataCollectorsManager;
+import data.dataKeeper.GlobalDataManager;
 import data.tableConstructors.TableConstructionPhases;
 import gui.mainEngine.Gui;
 import gui.mainEngine.GuiController;
@@ -19,6 +20,7 @@ import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
 
 public class TestShowPhasesWithClustersPLD {
 
+	private GlobalDataManager globalDataManager;
 	private GuiController guiController;
 	private Gui gui;
 
@@ -33,7 +35,27 @@ public class TestShowPhasesWithClustersPLD {
 
 		String filename = "filesHandler/inis/Atlas.ini";
 		try {
-			guiController.importData(filename);
+			globalDataManager = new GlobalDataManager();
+			
+			globalDataManager.getProjectDataManager().parseFile(filename);
+			
+			System.out.println("Project Name:" + globalDataManager.getProjectDataManager().getProjectName());
+			System.out.println("Dataset txt:" + globalDataManager.getProjectDataManager().getDatasetTxt());
+			System.out.println("Input Csv:" + globalDataManager.getProjectDataManager().getInputCsv());
+			System.out.println("Output Assessment1:" + globalDataManager.getProjectDataManager().getOutputAssessment1());
+			System.out.println("Output Assessment2:" + globalDataManager.getProjectDataManager().getOutputAssessment2());
+			System.out.println("Transitions File:" + globalDataManager.getProjectDataManager().getTransitionsFile());
+
+			globalDataManager.setData();
+			System.out.println(globalDataManager.getAllPPLTables().size());
+
+			System.out.println(filename);
+
+			guiController.setGlobalDataManager(globalDataManager);
+			guiController.fillTable();
+			guiController.fillTree();
+
+			gui.currentProject = filename;
 		} catch (RecognitionException | IOException e) {
 			e.printStackTrace();
 		}
@@ -49,26 +71,26 @@ public class TestShowPhasesWithClustersPLD {
 
 			System.out.println(gui.timeWeight + " " + gui.changeWeight);
 
-			PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(gui.inputCsv, gui.outputAssessment1,
-					gui.outputAssessment2, gui.timeWeight, gui.changeWeight, gui.preProcessingTime,
+			PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(globalDataManager.getProjectDataManager().getInputCsv(), globalDataManager.getProjectDataManager().getOutputAssessment1(),
+					globalDataManager.getProjectDataManager().getOutputAssessment2(), gui.timeWeight, gui.changeWeight, gui.preProcessingTime,
 					gui.preProcessingChange);
 
 			mainEngine.parseInput();
 			System.out.println("\n\n\n");
 			mainEngine.extractPhases(gui.numberOfPhases);
-			mainEngine.connectTransitionsWithPhases(guiController.getGlobalDataKeeper());
-			DataCollectorsManager dataCollectorsManager = guiController.getGlobalDataKeeper().getDataCollectorsManager();
+			mainEngine.connectTransitionsWithPhases(guiController.getGlobalDataManager());
+			DataCollectorsManager dataCollectorsManager = guiController.getGlobalDataManager().getDataCollectorsManager();
 			dataCollectorsManager.setPhaseCollectors(mainEngine.getPhaseCollectors());
 
-			if (guiController.getGlobalDataKeeper().getPhaseCollectors().size() != 0) {
+			if (guiController.getGlobalDataManager().getPhaseCollectors().size() != 0) {
 
-				TableConstructionPhases table = guiController.getGlobalDataKeeper()
+				TableConstructionPhases table = guiController.getGlobalDataManager()
 						.createTableConstructionPhases();
 
 				final String[] columns = table.constructColumns();
 				final String[][] rows = table.constructRows();
 				this.gui.segmentSize = table.getSegmentSize();
-				System.out.println("Schemas: " + guiController.getGlobalDataKeeper().getAllPPLSchemas().size());
+				System.out.println("Schemas: " + guiController.getGlobalDataManager().getAllPPLSchemas().size());
 				System.out.println("C: " + columns.length + " R: " + rows.length);
 
 				gui.finalColumns = columns;

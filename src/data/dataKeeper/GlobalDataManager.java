@@ -32,19 +32,15 @@ public class GlobalDataManager {
 	
 	private ProjectManager projectManager;
 
-	public GlobalDataManager(String filename, String transitionsFile) {
+	public GlobalDataManager() {
 		
 		pplData = new PPLDataManager();
 		tableChangeManager = new TableChangeManager();
 		dataCollectorsManager = new DataCollectorsManager();
-		projectManager = new ProjectManager(filename, transitionsFile);
+		projectManager = new ProjectManager();
 	}
 
-	public GlobalDataManager() {
-
-	}
-	
-	public ProjectManager getProjectDetailsData() {
+	public ProjectManager getProjectDataManager() {
 	
 		return projectManager;
 	}
@@ -60,7 +56,7 @@ public class GlobalDataManager {
 	}
 
 	public void setData() {
-
+		
 		Worker worker = new Worker(projectManager.getFilename(), projectManager.getTransitionsFile());
 		try {
 			worker.work();

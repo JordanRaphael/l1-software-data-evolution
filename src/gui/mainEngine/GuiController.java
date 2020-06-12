@@ -5,10 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -68,7 +65,7 @@ public class GuiController {
 		tableRenderer = tablesFactory.getTableType("Zoom Table");
 	}
 
-	public GlobalDataManager getGlobalDataKeeper() {
+	public GlobalDataManager getGlobalDataManager() {
 
 		return globalDataManager;
 	}
@@ -155,7 +152,7 @@ public class GuiController {
 
 	}
 
-	protected void fillTree() {
+	public void fillTree() {
 
 		TreeConstructionGeneral tc = new TreeConstructionGeneral(globalDataManager);
 
@@ -213,6 +210,7 @@ public class GuiController {
 			gui.project = file.getName();
 			String fileName = file.toString();
 			System.out.println("!!" + gui.project);
+			
 
 			try {
 				importData(fileName);
@@ -232,17 +230,17 @@ public class GuiController {
 	protected void infoAction() {
 		if (!(gui.currentProject == null)) {
 
-			System.out.println("Project Name:" + gui.projectName);
-			System.out.println("Dataset txt:" + gui.datasetTxt);
-			System.out.println("Input Csv:" + gui.inputCsv);
-			System.out.println("Output Assessment1:" + gui.outputAssessment1);
-			System.out.println("Output Assessment2:" + gui.outputAssessment2);
-			System.out.println("Transitions File:" + gui.transitionsFile);
+			System.out.println("Project Name:" + globalDataManager.getProjectDataManager().getProjectName());
+			System.out.println("Dataset txt:" + globalDataManager.getProjectDataManager().getDatasetTxt());
+			System.out.println("Input Csv:" + globalDataManager.getProjectDataManager().getInputCsv());
+			System.out.println("Output Assessment1:" + globalDataManager.getProjectDataManager().getOutputAssessment1());
+			System.out.println("Output Assessment2:" + globalDataManager.getProjectDataManager().getOutputAssessment2());
+			System.out.println("Transitions File:" + globalDataManager.getProjectDataManager().getTransitionsFile());
 
 			globalDataManager.printInfo();
 
-			ProjectInfoDialog infoDialog = new ProjectInfoDialog(gui.projectName, gui.datasetTxt, gui.inputCsv,
-					gui.transitionsFile, globalDataManager.getAllPPLSchemas().size(),
+			ProjectInfoDialog infoDialog = new ProjectInfoDialog(globalDataManager.getProjectDataManager().getProjectName(), globalDataManager.getProjectDataManager().getDatasetTxt(), globalDataManager.getProjectDataManager().getInputCsv(),
+					globalDataManager.getProjectDataManager().getTransitionsFile(), globalDataManager.getAllPPLSchemas().size(),
 					globalDataManager.getAllPPLTransitions().size(), globalDataManager.getAllPPLTables().size());
 
 			infoDialog.setVisible(true);
@@ -275,8 +273,8 @@ public class GuiController {
 
 				System.out.println(gui.timeWeight + " " + gui.changeWeight);
 
-				PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(gui.inputCsv, gui.outputAssessment1,
-						gui.outputAssessment2, gui.timeWeight, gui.changeWeight, gui.preProcessingTime,
+				PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(globalDataManager.getProjectDataManager().getInputCsv(), globalDataManager.getProjectDataManager().getOutputAssessment1(),
+						globalDataManager.getProjectDataManager().getOutputAssessment2(), gui.timeWeight, gui.changeWeight, gui.preProcessingTime,
 						gui.preProcessingChange);
 
 				globalDataManager.populateWithPhases(mainEngine, gui.numberOfPhases);
@@ -403,8 +401,8 @@ public class GuiController {
 
 				System.out.println(gui.timeWeight + " " + gui.changeWeight);
 
-				PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(gui.inputCsv, gui.outputAssessment1,
-						gui.outputAssessment2, gui.timeWeight, gui.changeWeight, gui.preProcessingTime,
+				PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(globalDataManager.getProjectDataManager().getInputCsv(), globalDataManager.getProjectDataManager().getOutputAssessment1(),
+						globalDataManager.getProjectDataManager().getOutputAssessment2(), gui.timeWeight, gui.changeWeight, gui.preProcessingTime,
 						gui.preProcessingChange);
 
 				globalDataManager.populateWithPhases(mainEngine, gui.numberOfPhases);
@@ -544,7 +542,7 @@ public class GuiController {
 
 	}
 
-	protected void fillTable() {
+	public void fillTable() {
 		TableConstructionIDU table = globalDataManager.createTableConstructionIDU();
 		final String[] columns = table.constructColumns();
 		final String[][] rows = table.constructRows();
@@ -568,8 +566,8 @@ public class GuiController {
 
 		System.out.println(gui.timeWeight + " " + gui.changeWeight);
 
-		PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(gui.inputCsv, gui.outputAssessment1,
-				gui.outputAssessment2, gui.timeWeight, gui.changeWeight, gui.preProcessingTime,
+		PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(globalDataManager.getProjectDataManager().getInputCsv(), globalDataManager.getProjectDataManager().getOutputAssessment1(),
+				globalDataManager.getProjectDataManager().getOutputAssessment2(), gui.timeWeight, gui.changeWeight, gui.preProcessingTime,
 				gui.preProcessingChange);
 
 		globalDataManager.populateWithPhases(mainEngine, gui.numberOfPhases);
@@ -618,10 +616,11 @@ public class GuiController {
 			return;
 		}
 	}
+	
+	protected void editProjectAction(){
 
-	protected void editProjectAction() {
 
-		String fileName = null;
+		String filename = null;
 		File dir = new File("filesHandler/inis");
 		JFileChooser fcOpen1 = new JFileChooser();
 		fcOpen1.setCurrentDirectory(dir);
@@ -632,53 +631,20 @@ public class GuiController {
 			File file = fcOpen1.getSelectedFile();
 			System.out.println(file.toString());
 			gui.project = file.getName();
-			fileName = file.toString();
+			filename = file.toString();
 			System.out.println("!!" + gui.project);
-
-			BufferedReader br;
+			
 			try {
-				br = new BufferedReader(new FileReader(fileName));
-				String line;
-
-				while (true) {
-					line = br.readLine();
-					if (line == null)
-						break;
-					if (line.contains("Project-name")) {
-						String[] projectNameTable = line.split(":");
-						gui.projectName = projectNameTable[1];
-					} else if (line.contains("Dataset-txt")) {
-						String[] datasetTxtTable = line.split(":");
-						gui.datasetTxt = datasetTxtTable[1];
-					} else if (line.contains("Input-csv")) {
-						String[] inputCsvTable = line.split(":");
-						gui.inputCsv = inputCsvTable[1];
-					} else if (line.contains("Assessement1-output")) {
-						String[] outputAss1 = line.split(":");
-						gui.outputAssessment1 = outputAss1[1];
-					} else if (line.contains("Assessement2-output")) {
-						String[] outputAss2 = line.split(":");
-						gui.outputAssessment2 = outputAss2[1];
-					} else if (line.contains("Transition-xml")) {
-						String[] transitionXmlTable = line.split(":");
-						gui.transitionsFile = transitionXmlTable[1];
-					}
-
-				}
-				;
-
-				br.close();
-			} catch (FileNotFoundException e1) {
+				globalDataManager.getProjectDataManager().parseFile(filename);
+			} catch (IOException e1) {
 				e1.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-
 			}
 
-			System.out.println(gui.projectName);
 
-			CreateProjectJDialog createProjectDialog = new CreateProjectJDialog(gui.projectName, gui.datasetTxt,
-					gui.inputCsv, gui.outputAssessment1, gui.outputAssessment2, gui.transitionsFile);
+			System.out.println(globalDataManager.getProjectDataManager().getProjectName());
+
+			CreateProjectJDialog createProjectDialog = new CreateProjectJDialog(globalDataManager.getProjectDataManager().getProjectName(), globalDataManager.getProjectDataManager().getDatasetTxt(),
+					globalDataManager.getProjectDataManager().getInputCsv(), globalDataManager.getProjectDataManager().getOutputAssessment1(), globalDataManager.getProjectDataManager().getOutputAssessment2(), globalDataManager.getProjectDataManager().getTransitionsFile());
 
 			createProjectDialog.setModal(true);
 			createProjectDialog.setVisible(true);
@@ -690,11 +656,11 @@ public class GuiController {
 				file = createProjectDialog.getFile();
 				System.out.println(file.toString());
 				gui.project = file.getName();
-				fileName = file.toString();
+				filename = file.toString();
 				System.out.println("!!" + gui.project);
 
 				try {
-					importData(fileName);
+					importData(filename);
 				} catch (IOException e) {
 					JOptionPane.showMessageDialog(null, "Something seems wrong with this file");
 					return;
@@ -727,7 +693,6 @@ public class GuiController {
 			gui.project = file.getName();
 			fileName = file.toString();
 			System.out.println("!!" + gui.project);
-			System.out.println(fileName);
 
 		} else {
 			return;
@@ -763,57 +728,30 @@ public class GuiController {
 		gui.zoomAreaTable.setZoom(gui.rowHeight, gui.columnWidth);
 	}
 
-	public void importData(String fileName) throws IOException, RecognitionException {
+	public void importData(String filename) throws IOException, RecognitionException {
 
-		BufferedReader br = new BufferedReader(new FileReader(fileName));
-		String line;
+		
 
-		while (true) {
-			line = br.readLine();
-			if (line == null)
-				break;
-			if (line.contains("Project-name")) {
-				String[] projectNameTable = line.split(":");
-				gui.projectName = projectNameTable[1];
-			} else if (line.contains("Dataset-txt")) {
-				String[] datasetTxtTable = line.split(":");
-				gui.datasetTxt = datasetTxtTable[1];
-			} else if (line.contains("Input-csv")) {
-				String[] inputCsvTable = line.split(":");
-				gui.inputCsv = inputCsvTable[1];
-			} else if (line.contains("Assessement1-output")) {
-				String[] outputAss1 = line.split(":");
-				gui.outputAssessment1 = outputAss1[1];
-			} else if (line.contains("Assessement2-output")) {
-				String[] outputAss2 = line.split(":");
-				gui.outputAssessment2 = outputAss2[1];
-			} else if (line.contains("Transition-xml")) {
-				String[] transitionXmlTable = line.split(":");
-				gui.transitionsFile = transitionXmlTable[1];
-			}
+		globalDataManager = new GlobalDataManager();
+		
+		globalDataManager.getProjectDataManager().parseFile(filename);
+		
+		System.out.println("Project Name:" + globalDataManager.getProjectDataManager().getProjectName());
+		System.out.println("Dataset txt:" + globalDataManager.getProjectDataManager().getDatasetTxt());
+		System.out.println("Input Csv:" + globalDataManager.getProjectDataManager().getInputCsv());
+		System.out.println("Output Assessment1:" + globalDataManager.getProjectDataManager().getOutputAssessment1());
+		System.out.println("Output Assessment2:" + globalDataManager.getProjectDataManager().getOutputAssessment2());
+		System.out.println("Transitions File:" + globalDataManager.getProjectDataManager().getTransitionsFile());
 
-		}
-		;
-
-		br.close();
-
-		System.out.println("Project Name:" + gui.projectName);
-		System.out.println("Dataset txt:" + gui.datasetTxt);
-		System.out.println("Input Csv:" + gui.inputCsv);
-		System.out.println("Output Assessment1:" + gui.outputAssessment1);
-		System.out.println("Output Assessment2:" + gui.outputAssessment2);
-		System.out.println("Transitions File:" + gui.transitionsFile);
-
-		globalDataManager = new GlobalDataManager(gui.datasetTxt, gui.transitionsFile);
 		globalDataManager.setData();
 		System.out.println(globalDataManager.getAllPPLTables().size());
 
-		System.out.println(fileName);
+		System.out.println(filename);
 
 		fillTable();
 		fillTree();
 
-		gui.currentProject = fileName;
+		gui.currentProject = filename;
 
 	}
 
@@ -930,6 +868,10 @@ public class GuiController {
 		gui.tabbedPane.setSelectedIndex(0);
 		makeZoomAreaTable();
 
+	}
+	
+	public void setGlobalDataManager(GlobalDataManager globalDataManager){
+		this.globalDataManager = globalDataManager;
 	}
 
 	protected void makeZoomAreaTableForCluster() {
