@@ -6,9 +6,7 @@ import java.util.TreeMap;
 
 import data.dataPPL.pplSQLSchema.PPLSchema;
 import data.dataPPL.pplSQLSchema.PPLTable;
-import data.dataPPL.pplTransition.AtomicChange;
 import data.dataPPL.pplTransition.PPLTransition;
-import data.dataPPL.pplTransition.TableChange;
 import data.dataProccessing.Worker;
 import data.tableConstructors.PldConstruction;
 import data.tableConstructors.TableConstructionAllSquaresIncluded;
@@ -17,8 +15,6 @@ import data.tableConstructors.TableConstructionIDU;
 import data.tableConstructors.TableConstructionPhases;
 import data.tableConstructors.TableConstructionWithClusters;
 import data.tableConstructors.TableConstructionZoomArea;
-import data.treeElements.TreeConstructionGeneral;
-import data.treeElements.TreeConstructionPhasesWithClusters;
 import phaseAnalyzer.commons.PhaseCollector;
 import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
 import tableClustering.clusterExtractor.commons.ClusterCollector;

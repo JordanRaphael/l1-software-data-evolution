@@ -47,9 +47,7 @@ public class TestSetData {
 			System.setOut(fileStream);
 
 			System.out.println(globalDataKeeper.getAllPPLSchemas().toString());
-			System.out.println(globalDataKeeper.getTableChangeManager().getAtomicChanges().toString());
-			System.out.println(globalDataKeeper.getTableChangeManager().getTableChanges().toString());
-			System.out.println(globalDataKeeper.getTableChangeManager().getTableChanges().toString());
+			globalDataKeeper.getTableChangeManager().printInfo();
 			System.out.println(globalDataKeeper.getProjectDataManager().getDataFolder().toString());
 			System.out.println(globalDataKeeper.getClusterCollectors().toString());
 

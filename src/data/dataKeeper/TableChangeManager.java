@@ -18,6 +18,13 @@ public class TableChangeManager {
 		tableChanges = new TreeMap<String, TableChange>();
 		tableChangesForTwo = new TreeMap<String, TableChange>();
 	}
+	
+	public void printInfo() {
+		System.out.println(atomicChanges.toString());
+		System.out.println(tableChanges.toString());
+		System.out.println(tableChangesForTwo.toString());
+	}
+	
 	public ArrayList<AtomicChange> getAtomicChanges(){
 		
 		return atomicChanges;
